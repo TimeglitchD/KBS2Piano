@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PianoApp", "PianoApp\PianoApp.csproj", "{DEAED550-6DE6-4CA6-AB89-98E52DBE3093}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DEAED550-6DE6-4CA6-AB89-98E52DBE3093}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEAED550-6DE6-4CA6-AB89-98E52DBE3093}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEAED550-6DE6-4CA6-AB89-98E52DBE3093}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEAED550-6DE6-4CA6-AB89-98E52DBE3093}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {27C8BE71-17E3-472F-8468-F8F8FD4C22E4}
+	EndGlobalSection
+EndGlobal
