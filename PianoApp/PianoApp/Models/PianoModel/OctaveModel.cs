@@ -15,10 +15,10 @@ namespace PianoApp.Models
         {
             Position = pos;
             CreateKeys();
-            Draw();
+            DrawPianoInConsole();
         }
 
-        private void Draw()
+        private void DrawPianoInConsole()
         {
             StringBuilder sb = new StringBuilder();
             foreach (var keyModel in KeyModelList)
