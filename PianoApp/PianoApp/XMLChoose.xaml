@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PianoApp"
         mc:Ignorable="d"
-        Title="Keuzemenu" Height="640" Width="800"
+        Title="Choicemenu" Height="640" Width="800"
         ResizeMode="NoResize"
         >
     <Grid>
@@ -14,31 +14,17 @@
             <ColumnDefinition Width="257*"/>
         </Grid.ColumnDefinitions>
         <TabControl Margin="0,69,270,10" Grid.Column="1">
-            <TabItem Header="Lessen">
-                <DataGrid x:Name="LessonGrid" AutoGenerateColumns="True" >
-                   
-                </DataGrid>
-            </TabItem>
-            <TabItem Header="Muziekstukken">
-                <DataGrid>
+            <TabItem Header="Sheet music">
+                <DataGrid x:Name="SheetMusic" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Titel"  Binding="{Binding title}"/>
-                        <DataGridTextColumn Header="Beschrijving"  Binding="{Binding description}"/>
-                        <DataGridTextColumn Header="Datum"  Binding="{Binding date}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </TabItem>
-            <TabItem Header="Opnames">
-                <DataGrid>
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Titel"  Binding="{Binding title}"/>
-                        <DataGridTextColumn Header="Beschrijving"  Binding="{Binding description}"/>
-                        <DataGridTextColumn Header="Datum"  Binding="{Binding date}"/>
+                        <DataGridTextColumn Width="200" Header="Title" Binding="{Binding Title}"/>
+                        <DataGridTextColumn Width="200" Header="Description"  Binding="{Binding Description}"/>
+                        <DataGridTextColumn Width="75" Header="Date"  Binding="{Binding Date}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
         </TabControl>
-        <Label Content="Kies een muziekstuk" Grid.Column="1" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="select" Content="Muziekstuk selecteren" Grid.Column="1" HorizontalAlignment="Left" Margin="508,536,0,0" VerticalAlignment="Top" Width="243" Height="50"/>
+        <Label Content="Choose a piece of music" Grid.Column="1" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="select" Content="Choose piece of music" Grid.Column="1" HorizontalAlignment="Left" Margin="508,536,0,0" VerticalAlignment="Top" Width="243" Height="50" Click="OnSelectClick"/>
     </Grid>
 </Window>

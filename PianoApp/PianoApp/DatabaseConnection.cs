@@ -37,7 +37,7 @@ namespace PianoApp
             }
         }
 
-        public DataSet getLessons()
+        public DataSet getSheetMusic(int type)
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
@@ -46,7 +46,7 @@ namespace PianoApp
                     SqlDataAdapter dataAdapter = new SqlDataAdapter();
                     SqlCommand command = connection.CreateCommand();
                     DataSet dataSet = new DataSet();
-                    command.CommandText = "SELECT * FROM music WHERE type = 'lesson'";
+                    command.CommandText = "SELECT * FROM music WHERE type =" + type;
                     dataAdapter.SelectCommand = command;
                     connection.Open();
                     dataAdapter.Fill(dataSet, "Music");

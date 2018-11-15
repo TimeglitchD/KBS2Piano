@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,12 +20,22 @@ namespace PianoApp
     /// </summary>
     public partial class XMLChoose : Window
     {
+        DatabaseConnection connection;
         public XMLChoose()
         {
             InitializeComponent();
-            DatabaseConnection connection = new DatabaseConnection();
-            var lessons = connection.getLessons();
-            LessonGrid.ItemsSource = lessons.Tables["Music"].DefaultView;
+            connection = new DatabaseConnection();
+            populateTab(1, SheetMusic);
+        }
+
+        public void populateTab(int Type, DataGrid grid)
+        {
+            grid.ItemsSource = connection.getSheetMusic(1).Tables["Music"].DefaultView;
+        }
+
+        private void OnSelectClick(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
