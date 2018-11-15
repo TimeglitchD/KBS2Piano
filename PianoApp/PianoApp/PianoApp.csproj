@@ -63,6 +63,27 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\GuidesController.cs" />
+    <Compile Include="Controllers\MusicPieceController.cs" />
+    <Compile Include="Models\GreatStaffModel.cs" />
+    <Compile Include="Models\SheetModel.cs" />
+    <Compile Include="Models\StaffModel.cs" />
+    <Compile Include="MusicXml\Domain\Backup.cs" />
+    <Compile Include="MusicXml\Domain\Clef.cs" />
+    <Compile Include="MusicXml\Domain\Encoding.cs" />
+    <Compile Include="MusicXml\Domain\Forward.cs" />
+    <Compile Include="MusicXml\Domain\Identification.cs" />
+    <Compile Include="MusicXml\Domain\Key.cs" />
+    <Compile Include="MusicXml\Domain\Lyric.cs" />
+    <Compile Include="MusicXml\Domain\Measure.cs" />
+    <Compile Include="MusicXml\Domain\MeasureAttributes.cs" />
+    <Compile Include="MusicXml\Domain\MeasureElement.cs" />
+    <Compile Include="MusicXml\Domain\Note.cs" />
+    <Compile Include="MusicXml\Domain\Part.cs" />
+    <Compile Include="MusicXml\Domain\Pitch.cs" />
+    <Compile Include="MusicXml\Domain\Score.cs" />
+    <Compile Include="MusicXml\Domain\Time.cs" />
+    <Compile Include="MusicXml\MusicXmlParser.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -86,6 +107,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="MusicXml\MusicXMl.nuspec" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -95,8 +117,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
+    <Folder Include="MusicXml\Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MusicXml\MusicXml.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
