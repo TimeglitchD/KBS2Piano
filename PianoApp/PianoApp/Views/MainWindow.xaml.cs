@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MusicXml;
+using PianoApp.Controllers;
 
 namespace PianoApp
 {
@@ -22,7 +24,14 @@ namespace PianoApp
     {
         public MainWindow()
         {
-            
+
+
+            PianoController pC = new PianoController();
+            MusicPieceController mPc = new MusicPieceController(){Piano = pC};
+            mPc.CreateMusicPiece("MusicFiles/lg-201059560.xml");
+            mPc.Guide.Start();
+
+            InitializeComponent();
         }
     }
 }
