@@ -15,22 +15,30 @@
         </Grid.ColumnDefinitions>
         <TabControl Margin="0,69,270,10" Grid.Column="1">
             <TabItem Header="Lessen">
-                <StackPanel Grid.Column="1" HorizontalAlignment="Left" Height="591" Margin="10,10,0,0" VerticalAlignment="Top" Width="460">
-
-                </StackPanel>
+                <DataGrid x:Name="LessonGrid" AutoGenerateColumns="True" >
+                   
+                </DataGrid>
             </TabItem>
             <TabItem Header="Muziekstukken">
-                <StackPanel Grid.Column="1" HorizontalAlignment="Left" Height="591" Margin="10,10,0,0" VerticalAlignment="Top" Width="460">
-
-                </StackPanel>
+                <DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Titel"  Binding="{Binding title}"/>
+                        <DataGridTextColumn Header="Beschrijving"  Binding="{Binding description}"/>
+                        <DataGridTextColumn Header="Datum"  Binding="{Binding date}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
             <TabItem Header="Opnames">
-                <StackPanel Grid.Column="1" HorizontalAlignment="Left" Height="591" Margin="10,10,0,0" VerticalAlignment="Top" Width="460">
-
-                </StackPanel>
+                <DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Titel"  Binding="{Binding title}"/>
+                        <DataGridTextColumn Header="Beschrijving"  Binding="{Binding description}"/>
+                        <DataGridTextColumn Header="Datum"  Binding="{Binding date}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </TabItem>
         </TabControl>
         <Label Content="Kies een muziekstuk" Grid.Column="1" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top"/>
-        <Button Content="Muziekstuk selecteren" Grid.Column="1" HorizontalAlignment="Left" Margin="508,536,0,0" VerticalAlignment="Top" Width="243" Height="50"/>
+        <Button x:Name="select" Content="Muziekstuk selecteren" Grid.Column="1" HorizontalAlignment="Left" Margin="508,536,0,0" VerticalAlignment="Top" Width="243" Height="50"/>
     </Grid>
 </Window>

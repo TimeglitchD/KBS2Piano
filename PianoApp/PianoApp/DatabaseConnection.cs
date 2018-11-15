@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace PianoApp
 {
@@ -36,35 +37,25 @@ namespace PianoApp
             }
         }
 
-        public List<Dictionary<string, string>> getLessons()
+        public DataSet getLessons()
         {
-            List<Dictionary<string, string>> lessons = new List<Dictionary<string, string>>();
-
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
-                SqlCommand command = new SqlCommand(
-                    "SELECT * FROM music WHERE type = 'lesson'",
-                    connection
-                );
-
-                command.Connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
+                try
                 {
-                    while (reader.Read())
-                    {
-                        Dictionary<string, string> lesson = new Dictionary<string, string>();
-                        lesson["title"] = (string)reader["title"];
-                        lesson["description"] = (string)reader["description"];
-                        lesson["date"] = (string)reader["date"];
-                        lesson["location"] = (string)reader["location"];
-                        lessons.Add(lesson);
-                    }
-
-                    return lessons;
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    SqlCommand command = connection.CreateCommand();
+                    DataSet dataSet = new DataSet();
+                    command.CommandText = "SELECT * FROM music WHERE type = 'lesson'";
+                    dataAdapter.SelectCommand = command;
+                    connection.Open();
+                    dataAdapter.Fill(dataSet, "Music");
+                    connection.Close();
+                    return dataSet;
+                } catch(Exception ex)
+                {
+                    return null;
                 }
-
-                return null;
             }
         }
 

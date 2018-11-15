@@ -22,9 +22,9 @@ namespace PianoApp
         public XMLChoose()
         {
             InitializeComponent();
-                DatabaseConnection connection = new DatabaseConnection();
-                var test = connection.getLessons();
-                MessageBox.Show(test.ToString());
+            DatabaseConnection connection = new DatabaseConnection();
+            var lessons = connection.getLessons();
+            LessonGrid.ItemsSource = lessons.Tables["Music"].DefaultView;
         }
     }
 }
