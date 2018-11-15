@@ -8,5 +8,6 @@ namespace PianoApp.Models
 {
     class BlackKey
     {
+        public string Type { get; set; } = "Black";
     }
 }
