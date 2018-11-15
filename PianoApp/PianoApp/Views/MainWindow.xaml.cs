@@ -26,12 +26,11 @@ namespace PianoApp
         {
             PianoController pC = new PianoController();
             MusicPieceController mPc = new MusicPieceController(){Piano = pC};
-            mPc.CreateMusicPiece("MusicFiles/lg-201059560.xml");
-            mPc.Guide.Start();
+            MusicChooseView mCv = new MusicChooseView();
+            //mPc.CreateMusicPiece("MusicFiles/lg-201059560.xml");
+            //mPc.Guide.Start();
 
             InitializeComponent();
-            XMLChoose choose = new XMLChoose();
-            choose.Show();
         }
     }
 }
