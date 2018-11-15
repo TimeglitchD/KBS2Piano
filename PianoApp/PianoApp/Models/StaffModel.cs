@@ -7,7 +7,7 @@ using MusicXml.Domain;
 
 namespace PianoApp.Models
 {
-    class StaffModel
+    public class StaffModel
     {        
         public int Number { get; set; }
         public List<Note> NoteList { get; set; } = new List<Note>();

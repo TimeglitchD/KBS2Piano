@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +10,7 @@ using PianoApp.Models;
 
 namespace PianoApp.Controllers
 {
-    class MusicPieceController
+    public class MusicPieceController
     {
         private Score _score;
         public PianoController Piano;

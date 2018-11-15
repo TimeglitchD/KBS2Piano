@@ -12,19 +12,26 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PianoApp.Controllers;
 
-namespace PianoApp
+namespace PianoApp.Views
 {
     /// <summary>
-    /// Interaction logic for XMLChoose.xaml
+    /// Interaction logic for MusicChooseView.xaml
     /// </summary>
-    public partial class XMLChoose : Window
+    public partial class MusicChooseView : Window
     {
-        DatabaseConnection connection;
-        public XMLChoose()
+
+        private DatabaseConnection connection;
+        private MusicPieceController mPc;
+        private string selectedPiece;
+
+        public MusicChooseView(MusicPieceController mPc)
         {
             InitializeComponent();
             connection = new DatabaseConnection();
+            this.mPc = mPc;
+
             populateTab(1, SheetMusic);
         }
 
@@ -35,7 +42,22 @@ namespace PianoApp
 
         private void OnSelectClick(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                this.mPc.CreateMusicPiece(selectedPiece);
+                this.mPc.Guide.Start();
+                this.Close();
+            } catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);
+            }
+        }
 
+        private void DataGrid_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            DataGrid dg = sender as DataGrid;
+            DataRowView selected = dg.CurrentItem as DataRowView;
+            selectedPiece = selected.Row["Location"] as String;
         }
     }
 }

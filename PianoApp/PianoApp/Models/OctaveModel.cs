@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PianoApp.Models
 {
-    class OctaveModel
+    public class OctaveModel
     {
     }
 }

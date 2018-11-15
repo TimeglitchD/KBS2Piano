@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MusicXml;
 using PianoApp.Controllers;
-
+using PianoApp.Views;
 namespace PianoApp
 {
     /// <summary>
@@ -22,15 +22,20 @@ namespace PianoApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MusicChooseView mCv;
+
         public MainWindow()
         {
             PianoController pC = new PianoController();
             MusicPieceController mPc = new MusicPieceController(){Piano = pC};
-            MusicChooseView mCv = new MusicChooseView();
-            //mPc.CreateMusicPiece("MusicFiles/lg-201059560.xml");
-            //mPc.Guide.Start();
+            mCv = new MusicChooseView(mPc);
 
             InitializeComponent();
+        }
+
+        private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
+        {
+            mCv.Show();
         }
     }
 }

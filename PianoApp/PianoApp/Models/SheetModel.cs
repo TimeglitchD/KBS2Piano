@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 
 namespace PianoApp.Models
 {
-    class SheetModel
+    public class SheetModel
     {
         public List<GreatStaffModel> GreatStaffModelList { get; set; } = new List<GreatStaffModel>();
     }

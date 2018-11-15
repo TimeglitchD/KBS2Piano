@@ -1,4 +1,4 @@
-﻿<Window x:Class="PianoApp.XMLChoose"
+﻿<Window x:Class="PianoApp.Views.MusicChooseView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -15,11 +15,12 @@
         </Grid.ColumnDefinitions>
         <TabControl Margin="0,69,270,10" Grid.Column="1">
             <TabItem Header="Sheet music">
-                <DataGrid x:Name="SheetMusic" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                <DataGrid x:Name="SheetMusic" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" SelectionChanged="DataGrid_SelectionChanged">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="200" Header="Title" Binding="{Binding Title}"/>
                         <DataGridTextColumn Width="200" Header="Description"  Binding="{Binding Description}"/>
                         <DataGridTextColumn Width="75" Header="Date"  Binding="{Binding Date}"/>
+                        <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

@@ -8,7 +8,7 @@ using MusicXml.Domain;
 
 namespace PianoApp.Controllers
 {
-    class GuidesController
+    public class GuidesController
     {
         public int Bpm { get; set; }
         public NoteType Note { get; set; }

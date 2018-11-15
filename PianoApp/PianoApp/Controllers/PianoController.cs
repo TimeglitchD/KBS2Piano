@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PianoApp.Controllers
 {
-    class PianoController
+    public class PianoController
     {
         public void UpdatePianoKeys()
         {
