@@ -13,6 +13,7 @@ namespace PianoApp.Controllers
     class MusicPieceController
     {
         private Score _score;
+        public PianoController Piano;
 
         public GuidesController Guide { get; set; }
 
@@ -25,13 +26,13 @@ namespace PianoApp.Controllers
         {
             _score = MusicXmlParser.GetScore(filename);
 
-            Guide = new GuidesController() {Score = _score};  
+            Guide = new GuidesController() {Score = _score, Piano = Piano};  
             
             Sheet = new SheetModel();
 
             AddGreatStaffsToSheet();
 
-            AddMeasuresToStaffs();
+            AddMeasuresToGreatStaffs();
 
             AddNotesToStaffs();
         }
@@ -61,7 +62,7 @@ namespace PianoApp.Controllers
         }
 
         //Fill staffs width measures based on amount of measures in the piece
-        private void AddMeasuresToStaffs()
+        private void AddMeasuresToGreatStaffs()
         {
             double maxWidth = 0;
             int lastItem = 0;
@@ -124,5 +125,6 @@ namespace PianoApp.Controllers
             }
             Console.WriteLine("================================");
         }
+
     }
 }

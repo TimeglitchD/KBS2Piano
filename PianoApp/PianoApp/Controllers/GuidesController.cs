@@ -13,7 +13,8 @@ namespace PianoApp.Controllers
         public int Bpm { get; set; }
         public NoteType Note { get; set; }
 
-        public Score Score; 
+        public PianoController Piano;
+        public Score Score;
 
         private void CheckNoteIntersect()
         {
@@ -29,7 +30,9 @@ namespace PianoApp.Controllers
                         if (measureElement.Type.Equals(MeasureElementType.Note))
                         {
                             var note = (Note)measureElement.Element;
-                            Console.WriteLine($"{note.Type} duration: {note.Duration}");
+                            Console.WriteLine($"Note: {note.Type}");
+                            Piano.UpdatePianoKeys();
+                            //TODO: color piano and notes here... In a loop or something...
                         }
                     }
                 }

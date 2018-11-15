@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="Controllers\GuidesController.cs" />
     <Compile Include="Controllers\MusicPieceController.cs" />
+    <Compile Include="Controllers\PianoController.cs" />
     <Compile Include="Models\GreatStaffModel.cs" />
     <Compile Include="Models\SheetModel.cs" />
     <Compile Include="Models\StaffModel.cs" />

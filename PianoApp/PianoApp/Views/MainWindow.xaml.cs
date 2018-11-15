@@ -24,8 +24,10 @@ namespace PianoApp
     {
         public MainWindow()
         {
-            MusicPieceController mPc = new MusicPieceController();
-            mPc.CreateMusicPiece("MusicFiles/lg-201059560.xml");           
+            PianoController pC = new PianoController();
+            MusicPieceController mPc = new MusicPieceController(){Piano = pC};
+            mPc.CreateMusicPiece("MusicFiles/lg-201059560.xml");
+            mPc.Guide.Start();
 
             InitializeComponent();
         }
