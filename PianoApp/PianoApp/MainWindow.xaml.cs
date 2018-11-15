@@ -22,7 +22,7 @@ namespace PianoApp
     {
         public MainWindow()
         {
-            InitializeComponent();
+            
         }
     }
 }
