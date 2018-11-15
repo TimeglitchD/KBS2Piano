@@ -9,13 +9,13 @@ namespace PianoApp.Models
     class PianoModel
     {
         public List<OctaveModel> OctaveModelList { get; set; } = new List<OctaveModel>();
-        public int Amount { get; set; } = 6;
+        public int Amount { get; set; } = 9;
 
         public PianoModel()
         {
             for (int i = 0; i < Amount; i++)
             {
-                OctaveModelList.Add(new OctaveModel(){Position = i});
+                OctaveModelList.Add(new OctaveModel(i));
             }
         }
     }
@@ -30,5 +30,6 @@ namespace PianoApp.Models
         F = 5,
         G = 6
     }
+
 }
     
