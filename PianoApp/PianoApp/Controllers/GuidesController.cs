@@ -30,8 +30,8 @@ namespace PianoApp.Controllers
                         if (measureElement.Type.Equals(MeasureElementType.Note))
                         {
                             var note = (Note)measureElement.Element;
-                            Console.WriteLine($"Note: {note.Type}");
-                            Piano.UpdatePianoKeys();
+//                            Console.WriteLine($"Note: {note.Type}");
+//                            Piano.UpdatePianoKeys();
                             //TODO: color piano and notes here... In a loop or something...
                         }
                     }

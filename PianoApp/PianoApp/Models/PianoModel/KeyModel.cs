@@ -8,5 +8,7 @@ namespace PianoApp.Models
 {
     public class KeyModel
     {
+        public int Alter { get; set; } = 0;
+        public Step Step { get; set; }
     }
 }

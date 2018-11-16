@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PianoApp.Models
 {
-    public class BlackKey
+    class BlackKey : KeyModel
     {
+        public string Type { get; set; } = "Black";
     }
 }

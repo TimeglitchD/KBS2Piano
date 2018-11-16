@@ -8,5 +8,6 @@ namespace PianoApp.Models
 {
     public class WhiteKey : KeyModel
     {
+        public string Type { get; set; } = "White";
     }
 }
