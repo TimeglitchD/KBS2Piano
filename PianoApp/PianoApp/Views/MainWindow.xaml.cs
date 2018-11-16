@@ -71,18 +71,21 @@ namespace PianoApp
             scroll.Visibility = Visibility.Visible;
             Grid.SetRow(scroll, 1);
 
-            //maak een nieuw grid voor de great staffs
-            StackPanel sheets = new StackPanel();
+            //maak een stackpanel met de great staves
+            StackPanel staves = new StackPanel();
             foreach (var item in mPc.Sheet.GreatStaffModelList)
             {
                 TextBlock tb = new TextBlock();
                 tb.Height = 50;
                 tb.Text = "great stave";
-                sheets.Children.Add(tb);
+                staves.Children.Add(tb);
             }
 
-            Grid.SetRow(sheets, 1);
-            scroll.Content = sheets;
+            //zet de stackpanel in de goede plek in het grid
+            Grid.SetRow(staves, 1);
+
+            //koppel de scrollbar aan het stackpanel
+            scroll.Content = staves;
 
 
             // Add the third text cell to the Grid
