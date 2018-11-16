@@ -30,16 +30,16 @@ namespace PianoApp.Controllers
                         if (measureElement.Type.Equals(MeasureElementType.Note))
                         {
                             var note = (Note)measureElement.Element;
-                            //                            Piano.UpdatePianoKeys();
-
-
-                            foreach (var keyModel in Piano.PianoModel.OctaveModelList[note.Pitch.Octave].KeyModelList)
+                            if (note.Pitch != null)
                             {
-                                if (note.Pitch.Step.ToString() == keyModel.Step.ToString() && note.Pitch.Alter == keyModel.Alter)
+                                foreach (var keyModel in Piano.PianoModel.OctaveModelList[note.Pitch.Octave].KeyModelList)
                                 {
-                                    Console.WriteLine($"Note {note.Pitch.Step}{note.Pitch.Octave}{note.Pitch.Alter} key pressed: {keyModel.Step}{note.Pitch.Octave}{keyModel.Alter}");
+                                    if (note.Pitch.Step.ToString() == keyModel.Step.ToString() && note.Pitch.Alter == keyModel.Alter)
+                                    {
+                                        Console.WriteLine($"Note {note.Pitch.Step}{note.Pitch.Octave}{note.Pitch.Alter} key pressed: {keyModel.Step}{Piano.PianoModel.OctaveModelList[note.Pitch.Octave].Position}{keyModel.Alter}");
+                                    }
                                 }
-                            }
+                            }                           
                         }
                     }
                 }
