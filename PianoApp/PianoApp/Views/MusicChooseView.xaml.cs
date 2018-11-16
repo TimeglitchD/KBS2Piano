@@ -45,7 +45,7 @@ namespace PianoApp.Views
             try
             {
                 this.mPc.CreateMusicPiece(selectedPiece);
-                this.mPc.Guide.Start();
+                
                 this.Close();
             } catch(Exception ex)
             {

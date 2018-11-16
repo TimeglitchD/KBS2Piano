@@ -6,11 +6,5 @@
         xmlns:local="clr-namespace:PianoApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="720" Width="1280">
-    <Grid>
-        <Canvas HorizontalAlignment="Left" Height="689" VerticalAlignment="Top" Width="1272">
-            <Button x:Name="SelectSheetMusic" Content="Select sheet music" Canvas.Left="32" Canvas.Top="27" Width="75" Click="SelectSheetMusic_Click"/>
-        </Canvas>
 
-
-    </Grid>
 </Window>
