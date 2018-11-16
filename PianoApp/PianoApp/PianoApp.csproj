@@ -84,7 +84,6 @@
     <Compile Include="Controllers\InputController.cs" />
     <Compile Include="Controllers\MusicPieceController.cs" />
     <Compile Include="Controllers\PianoController.cs" />
-
     <Compile Include="Models\PianoModel\BlackKey.cs" />
     <Compile Include="Models\SheetModel\GreatStaffModel.cs" />
     <Compile Include="Models\PianoModel\KeyModel.cs" />
@@ -93,7 +92,6 @@
     <Compile Include="Models\SheetModel\SheetModel.cs" />
     <Compile Include="Models\SheetModel\StaffModel.cs" />
     <Compile Include="Models\PianoModel\WhiteKey.cs" />
-
     <Compile Include="MusicXml\Domain\Backup.cs" />
     <Compile Include="MusicXml\Domain\Clef.cs" />
     <Compile Include="MusicXml\Domain\Encoding.cs" />
@@ -157,16 +155,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\Debug\" />
     <Folder Include="MusicXml\Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\MusicDatabase.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\MusicDatabase_log.ldf">
-      <DependentUpon>MusicDatabase.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="MusicXml\MusicXml.csproj" />
   </ItemGroup>
   <ItemGroup>
