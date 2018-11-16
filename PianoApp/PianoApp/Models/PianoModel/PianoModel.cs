@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PianoApp.Models
 {
-    class PianoModel
+    public class PianoModel
     {
         public List<OctaveModel> OctaveModelList { get; set; } = new List<OctaveModel>();
         public int Amount { get; set; } = 9;
