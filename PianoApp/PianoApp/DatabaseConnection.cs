@@ -14,29 +14,12 @@ namespace PianoApp
 
         public DatabaseConnection()
         {
+            //point connectionstring to local database
             connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename =" + System.AppDomain.CurrentDomain.BaseDirectory
             + @"MusicDatabase.mdf; Integrated Security = True";
         }
 
-        public void addMusic(string title, string description, string date, string type, string location)
-        {
-            try
-            {
-                StringBuilder command = new StringBuilder("INSERT INTO music (Title, Description, Date, Type, Location) VALUES (");
-                    command.Append("'" + title + "' ,");
-                    command.Append("'" + description + "' ,");
-                    command.Append("'" + date + "' ,");
-                    command.Append("'" + type + "' ,");
-                    command.Append("'" + location + "' )");
-
-                this.ExcecuteCommandNoOutput(command.ToString());
-
-            } catch(SqlException ex)
-            {
-                System.Windows.MessageBox.Show("Database error insert" + ex.Message);
-            }
-        }
-
+        //get a dataset of sheet music based on type specified.
         public DataSet getSheetMusic(int type)
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
@@ -59,6 +42,7 @@ namespace PianoApp
             }
         }
 
+        //function for update, insert, delete statements
         private void ExcecuteCommandNoOutput(string queryString)
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
@@ -66,6 +50,27 @@ namespace PianoApp
                 SqlCommand command = new SqlCommand(queryString, connection);
                 command.Connection.Open();
                 command.ExecuteNonQuery();
+            }
+        }
+
+
+        //method for adding music record to database. Unused
+        public void addMusic(string title, string description, string date, string type, string location)
+        {
+            try
+            {
+                StringBuilder command = new StringBuilder("INSERT INTO music (Title, Description, Date, Type, Location) VALUES (");
+                command.Append("'" + title + "' ,");
+                command.Append("'" + description + "' ,");
+                command.Append("'" + date + "' ,");
+                command.Append("'" + type + "' ,");
+                command.Append("'" + location + "' )");
+
+                this.ExcecuteCommandNoOutput(command.ToString());
+
+            } catch (SqlException ex)
+            {
+                System.Windows.MessageBox.Show("Database error insert" + ex.Message);
             }
         }
     }
