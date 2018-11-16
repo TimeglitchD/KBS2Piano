@@ -52,7 +52,7 @@ namespace PianoApp
                     dataAdapter.Fill(dataSet, "Music");
                     connection.Close();
                     return dataSet;
-                } catch(Exception ex)
+                } catch(Exception)
                 {
                     return null;
                 }

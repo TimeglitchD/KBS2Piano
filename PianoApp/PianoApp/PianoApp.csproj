@@ -165,7 +165,6 @@
       <DependentUpon>MusicDatabase.mdf</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="bin\Debug\MusicFiles\lg-150596634.xml" />
     <Content Include="MusicXml\MusicXml.csproj" />
   </ItemGroup>
   <ItemGroup>
