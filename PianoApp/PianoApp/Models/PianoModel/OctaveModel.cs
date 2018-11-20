@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace PianoApp.Models
 {
@@ -73,7 +74,7 @@ namespace PianoApp.Models
             Console.WriteLine($"Octave: {Position} Keys: {KeyModelList.Count}");            
         }
 
-        public KeyModel DrawKeys()
+        public KeyModel DrawOctave()
         {
             foreach (BlackKey blackKey in KeyModelList)
             {
