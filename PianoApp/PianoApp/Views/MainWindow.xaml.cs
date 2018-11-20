@@ -40,7 +40,7 @@ namespace PianoApp
             Show();
 
             metronomeSound sound = new metronomeSound();
-            sound.startMetronome(120, 4);
+            sound.startMetronome(120, 3, 1);
         }
 
         private void DrawMenu()
