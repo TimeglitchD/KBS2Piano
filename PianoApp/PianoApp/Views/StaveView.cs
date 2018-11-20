@@ -23,7 +23,7 @@ namespace PianoApp.Views
             sheet = new StackPanel();
             DrawMusic();
 
-            
+
         }
 
         public void DrawMusic()

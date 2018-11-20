@@ -51,7 +51,7 @@ namespace PianoApp.Models
                 if (i > 0 && i < 6)
                 {
                     Line line = new Line();
-                    line.Stroke = Brushes.MediumVioletRed;
+                    line.Stroke = Brushes.Black;
                     line.X1 = 0;
                     line.X2 = 1050;
                     line.HorizontalAlignment = HorizontalAlignment.Left;

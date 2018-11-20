@@ -13,7 +13,7 @@ namespace PianoApp.Models
     public class SheetModel
     {
         public List<GreatStaffModel> GreatStaffModelList { get; set; } = new List<GreatStaffModel>();
-        private StackPanel Sheet = new StackPanel() { Background = Brushes.AliceBlue };
+        private StackPanel Sheet = new StackPanel();
 
 
         public StackPanel DrawSheet()

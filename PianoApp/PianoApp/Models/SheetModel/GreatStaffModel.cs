@@ -24,7 +24,6 @@ namespace PianoApp.Models
 
         public Grid DrawGreatStaff()
         {
-            GreatStaffGrid.ShowGridLines = true;
             ColumnDefinition col1 = new ColumnDefinition();
             ColumnDefinition col2 = new ColumnDefinition();
             GreatStaffGrid.ColumnDefinitions.Add(col1);
