@@ -104,12 +104,13 @@ namespace PianoApp
 
             myGrid.Children.Add(SelectSheetMusic);
 
-            Content = myGrid;
             pv = new PianoView(myGrid);
             
 
             sv = new StaveView(myGrid);
 
+            Content = pv.myGrid;
+            
         }
 
 

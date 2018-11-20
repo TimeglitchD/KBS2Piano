@@ -18,30 +18,35 @@ namespace PianoApp.Views
     /// <summary>
     /// Interaction logic for PianoView.xaml
     /// </summary>
-    public partial class PianoView : Window
+    public partial class PianoView
     {
         private PianoController PC { get; }
         private StackPanel piano = new StackPanel();
+        public Grid myGrid;
 
 
         public PianoView(Grid myGrid)
         {
             PC = new PianoController();
-            piano = new StackPanel();
+            
+           
+            this.myGrid = myGrid;
             DrawPiano();
 
-            //zet stackpanel in de goede plek op het grid
-            Grid.SetRow(piano, 2);
+
         }
 
         public void DrawPiano()
         {
             //clear the view
-            piano.Children.Clear();
-
+           // piano.Children.Clear();
+            //zet stackpanel in de goede plek op het grid
+            Grid.SetRow(piano, 2);
             //draw the piano
             piano = PC.DrawPiano();
+            myGrid.Children.Add(piano);
             Console.WriteLine("Piano drawn");
         }
     }
 }
+

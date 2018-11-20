@@ -115,9 +115,7 @@
     <Compile Include="Views\MusicChooseView.xaml.cs">
       <DependentUpon>MusicChooseView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PianoView.xaml.cs">
-      <DependentUpon>PianoView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Views\PianoView.cs" />
     <Compile Include="Views\StaveView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -185,10 +183,6 @@
     <Page Include="Views\MusicChooseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PianoView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

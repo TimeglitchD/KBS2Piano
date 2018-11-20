@@ -19,6 +19,7 @@ namespace PianoApp.Models
             {
                 OctaveModelList.Add(new OctaveModel(i));
             }
+            
         }
 
         public StackPanel DrawPiano()
