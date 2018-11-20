@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PianoApp.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,9 @@ namespace PianoApp.Views
     /// </summary>
     public partial class PianoView : Window
     {
+        private PianoController pC;
+        StackPanel pianoPanel = new StackPanel();
+
         public PianoView()
         {
             InitializeComponent();
@@ -26,7 +30,7 @@ namespace PianoApp.Views
 
         public void DrawPianoModel()
         {
-            
+            pianoPanel.Children.Add(pC.DrawPianoModel);
         }
     }
 }

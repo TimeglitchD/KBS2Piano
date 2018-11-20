@@ -14,6 +14,8 @@ namespace PianoApp.Models
         public Rectangle DrawWhiteKey()
         {
             Rectangle whiteKey = new Rectangle();
+            whiteKey.Width = 25;
+            whiteKey.Height = 60;
             return whiteKey;
         }
     }

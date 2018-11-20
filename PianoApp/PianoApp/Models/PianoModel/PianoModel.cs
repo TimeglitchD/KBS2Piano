@@ -19,11 +19,11 @@ namespace PianoApp.Models
             }
         }
 
-        public OctaveModel DrawOctave()
+        public OctaveModel DrawPiano()
         {
             foreach(OctaveModel octaveModel in OctaveModelList)
             {
-                octaveModel.DrawKeys();
+                octaveModel.DrawOctave();
                 return octaveModel;
             }
 

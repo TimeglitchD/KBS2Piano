@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using PianoApp.Models;
 
 namespace PianoApp.Controllers
@@ -15,9 +16,10 @@ namespace PianoApp.Controllers
             Console.WriteLine("Updating piano keys...");
         }
 
-        public OctaveModel DrawPianoModel()
+        public PianoModel DrawPianoModel()
         {
-            
+            PianoModel.DrawPiano();
+            return PianoModel;
         }
     }
 }
