@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace PianoApp.Models
 {
@@ -10,6 +11,7 @@ namespace PianoApp.Models
     {
         public List<OctaveModel> OctaveModelList { get; set; } = new List<OctaveModel>();
         public int Amount { get; set; } = 9;
+        private StackPanel piano = new StackPanel();
 
         public PianoModel()
         {
@@ -19,15 +21,15 @@ namespace PianoApp.Models
             }
         }
 
-        public OctaveModel DrawPiano()
+        public StackPanel DrawPiano()
         {
             foreach(OctaveModel octaveModel in OctaveModelList)
             {
-                octaveModel.DrawOctave();
-                return octaveModel;
+                piano.Children.Add(octaveModel.DrawOctave());
+                Console.WriteLine("Piano added");
             }
 
-            return null;
+            return piano;
         }
     }
 

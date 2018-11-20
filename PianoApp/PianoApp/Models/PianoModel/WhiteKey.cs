@@ -11,7 +11,7 @@ namespace PianoApp.Models
     {
         public string Type { get; set; } = "White";
 
-        public Rectangle DrawWhiteKey()
+        public override Rectangle Draw()
         {
             Rectangle whiteKey = new Rectangle();
             whiteKey.Width = 25;

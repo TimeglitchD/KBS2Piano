@@ -11,15 +11,24 @@ namespace PianoApp.Controllers
     public class PianoController
     {
         public PianoModel PianoModel { get; set; } = new PianoModel();
+
         public void UpdatePianoKeys()
         {
             Console.WriteLine("Updating piano keys...");
         }
 
-        public PianoModel DrawPianoModel()
+        public StackPanel DrawPiano()
         {
-            PianoModel.DrawPiano();
-            return PianoModel;
+            if(PianoModel == null)
+            {
+                Console.WriteLine("No piano found");
+                return null;    
+            }
+            else
+            {
+                Console.WriteLine("Piano found");
+                return PianoModel.DrawPiano();
+            }
         }
     }
 }

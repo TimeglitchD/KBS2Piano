@@ -11,6 +11,7 @@ namespace PianoApp.Models
     {
         public int Position { get; set; }
         public List<KeyModel> KeyModelList { get; set; } = new List<KeyModel>();
+        private StackPanel octave = new StackPanel();
 
         public OctaveModel(int pos)
         {
@@ -74,21 +75,15 @@ namespace PianoApp.Models
             Console.WriteLine($"Octave: {Position} Keys: {KeyModelList.Count}");            
         }
 
-        public KeyModel DrawOctave()
+        public StackPanel DrawOctave()
         {
-            foreach (BlackKey blackKey in KeyModelList)
+            foreach (KeyModel key in KeyModelList)
             {
-                blackKey.DrawBlackKey();
-                return blackKey;
+                octave.Children.Add(key.Draw());
+                Console.WriteLine("Black key added to octave");
             }
 
-            foreach (WhiteKey whiteKey in KeyModelList)
-            {
-                whiteKey.DrawWhiteKey();
-                return whiteKey;
-            }
-
-            return null;
+            return octave;
         }
     }
 }

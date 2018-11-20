@@ -20,14 +20,15 @@ namespace PianoApp.Views
     /// </summary>
     public partial class PianoView : Window
     {
-        private PianoController pC { get; }
+        private PianoController PC { get; }
         private StackPanel piano = new StackPanel();
+
 
         public PianoView(Grid myGrid)
         {
-            PianoController pC = new PianoController();
+            PC = new PianoController();
             piano = new StackPanel();
-
+            DrawPiano();
 
             //zet stackpanel in de goede plek op het grid
             Grid.SetRow(piano, 2);
@@ -39,7 +40,7 @@ namespace PianoApp.Views
             piano.Children.Clear();
 
             //draw the piano
-            piano = pC.DrawPianoModel();
+            piano = PC.DrawPiano();
             Console.WriteLine("Piano drawn");
         }
     }

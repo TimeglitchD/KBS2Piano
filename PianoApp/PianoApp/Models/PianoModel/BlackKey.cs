@@ -11,7 +11,7 @@ namespace PianoApp.Models
     {
         public string Type { get; set; } = "Black";
 
-        public Rectangle DrawBlackKey()
+        public override Rectangle Draw()
         {
             Rectangle blackKey = new Rectangle();
             blackKey.Fill = System.Windows.Media.Brushes.Black;
