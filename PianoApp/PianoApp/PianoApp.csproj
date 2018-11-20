@@ -156,16 +156,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\Debug\" />
     <Folder Include="MusicXml\Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\MusicDatabase.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="bin\Debug\MusicDatabase_log.ldf">
-      <DependentUpon>MusicDatabase.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="MusicXml\MusicXml.csproj" />
   </ItemGroup>
   <ItemGroup>

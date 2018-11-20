@@ -37,7 +37,6 @@ namespace PianoApp
             PianoController pC = new PianoController();
 
             mPc = new MusicPieceController(){Piano = pC};
-            mCv = new MusicChooseView(mPc);
 
 
             //mPc.Guide.Start();
@@ -118,6 +117,7 @@ namespace PianoApp
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
+            mCv = new MusicChooseView(mPc);
             mCv.Show();
         }
 
