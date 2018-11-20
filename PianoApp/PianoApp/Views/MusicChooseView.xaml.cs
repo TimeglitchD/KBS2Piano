@@ -46,15 +46,16 @@ namespace PianoApp.Views
 
         private void OnSelectClick(object sender, RoutedEventArgs e)
         {
+            sv.MPc.CreateMusicPiece(selectedPiece);
+            //succesfull at opening xml file.
+
+            sv.DrawStaves();
+            //draw the new staves
+            sv.MPc.Guide.Start();
+            this.Close();
             try
             {
-                sv.MPc.CreateMusicPiece(selectedPiece);
-                //succesfull at opening xml file.
 
-                sv.DrawStaves();
-                //draw the new staves
-
-                this.Close();
                 
             } catch(Exception ex)
             {
