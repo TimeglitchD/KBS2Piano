@@ -51,7 +51,7 @@ namespace PianoApp.Views
                 sv.MPc.CreateMusicPiece(selectedPiece);
                 //succesfull at opening xml file.
 
-                sv.DrawStaves();
+                sv.DrawSheet();
                 //draw the new staves
 
                 this.Close();

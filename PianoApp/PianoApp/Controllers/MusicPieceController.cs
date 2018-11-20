@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using MusicXml;
 using MusicXml.Domain;
@@ -36,6 +37,30 @@ namespace PianoApp.Controllers
 
             AddNotesToStaffs();
 
+        }
+
+        public StackPanel DrawSheet()
+        {
+            if(Sheet == null)
+            {
+                Console.WriteLine("No piece found.");
+                return StandardSheet();
+
+            }
+            else
+            {
+                Console.WriteLine("Piece found!");
+                return Sheet.DrawSheet();
+            }
+            
+        }
+
+        public StackPanel StandardSheet()
+        {
+            GreatStaffModel greatStaffModel = new GreatStaffModel();
+            Sheet = new SheetModel();
+            Sheet.GreatStaffModelList.Add(greatStaffModel);
+            return Sheet.DrawSheet();
         }
 
         //Create Great staffs based on amount of measures in the piece
