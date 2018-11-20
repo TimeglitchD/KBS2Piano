@@ -40,7 +40,7 @@ namespace PianoApp
             //mPc.Guide.Start();
             DrawMenu();
             InitializeComponent();
-            
+
             Show();
         }
         private void DrawStaves()
@@ -122,6 +122,7 @@ namespace PianoApp
             myGrid.Children.Add(SelectSheetMusic);
 
             Content = myGrid;
+
         }
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
