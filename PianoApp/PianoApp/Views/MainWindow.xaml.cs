@@ -40,7 +40,6 @@ namespace PianoApp
             //mPc.Guide.Start();
             DrawMenu();
             InitializeComponent();
-            
             Show();
         }
         private void DrawStaves()

@@ -50,7 +50,8 @@ namespace PianoApp.Views
                 this.mPc.CreateMusicPiece(selectedPiece);
                 //succesfull at opening xml file.
                 this.Close();
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);
             }
@@ -61,7 +62,12 @@ namespace PianoApp.Views
         {
             DataGrid dg = sender as DataGrid;
             DataRowView selected = dg.CurrentItem as DataRowView;
+            //update selected location
             selectedPiece = selected.Row["Location"] as String;
+
+            //update textBoxes
+            titleBox.Text = selected.Row["Title"] as String;
+            descBox.Text = selected.Row["Description"] as String;
         }
     }
 }
