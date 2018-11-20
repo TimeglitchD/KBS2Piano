@@ -23,18 +23,22 @@ namespace PianoApp.Views
     {
 
         private DatabaseConnection connection;
-        private MusicPieceController mPc;
+        private StaveView sv;
+
+        //selected piece's file location
         private string selectedPiece;
 
-        public MusicChooseView(MusicPieceController mPc)
+        public MusicChooseView(StaveView sv)
         {
             InitializeComponent();
             connection = new DatabaseConnection();
-            this.mPc = mPc;
+            this.sv = sv;
 
+            //add sheet records to tab
             populateTab(1, SheetMusic);
         }
 
+        //fill tab based on type
         public void populateTab(int Type, DataGrid grid)
         {
             grid.ItemsSource = connection.getSheetMusic(1).Tables["Music"].DefaultView;
@@ -44,18 +48,21 @@ namespace PianoApp.Views
         {
             try
             {
-                this.mPc.CreateMusicPiece(selectedPiece);
+                sv.MPc.CreateMusicPiece(selectedPiece);
+                //succesfull at opening xml file.
 
-                //start guide when music piece is loaded correctly
-                this.mPc.Guide.Start();
+                sv.DrawStaves();
+                //draw the new staves
 
                 this.Close();
+                
             } catch(Exception ex)
             {
                 System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);
             }
         }
 
+        //event updates file path based on selection
         private void DataGrid_SelectionChanged(object sender, RoutedEventArgs e)
         {
             DataGrid dg = sender as DataGrid;
