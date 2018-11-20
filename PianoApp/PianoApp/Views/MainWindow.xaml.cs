@@ -40,7 +40,13 @@ namespace PianoApp
             Show();
 
             metronomeSound sound = new metronomeSound();
-            sound.startMetronome(120, 3, 1);
+            try
+            {
+                sound.startMetronome(80, 3, 1);
+            } catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
         }
 
         private void DrawMenu()
