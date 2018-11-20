@@ -30,6 +30,7 @@ namespace PianoApp.Views
 
         public MusicChooseView(StaveView sv)
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             connection = new DatabaseConnection();
             this.sv = sv;
@@ -46,16 +47,16 @@ namespace PianoApp.Views
 
         private void OnSelectClick(object sender, RoutedEventArgs e)
         {
-            sv.MPc.CreateMusicPiece(selectedPiece);
-            //succesfull at opening xml file.
-
-            sv.DrawStaves();
-            //draw the new staves
-            sv.MPc.Guide.Start();
-            this.Close();
             try
             {
 
+                sv.MPc.CreateMusicPiece(selectedPiece);
+                Console.WriteLine("Piece loaded.");
+                //succesfull at opening xml file.
+
+                sv.DrawMusic();
+                //draw the new staves
+                this.Close();
                 
             } catch(Exception ex)
             {
