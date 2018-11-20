@@ -14,8 +14,13 @@ namespace PianoApp.Controllers
         public NoteType Note { get; set; }
 
         public PianoController Piano;
+
         public Score Score;
 
+        public NoteType ChosenNote = NoteType.Quarter;
+
+        private float _divs;
+    
         private void CheckNoteIntersect()
         {
             foreach (var scorePart in Score.Parts)
@@ -23,6 +28,17 @@ namespace PianoApp.Controllers
                 //Access all measures inside the music piece
                 foreach (var scorePartMeasure in scorePart.Measures)
                 {
+
+                    if (scorePartMeasure.Attributes != null)
+                    {
+                        //get the amount of divisions and beats from current part.
+                        _divs = scorePartMeasure.Attributes.Divisions;
+                    }
+
+                    //Test BPM lentgth tel is 60 sec/ defined bpm
+                    float userDefinedBpm = 60;
+                    float bpm = 60 / userDefinedBpm;
+
                     //Access te elements inside a measure
                     foreach (var measureElement in scorePartMeasure.MeasureElements)
                     {
@@ -32,13 +48,16 @@ namespace PianoApp.Controllers
                             var note = (Note)measureElement.Element;
                             if (note.Pitch != null)
                             {
-                                foreach (var keyModel in Piano.PianoModel.OctaveModelList[note.Pitch.Octave].KeyModelList)
-                                {
-                                    if (note.Pitch.Step.ToString() == keyModel.Step.ToString() && note.Pitch.Alter == keyModel.Alter)
-                                    {
-                                        Console.WriteLine($"Note {note.Pitch.Step}{note.Pitch.Octave}{note.Pitch.Alter} key pressed: {keyModel.Step}{Piano.PianoModel.OctaveModelList[note.Pitch.Octave].Position}{keyModel.Alter}");
-                                    }
-                                }
+
+                                //Get the duration of the current note
+                                var dur = note.Duration;
+
+                                float timeout = bpm * (dur / _divs);
+
+                                //show the amount of time a key has to be active and a note should be colored
+                                Console.WriteLine(timeout);
+
+                                Piano.UpdatePianoKeys();
                             }                           
                         }
                     }

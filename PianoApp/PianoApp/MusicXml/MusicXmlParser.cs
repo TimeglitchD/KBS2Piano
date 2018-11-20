@@ -168,7 +168,11 @@ namespace MusicXml
 			if (accidental != null)
 				note.Accidental = accidental.InnerText;
 
-			note.Lyric = GetLyric(noteNode);
+		    var xPos = noteNode.Attributes["default-x"];
+		    if (xPos != null)
+		        note.XPos = float.Parse(xPos.Value, CultureInfo.InvariantCulture.NumberFormat);
+
+            note.Lyric = GetLyric(noteNode);
 
 			note.Pitch = GetPitch(noteNode);
 

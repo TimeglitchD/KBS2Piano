@@ -23,15 +23,17 @@ namespace PianoApp.Views
     {
 
         private DatabaseConnection connection;
-        private MusicPieceController mPc;
+        private StaveView sv;
+
         //selected piece's file location
         private string selectedPiece;
 
-        public MusicChooseView(MusicPieceController mPc)
+        public MusicChooseView(StaveView sv)
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
             connection = new DatabaseConnection();
-            this.mPc = mPc;
+            this.sv = sv;
 
             //add sheet records to tab
             populateTab(1, SheetMusic);
@@ -47,9 +49,15 @@ namespace PianoApp.Views
         {
             try
             {
-                this.mPc.CreateMusicPiece(selectedPiece);
+
+                sv.MPc.CreateMusicPiece(selectedPiece);
+                Console.WriteLine("Piece loaded.");
                 //succesfull at opening xml file.
+
+                sv.DrawMusic();
+                //draw the new staves
                 this.Close();
+                
             } catch(Exception ex)
             {
                 System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);
@@ -62,6 +70,10 @@ namespace PianoApp.Views
             DataGrid dg = sender as DataGrid;
             DataRowView selected = dg.CurrentItem as DataRowView;
             selectedPiece = selected.Row["Location"] as String;
+
+            //update textBoxes
+            titleBox.Text = selected.Row["Title"] as String;
+            descBox.Text = selected.Row["Description"] as String;
         }
     }
 }

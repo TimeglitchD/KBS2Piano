@@ -34,16 +34,13 @@ namespace PianoApp
         private StackPanel staves = new StackPanel();
         private StackPanel piano = new StackPanel();
 
+        private StaveView sv;
+        
         private Grid myGrid = new Grid();
 
         public MainWindow()
         {
-            PianoController pC = new PianoController();
-
-            mPc = new MusicPieceController(){Piano = pC};
-
-
-            //mPc.Guide.Start();
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             DrawMenu();
             InitializeComponent();
 
@@ -91,6 +88,7 @@ namespace PianoApp
             txt2.FontWeight = FontWeights.Bold;
             Grid.SetRow(txt2, 1);
 
+
             // Add the third text cell to the Grid
             TextBlock txt3 = new TextBlock();
             txt3.Text = "PIANO";
@@ -108,13 +106,20 @@ namespace PianoApp
 
             Content = myGrid;
             pv = new PianoView(myGrid);
+            
+
+            sv = new StaveView(myGrid);
 
         }
+
+
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
-            mCv = new MusicChooseView(mPc);
+            mCv = new MusicChooseView(sv);
             mCv.Show();
         }
+
+
     }
 }

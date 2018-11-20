@@ -118,6 +118,7 @@
     <Compile Include="Views\PianoView.xaml.cs">
       <DependentUpon>PianoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\StaveView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -186,8 +187,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PianoView.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
