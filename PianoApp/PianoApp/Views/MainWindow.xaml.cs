@@ -28,29 +28,19 @@ namespace PianoApp
 
         private MusicChooseView mCv;
         private StaveView sv;
-        private MusicPieceController mPc;
+        
         private StackPanel staves = new StackPanel();
         private Grid myGrid = new Grid();
 
         public MainWindow()
         {
-            PianoController pC = new PianoController();
-
-            mPc = new MusicPieceController(){Piano = pC};
-
-
             //mPc.Guide.Start();
             DrawMenu();
-            DrawStaves();
             InitializeComponent();
             
             Show();
         }
-        private void DrawStaves()
-        {
-            sv = new StaveView(mPc, myGrid);
 
-        }
         private void DrawMenu()
         {
             // Create the Grid
@@ -111,13 +101,15 @@ namespace PianoApp
             myGrid.Children.Add(SelectSheetMusic);
 
             Content = myGrid;
+            sv = new StaveView(myGrid);
+
         }
 
 
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
-            mCv = new MusicChooseView(mPc);
+            mCv = new MusicChooseView(sv);
             mCv.Show();
         }
 

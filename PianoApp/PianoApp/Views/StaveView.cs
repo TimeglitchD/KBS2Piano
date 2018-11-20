@@ -12,14 +12,36 @@ namespace PianoApp.Views
     public class StaveView
     {
         private StackPanel staves = new StackPanel();
+        public MusicPieceController MPc { get;}
 
-        public StaveView(MusicPieceController mPc, Grid myGrid)
+        public StaveView(Grid myGrid)
         {
+            PianoController pC = new PianoController();
+            MPc = new MusicPieceController() { Piano = pC };
             staves = new StackPanel();
-            if (mPc.Sheet != null)
+            DrawStaves();
+
+            //scrollbar
+            ScrollViewer scroll = new ScrollViewer();
+            scroll.Visibility = Visibility.Visible;
+            Grid.SetRow(scroll, 1);
+
+            //zet de stackpanel in de goede plek in het grid
+            Grid.SetRow(staves, 1);
+
+            //koppel de scrollbar aan het stackpanel
+            scroll.Content = staves;
+
+            myGrid.Children.Add(scroll);
+        }
+
+        public void DrawStaves()
+        {
+            staves.Children.Clear();
+            if (MPc.Sheet != null)
             {
                 Console.WriteLine("Piece found!");
-                foreach (var item in mPc.Sheet.GreatStaffModelList)
+                foreach (var item in MPc.Sheet.GreatStaffModelList)
                 {
                     TextBlock tb = new TextBlock();
                     tb.Height = 50;
@@ -37,19 +59,6 @@ namespace PianoApp.Views
                 staves.Children.Add(tb);
                 Console.WriteLine("Stave added");
             }
-
-            //scrollbar
-            ScrollViewer scroll = new ScrollViewer();
-            scroll.Visibility = Visibility.Visible;
-            Grid.SetRow(scroll, 1);
-
-            //zet de stackpanel in de goede plek in het grid
-            Grid.SetRow(staves, 1);
-
-            //koppel de scrollbar aan het stackpanel
-            scroll.Content = staves;
-
-            myGrid.Children.Add(scroll);
         }
 
 

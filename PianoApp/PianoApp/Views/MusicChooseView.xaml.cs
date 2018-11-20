@@ -23,15 +23,16 @@ namespace PianoApp.Views
     {
 
         private DatabaseConnection connection;
-        private MusicPieceController mPc;
+        private StaveView sv;
+
         //selected piece's file location
         private string selectedPiece;
 
-        public MusicChooseView(MusicPieceController mPc)
+        public MusicChooseView(StaveView sv)
         {
             InitializeComponent();
             connection = new DatabaseConnection();
-            this.mPc = mPc;
+            this.sv = sv;
 
             //add sheet records to tab
             populateTab(1, SheetMusic);
@@ -47,8 +48,12 @@ namespace PianoApp.Views
         {
             try
             {
-                this.mPc.CreateMusicPiece(selectedPiece);
+                sv.MPc.CreateMusicPiece(selectedPiece);
                 //succesfull at opening xml file.
+
+                sv.DrawStaves();
+                //draw the new staves
+
                 this.Close();
                 
             } catch(Exception ex)
