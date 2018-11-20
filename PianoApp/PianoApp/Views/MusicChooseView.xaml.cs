@@ -45,7 +45,10 @@ namespace PianoApp.Views
             try
             {
                 this.mPc.CreateMusicPiece(selectedPiece);
-                
+
+                //start guide when music piece is loaded correctly
+                this.mPc.Guide.Start();
+
                 this.Close();
             } catch(Exception ex)
             {
