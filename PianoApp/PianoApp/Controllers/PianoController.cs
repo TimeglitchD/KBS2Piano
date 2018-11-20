@@ -20,6 +20,7 @@ namespace PianoApp.Controllers
                 if (note.Pitch.Step.ToString() == keyModel.Step.ToString() && note.Pitch.Alter == keyModel.Alter)
                 {
                     keyModel.Active = true;
+                    Console.WriteLine(note.XPos);
                     Console.WriteLine($"Note {note.Pitch.Step}{note.Pitch.Octave}{note.Pitch.Alter} key pressed: {keyModel.Step}{PianoModel.OctaveModelList[note.Pitch.Octave].Position}{keyModel.Alter}");
                 }
             }
