@@ -20,17 +20,27 @@ namespace PianoApp.Views
     /// </summary>
     public partial class PianoView : Window
     {
-        private PianoController pC;
-        StackPanel pianoPanel = new StackPanel();
+        private PianoController pC { get; }
+        private StackPanel piano = new StackPanel();
 
-        public PianoView()
+        public PianoView(Grid myGrid)
         {
-            InitializeComponent();
+            PianoController pC = new PianoController();
+            piano = new StackPanel();
+
+
+            //zet stackpanel in de goede plek op het grid
+            Grid.SetRow(piano, 2);
         }
 
-        public void DrawPianoModel()
+        public void DrawPiano()
         {
-            pianoPanel.Children.Add(pC.DrawPianoModel);
+            //clear the view
+            piano.Children.Clear();
+
+            //draw the piano
+            piano = pC.DrawPianoModel();
+            Console.WriteLine("Piano drawn");
         }
     }
 }
