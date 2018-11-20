@@ -16,6 +16,8 @@ namespace PianoApp.Controllers
         public PianoController Piano;
         public Score Score;
 
+        public NoteType ChosenNote = NoteType.Quarter;
+
         private void CheckNoteIntersect()
         {
             foreach (var scorePart in Score.Parts)
@@ -36,6 +38,10 @@ namespace PianoApp.Controllers
                                 {
                                     if (note.Pitch.Step.ToString() == keyModel.Step.ToString() && note.Pitch.Alter == keyModel.Alter)
                                     {
+                                        //Test BPM
+                                        var bpm = 60;
+                                        
+                                        //4 keer 6 in een maat
                                         Console.WriteLine($"Note {note.Pitch.Step}{note.Pitch.Octave}{note.Pitch.Alter} key pressed: {keyModel.Step}{Piano.PianoModel.OctaveModelList[note.Pitch.Octave].Position}{keyModel.Alter}");
                                     }
                                 }
