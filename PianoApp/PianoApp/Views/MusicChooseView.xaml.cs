@@ -53,7 +53,7 @@ namespace PianoApp.Views
                 sv.MPc.CreateMusicPiece(selectedPiece);
                 Console.WriteLine("Piece loaded.");
                 //succesfull at opening xml file.
-
+                sv.MPc.Guide.Start();
                 sv.DrawMusic();
                 //draw the new staves
                 this.Close();
