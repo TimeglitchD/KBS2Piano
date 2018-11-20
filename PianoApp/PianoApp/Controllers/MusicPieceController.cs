@@ -15,7 +15,7 @@ namespace PianoApp.Controllers
         private Score _score;
         public PianoController Piano;
 
-        public GuidesController Guide { get; set; }
+        public GuidesController Guide { get; set; } = new GuidesController();
 
         public SheetModel Sheet { get; set; }
 

@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Drawing;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -17,6 +18,7 @@ using MusicXml;
 using PianoApp.Controllers;
 using PianoApp.Views;
 using PianoApp.Models;
+using PianoApp.Models.Exception;
 
 namespace PianoApp
 {
@@ -32,18 +34,23 @@ namespace PianoApp
         private StackPanel staves = new StackPanel();
         private Grid myGrid = new Grid();
 
+        private TextBox bpmTB = new TextBox();
+        private ComboBox notesCB = new ComboBox();
+
+        int bpmValue = -1;
+
         public MainWindow()
         {
             PianoController pC = new PianoController();
 
-            mPc = new MusicPieceController(){Piano = pC};
+            mPc = new MusicPieceController() { Piano = pC };
 
 
             //mPc.Guide.Start();
             DrawMenu();
             DrawStaves();
             InitializeComponent();
-            
+
             Show();
         }
         private void DrawStaves()
@@ -59,7 +66,7 @@ namespace PianoApp
                 ShowGridLines = true
             };
 
-
+            
             // Define the Rows
             RowDefinition rowDef1 = new RowDefinition();
             RowDefinition rowDef2 = new RowDefinition();
@@ -71,17 +78,16 @@ namespace PianoApp
             myGrid.RowDefinitions.Add(rowDef2);
             myGrid.RowDefinitions.Add(rowDef3);
 
-            // Add the first text cell to the Grid
-            TextBlock txt1 = new TextBlock();
-            txt1.Text = "BUTTONS";
-            txt1.FontSize = 12;
-            txt1.FontWeight = FontWeights.Bold;
-            Grid.SetRow(txt1, 0);
+            // Draw menu items
+            DrawBpmMenu();
 
             // Add the button to the Grid
             Button SelectSheetMusic = new Button();
             SelectSheetMusic.Name = "SelectSheetMusic";
             SelectSheetMusic.Content = "Select sheet music";
+            SelectSheetMusic.VerticalAlignment = VerticalAlignment.Center;
+            SelectSheetMusic.Width = 100;
+            SelectSheetMusic.Height = 80;
             SelectSheetMusic.Click += SelectSheetMusic_Click;
             Grid.SetRow(SelectSheetMusic, 0);
 
@@ -92,8 +98,6 @@ namespace PianoApp
             txt2.FontWeight = FontWeights.Bold;
             Grid.SetRow(txt2, 1);
 
-            
-
 
             // Add the third text cell to the Grid
             TextBlock txt3 = new TextBlock();
@@ -103,24 +107,105 @@ namespace PianoApp
             Grid.SetRow(txt3, 2);
 
 
+            // Start button
+            Button startBtn = new Button();
+            startBtn.FontSize = 25;
+            startBtn.Name = "startBtn";
+            startBtn.Content = "▶";
+            startBtn.Width = 40;
+            startBtn.Height = 40;
+            startBtn.Margin = new Thickness(-500, -5, 0, -40);
+            startBtn.Click += StartBtn_Click;
+            Grid.SetRow(startBtn, 0);
+
             // Add the TextBlock elements to the Grid Children collection
-            myGrid.Children.Add(txt1);
             myGrid.Children.Add(txt2);
             myGrid.Children.Add(txt3);
-            
             myGrid.Children.Add(SelectSheetMusic);
+            myGrid.Children.Add(startBtn);
 
             Content = myGrid;
         }
 
+        private void DrawBpmMenu()
+        {
+            // Add the first text cell to the Grid
+            TextBlock txt1 = new TextBlock();
+            txt1.Text = "BPM =";
+            txt1.FontSize = 35;
+            txt1.Margin = new Thickness(0, 40, 0, -40);
+            txt1.FontWeight = FontWeights.Bold;
+            Grid.SetRow(txt1, 0);
 
+            // Add textbox to set bpm
+            bpmTB = new TextBox();
+            bpmTB.Width = 90;
+            bpmTB.FontSize = 30;
+            bpmTB.Name = "bpmTB";
+            bpmTB.Text = "60";
+            bpmTB.Height = 40;
+            bpmTB.Margin = new Thickness(-940, -5, 0, -40);
+            Grid.SetRow(bpmTB, 0);
+
+            // Add combobox to set bpm to notes
+            notesCB = new ComboBox();
+            notesCB.Width = 130;
+            notesCB.Height = 40;
+            notesCB.FontSize = 20;
+
+            // Add items to combobox
+            notesCB.Items.Add("Hele noot");
+            notesCB.Items.Add("Halve noot");
+            notesCB.Items.Add("Kwart noot");
+
+            // Set first item selected
+            notesCB.SelectedIndex = 0;
+            notesCB.Margin = new Thickness(-700, -5, 0, -40);
+            Grid.SetRow(notesCB, 0);
+
+            // Add items to grid
+            myGrid.Children.Add(txt1);
+            myGrid.Children.Add(bpmTB);
+            myGrid.Children.Add(notesCB);
+        }
+
+        private void StartBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Set value to int
+                bpmValue = int.Parse(bpmTB.Text);
+
+                // Throw custom exception
+                if(bpmValue < 0 || bpmValue > 300) throw new BpmOutOfRangeException($"Bpm waarde ligt niet tussen de 0 en de 300 ({bpmValue})");
+
+                // Set values in GuideController
+                mPc.Guide.Bpm = bpmValue;
+                mPc.Guide.SetNote(notesCB.Text);
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("De ingevoerde waarde moet een getal zijn!");
+            }
+            catch (BpmOutOfRangeException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            Console.WriteLine(mPc.Guide.Bpm);
+            Console.WriteLine(mPc.Guide.Note);
+        }
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
             mCv = new MusicChooseView(mPc);
             mCv.Show();
         }
-
-
+    }
+    public enum NoteType
+    {
+        Quarter,
+        Half,
+        Whole
     }
 }
