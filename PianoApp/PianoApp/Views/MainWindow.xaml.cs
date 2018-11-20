@@ -27,8 +27,10 @@ namespace PianoApp
     {
 
         private MusicChooseView mCv;
+        private StaveView sv;
         private MusicPieceController mPc;
         private StackPanel staves = new StackPanel();
+        private Grid myGrid = new Grid();
 
         public MainWindow()
         {
@@ -40,24 +42,20 @@ namespace PianoApp
 
             //mPc.Guide.Start();
             DrawMenu();
+            DrawStaves();
             InitializeComponent();
             
             Show();
         }
         private void DrawStaves()
         {
-            foreach (var item in mPc.Sheet.GreatStaffModelList)
-            {
-                TextBlock tb = new TextBlock();
-                tb.Height = 50;
-                tb.Text = "great stave";
-                staves.Children.Add(tb);
-            }
+            sv = new StaveView(mPc, myGrid);
+
         }
         private void DrawMenu()
         {
             // Create the Grid
-            Grid myGrid = new Grid
+            myGrid = new Grid
             {
                 ShowGridLines = true
             };
@@ -95,16 +93,7 @@ namespace PianoApp
             txt2.FontWeight = FontWeights.Bold;
             Grid.SetRow(txt2, 1);
 
-            //scrollbar
-            ScrollViewer scroll = new ScrollViewer();
-            scroll.Visibility = Visibility.Visible;
-            Grid.SetRow(scroll, 1);
-
-            //zet de stackpanel in de goede plek in het grid
-            Grid.SetRow(staves, 1);
-
-            //koppel de scrollbar aan het stackpanel
-            scroll.Content = staves;
+            
 
 
             // Add the third text cell to the Grid
@@ -119,15 +108,19 @@ namespace PianoApp
             myGrid.Children.Add(txt1);
             myGrid.Children.Add(txt2);
             myGrid.Children.Add(txt3);
-            myGrid.Children.Add(scroll);
+            
             myGrid.Children.Add(SelectSheetMusic);
 
             Content = myGrid;
         }
 
+
+
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
             mCv.Show();
         }
+
+
     }
 }

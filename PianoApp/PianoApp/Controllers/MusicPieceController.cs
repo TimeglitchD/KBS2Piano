@@ -35,6 +35,7 @@ namespace PianoApp.Controllers
             AddMeasuresToGreatStaffs();
 
             AddNotesToStaffs();
+
         }
 
         //Create Great staffs based on amount of measures in the piece

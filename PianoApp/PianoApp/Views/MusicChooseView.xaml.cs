@@ -45,8 +45,8 @@ namespace PianoApp.Views
             try
             {
                 this.mPc.CreateMusicPiece(selectedPiece);
-                
                 this.Close();
+                
             } catch(Exception ex)
             {
                 System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);
