@@ -12,20 +12,20 @@ namespace PianoApp.Controllers
     {
         public PianoModel PianoModel { get; set; } = new PianoModel();
 
-        public void UpdatePianoKeys(Note note)
+        public void UpdatePianoKeys(Dictionary<Note, float> noteAndTimeoutDictionary)
         {
-            //go over all keys and compare to note when true color the key...
-            foreach (var keyModel in PianoModel.OctaveModelList[note.Pitch.Octave].KeyModelList)
-            {
-                if (note.Pitch.Step.ToString() == keyModel.Step.ToString() && note.Pitch.Alter == keyModel.Alter)
+            //go over all keys and compare to note when true set active true on the corresponding key...
+             foreach (var keyValuePair in noteAndTimeoutDictionary){
+                foreach (var keyModel in PianoModel.OctaveModelList[keyValuePair.Key.Pitch.Octave].KeyModelList)
                 {
-                    keyModel.Active = true;
-                    Console.WriteLine(note.XPos);
-                    Console.WriteLine($"Note {note.Pitch.Step}{note.Pitch.Octave}{note.Pitch.Alter} key pressed: {keyModel.Step}{PianoModel.OctaveModelList[note.Pitch.Octave].Position}{keyModel.Alter}");
-                }
-            }
-
-            Console.WriteLine("Updating piano keys...");
+                    if (keyValuePair.Key.Pitch.Step.ToString() == keyModel.Step.ToString() && keyValuePair.Key.Pitch.Alter == keyModel.Alter)
+                    {
+                        keyModel.Active = true;
+                        Console.WriteLine(keyValuePair.Key.XPos);
+                        Console.WriteLine($"Note {keyValuePair.Key.Pitch.Step}{keyValuePair.Key.Pitch.Octave}{keyValuePair.Key.Pitch.Alter} key pressed: {keyModel.Step}{PianoModel.OctaveModelList[keyValuePair.Key.Pitch.Octave].Position}{keyModel.Alter}");
+                    }
+                }                
+            }            
         }
     }
 }

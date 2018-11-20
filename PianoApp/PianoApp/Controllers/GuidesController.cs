@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -20,9 +21,24 @@ namespace PianoApp.Controllers
         public NoteType ChosenNote = NoteType.Quarter;
 
         private float _divs;
-    
+
+        private Dictionary<Note, float> _activeNoteAndTimeoutDict = new Dictionary<Note, float>();
+        private Stopwatch _stopwatch;
+
+        private System.Threading.Thread guideThread;
+
+        private bool _isPlaying = false;
+
+
         private void CheckNoteIntersect()
-        {
+        {        
+            _isPlaying = true;
+
+            //            while (_isPlaying)
+            //            {                
+            //                
+            //            }    
+
             foreach (var scorePart in Score.Parts)
             {
                 //Access all measures inside the music piece
@@ -48,17 +64,33 @@ namespace PianoApp.Controllers
                             var note = (Note)measureElement.Element;
                             if (note.Pitch != null)
                             {
-
                                 //Get the duration of the current note
                                 var dur = note.Duration;
 
                                 float timeout = bpm * (dur / _divs);
 
-                                //show the amount of time a key has to be active and a note should be colored
-                                Console.WriteLine(timeout);
+                                if (!_activeNoteAndTimeoutDict.ContainsKey(note))
+                                {
+                                    _activeNoteAndTimeoutDict.Add(note, timeout);
+                                }
 
-                                Piano.UpdatePianoKeys(note);
-                            }                           
+                                var tempDict = new Dictionary<Note, float>(_activeNoteAndTimeoutDict);
+
+                                foreach (var keyValuePair in _activeNoteAndTimeoutDict)
+                                {
+                                    //Remove the active note if time is elapsed
+                                    if ((keyValuePair.Value * 1000) > _stopwatch.ElapsedMilliseconds)
+                                    {
+                                        tempDict.Remove(keyValuePair.Key);
+                                    }
+                                }
+
+                                _activeNoteAndTimeoutDict = new Dictionary<Note, float>(tempDict);
+
+                                Piano.UpdatePianoKeys(_activeNoteAndTimeoutDict);
+
+                                Thread.Sleep((int)(timeout * 1000));
+                            }
                         }
                     }
                 }
@@ -67,7 +99,15 @@ namespace PianoApp.Controllers
 
         public bool Start()
         {
-            CheckNoteIntersect();
+            _stopwatch = Stopwatch.StartNew();
+            guideThread = new System.Threading.Thread(new System.Threading.ThreadStart(CheckNoteIntersect));
+            guideThread.Start();
+            return true;
+        }
+
+        public bool Stop()
+        {
+            _isPlaying = false;
             return true;
         }
 
