@@ -37,7 +37,6 @@ namespace PianoApp
             //mPc.Guide.Start();
             DrawMenu();
             InitializeComponent();
-            
             Show();
         }
 

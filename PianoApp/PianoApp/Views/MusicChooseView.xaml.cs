@@ -69,6 +69,10 @@ namespace PianoApp.Views
             DataGrid dg = sender as DataGrid;
             DataRowView selected = dg.CurrentItem as DataRowView;
             selectedPiece = selected.Row["Location"] as String;
+
+            //update textBoxes
+            titleBox.Text = selected.Row["Title"] as String;
+            descBox.Text = selected.Row["Description"] as String;
         }
     }
 }
