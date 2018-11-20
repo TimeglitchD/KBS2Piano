@@ -115,9 +115,7 @@
     <Compile Include="Views\MusicChooseView.xaml.cs">
       <DependentUpon>MusicChooseView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PianoView.xaml.cs">
-      <DependentUpon>PianoView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Views\PianoView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -182,10 +180,6 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Views\MusicChooseView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PianoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

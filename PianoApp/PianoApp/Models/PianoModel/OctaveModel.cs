@@ -77,10 +77,10 @@ namespace PianoApp.Models
 
         public StackPanel DrawOctave()
         {
-            foreach (KeyModel key in KeyModelList)
+            foreach (var key in KeyModelList)
             {
                 octave.Children.Add(key.Draw());
-                Console.WriteLine("Black key added to octave");
+                Console.WriteLine("Key added to octave");
             }
 
             return octave;

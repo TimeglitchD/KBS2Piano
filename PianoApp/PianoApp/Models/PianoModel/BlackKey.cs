@@ -17,6 +17,8 @@ namespace PianoApp.Models
             blackKey.Fill = System.Windows.Media.Brushes.Black;
             blackKey.Width = 25;
             blackKey.Height = 60;
+           
+
             return blackKey;
         }
     }

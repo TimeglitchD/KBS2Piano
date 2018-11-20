@@ -106,9 +106,10 @@ namespace PianoApp
 
             myGrid.Children.Add(SelectSheetMusic);
 
-            Content = myGrid;
             pv = new PianoView(myGrid);
 
+            Content = pv.myGrid;
+            
         }
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
