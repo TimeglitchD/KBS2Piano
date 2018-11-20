@@ -14,5 +14,10 @@ namespace PianoApp.Controllers
         {
             Console.WriteLine("Updating piano keys...");
         }
+
+        public OctaveModel DrawPianoModel()
+        {
+            
+        }
     }
 }

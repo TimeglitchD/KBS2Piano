@@ -72,5 +72,22 @@ namespace PianoApp.Models
             }
             Console.WriteLine($"Octave: {Position} Keys: {KeyModelList.Count}");            
         }
+
+        public KeyModel DrawKeys()
+        {
+            foreach (BlackKey blackKey in KeyModelList)
+            {
+                blackKey.DrawBlackKey();
+                return blackKey;
+            }
+
+            foreach (WhiteKey whiteKey in KeyModelList)
+            {
+                whiteKey.DrawWhiteKey();
+                return whiteKey;
+            }
+
+            return null;
+        }
     }
 }

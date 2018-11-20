@@ -18,6 +18,17 @@ namespace PianoApp.Models
                 OctaveModelList.Add(new OctaveModel(i));
             }
         }
+
+        public OctaveModel DrawOctave()
+        {
+            foreach(OctaveModel octaveModel in OctaveModelList)
+            {
+                octaveModel.DrawKeys();
+                return octaveModel;
+            }
+
+            return null;
+        }
     }
 
     public enum Step
@@ -30,6 +41,7 @@ namespace PianoApp.Models
         F = 5,
         G = 6
     }
+
 
 }
     

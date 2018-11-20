@@ -22,20 +22,14 @@ namespace PianoApp.Views
         public PianoView()
         {
             InitializeComponent();
-            WhiteKeyButton();
         }
 
-        public void WhiteKeyButton()
+        public void DrawPianoModel()
         {
             Button whiteKeyButton = new Button();
             whiteKeyButton.Height = 50;
             whiteKeyButton.Width = 50;
             whiteKeyButton.Content = "Button";
-        }
-
-        public void BlackKeyButton()
-        {
-
         }
     }
 }
