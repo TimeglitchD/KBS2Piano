@@ -15,7 +15,6 @@ namespace PianoApp.Models
         private SoundPlayer metronomeBeat;
 
         private Thread t;
-        private System.Timers.Timer timer;
 
         private int beats;
         private int elapsedBeats = 0;
@@ -52,7 +51,8 @@ namespace PianoApp.Models
 
         public void stopMetronome()
         {
-            timer.Stop();
+            //abort because thread is only playing sound.
+            t.Abort();
         }
 
         private void timer_tick(object sender, EventArgs e)
@@ -77,7 +77,7 @@ namespace PianoApp.Models
         private void metronomeTimer(int interval)
         {
             //Thread.CurrentThread.IsBackground = true;
-            timer = new System.Timers.Timer();
+            System.Timers.Timer timer = new System.Timers.Timer();
             timer.Elapsed += new ElapsedEventHandler(this.timer_tick);
             timer.Interval = interval;
             timer.Start();
