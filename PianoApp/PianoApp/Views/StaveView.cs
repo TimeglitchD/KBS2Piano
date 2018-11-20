@@ -11,15 +11,30 @@ namespace PianoApp.Views
 {
     public class StaveView
     {
-        private StackPanel sheet = new StackPanel();
+        private StackPanel sheet;
         public MusicPieceController MPc { get; }
+        private Grid myGrid;
 
         public StaveView(Grid myGrid)
         {
+            this.myGrid = myGrid;
             PianoController pC = new PianoController();
             MPc = new MusicPieceController() { Piano = pC };
             sheet = new StackPanel();
-            DrawSheet();
+            DrawMusic();
+
+            
+        }
+
+        public void DrawMusic()
+        {
+            //clear the view
+            sheet.Children.Clear();
+            Console.WriteLine("Sheet cleared.");
+
+            //draw in the new sheet
+            sheet = MPc.DrawMusicPiece();
+            Console.WriteLine("Sheet drawn.");
 
             //scrollbar
             ScrollViewer scroll = new ScrollViewer();
@@ -33,16 +48,6 @@ namespace PianoApp.Views
             scroll.Content = sheet;
 
             myGrid.Children.Add(scroll);
-        }
-
-        public void DrawSheet()
-        {
-            //clear the view
-            sheet.Children.Clear();
-
-            //draw in the new sheet
-            sheet = MPc.DrawSheet();
-            Console.WriteLine("Sheet drawn.");
 
         }
 

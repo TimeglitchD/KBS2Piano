@@ -34,6 +34,7 @@ namespace PianoApp
 
         public MainWindow()
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             //mPc.Guide.Start();
             DrawMenu();
             InitializeComponent();

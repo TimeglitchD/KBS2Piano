@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,8 +27,8 @@ namespace PianoApp.Controllers
         {
             _score = MusicXmlParser.GetScore(filename);
 
-            Guide = new GuidesController() {Score = _score, Piano = Piano};  
-            
+            Guide = new GuidesController() { Score = _score, Piano = Piano };
+
             Sheet = new SheetModel();
 
             AddGreatStaffsToSheet();
@@ -39,9 +39,9 @@ namespace PianoApp.Controllers
 
         }
 
-        public StackPanel DrawSheet()
+        public StackPanel DrawMusicPiece()
         {
-            if(Sheet == null)
+            if (Sheet == null)
             {
                 Console.WriteLine("No piece found.");
                 return StandardSheet();
@@ -52,7 +52,7 @@ namespace PianoApp.Controllers
                 Console.WriteLine("Piece found!");
                 return Sheet.DrawSheet();
             }
-            
+
         }
 
         public StackPanel StandardSheet()
@@ -65,7 +65,7 @@ namespace PianoApp.Controllers
 
         //Create Great staffs based on amount of measures in the piece
         private void AddGreatStaffsToSheet()
-        {            
+        {
             double totalWidth = 0;
 
             foreach (var scorePart in _score.Parts)
@@ -115,7 +115,7 @@ namespace PianoApp.Controllers
                         }
                     }
                 }
-                Console.WriteLine($"Amount measures added: {greatStaffModel.MeasureList.Count}");                
+                Console.WriteLine($"Amount measures added: {greatStaffModel.MeasureList.Count}");
             }
             Console.WriteLine("================================");
         }
@@ -131,14 +131,14 @@ namespace PianoApp.Controllers
                     {
                         if (measureElement.Type.Equals(MeasureElementType.Note))
                         {
-                            var note = (Note) measureElement.Element;
+                            var note = (Note)measureElement.Element;
 
                             foreach (var staffModel in greatStaffModel.StaffList)
                             {
                                 if (staffModel.Number == note.Staff)
                                 {
-                                   staffModel.NoteList.Add(note);                                   
-                                }                                
+                                    staffModel.NoteList.Add(note);
+                                }
                             }
                         }
                     }
