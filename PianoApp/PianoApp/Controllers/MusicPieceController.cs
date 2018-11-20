@@ -1,8 +1,9 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using MusicXml;
 using MusicXml.Domain;
@@ -26,8 +27,8 @@ namespace PianoApp.Controllers
         {
             _score = MusicXmlParser.GetScore(filename);
 
-            Guide = new GuidesController() {Score = _score, Piano = Piano};  
-            
+            Guide = new GuidesController() { Score = _score, Piano = Piano };
+
             Sheet = new SheetModel();
 
             AddGreatStaffsToSheet();
@@ -38,9 +39,33 @@ namespace PianoApp.Controllers
 
         }
 
+        public StackPanel DrawMusicPiece()
+        {
+            if (Sheet == null)
+            {
+                Console.WriteLine("No piece found.");
+                return StandardSheet();
+
+            }
+            else
+            {
+                Console.WriteLine("Piece found!");
+                return Sheet.DrawSheet();
+            }
+
+        }
+
+        public StackPanel StandardSheet()
+        {
+            GreatStaffModel greatStaffModel = new GreatStaffModel();
+            Sheet = new SheetModel();
+            Sheet.GreatStaffModelList.Add(greatStaffModel);
+            return Sheet.DrawSheet();
+        }
+
         //Create Great staffs based on amount of measures in the piece
         private void AddGreatStaffsToSheet()
-        {            
+        {
             double totalWidth = 0;
 
             foreach (var scorePart in _score.Parts)
@@ -90,7 +115,7 @@ namespace PianoApp.Controllers
                         }
                     }
                 }
-                Console.WriteLine($"Amount measures added: {greatStaffModel.MeasureList.Count}");                
+                Console.WriteLine($"Amount measures added: {greatStaffModel.MeasureList.Count}");
             }
             Console.WriteLine("================================");
         }
@@ -106,14 +131,14 @@ namespace PianoApp.Controllers
                     {
                         if (measureElement.Type.Equals(MeasureElementType.Note))
                         {
-                            var note = (Note) measureElement.Element;
+                            var note = (Note)measureElement.Element;
 
                             foreach (var staffModel in greatStaffModel.StaffList)
                             {
                                 if (staffModel.Number == note.Staff)
                                 {
-                                   staffModel.NoteList.Add(note);                                   
-                                }                                
+                                    staffModel.NoteList.Add(note);
+                                }
                             }
                         }
                     }
