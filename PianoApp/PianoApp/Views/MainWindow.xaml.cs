@@ -34,6 +34,8 @@ namespace PianoApp
         private StackPanel staves = new StackPanel();
         private Grid myGrid = new Grid();
 
+        private Grid newGrid = new Grid();
+
         private TextBox bpmTB = new TextBox();
         private ComboBox notesCB = new ComboBox();
 
@@ -66,30 +68,65 @@ namespace PianoApp
                 ShowGridLines = true
             };
 
-            
             // Define the Rows
             RowDefinition rowDef1 = new RowDefinition();
             RowDefinition rowDef2 = new RowDefinition();
             RowDefinition rowDef3 = new RowDefinition();
-            rowDef1.Height = new GridLength(1, GridUnitType.Star);
-            rowDef2.Height = new GridLength(5, GridUnitType.Star);
-            rowDef3.Height = new GridLength(2, GridUnitType.Star);
+            rowDef1.Height = new GridLength(50, GridUnitType.Star);
+            rowDef2.Height = new GridLength(500, GridUnitType.Star);
+            rowDef3.Height = new GridLength(200, GridUnitType.Star);
             myGrid.RowDefinitions.Add(rowDef1);
             myGrid.RowDefinitions.Add(rowDef2);
             myGrid.RowDefinitions.Add(rowDef3);
+            Grid.SetRow(newGrid, 0);
 
+            ColumnDefinition colDef1 = new ColumnDefinition();
+            ColumnDefinition colDef2 = new ColumnDefinition();
+            ColumnDefinition colDef3 = new ColumnDefinition();
+            ColumnDefinition colDef4 = new ColumnDefinition();
+            ColumnDefinition colDef5 = new ColumnDefinition();
+            ColumnDefinition colDef6 = new ColumnDefinition();
+            ColumnDefinition colDef7 = new ColumnDefinition();
+            ColumnDefinition colDef8 = new ColumnDefinition();
+            ColumnDefinition colDef9 = new ColumnDefinition();
+
+            colDef1.Width = new GridLength(100, GridUnitType.Star);
+            colDef2.Width = new GridLength(100, GridUnitType.Star);
+            colDef3.Width = new GridLength(100, GridUnitType.Star);
+            colDef4.Width = new GridLength(160, GridUnitType.Star);
+            colDef5.Width = new GridLength(40, GridUnitType.Star);
+            colDef6.Width = new GridLength(100, GridUnitType.Star);
+            colDef7.Width = new GridLength(100, GridUnitType.Star);
+            colDef8.Width = new GridLength(100, GridUnitType.Star);
+            colDef9.Width = new GridLength(500, GridUnitType.Star);
+
+            newGrid.ColumnDefinitions.Add(colDef1);
+            newGrid.ColumnDefinitions.Add(colDef2);
+            newGrid.ColumnDefinitions.Add(colDef3);
+            newGrid.ColumnDefinitions.Add(colDef4);
+            newGrid.ColumnDefinitions.Add(colDef5);
+            newGrid.ColumnDefinitions.Add(colDef6);
+            newGrid.ColumnDefinitions.Add(colDef7);
+            newGrid.ColumnDefinitions.Add(colDef8);
+            newGrid.ColumnDefinitions.Add(colDef9);
+            
             // Draw menu items
             DrawBpmMenu();
 
             // Add the button to the Grid
             Button SelectSheetMusic = new Button();
             SelectSheetMusic.Name = "SelectSheetMusic";
-            SelectSheetMusic.Content = "Select sheet music";
-            SelectSheetMusic.VerticalAlignment = VerticalAlignment.Center;
-            SelectSheetMusic.Width = 100;
-            SelectSheetMusic.Height = 80;
+            SelectSheetMusic.Content = "Selecteer \n muziekstuk";
+
+            // Set height/width based on column height/widht
+            SelectSheetMusic.Width = newGrid.ColumnDefinitions[0].Width.Value - 10;
+            SelectSheetMusic.Height = 40;
+
+            // Center and stick to bottom in column
+            SelectSheetMusic.HorizontalAlignment = HorizontalAlignment.Center;
+            SelectSheetMusic.VerticalAlignment = VerticalAlignment.Bottom;
             SelectSheetMusic.Click += SelectSheetMusic_Click;
-            Grid.SetRow(SelectSheetMusic, 0);
+            Grid.SetColumn(SelectSheetMusic, 0);
 
             // Add the second text cell to the Grid
             TextBlock txt2 = new TextBlock();
@@ -114,15 +151,16 @@ namespace PianoApp
             startBtn.Content = "▶";
             startBtn.Width = 40;
             startBtn.Height = 40;
-            startBtn.Margin = new Thickness(-500, -5, 0, -40);
+            startBtn.HorizontalAlignment = HorizontalAlignment.Center;
             startBtn.Click += StartBtn_Click;
             Grid.SetRow(startBtn, 0);
 
             // Add the TextBlock elements to the Grid Children collection
             myGrid.Children.Add(txt2);
             myGrid.Children.Add(txt3);
-            myGrid.Children.Add(SelectSheetMusic);
+            newGrid.Children.Add(SelectSheetMusic);
             myGrid.Children.Add(startBtn);
+            myGrid.Children.Add(newGrid);
 
             Content = myGrid;
         }
@@ -132,27 +170,32 @@ namespace PianoApp
             // Add the first text cell to the Grid
             TextBlock txt1 = new TextBlock();
             txt1.Text = "BPM =";
-            txt1.FontSize = 35;
-            txt1.Margin = new Thickness(0, 40, 0, -40);
+            txt1.FontSize = 30;
+            txt1.HorizontalAlignment = HorizontalAlignment.Right;
+            txt1.VerticalAlignment = VerticalAlignment.Bottom;
             txt1.FontWeight = FontWeights.Bold;
-            Grid.SetRow(txt1, 0);
+            Grid.SetColumn(txt1, 1);
 
             // Add textbox to set bpm
             bpmTB = new TextBox();
-            bpmTB.Width = 90;
+            bpmTB.Width = newGrid.ColumnDefinitions[1].Width.Value -10;
+            bpmTB.Height = myGrid.RowDefinitions[1].Height.Value;
+            bpmTB.HorizontalAlignment = HorizontalAlignment.Left;
+            bpmTB.VerticalAlignment = VerticalAlignment.Bottom;
             bpmTB.FontSize = 30;
             bpmTB.Name = "bpmTB";
             bpmTB.Text = "60";
             bpmTB.Height = 40;
-            bpmTB.Margin = new Thickness(-940, -5, 0, -40);
-            Grid.SetRow(bpmTB, 0);
+            Grid.SetColumn(bpmTB, 2);
 
             // Add combobox to set bpm to notes
             notesCB = new ComboBox();
-            notesCB.Width = 130;
             notesCB.Height = 40;
             notesCB.FontSize = 20;
 
+            notesCB.Width = newGrid.ColumnDefinitions[3].Width.Value - 20;
+            notesCB.HorizontalAlignment = HorizontalAlignment.Left;
+            notesCB.VerticalAlignment = VerticalAlignment.Bottom;
             // Add items to combobox
             notesCB.Items.Add("Hele noot");
             notesCB.Items.Add("Halve noot");
@@ -160,13 +203,12 @@ namespace PianoApp
 
             // Set first item selected
             notesCB.SelectedIndex = 0;
-            notesCB.Margin = new Thickness(-700, -5, 0, -40);
-            Grid.SetRow(notesCB, 0);
+            Grid.SetColumn(notesCB, 3);
 
             // Add items to grid
-            myGrid.Children.Add(txt1);
-            myGrid.Children.Add(bpmTB);
-            myGrid.Children.Add(notesCB);
+            newGrid.Children.Add(txt1);
+            newGrid.Children.Add(bpmTB);
+            newGrid.Children.Add(notesCB);
         }
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
