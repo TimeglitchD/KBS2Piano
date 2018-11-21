@@ -8,12 +8,13 @@ using NUnit.Framework;
 namespace Goblit.UnitTests
 {
     [TestFixture]
-    public class WorldLoaderTests
+    public class MetronomeTests
     {
 
         [Test]
-        public void test()
+        public void MetronomeWithCountdownTest()
         {
+            //arrange
 
         }
     }
