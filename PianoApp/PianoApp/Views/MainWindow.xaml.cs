@@ -30,7 +30,7 @@ namespace PianoApp
 
         private MusicChooseView mCv;
         private StaveView sv;
-        
+
         private StackPanel staves = new StackPanel();
         private Grid mainGrid = new Grid();
 
@@ -45,13 +45,14 @@ namespace PianoApp
         Button startBtn = new Button();
         Button resetButton = new Button();
 
+
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             PianoController pC = new PianoController();
 
             mPc = new MusicPieceController() { Piano = pC };
-            
+
             //mPc.Guide.Start();
             DrawMenu();
             InitializeComponent();
@@ -81,7 +82,7 @@ namespace PianoApp
             DefineRowMyGrid();
 
             // Define all columns for menuGrid
-            DefineGridRowsMenuGrid();
+            DefineGridColumsMenuGrid();
 
             // Draw menu items
             DrawBpmMenu();
@@ -123,6 +124,7 @@ namespace PianoApp
             startBtn.Name = "startBtn";
             startBtn.Content = "▶";
             startBtn.Width = 40;
+            Console.WriteLine(mPc.Sheet);
             startBtn.Height = 40;
             startBtn.HorizontalAlignment = HorizontalAlignment.Center;
             startBtn.Click += StartBtn_Click;
@@ -138,8 +140,6 @@ namespace PianoApp
 
             Content = mainGrid;
         }
-
-
 
         private void DrawBpmMenu()
         {
@@ -220,11 +220,11 @@ namespace PianoApp
             {
                 // Set value to int
                 bpmValue = int.Parse(bpmTB.Text);
-                
+
                 // Set values in GuideController
                 mPc.Guide.Bpm = bpmValue;
                 mPc.Guide.SetNote(notesCB.Text);
-                
+
             }
             catch (FormatException)
             {
@@ -271,7 +271,7 @@ namespace PianoApp
             Grid.SetRow(menuGrid, 0);
         }
 
-        private void DefineGridRowsMenuGrid()
+        private void DefineGridColumsMenuGrid()
         {
             // Create new Columns
             ColumnDefinition colDef1 = new ColumnDefinition();
