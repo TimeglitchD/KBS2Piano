@@ -67,13 +67,13 @@ namespace PianoApp
             {
                 ShowGridLines = true
             };
-            
+
             // Define all rows for mainGrid
             DefineRowMyGrid();
 
             // Define all columns for menuGrid
             DefineGridRowsMenuGrid();
-            
+
             // Draw menu items
             DrawBpmMenu();
 
@@ -130,7 +130,7 @@ namespace PianoApp
             Content = mainGrid;
         }
 
-       
+
 
         private void DrawBpmMenu()
         {
@@ -145,7 +145,7 @@ namespace PianoApp
 
             // Add textbox to set bpm
             bpmTB = new TextBox();
-            bpmTB.Width = menuGrid.ColumnDefinitions[1].Width.Value -10;
+            bpmTB.Width = menuGrid.ColumnDefinitions[1].Width.Value - 10;
             bpmTB.Height = mainGrid.RowDefinitions[1].Height.Value;
             bpmTB.HorizontalAlignment = HorizontalAlignment.Left;
             bpmTB.VerticalAlignment = VerticalAlignment.Bottom;
@@ -187,7 +187,7 @@ namespace PianoApp
                 bpmValue = int.Parse(bpmTB.Text);
 
                 // Throw custom exception
-                if(bpmValue < 0 || bpmValue > 300) throw new BpmOutOfRangeException($"Bpm waarde ligt niet tussen de 0 en de 300 ({bpmValue})");
+                if (bpmValue < 0 || bpmValue > 300) throw new BpmOutOfRangeException($"Bpm waarde ligt niet tussen de 0 en de 300 ({bpmValue})");
 
                 // Set values in GuideController
                 mPc.Guide.Bpm = bpmValue;
