@@ -192,10 +192,7 @@ namespace PianoApp
             {
                 // Set value to int
                 bpmValue = int.Parse(bpmTB.Text);
-
-                // Throw custom exception
-                if (bpmValue < 0 || bpmValue > 300) throw new BpmOutOfRangeException($"Bpm waarde ligt niet tussen de 0 en de 300 ({bpmValue})");
-
+                
                 // Set values in GuideController
                 mPc.Guide.Bpm = bpmValue;
                 mPc.Guide.SetNote(notesCB.Text);
@@ -211,6 +208,11 @@ namespace PianoApp
 
             Console.WriteLine(mPc.Guide.Bpm);
             Console.WriteLine(mPc.Guide.Note);
+        }
+
+        public void setBpm()
+        {
+
         }
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)

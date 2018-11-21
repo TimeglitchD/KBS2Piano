@@ -12,15 +12,15 @@ namespace PianoAppTests
         public void MetronomeWithCountdown_Stop_StartWithoutCountDown()
         {
             //arrange
-            var sound = new metronomeSound();
+            //var sound = new metronomeSound();
 
-            //act
-            sound.startMetronome(50, 2, 1);
-            sound.stopMetronome();
-            sound.startMetronome(50, 2);
+            ////act
+            //sound.startMetronome(50, 2, 1);
+            //sound.stopMetronome();
+            //sound.startMetronome(50, 2);
 
-            //Assert
-            Assert.IsFalse(sound.getCountdown());
+            ////Assert
+            //Assert.IsFalse(sound.getCountdown());
         }
     }
 }
