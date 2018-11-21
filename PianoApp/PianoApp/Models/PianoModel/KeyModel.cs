@@ -10,5 +10,6 @@ namespace PianoApp.Models
     {
         public int Alter { get; set; } = 0;
         public Step Step { get; set; }
+        public bool Active { get; set; } = false;
     }
 }

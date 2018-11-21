@@ -13,7 +13,9 @@ namespace MusicXml.Domain
 			IsChordTone = false;
 		}
 
-		public string Type { get; internal set; }
+	    public float XPos { get; internal set; }
+
+	    public string Type { get; internal set; }
 		
 		public int Voice { get; internal set; }
 
