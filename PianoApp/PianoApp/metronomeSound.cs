@@ -45,13 +45,10 @@ namespace PianoApp.Models
         //start metronome with specified amount of countdown measures
         public void startMetronome(int bpm, int beats, int countDownAmount)
         {
-            int interval = (int)(1000.0 / (bpm / 60.0));
-            this.beats = beats;
             this.countDown = true;
             this.countDownAmount = countDownAmount;
             elapsedCountdown = 0;
-            t = new Thread(() => metronomeTimer(interval));
-            t.Start();
+            startMetronome(bpm, beats);
         }
 
         //start metronome without countdown
