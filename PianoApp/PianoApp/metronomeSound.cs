@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Timers;
 
-namespace PianoApp.Models
+namespace PianoApp
 {
-    class metronomeSound
+    public class metronomeSound
     {
         private SoundPlayer metronome;
         private SoundPlayer metronomeBeat;
@@ -23,7 +23,7 @@ namespace PianoApp.Models
         private bool countDown = false;
         private int countDownAmount;
         private int elapsedCountdown;
-
+        
         public metronomeSound()
         {
             //playsync silent sound to prevent soundplayer delay
@@ -120,6 +120,11 @@ namespace PianoApp.Models
             {
                 metronome.Play();
             }
+        }
+
+        public bool getCountdown()
+        {
+            return countDown;
         }
     }
 }
