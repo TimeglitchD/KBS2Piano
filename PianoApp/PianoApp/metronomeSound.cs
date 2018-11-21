@@ -63,6 +63,7 @@ namespace PianoApp.Models
         //force stop metronome
         public void stopMetronome()
         {
+            this.countDown = false;
             //abort because thread is only playing sound.
             t.Abort();
         }
