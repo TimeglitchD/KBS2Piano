@@ -14,7 +14,7 @@ namespace PianoApp.Models
         public List<StaffModel> StaffList { get; set; } = new List<StaffModel>();
         public List<Measure> MeasureList { get; set; } = new List<Measure>();
         private StackPanel GreatStaff = new StackPanel();
-        private Grid GreatStaffGrid = new Grid();
+        public Grid GreatStaffGrid { get; } = new Grid();
 
         public GreatStaffModel()
         {
