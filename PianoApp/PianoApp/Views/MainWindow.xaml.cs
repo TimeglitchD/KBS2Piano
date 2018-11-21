@@ -40,6 +40,7 @@ namespace PianoApp
         private ComboBox notesCB = new ComboBox();
 
         int bpmValue = -1;
+        private MusicPieceController mPc;
 
         public MainWindow()
         {
@@ -56,7 +57,7 @@ namespace PianoApp
         }
         private void DrawStaves()
         {
-            sv = new StaveView(mPc, mainGrid);
+            sv = new StaveView(mainGrid);
 
             //metronomeSound sound = new metronomeSound();
             //sound.startMetronome(80, 3, 1);
@@ -157,8 +158,8 @@ namespace PianoApp
             bpmTB.Height = 40;
             Grid.SetColumn(bpmTB, 2);
 
-            Content = myGrid;
-            sv = new StaveView(myGrid);
+            Content = mainGrid;
+            sv = new StaveView(mainGrid);
 
 
             // Add combobox to set bpm to notes
