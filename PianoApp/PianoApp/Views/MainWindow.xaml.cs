@@ -113,14 +113,10 @@ namespace PianoApp
 
         }
 
-
-
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
             mCv = new MusicChooseView(sv);
             mCv.Show();
         }
-
-
     }
 }
