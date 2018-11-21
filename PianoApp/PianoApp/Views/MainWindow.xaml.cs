@@ -32,9 +32,9 @@ namespace PianoApp
         private StaveView sv;
         private MusicPieceController mPc;
         private StackPanel staves = new StackPanel();
-        private Grid myGrid = new Grid();
+        private Grid mainGrid = new Grid();
 
-        private Grid newGrid = new Grid();
+        private Grid menuGrid = new Grid();
 
         private TextBox bpmTB = new TextBox();
         private ComboBox notesCB = new ComboBox();
@@ -57,58 +57,22 @@ namespace PianoApp
         }
         private void DrawStaves()
         {
-            sv = new StaveView(mPc, myGrid);
+            sv = new StaveView(mPc, mainGrid);
 
         }
         private void DrawMenu()
         {
             // Create the Grid
-            myGrid = new Grid
+            mainGrid = new Grid
             {
                 ShowGridLines = true
             };
+            
+            // Define all rows for mainGrid
+            DefineRowMyGrid();
 
-            // Define the Rows
-            RowDefinition rowDef1 = new RowDefinition();
-            RowDefinition rowDef2 = new RowDefinition();
-            RowDefinition rowDef3 = new RowDefinition();
-            rowDef1.Height = new GridLength(50, GridUnitType.Star);
-            rowDef2.Height = new GridLength(500, GridUnitType.Star);
-            rowDef3.Height = new GridLength(200, GridUnitType.Star);
-            myGrid.RowDefinitions.Add(rowDef1);
-            myGrid.RowDefinitions.Add(rowDef2);
-            myGrid.RowDefinitions.Add(rowDef3);
-            Grid.SetRow(newGrid, 0);
-
-            ColumnDefinition colDef1 = new ColumnDefinition();
-            ColumnDefinition colDef2 = new ColumnDefinition();
-            ColumnDefinition colDef3 = new ColumnDefinition();
-            ColumnDefinition colDef4 = new ColumnDefinition();
-            ColumnDefinition colDef5 = new ColumnDefinition();
-            ColumnDefinition colDef6 = new ColumnDefinition();
-            ColumnDefinition colDef7 = new ColumnDefinition();
-            ColumnDefinition colDef8 = new ColumnDefinition();
-            ColumnDefinition colDef9 = new ColumnDefinition();
-
-            colDef1.Width = new GridLength(100, GridUnitType.Star);
-            colDef2.Width = new GridLength(100, GridUnitType.Star);
-            colDef3.Width = new GridLength(100, GridUnitType.Star);
-            colDef4.Width = new GridLength(160, GridUnitType.Star);
-            colDef5.Width = new GridLength(40, GridUnitType.Star);
-            colDef6.Width = new GridLength(100, GridUnitType.Star);
-            colDef7.Width = new GridLength(100, GridUnitType.Star);
-            colDef8.Width = new GridLength(100, GridUnitType.Star);
-            colDef9.Width = new GridLength(500, GridUnitType.Star);
-
-            newGrid.ColumnDefinitions.Add(colDef1);
-            newGrid.ColumnDefinitions.Add(colDef2);
-            newGrid.ColumnDefinitions.Add(colDef3);
-            newGrid.ColumnDefinitions.Add(colDef4);
-            newGrid.ColumnDefinitions.Add(colDef5);
-            newGrid.ColumnDefinitions.Add(colDef6);
-            newGrid.ColumnDefinitions.Add(colDef7);
-            newGrid.ColumnDefinitions.Add(colDef8);
-            newGrid.ColumnDefinitions.Add(colDef9);
+            // Define all columns for menuGrid
+            DefineGridRowsMenuGrid();
             
             // Draw menu items
             DrawBpmMenu();
@@ -119,7 +83,7 @@ namespace PianoApp
             SelectSheetMusic.Content = "Selecteer \n muziekstuk";
 
             // Set height/width based on column height/widht
-            SelectSheetMusic.Width = newGrid.ColumnDefinitions[0].Width.Value - 10;
+            SelectSheetMusic.Width = menuGrid.ColumnDefinitions[0].Width.Value - 10;
             SelectSheetMusic.Height = 40;
 
             // Center and stick to bottom in column
@@ -156,14 +120,17 @@ namespace PianoApp
             Grid.SetRow(startBtn, 0);
 
             // Add the TextBlock elements to the Grid Children collection
-            myGrid.Children.Add(txt2);
-            myGrid.Children.Add(txt3);
-            newGrid.Children.Add(SelectSheetMusic);
-            myGrid.Children.Add(startBtn);
-            myGrid.Children.Add(newGrid);
+            mainGrid.Children.Add(txt2);
+            mainGrid.Children.Add(txt3);
+            mainGrid.Children.Add(startBtn);
+            mainGrid.Children.Add(menuGrid);
 
-            Content = myGrid;
+            menuGrid.Children.Add(SelectSheetMusic);
+
+            Content = mainGrid;
         }
+
+       
 
         private void DrawBpmMenu()
         {
@@ -178,8 +145,8 @@ namespace PianoApp
 
             // Add textbox to set bpm
             bpmTB = new TextBox();
-            bpmTB.Width = newGrid.ColumnDefinitions[1].Width.Value -10;
-            bpmTB.Height = myGrid.RowDefinitions[1].Height.Value;
+            bpmTB.Width = menuGrid.ColumnDefinitions[1].Width.Value -10;
+            bpmTB.Height = mainGrid.RowDefinitions[1].Height.Value;
             bpmTB.HorizontalAlignment = HorizontalAlignment.Left;
             bpmTB.VerticalAlignment = VerticalAlignment.Bottom;
             bpmTB.FontSize = 30;
@@ -193,9 +160,10 @@ namespace PianoApp
             notesCB.Height = 40;
             notesCB.FontSize = 20;
 
-            notesCB.Width = newGrid.ColumnDefinitions[3].Width.Value - 20;
+            notesCB.Width = menuGrid.ColumnDefinitions[3].Width.Value - 20;
             notesCB.HorizontalAlignment = HorizontalAlignment.Left;
             notesCB.VerticalAlignment = VerticalAlignment.Bottom;
+
             // Add items to combobox
             notesCB.Items.Add("Hele noot");
             notesCB.Items.Add("Halve noot");
@@ -206,9 +174,9 @@ namespace PianoApp
             Grid.SetColumn(notesCB, 3);
 
             // Add items to grid
-            newGrid.Children.Add(txt1);
-            newGrid.Children.Add(bpmTB);
-            newGrid.Children.Add(notesCB);
+            menuGrid.Children.Add(txt1);
+            menuGrid.Children.Add(bpmTB);
+            menuGrid.Children.Add(notesCB);
         }
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
@@ -242,6 +210,63 @@ namespace PianoApp
         {
             mCv = new MusicChooseView(mPc);
             mCv.Show();
+        }
+
+        private void DefineRowMyGrid()
+        {
+            // Define new row
+            RowDefinition rowDef1 = new RowDefinition();
+            RowDefinition rowDef2 = new RowDefinition();
+            RowDefinition rowDef3 = new RowDefinition();
+
+            // Add lenght to rows
+            rowDef1.Height = new GridLength(50, GridUnitType.Star);
+            rowDef2.Height = new GridLength(500, GridUnitType.Star);
+            rowDef3.Height = new GridLength(200, GridUnitType.Star);
+
+            // Add row to mainGrid
+            mainGrid.RowDefinitions.Add(rowDef1);
+            mainGrid.RowDefinitions.Add(rowDef2);
+            mainGrid.RowDefinitions.Add(rowDef3);
+
+            // Add menuGrid to mainGrid
+            Grid.SetRow(menuGrid, 0);
+        }
+
+        private void DefineGridRowsMenuGrid()
+        {
+            // Create new Columns
+            ColumnDefinition colDef1 = new ColumnDefinition();
+            ColumnDefinition colDef2 = new ColumnDefinition();
+            ColumnDefinition colDef3 = new ColumnDefinition();
+            ColumnDefinition colDef4 = new ColumnDefinition();
+            ColumnDefinition colDef5 = new ColumnDefinition();
+            ColumnDefinition colDef6 = new ColumnDefinition();
+            ColumnDefinition colDef7 = new ColumnDefinition();
+            ColumnDefinition colDef8 = new ColumnDefinition();
+            ColumnDefinition colDef9 = new ColumnDefinition();
+
+            // Set Lenght of the columns
+            colDef1.Width = new GridLength(100, GridUnitType.Star);
+            colDef2.Width = new GridLength(100, GridUnitType.Star);
+            colDef3.Width = new GridLength(100, GridUnitType.Star);
+            colDef4.Width = new GridLength(160, GridUnitType.Star);
+            colDef5.Width = new GridLength(40, GridUnitType.Star);
+            colDef6.Width = new GridLength(100, GridUnitType.Star);
+            colDef7.Width = new GridLength(100, GridUnitType.Star);
+            colDef8.Width = new GridLength(100, GridUnitType.Star);
+            colDef9.Width = new GridLength(500, GridUnitType.Star);
+
+            // Add columns to menuGrid
+            menuGrid.ColumnDefinitions.Add(colDef1);
+            menuGrid.ColumnDefinitions.Add(colDef2);
+            menuGrid.ColumnDefinitions.Add(colDef3);
+            menuGrid.ColumnDefinitions.Add(colDef4);
+            menuGrid.ColumnDefinitions.Add(colDef5);
+            menuGrid.ColumnDefinitions.Add(colDef6);
+            menuGrid.ColumnDefinitions.Add(colDef7);
+            menuGrid.ColumnDefinitions.Add(colDef8);
+            menuGrid.ColumnDefinitions.Add(colDef9);
         }
     }
     public enum NoteType
