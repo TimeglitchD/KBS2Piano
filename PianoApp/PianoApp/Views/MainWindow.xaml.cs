@@ -234,7 +234,7 @@ namespace PianoApp
             {
                 MessageBox.Show(ex.Message);
             }
-
+            mCv.Start();
             Console.WriteLine(mPc.Guide.Bpm);
             Console.WriteLine(mPc.Guide.Note);
 

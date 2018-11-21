@@ -53,7 +53,6 @@ namespace PianoApp.Views
                 sv.MPc.CreateMusicPiece(selectedPiece);
                 Console.WriteLine("Piece loaded.");
                 //succesfull at opening xml file.
-                sv.MPc.Guide.Start();
                 sv.DrawMusic();
                 //draw the new staves
                 this.Close();
@@ -62,6 +61,11 @@ namespace PianoApp.Views
             {
                 System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);
             }
+        }
+
+        public void Start()
+        {
+            sv.MPc.Guide.Start();
         }
 
         //event updates file path based on selection
