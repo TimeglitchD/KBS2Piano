@@ -8,7 +8,7 @@ using System.Data;
 
 namespace PianoApp
 {
-    class DatabaseConnection
+    public class DatabaseConnection
     {
         private string connectionString;
 
@@ -55,7 +55,7 @@ namespace PianoApp
 
 
         //method for adding music record to database. Unused
-        public void addMusic(string title, string description, string date, string type, string location)
+        public bool addMusic(string title, string description, string date, string type, string location)
         {
             try
             {
@@ -67,10 +67,11 @@ namespace PianoApp
                 command.Append("'" + location + "' )");
 
                 this.ExcecuteCommandNoOutput(command.ToString());
-
+                return true;
             } catch (SqlException ex)
             {
-                System.Windows.MessageBox.Show("Database error insert" + ex.Message);
+                System.Windows.MessageBox.Show(ex.Message);
+                return false;
             }
         }
     }
