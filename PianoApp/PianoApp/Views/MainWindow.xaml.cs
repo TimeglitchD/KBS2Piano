@@ -59,8 +59,8 @@ namespace PianoApp
         {
             sv = new StaveView(mainGrid);
 
-            //metronomeSound sound = new metronomeSound();
-            //sound.startMetronome(80, 3, 1);
+            metronomeSound sound = new metronomeSound();
+            sound.startMetronome(120, 4, 1);
         }
 
         private void DrawMenu()
@@ -209,6 +209,7 @@ namespace PianoApp
             Console.WriteLine(mPc.Guide.Bpm);
             Console.WriteLine(mPc.Guide.Note);
         }
+
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {

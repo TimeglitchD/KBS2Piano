@@ -6,14 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Timers;
+using NAudio.Wave;
+using System.IO;
 
 namespace PianoApp
 {
     public class metronomeSound
     {
-        private SoundPlayer metronome;
-        private SoundPlayer metronomeBeat;
-        private SoundPlayer empty;
+        private DirectSoundOut outputDeviceMetronome;
+        private DirectSoundOut outputDeviceMetronomeBeat;
+
+        private AudioFileReader metronomeSoundFile;
+        private AudioFileReader metronomeBeatSoundFile;
 
         private Thread t;
 
@@ -21,25 +25,22 @@ namespace PianoApp
         private int elapsedBeats = 0;
 
         private bool countDown = false;
+        private bool countDownOnly = false;
         private int countDownAmount;
         private int elapsedCountdown;
-        
+       
         public metronomeSound()
         {
-            //playsync silent sound to prevent soundplayer delay
-            empty = new SoundPlayer();
-            empty.SoundLocation = System.AppDomain.CurrentDomain.BaseDirectory + @"/sounds/empty.wav";
-            empty.PlaySync();
+            metronomeSoundFile = new AudioFileReader(System.AppDomain.CurrentDomain.BaseDirectory + @"/sounds/metronome.wav");
+            metronomeBeatSoundFile = new AudioFileReader(System.AppDomain.CurrentDomain.BaseDirectory + @"/sounds/metronomeBeat.wav");
 
-            //load actual sounds
-            metronome = new SoundPlayer();
-            metronome.SoundLocation = System.AppDomain.CurrentDomain.BaseDirectory + @"/sounds/metronome.wav";
-            metronome.Load();
+            Guid guid = Guid.Empty;
+            outputDeviceMetronomeBeat = new DirectSoundOut(guid, 50);
+            outputDeviceMetronome = new DirectSoundOut(guid, 50);
+            
+            outputDeviceMetronome.Init(metronomeSoundFile);
+            outputDeviceMetronomeBeat.Init(metronomeBeatSoundFile);
 
-            //load beat sound
-            metronomeBeat = new SoundPlayer();
-            metronomeBeat.SoundLocation = System.AppDomain.CurrentDomain.BaseDirectory + @"/sounds/metronomeBeat.wav";
-            metronomeBeat.Load();
         }
 
         //start metronome with specified amount of countdown measures
@@ -60,6 +61,12 @@ namespace PianoApp
             t.Start();
         }
 
+        public void startMetronomeCountDownOnly(int bpm, int beats, int countDownAmount)
+        {
+            countDownOnly = true;
+            startMetronome(bpm, beats, countDownAmount);
+        }
+
         //force stop metronome
         public void stopMetronome()
         {
@@ -71,6 +78,7 @@ namespace PianoApp
         //event that fires on every beat
         private void timer_tick(object sender, EventArgs e)
         {
+
             if(countDown && elapsedBeats < beats * countDownAmount)
             {
                 this.playMetronome(true);
@@ -114,11 +122,23 @@ namespace PianoApp
         {
             if (isBeat)
             {
-                metronomeBeat.Play();
+                new Thread(() =>
+                {
+                    Thread.CurrentThread.IsBackground = true;
+                    metronomeBeatSoundFile.CurrentTime = System.TimeSpan.Zero;
+                    outputDeviceMetronomeBeat.Play();
+                }).Start();
+                
             }
             else
             {
-                metronome.Play();
+                 new Thread(() =>
+                  {
+                      Thread.CurrentThread.IsBackground = true;
+                      metronomeSoundFile.CurrentTime = System.TimeSpan.Zero;
+                      outputDeviceMetronome.Play();
+                  }).Start();
+                
             }
         }
 
