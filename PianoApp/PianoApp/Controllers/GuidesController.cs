@@ -104,6 +104,7 @@ namespace PianoApp.Controllers
         {
             _stopwatch = Stopwatch.StartNew();
             guideThread = new System.Threading.Thread(new System.Threading.ThreadStart(CheckNoteIntersect));
+            guideThread.IsBackground = true;
             guideThread.Start();
             return true;
         }

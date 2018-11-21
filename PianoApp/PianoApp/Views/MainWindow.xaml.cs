@@ -31,6 +31,7 @@ namespace PianoApp
         private MusicChooseView mCv;
         private StaveView sv;
         private MusicPieceController mPc;
+        private NoteView nv;
         
         private StackPanel staves = new StackPanel();
         private Grid myGrid = new Grid();
@@ -125,7 +126,13 @@ namespace PianoApp
             myGrid.Children.Add(startBtn);
 
             Content = myGrid;
+
+            //Create the staves
             sv = new StaveView(myGrid);
+
+            //Draw the notes
+            nv = new NoteView(sv);
+            nv.DrawNotes();
 
         }
 
@@ -200,7 +207,7 @@ namespace PianoApp
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
-            mCv = new MusicChooseView(sv);
+            mCv = new MusicChooseView(sv, nv);
             mCv.Show();
         }
     }

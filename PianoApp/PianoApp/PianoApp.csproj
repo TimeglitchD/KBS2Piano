@@ -120,6 +120,7 @@
     <Compile Include="Views\MusicChooseView.xaml.cs">
       <DependentUpon>MusicChooseView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\NoteView.cs" />
     <Compile Include="Views\StaveView.cs" />
   </ItemGroup>
   <ItemGroup>
