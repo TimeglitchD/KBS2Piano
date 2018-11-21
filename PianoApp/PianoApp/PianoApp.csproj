@@ -71,7 +71,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DatabaseConnection.cs" />
+<<<<<<< HEAD
     <Compile Include="metronomeSound.cs" />
+=======
+    <Compile Include="Models\Exception\BpmOutOfRangeException.cs" />
+>>>>>>> setBpm
     <Compile Include="MusicDatabaseDataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

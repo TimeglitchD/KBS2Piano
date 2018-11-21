@@ -5,12 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using MusicXml.Domain;
 
 namespace PianoApp.Controllers
 {
     public class GuidesController
     {
+        public int _bpm;
+
         public int Bpm { get; set; }
         public NoteType Note { get; set; }
 
@@ -84,7 +87,6 @@ namespace PianoApp.Controllers
                                         tempDict.Remove(keyValuePair.Key);
                                     }
                                 }
-
                                 _activeNoteAndTimeoutDict = new Dictionary<Note, float>(tempDict);
 
                                 Piano.UpdatePianoKeys(_activeNoteAndTimeoutDict);
@@ -109,6 +111,22 @@ namespace PianoApp.Controllers
         {
             _isPlaying = false;
             return true;
+        }
+
+        public void SetNote(string note)
+        {
+            if (note == "Hele noot")
+            {
+                Note = NoteType.Whole;
+            }
+            else if (note == "Halve noot")
+            {
+                Note = NoteType.Half;
+            }
+            else
+            {
+                Note = NoteType.Quarter;
+            }
         }
 
     }
