@@ -210,11 +210,6 @@ namespace PianoApp
             Console.WriteLine(mPc.Guide.Note);
         }
 
-        public void setBpm()
-        {
-
-        }
-
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
             mCv = new MusicChooseView(sv);
