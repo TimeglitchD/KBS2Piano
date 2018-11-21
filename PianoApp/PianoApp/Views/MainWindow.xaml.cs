@@ -40,8 +40,8 @@ namespace PianoApp
             InitializeComponent();
             Show();
 
-            //metronomeSound sound = new metronomeSound();
-            //sound.startMetronome(80, 3, 1);
+            metronomeSound sound = new metronomeSound();
+            sound.startMetronome(120, 4, 1);
         }
 
         private void DrawMenu()
@@ -107,6 +107,7 @@ namespace PianoApp
             sv = new StaveView(myGrid);
 
         }
+
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
