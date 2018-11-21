@@ -61,11 +61,18 @@ namespace PianoApp
         }
 
         //force stop metronome
-        public void stopMetronome()
+        public bool stopMetronome()
         {
-            this.countDown = false;
             //abort because thread is only playing sound.
-            t.Abort();
+            try
+            {
+                t.Abort();
+                return true;
+            } catch(Exception)
+            {
+                return false;
+            }
+
         }
 
         //event that fires on every beat
