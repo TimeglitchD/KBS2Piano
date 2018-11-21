@@ -42,6 +42,9 @@ namespace PianoApp
         int bpmValue = -1;
         private MusicPieceController mPc;
 
+        Button startBtn = new Button();
+        Button resetButton = new Button();
+
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -70,6 +73,9 @@ namespace PianoApp
             {
                 ShowGridLines = true
             };
+
+            // show menuGrid lines
+            //menuGrid.ShowGridLines = true;
 
             // Define all rows for mainGrid
             DefineRowMyGrid();
@@ -112,7 +118,7 @@ namespace PianoApp
 
 
             // Start button
-            Button startBtn = new Button();
+            startBtn = new Button();
             startBtn.FontSize = 25;
             startBtn.Name = "startBtn";
             startBtn.Content = "▶";
@@ -180,10 +186,32 @@ namespace PianoApp
             notesCB.SelectedIndex = 0;
             Grid.SetColumn(notesCB, 3);
 
+            // Create resetbutton if isPlaying
+            resetButton = new Button();
+            resetButton.FontSize = 25;
+            resetButton.Name = "resetBtn";
+            resetButton.Content = "◼";
+            resetButton.Width = 40;
+            resetButton.Height = 40;
+            resetButton.HorizontalAlignment = HorizontalAlignment.Right;
+            resetButton.Click += ResetButton_Click;
+            Grid.SetColumn(resetButton, 5);
+
             // Add items to grid
             menuGrid.Children.Add(txt1);
             menuGrid.Children.Add(bpmTB);
             menuGrid.Children.Add(notesCB);
+            menuGrid.Children.Add(resetButton);
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Muziekstuk is gestopt....!");
+
+            // Set buttons enabled or readonly false if resetting music
+            bpmTB.IsReadOnly = false;
+            bpmTB.Background = Brushes.White;
+            notesCB.IsEnabled = true;
         }
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
@@ -196,6 +224,7 @@ namespace PianoApp
                 // Set values in GuideController
                 mPc.Guide.Bpm = bpmValue;
                 mPc.Guide.SetNote(notesCB.Text);
+                
             }
             catch (FormatException)
             {
@@ -208,6 +237,11 @@ namespace PianoApp
 
             Console.WriteLine(mPc.Guide.Bpm);
             Console.WriteLine(mPc.Guide.Note);
+
+            // Set buttons enabled false or readonly if playing
+            notesCB.IsEnabled = false;
+            bpmTB.IsReadOnly = true;
+            bpmTB.Background = Brushes.LightGray;
         }
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
