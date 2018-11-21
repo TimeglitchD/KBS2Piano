@@ -63,8 +63,8 @@ namespace PianoApp
         {
             sv = new StaveView(mainGrid);
 
-            //metronomeSound sound = new metronomeSound();
-            //sound.startMetronome(80, 3, 1);
+            metronomeSound sound = new metronomeSound();
+            sound.startMetronome(120, 4, 1);
         }
 
         private void DrawMenu()
@@ -243,6 +243,7 @@ namespace PianoApp
             bpmTB.IsReadOnly = true;
             bpmTB.Background = Brushes.LightGray;
         }
+
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
