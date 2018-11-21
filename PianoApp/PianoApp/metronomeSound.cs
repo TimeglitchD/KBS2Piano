@@ -9,7 +9,7 @@ using System.Timers;
 
 namespace PianoApp.Models
 {
-    class metronomeSound
+    public class metronomeSound
     {
         private SoundPlayer metronome;
         private SoundPlayer metronomeBeat;

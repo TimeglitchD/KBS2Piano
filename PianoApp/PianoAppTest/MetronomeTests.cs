@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using NUnit.Framework;
+using PianoApp;
 
 namespace Goblit.UnitTests
 {
@@ -15,7 +16,7 @@ namespace Goblit.UnitTests
         public void MetronomeWithCountdownTest()
         {
             //arrange
-
+            
         }
     }
 }
