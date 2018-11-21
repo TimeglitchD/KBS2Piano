@@ -7,12 +7,21 @@ using System.Windows.Shapes;
 
 namespace PianoApp.Models
 {
-    abstract public class KeyModel
+    public class KeyModel
     {
         public int Alter { get; set; } = 0;
         public Step Step { get; set; }
         public bool Active { get; set; } = false;
+        public string type { get; set; }
 
-        abstract public Rectangle Draw();
+       public virtual Rectangle Draw(float width)
+        {
+            return null;
+        }
+       public virtual void Color()
+        {
+
+        }
     }
 }
+

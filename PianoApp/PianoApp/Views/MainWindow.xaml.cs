@@ -43,7 +43,6 @@ namespace PianoApp
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             DrawMenu();
             InitializeComponent();
-
             Show();
         }
 
@@ -105,12 +104,10 @@ namespace PianoApp
             myGrid.Children.Add(SelectSheetMusic);
 
             pv = new PianoView(myGrid);
-            
-
             sv = new StaveView(myGrid);
-
             Content = pv.myGrid;
-            
+                       
+
         }
 
 

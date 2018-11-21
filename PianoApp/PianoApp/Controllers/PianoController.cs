@@ -17,7 +17,7 @@ namespace PianoApp.Controllers
             Console.WriteLine("Updating piano keys...");
         }
 
-        public StackPanel DrawPiano()
+        public DockPanel DrawPianoController()
         {
             if(PianoModel == null)
             {
@@ -27,7 +27,7 @@ namespace PianoApp.Controllers
             else
             {
                 Console.WriteLine("Piano found");
-                return PianoModel.DrawPiano();
+                return PianoModel.DrawPianoModel();
             }
         }
     }

@@ -10,13 +10,32 @@ namespace PianoApp.Models
     public class WhiteKey : KeyModel
     {
         public string Type { get; set; } = "White";
+        public Rectangle whiteKey { get; set; } = new Rectangle();
 
-        public override Rectangle Draw()
+        public WhiteKey()
         {
-            Rectangle whiteKey = new Rectangle();
-            whiteKey.Width = 25;
-            whiteKey.Height = 60;
+            base.type = Type;
+        }
+
+        public override Rectangle Draw(float width)
+        {
+            Color();
+            whiteKey.Stroke = System.Windows.Media.Brushes.Black;
+            whiteKey.Width = width;
+            whiteKey.Height = 171;
             return whiteKey;
+        }
+
+        public override void Color()
+        {
+            if (Active)
+            {
+                whiteKey.Fill = System.Windows.Media.Brushes.Aquamarine;
+            }
+            else
+            {
+                whiteKey.Fill = System.Windows.Media.Brushes.FloralWhite;
+            }
         }
     }
 }

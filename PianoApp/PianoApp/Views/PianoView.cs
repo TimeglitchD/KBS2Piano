@@ -21,29 +21,27 @@ namespace PianoApp.Views
     public partial class PianoView
     {
         private PianoController PC { get; }
-        private StackPanel piano = new StackPanel();
+        private DockPanel piano = new DockPanel();
         public Grid myGrid;
 
 
         public PianoView(Grid myGrid)
         {
             PC = new PianoController();
-            
-           
             this.myGrid = myGrid;
-            DrawPiano();
-
-
+            DrawPianoView();
         }
 
-        public void DrawPiano()
+        public void DrawPianoView()
         {
             //clear the view
-           // piano.Children.Clear();
+            piano.Children.Clear();
+            
+            //draw the piano
+            piano = PC.DrawPianoController();
+            //piano.Orientation = Orientation.Horizontal;
             //zet stackpanel in de goede plek op het grid
             Grid.SetRow(piano, 2);
-            //draw the piano
-            piano = PC.DrawPiano();
             myGrid.Children.Add(piano);
             Console.WriteLine("Piano drawn");
         }
