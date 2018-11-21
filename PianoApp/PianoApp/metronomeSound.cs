@@ -23,7 +23,7 @@ namespace PianoApp
         private bool countDown = false;
         private int countDownAmount;
         private int elapsedCountdown;
-
+        
         public metronomeSound()
         {
             //playsync silent sound to prevent soundplayer delay
