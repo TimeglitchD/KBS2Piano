@@ -253,8 +253,10 @@ namespace PianoApp.Views
             }
         }
 
-
-
-
+        private void countdownFinished(object sender, EventArgs e)
+        {
+            //start guide here
+            System.Windows.MessageBox.Show("countdown finished");
+        }
     }
 }
