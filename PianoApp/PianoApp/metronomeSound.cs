@@ -78,11 +78,18 @@ namespace PianoApp
         }
 
         //stop metronome
-        public void stopMetronome()
+        public bool stopMetronome()
         {
-            this.countDown = false;
-            timer.Stop();
-            resetValues();
+            try
+            {
+                this.countDown = false;
+                timer.Stop();
+                resetValues();
+                return true;
+            } catch(Exception)
+            {
+                return false;
+            }
         }
 
         //function runs in new thread.
@@ -210,6 +217,12 @@ namespace PianoApp
                     elapsedBeats++;
                 }
             }
+        }
+
+        //test get
+        public bool getCountdown()
+        {
+            return countDown;
         }
     }
 }
