@@ -42,21 +42,15 @@ namespace PianoApp
         
         private Grid myGrid = new Grid();
 
-
-
-
-
+        private metronomeSound metronome;
 
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             PianoController pC = new PianoController();
-
-
             mPc = new MusicPieceController() { Piano = pC };
             DrawMenu();
             InitializeComponent();
-
             Show();
         }
 
@@ -78,11 +72,6 @@ namespace PianoApp
 
             // Define all rows for mainGrid
             DefineRowMyGrid();
-
-
-
-         
-
             //Create the staves
             pv = new PianoView(myGrid);
             sv = new StaveView(myGrid);
@@ -95,14 +84,9 @@ namespace PianoApp
 
             bv = new ButtonView(myGrid, sv, nv);
 
-
+            metronome = bv.metronome;
+            metronome.countdownFinished += countdownFinished;
         }
-
-        
-
-
-
-
 
         private void DefineRowMyGrid()
         {
@@ -124,8 +108,13 @@ namespace PianoApp
             
         }
 
-       
+        private void countdownFinished(object sender, EventArgs e)
+        {
+            //start guide here
+            System.Windows.MessageBox.Show("countdown finished");
+        }
     }
+
     public enum NoteType
     {
         Quarter,

@@ -23,7 +23,8 @@ namespace PianoApp.Views
         private ComboBox notesCB = new ComboBox();
         private bool paused = false;
         private Button startBtn = new Button();
-        private metronomeSound metronome = new metronomeSound();
+
+        public metronomeSound metronome = new metronomeSound();
         private bool metronomeEnabled = false;
         private Button metronomeButton;
 
@@ -43,6 +44,8 @@ namespace PianoApp.Views
 
             // Draw menu items
             DrawBpmMenu();
+
+            drawMetronomeMenu();
 
             // Start button
             Button startBtn = new Button();
@@ -78,8 +81,6 @@ namespace PianoApp.Views
             Grid.SetRow(menuGrid, 0);
             menuGrid.Children.Add(SelectSheetMusic);
             myGrid.Children.Add(menuGrid);
-
-
         }
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
@@ -97,6 +98,16 @@ namespace PianoApp.Views
                 // Set values in GuideController
                 mPc.Guide.Bpm = bpmValue;
                 mPc.Guide.SetNote(notesCB.Text);
+
+                //set value in metronome and start it.
+                if (metronomeEnabled)
+                {
+                    metronome.startMetronome(bpmValue, 4, 1);
+                }
+                else
+                {
+                    metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+                }
             }
             catch (FormatException)
             {
@@ -181,7 +192,7 @@ namespace PianoApp.Views
             colDef2.Width = new GridLength(100, GridUnitType.Star);
             colDef3.Width = new GridLength(100, GridUnitType.Star);
             colDef4.Width = new GridLength(160, GridUnitType.Star);
-            colDef5.Width = new GridLength(40, GridUnitType.Star);
+            colDef5.Width = new GridLength(120, GridUnitType.Star);
             colDef6.Width = new GridLength(100, GridUnitType.Star);
             colDef7.Width = new GridLength(100, GridUnitType.Star);
             colDef8.Width = new GridLength(100, GridUnitType.Star);
@@ -220,8 +231,10 @@ namespace PianoApp.Views
             metronomeButton.Height = 40;
             metronomeButton.Content = "Metronoom: Uit";
             metronomeButton.Click += onMetronomeButtonClick;
-            metronomeButton.Margin = new Thickness(-300, -5, 0, -40);
-            myGrid.Children.Add(metronomeButton);
+            metronomeButton.HorizontalAlignment = HorizontalAlignment.Right;
+            metronomeButton.VerticalAlignment = VerticalAlignment.Bottom;
+            Grid.SetColumn(metronomeButton, 4);
+            menuGrid.Children.Add(metronomeButton);
 
         }
 
@@ -238,9 +251,5 @@ namespace PianoApp.Views
                 metronomeButton.Content = "Metronoom: Aan";
             }
         }
-
-
-
-
     }
 }
