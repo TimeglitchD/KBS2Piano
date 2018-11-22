@@ -28,7 +28,11 @@ namespace PianoApp
         private bool countDownOnly = false;
         private int countDownAmount;
         private int elapsedCountdown;
+<<<<<<< HEAD
         
+=======
+       
+>>>>>>> 7848c7f0737dd56668e601e9cb3a7403a79f1c79
         public metronomeSound()
         {
             metronomeSoundFile = new AudioFileReader(System.AppDomain.CurrentDomain.BaseDirectory + @"/sounds/metronome.wav");

@@ -22,8 +22,6 @@ namespace PianoApp.Views
             MPc = new MusicPieceController() { Piano = pC };
             sheet = new StackPanel();
             DrawMusic();
-
-
         }
 
         public void DrawMusic()

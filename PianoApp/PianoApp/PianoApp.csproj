@@ -14,6 +14,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -73,10 +73,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controllers\GuidesController.cs" />
     <Compile Include="DatabaseConnection.cs" />
-    <Compile Include="metronomeSound.cs" />
-
     <Compile Include="Models\Exception\BpmOutOfRangeException.cs" />
+    <Compile Include="metronomeSound.cs" />
     <Compile Include="MusicDatabaseDataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -86,7 +86,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\GuidesController.cs" />
     <Compile Include="Controllers\InputController.cs" />
     <Compile Include="Controllers\MusicPieceController.cs" />
     <Compile Include="Controllers\PianoController.cs" />
@@ -114,6 +113,7 @@
     <Compile Include="MusicXml\Domain\Score.cs" />
     <Compile Include="MusicXml\Domain\Time.cs" />
     <Compile Include="MusicXml\MusicXmlParser.cs" />
+    <Compile Include="Views\ButtonView.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -121,6 +121,8 @@
     <Compile Include="Views\MusicChooseView.xaml.cs">
       <DependentUpon>MusicChooseView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\NoteView.cs" />
+    <Compile Include="Views\PianoView.cs" />
     <Compile Include="Views\StaveView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +165,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Debug\" />
     <Folder Include="MusicXml\Properties\" />
   </ItemGroup>
   <ItemGroup>

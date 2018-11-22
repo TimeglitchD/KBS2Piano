@@ -35,7 +35,7 @@ namespace PianoApp.Controllers
 
             AddMeasuresToGreatStaffs();
 
-            AddNotesToStaffs();
+            AddNotesToMeasures();
 
         }
 
@@ -83,6 +83,7 @@ namespace PianoApp.Controllers
                 }
             }
 
+
             Console.WriteLine($"Amount of Great Staffs added: {Sheet.GreatStaffModelList.Count}");
             Console.WriteLine("================================");
         }
@@ -121,7 +122,7 @@ namespace PianoApp.Controllers
         }
 
         //Fill staffs with notes
-        private void AddNotesToStaffs()
+        private void AddNotesToMeasures()
         {
             foreach (var greatStaffModel in Sheet.GreatStaffModelList)
             {

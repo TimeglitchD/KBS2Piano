@@ -16,13 +16,15 @@ namespace PianoApp.Models
 
         public int Number { get; set; }
         public List<Note> NoteList { get; set; } = new List<Note>();
+        public Grid stave { get; set; }
 
         public Grid DrawStaff()
         {
             //create the grid
-            Grid stave = new Grid();
+            stave = new Grid();
             stave.Height = 100;
-            stave.Width = 1050;
+            stave.Width = 1055;
+            RowDefinition rowDef0 = new RowDefinition();
             RowDefinition rowDef1 = new RowDefinition();
             RowDefinition rowDef2 = new RowDefinition();
             RowDefinition rowDef3 = new RowDefinition();
@@ -36,6 +38,8 @@ namespace PianoApp.Models
             RowDefinition rowDef11 = new RowDefinition();
             RowDefinition rowDef12 = new RowDefinition();
             RowDefinition rowDef13 = new RowDefinition();
+            RowDefinition rowDef14 = new RowDefinition();
+            rowDef0.Height = new GridLength(1, GridUnitType.Star);
             rowDef1.Height = new GridLength(1, GridUnitType.Star);
             rowDef2.Height = new GridLength(1, GridUnitType.Star);
             rowDef3.Height = new GridLength(1, GridUnitType.Star);
@@ -49,6 +53,8 @@ namespace PianoApp.Models
             rowDef11.Height = new GridLength(1, GridUnitType.Star);
             rowDef12.Height = new GridLength(1, GridUnitType.Star);
             rowDef13.Height = new GridLength(1, GridUnitType.Star);
+            rowDef14.Height = new GridLength(1, GridUnitType.Star);
+            stave.RowDefinitions.Add(rowDef0);
             stave.RowDefinitions.Add(rowDef1);
             stave.RowDefinitions.Add(rowDef2);
             stave.RowDefinitions.Add(rowDef3);
@@ -62,11 +68,12 @@ namespace PianoApp.Models
             stave.RowDefinitions.Add(rowDef11);
             stave.RowDefinitions.Add(rowDef12);
             stave.RowDefinitions.Add(rowDef13);
+            stave.RowDefinitions.Add(rowDef14);
 
             //add lines to the grid on the correct places
             for (int i = 0; i < 13; i++)
             {
-                if (i > 0 && i < 12 && i % 2 == 0)
+                if (i >=3 && i <= 11 && i % 2 == 1)
                 {
                     Line line = new Line();
                     line.Stroke = Brushes.Black;
@@ -74,7 +81,7 @@ namespace PianoApp.Models
                     line.X2 = 1050;
                     line.HorizontalAlignment = HorizontalAlignment.Left;
                     line.VerticalAlignment = VerticalAlignment.Center;
-                    line.StrokeThickness = 2;
+                    line.StrokeThickness = 1;
                     Grid.SetRow(line, i);
                     stave.Children.Add(line);
                 }

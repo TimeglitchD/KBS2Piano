@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace PianoApp.Models
 {
@@ -10,10 +11,13 @@ namespace PianoApp.Models
     {
         public int Position { get; set; }
         public List<KeyModel> KeyModelList { get; set; } = new List<KeyModel>();
+        private DockPanel octave = new DockPanel();
 
         public OctaveModel(int pos)
         {
             Position = pos;
+            octave.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            //octave.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             CreateKeys();
             DrawPianoInConsole();
         }
@@ -62,6 +66,7 @@ namespace PianoApp.Models
                         break;
                     case 5:
                         KeyModelList.Add(new WhiteKey() { Step = Step.A });
+                        KeyModelList.Add(new BlackKey() { Step = Step.A, Alter = -1 });
                         KeyModelList.Add(new BlackKey() { Step = Step.A, Alter = 1 });
                         break;
                     case 6:
@@ -71,6 +76,37 @@ namespace PianoApp.Models
                 }
             }
             Console.WriteLine($"Octave: {Position} Keys: {KeyModelList.Count}");            
+        }
+
+        public DockPanel DrawOctave(float width)
+        {
+            var previous = new KeyModel();
+            int index = 0;
+            foreach (var key in KeyModelList)
+            {
+                if (key.Alter >= 0) {
+                    var newKey = key.Draw(width);
+
+                    if (previous.type == "Black")
+                    {
+                        newKey.Margin = new System.Windows.Thickness(-(width / 4), 0, 0, 0);
+                    }
+                    if (key.type == "Black")
+                    { 
+                    newKey.Margin = new System.Windows.Thickness(-(width / 4),0,0,0);
+                        DockPanel.SetZIndex(newKey, index);
+                    }
+                    
+                    newKey.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                    
+                    octave.Children.Add(newKey);
+                    Console.WriteLine("Key drawn");
+                    previous = key;
+                    index++;
+                }
+            }
+
+            return octave;
         }
     }
 }
