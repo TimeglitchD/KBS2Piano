@@ -21,6 +21,8 @@ namespace PianoApp.Models
 
         private Thread t;
 
+        private System.Timers.Timer timer;
+
         private int beats;
         private int elapsedBeats = 0;
 
@@ -28,7 +30,9 @@ namespace PianoApp.Models
         private bool countDownOnly = false;
         private int countDownAmount;
         private int elapsedCountdown;
-        
+
+        public event EventHandler countdownFinished;
+
 
         public metronomeSound()
         {
@@ -72,39 +76,57 @@ namespace PianoApp.Models
         public void stopMetronome()
         {
             this.countDown = false;
-            //abort because thread is only playing sound.
-            t.Abort();
+            timer.Stop();
+            resetValues();
         }
 
         //event that fires on every beat
         private void timer_tick(object sender, EventArgs e)
         {
-
-            if(countDown && elapsedBeats < beats * countDownAmount)
+            if (countDownOnly)
             {
-                this.playMetronome(true);
-                elapsedBeats++;
-                return;
-            } else if(countDown && elapsedBeats == beats * countDownAmount)
-            {
-                elapsedBeats = 0;
-                countDown = false;
-            }
-
-            if (elapsedBeats == 0)
-            {
-                this.playMetronome(true);
-                elapsedBeats++;
-            }
-            else if (elapsedBeats == beats -1)
-            {
-                this.playMetronome(false);
-                elapsedBeats = 0;
+                if (countDown && elapsedBeats < beats * countDownAmount)
+                {
+                    this.playMetronome(true);
+                    elapsedBeats++;
+                    return;
+                }
+                else
+                {
+                    timer.Stop();
+                    onCountdownFinished(EventArgs.Empty);
+                }
             }
             else
             {
-                this.playMetronome(false);
-                elapsedBeats++;
+                if (countDown && elapsedBeats < beats * countDownAmount)
+                {
+                    this.playMetronome(true);
+                    elapsedBeats++;
+                    return;
+                }
+                else if (countDown && elapsedBeats == beats * countDownAmount)
+                {
+                    elapsedBeats = 0;
+                    
+                    onCountdownFinished(EventArgs.Empty);
+                }
+
+                if (elapsedBeats == 0)
+                {
+                    this.playMetronome(true);
+                    elapsedBeats++;
+                }
+                else if (elapsedBeats == beats - 1)
+                {
+                    this.playMetronome(false);
+                    elapsedBeats = 0;
+                }
+                else
+                {
+                    this.playMetronome(false);
+                    elapsedBeats++;
+                }
             }
         }
 
@@ -112,7 +134,7 @@ namespace PianoApp.Models
         private void metronomeTimer(int interval)
         {
             //Thread.CurrentThread.IsBackground = true;
-            System.Timers.Timer timer = new System.Timers.Timer();
+            timer = new System.Timers.Timer();
             timer.Elapsed += new ElapsedEventHandler(this.timer_tick);
             timer.Interval = interval;
             timer.Start();
@@ -141,6 +163,23 @@ namespace PianoApp.Models
                   }).Start();
                 
             }
+        }
+
+        private void onCountdownFinished(EventArgs e)
+        {
+            if(countdownFinished != null)
+            {
+                countdownFinished(this, e);
+            }
+        }
+
+        private void resetValues()
+        {
+            countDown = false;
+            countDownAmount = 0;
+            beats = 0;
+            elapsedBeats = 0;
+            elapsedCountdown = 0;
         }
     }
 }

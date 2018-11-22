@@ -64,6 +64,8 @@ namespace PianoApp
             DrawMenu();
             InitializeComponent();
             Show();
+
+            metronome.countdownFinished += countdownFinished;
         }
 
         private void DrawMenu()
@@ -233,6 +235,9 @@ namespace PianoApp
                 if(metronomeEnabled)
                 {
                     metronome.startMetronome(bpmValue, 4);
+                } else
+                {
+                    metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
                 }
 
                 //mPc.Guide.Start();
@@ -268,7 +273,13 @@ namespace PianoApp
                 startBtn.Content = "||";
             }
         }
+
+        private void countdownFinished(object sender, EventArgs e)
+        {
+            System.Windows.MessageBox.Show("countdown finished");
+        }
     }
+
     public enum NoteType
     {
         Quarter,
