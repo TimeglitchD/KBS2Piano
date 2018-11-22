@@ -49,6 +49,10 @@ namespace PianoApp
 
         int bpmValue = -1;
 
+        private metronomeSound metronome = new metronomeSound();
+        private bool metronomeEnabled = false;
+        private Button metronomeButton;
+
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -57,14 +61,9 @@ namespace PianoApp
 
             mPc = new MusicPieceController() { Piano = pC };
 
-
-            //mPc.Guide.Start();
             DrawMenu();
             InitializeComponent();
             Show();
-
-            metronomeSound sound = new metronomeSound();
-            sound.startMetronome(120, 4, 1);
         }
 
         private void DrawMenu()
@@ -89,6 +88,8 @@ namespace PianoApp
 
             // Draw menu items
             DrawBpmMenu();
+
+            drawMetronomeMenu();
 
             // Add the button to the Grid
             Button SelectSheetMusic = new Button();
@@ -188,6 +189,31 @@ namespace PianoApp
             myGrid.Children.Add(notesCB);
         }
 
+        public void drawMetronomeMenu()
+        {
+            metronomeButton = new Button();
+            metronomeButton.Width = 120;
+            metronomeButton.Height = 40;
+            metronomeButton.Content = "Metronoom: Uit";
+            metronomeButton.Click += onMetronomeButtonClick;
+            metronomeButton.Margin = new Thickness(-300, -5, 0, -40);
+            myGrid.Children.Add(metronomeButton);
+
+        }
+
+        private void onMetronomeButtonClick(object sender, RoutedEventArgs e)
+        {
+            if(metronomeEnabled)
+            {
+                metronomeEnabled = false;
+                metronomeButton.Content = "Metronoom: Uit";
+            } else
+            {
+                metronomeEnabled = true;
+                metronomeButton.Content = "Metronoom: Aan";
+            }
+        }
+
         private void StartBtn_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -202,6 +228,14 @@ namespace PianoApp
                 // Set values in GuideController
                 mPc.Guide.Bpm = bpmValue;
                 mPc.Guide.SetNote(notesCB.Text);
+
+                //set value in metronome and start it.
+                if(metronomeEnabled)
+                {
+                    metronome.startMetronome(bpmValue, 4);
+                }
+
+                //mPc.Guide.Start();
             }
             catch (FormatException)
             {
