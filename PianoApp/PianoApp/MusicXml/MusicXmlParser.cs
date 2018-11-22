@@ -62,7 +62,6 @@ namespace MusicXml
                             if (measureNode.SelectSingleNode("print") != null)
                             {
                                 score.systems++;
-                                Console.WriteLine(score.systems);
                             }
 
 
