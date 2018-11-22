@@ -51,12 +51,9 @@ namespace PianoApp
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             PianoController pC = new PianoController();
-
-
             mPc = new MusicPieceController() { Piano = pC };
             DrawMenu();
             InitializeComponent();
-
             Show();
         }
 
@@ -78,11 +75,6 @@ namespace PianoApp
 
             // Define all rows for mainGrid
             DefineRowMyGrid();
-
-
-
-         
-
             //Create the staves
             pv = new PianoView(myGrid);
             sv = new StaveView(myGrid);
@@ -97,12 +89,6 @@ namespace PianoApp
 
 
         }
-
-        
-
-
-
-
 
         private void DefineRowMyGrid()
         {
@@ -123,9 +109,8 @@ namespace PianoApp
 
             
         }
-
-       
     }
+
     public enum NoteType
     {
         Quarter,
