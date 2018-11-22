@@ -89,11 +89,11 @@ namespace PianoApp.Models
 
                     if (previous.type == "Black")
                     {
-                        newKey.Margin = new System.Windows.Thickness(-(width / 2), 0, 0, 0);
+                        newKey.Margin = new System.Windows.Thickness(-(width / 4), 0, 0, 0);
                     }
                     if (key.type == "Black")
                     { 
-                    newKey.Margin = new System.Windows.Thickness(-(width / 2),0,0,0);
+                    newKey.Margin = new System.Windows.Thickness(-(width / 4),0,0,0);
                         DockPanel.SetZIndex(newKey, index);
                     }
                     

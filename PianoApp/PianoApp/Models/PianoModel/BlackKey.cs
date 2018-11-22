@@ -20,11 +20,11 @@ namespace PianoApp.Models
         public override Rectangle Draw(float width)
         {
             Color();
-            blackKey.Width = width;
+            blackKey.Width = width/2;
             blackKey.Height = 115;
-            blackKey.Stroke = System.Windows.Media.Brushes.FloralWhite;
+            //blackKey.Stroke = System.Windows.Media.Brushes.FloralWhite;
             
-            blackKey.StrokeThickness = 5;
+            //blackKey.StrokeThickness = 5;
             return blackKey;
         }
 
