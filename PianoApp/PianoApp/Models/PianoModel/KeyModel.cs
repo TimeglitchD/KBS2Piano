@@ -18,7 +18,8 @@ namespace PianoApp.Models
         {
             return null;
         }
-       public virtual void Color()
+
+        public virtual void Color()
         {
 
         }

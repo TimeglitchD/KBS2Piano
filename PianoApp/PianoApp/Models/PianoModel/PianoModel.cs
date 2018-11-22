@@ -24,13 +24,15 @@ namespace PianoApp.Models
 
         public DockPanel DrawPianoModel()
         {
+            //set width per key
             float width = (float)1266 / (Amount * 7);
+
+            //add octaves to piano
             foreach(OctaveModel octaveModel in OctaveModelList)
             {
                 piano.Children.Add(octaveModel.DrawOctave(width));
                 Console.WriteLine("Octave added");
             }
-
             return piano;
         }
     }

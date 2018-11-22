@@ -26,6 +26,7 @@ namespace PianoApp.Models
             return whiteKey;
         }
 
+        //decide color of key weither it's active or not
         public override void Color()
         {
             if (Active)

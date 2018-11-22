@@ -82,22 +82,27 @@ namespace PianoApp.Models
         {
             var previous = new KeyModel();
             int index = 0;
+
+            //add keys to octave
             foreach (var key in KeyModelList)
             {
                 if (key.Alter >= 0) {
                     var newKey = key.Draw(width);
 
+                    //place black key over white keys
                     if (previous.type == "Black")
                     {
                         newKey.Margin = new System.Windows.Thickness(-(width / 4), 0, 0, 0);
                     }
                     if (key.type == "Black")
                     { 
-                    newKey.Margin = new System.Windows.Thickness(-(width / 4),0,0,0);
+                        newKey.Margin = new System.Windows.Thickness(-(width / 4),0,0,0);
                         DockPanel.SetZIndex(newKey, index);
                     }
                     
+                    //set keys to top of Dockpanel
                     newKey.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                    
                     
                     octave.Children.Add(newKey);
                     Console.WriteLine("Key drawn");

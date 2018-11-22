@@ -22,12 +22,10 @@ namespace PianoApp.Models
             Color();
             blackKey.Width = width/2;
             blackKey.Height = 115;
-            //blackKey.Stroke = System.Windows.Media.Brushes.FloralWhite;
-            
-            //blackKey.StrokeThickness = 5;
             return blackKey;
         }
 
+        //decide color of key weither it's active or not
         public override void Color()
         {
             if (Active)
