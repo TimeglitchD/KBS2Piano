@@ -18,11 +18,11 @@ namespace PianoAppTests
             return mPc;
         }
 
-        [TestCase("60", 60)]
-        public void StartBtn_Click_BpmTextToInt_TextSetToInt(string input, int result)
+        [TestCase("60", 60.0f)]
+        public void StartBtn_Click_BpmTextToInt_TextSetToInt(string input, float result)
         {
             // Arrange and Act
-            int intVal = int.Parse(input);
+            float intVal = (float)int.Parse(input);
 
             // Assert
             Assert.AreEqual(intVal, result);

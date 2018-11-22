@@ -15,5 +15,7 @@ namespace MusicXml.Domain
 		public Identification Identification { get; internal set; }
 
 		public List<Part> Parts { get; internal set; }
+
+        public int systems { get; internal set; }
 	}
 }
