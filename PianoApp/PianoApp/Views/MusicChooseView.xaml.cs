@@ -44,7 +44,7 @@ namespace PianoApp.Views
         //fill tab based on type
         public void populateTab(int Type, DataGrid grid)
         {
-            grid.ItemsSource = connection.getSheetMusic(1).Tables["Music"].DefaultView;
+            //grid.ItemsSource = connection.getSheetMusic(1).Tables["Music"].DefaultView;
         }
 
         private void OnSelectClick(object sender, RoutedEventArgs e)

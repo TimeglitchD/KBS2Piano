@@ -90,10 +90,11 @@ namespace PianoApp.Controllers
 
                                 _activeNoteAndTimeoutDict = new Dictionary<Note, float>(tempDict);
 
-                                Piano.UpdatePianoKeys(_activeNoteAndTimeoutDict);
+                                //Piano.UpdatePianoKeys(_activeNoteAndTimeoutDict);
 
                                 Thread.Sleep((int)(timeout * 1000));
-                            }
+                                //Piano.UpdatePianoKeys();
+                            }                           
                         }
                     }
                 }

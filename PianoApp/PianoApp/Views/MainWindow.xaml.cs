@@ -29,11 +29,16 @@ namespace PianoApp
     {
 
         private MusicChooseView mCv;
-        private StaveView sv;
+        private PianoView pv;
+
         private MusicPieceController mPc;
+
+        private StackPanel staves = new StackPanel();
+        private StackPanel piano = new StackPanel();
+
+        private StaveView sv;
         private NoteView nv;
         
-        private StackPanel staves = new StackPanel();
         private Grid myGrid = new Grid();
 
         private TextBox bpmTB = new TextBox();
@@ -128,7 +133,10 @@ namespace PianoApp
             Content = myGrid;
 
             //Create the staves
+            pv = new PianoView(myGrid);
             sv = new StaveView(myGrid);
+            Content = pv.myGrid;
+                       
 
             //Draw the notes
             nv = new NoteView(sv);
