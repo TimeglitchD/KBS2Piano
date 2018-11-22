@@ -38,5 +38,36 @@ namespace PianoAppTests
             ////Assert
             Assert.IsFalse(sound.getCountdown());
         }
+
+        [Test]
+        public void Metronome_countdownEvent()
+        {
+            //arrange
+            var sound = new metronomeSound();
+            bool eventRaised = false;
+            sound.countdownFinished += (s, e) => { eventRaised = true; };
+            ////act
+            sound.startMetronome(240, 1, 1);
+            Thread.Sleep(2000);
+            sound.stopMetronome();
+
+            ////Assert
+            Assert.IsTrue(eventRaised);
+        }
+
+        [Test]
+        public void Metronome_countdownEvent_countDownOnly()
+        {
+            //arrange
+            var sound = new metronomeSound();
+            bool eventRaised = false;
+            sound.countdownFinished += (s, e) => { eventRaised = true; };
+            ////act
+            sound.startMetronomeCountDownOnly(240, 1, 1);
+            Thread.Sleep(1000);
+
+            ////Assert
+            Assert.IsTrue(eventRaised);
+        }
     }
 }
