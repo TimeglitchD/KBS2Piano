@@ -44,6 +44,9 @@ namespace PianoApp
 
 
 
+
+
+
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -51,13 +54,12 @@ namespace PianoApp
 
 
             mPc = new MusicPieceController() { Piano = pC };
-            
-            //mPc.Guide.Start();
             DrawMenu();
             InitializeComponent();
 
             Show();
         }
+
         private void DrawStaves()
         {
             sv = new StaveView(myGrid);
@@ -79,8 +81,7 @@ namespace PianoApp
 
 
 
-            
-
+         
 
             //Create the staves
             pv = new PianoView(myGrid);
@@ -97,8 +98,7 @@ namespace PianoApp
 
         }
 
-
-
+        
 
 
 
@@ -124,7 +124,7 @@ namespace PianoApp
             
         }
 
-
+       
     }
     public enum NoteType
     {

@@ -21,6 +21,11 @@ namespace PianoApp.Views
 
         private TextBox bpmTB = new TextBox();
         private ComboBox notesCB = new ComboBox();
+        private bool paused = false;
+        private Button startBtn = new Button();
+        private metronomeSound metronome = new metronomeSound();
+        private bool metronomeEnabled = false;
+        private Button metronomeButton;
 
         int bpmValue = -1;
 
@@ -106,7 +111,7 @@ namespace PianoApp.Views
             Console.WriteLine(mPc.Guide.Note);
         }
 
-        
+
 
         private void DrawBpmMenu()
         {
@@ -193,6 +198,48 @@ namespace PianoApp.Views
             menuGrid.ColumnDefinitions.Add(colDef8);
             menuGrid.ColumnDefinitions.Add(colDef9);
         }
+
+        private void CheckPause()
+        {
+            if (paused)
+            {
+                paused = false;
+                startBtn.Content = "▶";
+            }
+            else
+            {
+                paused = true;
+                startBtn.Content = "||";
+            }
+        }
+
+        public void drawMetronomeMenu()
+        {
+            metronomeButton = new Button();
+            metronomeButton.Width = 120;
+            metronomeButton.Height = 40;
+            metronomeButton.Content = "Metronoom: Uit";
+            metronomeButton.Click += onMetronomeButtonClick;
+            metronomeButton.Margin = new Thickness(-300, -5, 0, -40);
+            myGrid.Children.Add(metronomeButton);
+
+        }
+
+        private void onMetronomeButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (metronomeEnabled)
+            {
+                metronomeEnabled = false;
+                metronomeButton.Content = "Metronoom: Uit";
+            }
+            else
+            {
+                metronomeEnabled = true;
+                metronomeButton.Content = "Metronoom: Aan";
+            }
+        }
+
+
 
 
     }
