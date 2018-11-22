@@ -23,6 +23,7 @@ namespace PianoApp.Views
         private ComboBox notesCB = new ComboBox();
         private bool paused = false;
         private Button startBtn = new Button();
+
         private metronomeSound metronome = new metronomeSound();
         private bool metronomeEnabled = false;
         private Button metronomeButton;
