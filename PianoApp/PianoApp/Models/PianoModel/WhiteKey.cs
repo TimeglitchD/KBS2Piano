@@ -22,7 +22,7 @@ namespace PianoApp.Models
             Color();
             whiteKey.Stroke = System.Windows.Media.Brushes.Black;
             whiteKey.Width = width;
-            whiteKey.Height = 171;
+            whiteKey.Height = 182;
             return whiteKey;
         }
 
