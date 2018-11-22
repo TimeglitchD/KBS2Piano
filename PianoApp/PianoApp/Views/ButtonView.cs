@@ -101,10 +101,6 @@ namespace PianoApp.Views
 
             try
             {
-                CheckPause();
-                // Set value to int
-                bpmValue = int.Parse(bpmTB.Text);
-
                 // Set value to int
                 bpmValue = (float)int.Parse(bpmTB.Text);
                 //bpmValue = (float)bpmValueInt;
@@ -132,7 +128,7 @@ namespace PianoApp.Views
                 MessageBox.Show(ex.Message);
                 return;
             }
-
+            CheckPause();
             Console.WriteLine(mPc.Guide.Bpm);
             Console.WriteLine(mPc.Guide.Note);
 
@@ -140,11 +136,8 @@ namespace PianoApp.Views
             notesCB.IsEnabled = false;
             bpmTB.IsReadOnly = true;
             SelectSheetMusic.IsEnabled = false;
+            metronomeButton.IsEnabled = false;
             bpmTB.Background = Brushes.LightGray;
-            Console.WriteLine(mPc.Guide._isPlaying);
-
-            mPc.Guide.Start();
-            Console.WriteLine(mPc.Guide._isPlaying);
         }
 
 
@@ -219,9 +212,10 @@ namespace PianoApp.Views
             bpmTB.IsReadOnly = false;
             bpmTB.Background = Brushes.White;
             notesCB.IsEnabled = true;
+            metronomeButton.IsEnabled = true;
 
             // TODO
-            mPc.Guide.Start();
+            //mPc.Guide.Start();
         }
 
         private void DefineGridRowsMenuGrid()

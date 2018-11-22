@@ -118,7 +118,13 @@ namespace PianoApp
         private void countdownFinished(object sender, EventArgs e)
         {
             //start guide here
-            System.Windows.MessageBox.Show("countdown finished");
+            MessageBox.Show("countdown finished");
+            if(mPc.Guide.Score == null)
+            {
+                Console.WriteLine("Doet niet");
+                return;
+            }
+            mPc.Guide.Start();
         }
     }
 
