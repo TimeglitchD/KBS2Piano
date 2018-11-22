@@ -12,7 +12,7 @@ namespace PianoTest1
     [TestFixture]
     public class UnitTest1
     {
-        [TestCase(6, 6), RequiresThread(ApartmentState.STA)]
+        [TestCase(1, 6), RequiresThread(ApartmentState.STA)]
         public void DrawPianoModelTest(int amount, int count)
         {
             PianoModel pm = new PianoModel();
@@ -20,7 +20,7 @@ namespace PianoTest1
 
             DockPanel PianoModel = pm.DrawPianoModel();
 
-            Assert.AreEqual(pm.DrawPianoModel().Children.Count, count);
+            Assert.AreEqual(PianoModel.Children.Count, count);
         }
 
         [TestCase(1,12), RequiresThread(ApartmentState.STA)]
