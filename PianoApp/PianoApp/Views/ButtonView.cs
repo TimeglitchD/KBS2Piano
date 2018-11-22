@@ -99,6 +99,16 @@ namespace PianoApp.Views
                 // Set values in GuideController
                 mPc.Guide.Bpm = bpmValue;
                 mPc.Guide.SetNote(notesCB.Text);
+
+                //set value in metronome and start it.
+                if (metronomeEnabled)
+                {
+                    metronome.startMetronome(bpmValue, 4, 1);
+                }
+                else
+                {
+                    metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+                }
             }
             catch (FormatException)
             {
