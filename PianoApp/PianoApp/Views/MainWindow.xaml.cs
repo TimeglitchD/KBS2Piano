@@ -44,6 +44,9 @@ namespace PianoApp
         private TextBox bpmTB = new TextBox();
         private ComboBox notesCB = new ComboBox();
 
+        private bool paused = false;
+        private Button startBtn = new Button();
+
         int bpmValue = -1;
 
         public MainWindow()
@@ -114,7 +117,6 @@ namespace PianoApp
 
 
             // Start button
-            Button startBtn = new Button();
             startBtn.FontSize = 25;
             startBtn.Name = "startBtn";
             startBtn.Content = "▶";
@@ -190,6 +192,7 @@ namespace PianoApp
         {
             try
             {
+                CheckPause();
                 // Set value to int
                 bpmValue = int.Parse(bpmTB.Text);
 
@@ -217,6 +220,19 @@ namespace PianoApp
         {
             mCv = new MusicChooseView(sv, nv);
             mCv.Show();
+        }
+
+        private void CheckPause()
+        {
+            if (paused)
+            {
+                paused = false;
+                startBtn.Content = "▶";
+            } else
+            {
+                paused = true;
+                startBtn.Content = "||";
+            }
         }
     }
     public enum NoteType
