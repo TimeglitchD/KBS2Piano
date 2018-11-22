@@ -66,21 +66,26 @@ namespace PianoApp.Controllers
         //Create Great staffs based on amount of measures in the piece
         private void AddGreatStaffsToSheet()
         {
-            double totalWidth = 0;
+            //double totalWidth = 0;
 
-            foreach (var scorePart in _score.Parts)
+            //foreach (var scorePart in _score.Parts)
+            //{
+            //    foreach (var scorePartMeasure in scorePart.Measures)
+            //    {
+            //        totalWidth += (double)scorePartMeasure.Width;
+            //    }
+
+            //    double totalWidthDividedByMax = Math.Ceiling(totalWidth / _maxStaffWidth);
+
+            //    for (int i = 0; i < totalWidthDividedByMax; i++)
+            //    {
+            //        Sheet.GreatStaffModelList.Add(new GreatStaffModel());
+            //    }
+            //}
+
+            for(int i = _score.systems; i > 0; i--)
             {
-                foreach (var scorePartMeasure in scorePart.Measures)
-                {
-                    totalWidth += (double)scorePartMeasure.Width;
-                }
-
-                double totalWidthDividedByMax = Math.Ceiling(totalWidth / _maxStaffWidth);
-
-                for (int i = 0; i < totalWidthDividedByMax; i++)
-                {
-                    Sheet.GreatStaffModelList.Add(new GreatStaffModel());
-                }
+                Sheet.GreatStaffModelList.Add(new GreatStaffModel());
             }
 
 

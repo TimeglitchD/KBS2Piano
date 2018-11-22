@@ -8,396 +8,405 @@ using Encoding = MusicXml.Domain.Encoding;
 
 namespace MusicXml
 {
-	public static class MusicXmlParser
-	{
-		public static Score GetScore(string filename)
-		{
-			var document = GetXmlDocument(filename);
+    public static class MusicXmlParser
+    {
+        public static Score GetScore(string filename)
+        {
+            var document = GetXmlDocument(filename);
 
-			var score = new Score();
+            var score = new Score();
+            score.systems = 0;
 
-			var movementTitleNode = document.SelectSingleNode("score-partwise/movement-title");
-			if (movementTitleNode != null)
-				score.MovementTitle = movementTitleNode.InnerText;
+            var movementTitleNode = document.SelectSingleNode("score-partwise/movement-title");
+            if (movementTitleNode != null)
+                score.MovementTitle = movementTitleNode.InnerText;
 
-			score.Identification = GetIdentification(document);
-			
-			var partNodes = document.SelectNodes("score-partwise/part-list/score-part");
-			
-			if (partNodes != null)
-			{
-				foreach (XmlNode partNode in partNodes)
-				{
-					var part = new Part();
-					score.Parts.Add(part);
+            score.Identification = GetIdentification(document);
 
-					if (partNode.Attributes != null)
-						part.Id = partNode.Attributes["id"].InnerText;
-					
-					var partNameNode = partNode.SelectSingleNode("part-name");
-					
-					if (partNameNode != null)
-						part.Name = partNameNode.InnerText;
+            var partNodes = document.SelectNodes("score-partwise/part-list/score-part");
 
-					var measuresXpath = string.Format("//part[@id='{0}']/measure", part.Id);
+            if (partNodes != null)
+            {
+                foreach (XmlNode partNode in partNodes)
+                {
+                    var part = new Part();
+                    score.Parts.Add(part);
 
-					var measureNodes = partNode.SelectNodes(measuresXpath);
+                    if (partNode.Attributes != null)
+                        part.Id = partNode.Attributes["id"].InnerText;
 
-					if (measureNodes != null)
-					{
-						foreach (XmlNode measureNode in measureNodes)
-						{
-							var measure = new Measure();
+                    var partNameNode = partNode.SelectSingleNode("part-name");
 
-							if (measureNode.Attributes != null)
-							{
-								var measureWidthAttribute = measureNode.Attributes["width"];
-								decimal w;
-								if (measureWidthAttribute != null && decimal.TryParse(measureWidthAttribute.InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture,out w))
-									measure.Width = w;
-							}
+                    if (partNameNode != null)
+                        part.Name = partNameNode.InnerText;
 
-							var attributesNode = measureNode.SelectSingleNode("attributes");
+                    var measuresXpath = string.Format("//part[@id='{0}']/measure", part.Id);
 
-							if (attributesNode != null)
-							{
-								measure.Attributes = new MeasureAttributes();
+                    var measureNodes = partNode.SelectNodes(measuresXpath);
 
-								var divisionsNode = attributesNode.SelectSingleNode("divisions");
-								if (divisionsNode != null)
-									measure.Attributes.Divisions = Convert.ToInt32(divisionsNode.InnerText);
+                    if (measureNodes != null)
+                    {
+                        foreach (XmlNode measureNode in measureNodes)
+                        {
+                            var measure = new Measure();
 
-								var keyNode = attributesNode.SelectSingleNode("key");
+                            if (measureNode.Attributes != null)
+                            {
+                                var measureWidthAttribute = measureNode.Attributes["width"];
+                                decimal w;
+                                if (measureWidthAttribute != null && decimal.TryParse(measureWidthAttribute.InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out w))
+                                    measure.Width = w;
+                            }
 
-								if (keyNode != null)
-								{
-									measure.Attributes.Key = new Key();
 
-									var fifthsNode = keyNode.SelectSingleNode("fifths");
-									if (fifthsNode != null)
-										measure.Attributes.Key.Fifths = Convert.ToInt32(fifthsNode.InnerText);
+                            if (measureNode.SelectSingleNode("print") != null)
+                            {
+                                score.systems++;
+                                Console.WriteLine(score.systems);
+                            }
 
-									var modeNode = keyNode.SelectSingleNode("mode");
-									if (modeNode != null)
-										measure.Attributes.Key.Mode = modeNode.InnerText;
-								}
-								
-								measure.Attributes.Time = GetTime(attributesNode);
 
-								measure.Attributes.Clef = GetClef(attributesNode);
-							}
+                            var attributesNode = measureNode.SelectSingleNode("attributes");
 
-							var childNodes = measureNode.ChildNodes;
+                            if (attributesNode != null)
+                            {
+                                measure.Attributes = new MeasureAttributes();
 
-							foreach (XmlNode node in childNodes)
-							{
-								MeasureElement measureElement = null;
+                                var divisionsNode = attributesNode.SelectSingleNode("divisions");
+                                if (divisionsNode != null)
+                                    measure.Attributes.Divisions = Convert.ToInt32(divisionsNode.InnerText);
 
-								if (node.Name == "note")
-								{
-									var newNote = GetNote(node);
-									measureElement = new MeasureElement {Type = MeasureElementType.Note, Element = newNote};
-								}
-								else if (node.Name == "backup")
-								{
-									measureElement = new MeasureElement {Type = MeasureElementType.Backup, Element = GetBackupElement(node)};
-								}
-								else if (node.Name == "forward")
-								{
-									measureElement = new MeasureElement {Type = MeasureElementType.Forward, Element = GetForwardElement(node)};
-								}
+                                var keyNode = attributesNode.SelectSingleNode("key");
 
-								if (measureElement != null)
-									measure.MeasureElements.Add(measureElement);
-							}
-							
-							part.Measures.Add(measure);
-						}
-					}
-				}
-			}
+                                if (keyNode != null)
+                                {
+                                    measure.Attributes.Key = new Key();
 
-			return score;
-		}
+                                    var fifthsNode = keyNode.SelectSingleNode("fifths");
+                                    if (fifthsNode != null)
+                                        measure.Attributes.Key.Fifths = Convert.ToInt32(fifthsNode.InnerText);
 
-		private static Forward GetForwardElement(XmlNode node)
-		{
-			var forward = new Forward();
+                                    var modeNode = keyNode.SelectSingleNode("mode");
+                                    if (modeNode != null)
+                                        measure.Attributes.Key.Mode = modeNode.InnerText;
+                                }
 
-			var forwardNode = node.SelectSingleNode("duration");
+                                measure.Attributes.Time = GetTime(attributesNode);
 
-			if (forwardNode != null)
-			{
-				forward.Duration = Convert.ToInt32(forwardNode.InnerText);
-			}
+                                measure.Attributes.Clef = GetClef(attributesNode);
+                            }
 
-			return forward;
-		}
+                            var childNodes = measureNode.ChildNodes;
 
-		private static Backup GetBackupElement(XmlNode node)
-		{
-			var backup = new Backup();
+                            foreach (XmlNode node in childNodes)
+                            {
+                                MeasureElement measureElement = null;
 
-			var backupNode = node.SelectSingleNode("duration");
+                                if (node.Name == "note")
+                                {
+                                    var newNote = GetNote(node);
+                                    measureElement = new MeasureElement { Type = MeasureElementType.Note, Element = newNote };
+                                }
+                                else if (node.Name == "backup")
+                                {
+                                    measureElement = new MeasureElement { Type = MeasureElementType.Backup, Element = GetBackupElement(node) };
+                                }
+                                else if (node.Name == "forward")
+                                {
+                                    measureElement = new MeasureElement { Type = MeasureElementType.Forward, Element = GetForwardElement(node) };
+                                }
 
-			if (backupNode != null)
-			{
-				backup.Duration = Convert.ToInt32(backupNode.InnerText);
-			}
+                                if (measureElement != null)
+                                    measure.MeasureElements.Add(measureElement);
+                            }
 
-			return backup;
-		}
+                            part.Measures.Add(measure);
+                        }
+                    }
+                }
+            }
 
-		private static Note GetNote(XmlNode noteNode)
-		{
-			var note = new Note();
+            return score;
+        }
 
-			var typeNode = noteNode.SelectSingleNode("type");
-			if (typeNode != null)
-				note.Type = typeNode.InnerText;
+        private static Forward GetForwardElement(XmlNode node)
+        {
+            var forward = new Forward();
 
-			var voiceNode = noteNode.SelectSingleNode("voice");
-			if (voiceNode != null)
-				note.Voice = Convert.ToInt32(voiceNode.InnerText);
+            var forwardNode = node.SelectSingleNode("duration");
 
-			var durationNode = noteNode.SelectSingleNode("duration");
-			if (durationNode != null)
-				note.Duration = Convert.ToInt32(durationNode.InnerText);
+            if (forwardNode != null)
+            {
+                forward.Duration = Convert.ToInt32(forwardNode.InnerText);
+            }
 
-			var accidental = noteNode.SelectSingleNode("accidental");
-			if (accidental != null)
-				note.Accidental = accidental.InnerText;
+            return forward;
+        }
 
-		    var xPos = noteNode.Attributes["default-x"];
-		    if (xPos != null)
-		        note.XPos = float.Parse(xPos.Value, CultureInfo.InvariantCulture.NumberFormat);
+        private static Backup GetBackupElement(XmlNode node)
+        {
+            var backup = new Backup();
+
+            var backupNode = node.SelectSingleNode("duration");
+
+            if (backupNode != null)
+            {
+                backup.Duration = Convert.ToInt32(backupNode.InnerText);
+            }
+
+            return backup;
+        }
+
+        private static Note GetNote(XmlNode noteNode)
+        {
+            var note = new Note();
+
+            var typeNode = noteNode.SelectSingleNode("type");
+            if (typeNode != null)
+                note.Type = typeNode.InnerText;
+
+            var voiceNode = noteNode.SelectSingleNode("voice");
+            if (voiceNode != null)
+                note.Voice = Convert.ToInt32(voiceNode.InnerText);
+
+            var durationNode = noteNode.SelectSingleNode("duration");
+            if (durationNode != null)
+                note.Duration = Convert.ToInt32(durationNode.InnerText);
+
+            var accidental = noteNode.SelectSingleNode("accidental");
+            if (accidental != null)
+                note.Accidental = accidental.InnerText;
+
+            var xPos = noteNode.Attributes["default-x"];
+            if (xPos != null)
+                note.XPos = float.Parse(xPos.Value, CultureInfo.InvariantCulture.NumberFormat);
 
             note.Lyric = GetLyric(noteNode);
 
-			note.Pitch = GetPitch(noteNode);
+            note.Pitch = GetPitch(noteNode);
 
-			var staffNode = noteNode.SelectSingleNode("staff");
-			if (staffNode != null)
-				note.Staff = Convert.ToInt32(staffNode.InnerText);
+            var staffNode = noteNode.SelectSingleNode("staff");
+            if (staffNode != null)
+                note.Staff = Convert.ToInt32(staffNode.InnerText);
 
-			var chordNode = noteNode.SelectSingleNode("chord");
-			if (chordNode != null)
-				note.IsChordTone = true;
-			
-			var restNode = noteNode.SelectSingleNode("rest");
-			if (restNode != null)
-				note.IsRest = true;
+            var chordNode = noteNode.SelectSingleNode("chord");
+            if (chordNode != null)
+                note.IsChordTone = true;
 
-			return note;
-		}
+            var restNode = noteNode.SelectSingleNode("rest");
+            if (restNode != null)
+                note.IsRest = true;
 
-		private static Pitch GetPitch(XmlNode noteNode)
-		{
-			var pitch = new Pitch();
-			var pitchNode = noteNode.SelectSingleNode("pitch");
-			if (pitchNode != null)
-			{
-				var stepNode = pitchNode.SelectSingleNode("step");
-				if (stepNode != null)
-					pitch.Step = stepNode.InnerText[0];
+            return note;
+        }
 
-				var alterNode = pitchNode.SelectSingleNode("alter");
-				if (alterNode != null)
-					pitch.Alter = Convert.ToInt32(alterNode.InnerText);
+        private static Pitch GetPitch(XmlNode noteNode)
+        {
+            var pitch = new Pitch();
+            var pitchNode = noteNode.SelectSingleNode("pitch");
+            if (pitchNode != null)
+            {
+                var stepNode = pitchNode.SelectSingleNode("step");
+                if (stepNode != null)
+                    pitch.Step = stepNode.InnerText[0];
 
-				var octaveNode = pitchNode.SelectSingleNode("octave");
-				if (octaveNode != null)
-					pitch.Octave = Convert.ToInt32(octaveNode.InnerText);
-			}
-			else
-			{
-				return null;
-			}
+                var alterNode = pitchNode.SelectSingleNode("alter");
+                if (alterNode != null)
+                    pitch.Alter = Convert.ToInt32(alterNode.InnerText);
 
-			return pitch;
-		}
+                var octaveNode = pitchNode.SelectSingleNode("octave");
+                if (octaveNode != null)
+                    pitch.Octave = Convert.ToInt32(octaveNode.InnerText);
+            }
+            else
+            {
+                return null;
+            }
 
-		private static Lyric GetLyric(XmlNode noteNode)
-		{
-			var lyric = new Lyric();
+            return pitch;
+        }
 
-			var lyricNode = noteNode.SelectSingleNode("lyric");
-			if (lyricNode != null)
-			{
-				var syllabicNode = lyricNode.SelectSingleNode("syllabic");
+        private static Lyric GetLyric(XmlNode noteNode)
+        {
+            var lyric = new Lyric();
 
-				var syllabicText = string.Empty;
+            var lyricNode = noteNode.SelectSingleNode("lyric");
+            if (lyricNode != null)
+            {
+                var syllabicNode = lyricNode.SelectSingleNode("syllabic");
 
-				if (syllabicNode != null)
-					syllabicText = syllabicNode.InnerText;
+                var syllabicText = string.Empty;
 
-				switch (syllabicText)
-				{
-					case "":
-						lyric.Syllabic = Syllabic.None;
-						break;
-					case "begin":
-						lyric.Syllabic = Syllabic.Begin;
-						break;
-					case "single":
-						lyric.Syllabic = Syllabic.Single;
-						break;
-					case "end":
-						lyric.Syllabic = Syllabic.End;
-						break;
-					case "middle":
-						lyric.Syllabic = Syllabic.Middle;
-						break;
-				}
+                if (syllabicNode != null)
+                    syllabicText = syllabicNode.InnerText;
 
-				var textNode = lyricNode.SelectSingleNode("text");
-				if (textNode != null)
-					lyric.Text = textNode.InnerText;
-			}
-			return lyric;
-		}
+                switch (syllabicText)
+                {
+                    case "":
+                        lyric.Syllabic = Syllabic.None;
+                        break;
+                    case "begin":
+                        lyric.Syllabic = Syllabic.Begin;
+                        break;
+                    case "single":
+                        lyric.Syllabic = Syllabic.Single;
+                        break;
+                    case "end":
+                        lyric.Syllabic = Syllabic.End;
+                        break;
+                    case "middle":
+                        lyric.Syllabic = Syllabic.Middle;
+                        break;
+                }
 
-		private static Clef GetClef(XmlNode attributesNode)
-		{
-			var clef = new Clef();
+                var textNode = lyricNode.SelectSingleNode("text");
+                if (textNode != null)
+                    lyric.Text = textNode.InnerText;
+            }
+            return lyric;
+        }
 
-			var clefNode = attributesNode.SelectSingleNode("clef");
+        private static Clef GetClef(XmlNode attributesNode)
+        {
+            var clef = new Clef();
 
-			if (clefNode != null)
-			{
-				var lineNode = clefNode.SelectSingleNode("line");
-				if (lineNode != null)
-					clef.Line = Convert.ToInt32(lineNode.InnerText);
+            var clefNode = attributesNode.SelectSingleNode("clef");
 
-				var signNode = clefNode.SelectSingleNode("sign");
-				if (signNode != null)
-					clef.Sign = signNode.InnerText;
-			}
-			return clef;
-		}
+            if (clefNode != null)
+            {
+                var lineNode = clefNode.SelectSingleNode("line");
+                if (lineNode != null)
+                    clef.Line = Convert.ToInt32(lineNode.InnerText);
 
-		private static Time GetTime(XmlNode attributesNode)
-		{
-			var time = new Time();
+                var signNode = clefNode.SelectSingleNode("sign");
+                if (signNode != null)
+                    clef.Sign = signNode.InnerText;
+            }
+            return clef;
+        }
 
-			var timeNode = attributesNode.SelectSingleNode("time");
-			if (timeNode != null)
-			{
-				var beatsNode = timeNode.SelectSingleNode("beats");
+        private static Time GetTime(XmlNode attributesNode)
+        {
+            var time = new Time();
 
-				if (beatsNode != null)
-					time.Beats = Convert.ToInt32(beatsNode.InnerText);
+            var timeNode = attributesNode.SelectSingleNode("time");
+            if (timeNode != null)
+            {
+                var beatsNode = timeNode.SelectSingleNode("beats");
 
-				var beatTypeNode = timeNode.SelectSingleNode("beat-type");
+                if (beatsNode != null)
+                    time.Beats = Convert.ToInt32(beatsNode.InnerText);
 
-				if (beatTypeNode != null)
-					time.Mode = beatTypeNode.InnerText;
+                var beatTypeNode = timeNode.SelectSingleNode("beat-type");
 
-				var symbol = TimeSymbol.Normal;
+                if (beatTypeNode != null)
+                    time.Mode = beatTypeNode.InnerText;
 
-				if (timeNode.Attributes != null)
-				{
-					var symbolAttribute = timeNode.Attributes["symbol"];
+                var symbol = TimeSymbol.Normal;
 
-					if (symbolAttribute != null)
-					{
-						switch (symbolAttribute.InnerText)
-						{
-							case "common":
-								symbol = TimeSymbol.Common;
-								break;
-							case "cut":
-								symbol = TimeSymbol.Cut;
-								break;
-							case "single-number":
-								symbol = TimeSymbol.SingleNumber;
-								break;
-						}
-					}
-				}
+                if (timeNode.Attributes != null)
+                {
+                    var symbolAttribute = timeNode.Attributes["symbol"];
 
-				time.Symbol = symbol;
-			}
-			return time;
-		}
+                    if (symbolAttribute != null)
+                    {
+                        switch (symbolAttribute.InnerText)
+                        {
+                            case "common":
+                                symbol = TimeSymbol.Common;
+                                break;
+                            case "cut":
+                                symbol = TimeSymbol.Cut;
+                                break;
+                            case "single-number":
+                                symbol = TimeSymbol.SingleNumber;
+                                break;
+                        }
+                    }
+                }
 
-		private static Identification GetIdentification(XmlNode document)
-		{
-			var identificationNode = document.SelectSingleNode("score-partwise/identification");
+                time.Symbol = symbol;
+            }
+            return time;
+        }
 
-			if (identificationNode != null)
-			{
-				var identification = new Identification();
+        private static Identification GetIdentification(XmlNode document)
+        {
+            var identificationNode = document.SelectSingleNode("score-partwise/identification");
 
-				var composerNode = identificationNode.SelectSingleNode("creator[@type='composer']");
-				identification.Composer = composerNode != null ? composerNode.InnerText : string.Empty;
+            if (identificationNode != null)
+            {
+                var identification = new Identification();
 
-				var rightsNode = identificationNode.SelectSingleNode("rights");
-				identification.Rights = rightsNode != null ? rightsNode.InnerText : string.Empty;
+                var composerNode = identificationNode.SelectSingleNode("creator[@type='composer']");
+                identification.Composer = composerNode != null ? composerNode.InnerText : string.Empty;
 
-				identification.Encoding = GetEncoding(identificationNode);
+                var rightsNode = identificationNode.SelectSingleNode("rights");
+                identification.Rights = rightsNode != null ? rightsNode.InnerText : string.Empty;
 
-				return identification;
-			}
+                identification.Encoding = GetEncoding(identificationNode);
 
-			return null;
-		}
+                return identification;
+            }
 
-		private static Encoding GetEncoding(XmlNode identificationNode)
-		{
-			var encodingNode = identificationNode.SelectSingleNode("encoding");
+            return null;
+        }
 
-			var encoding = new Encoding();
+        private static Encoding GetEncoding(XmlNode identificationNode)
+        {
+            var encodingNode = identificationNode.SelectSingleNode("encoding");
 
-			if (encodingNode != null)
-			{
-				encoding.Software = GetInnerTextOfChildTag(encodingNode, "software");
+            var encoding = new Encoding();
 
-				encoding.Description = GetInnerTextOfChildTag(encodingNode, "encoding-description");
+            if (encodingNode != null)
+            {
+                encoding.Software = GetInnerTextOfChildTag(encodingNode, "software");
 
-				var encodingDate = encodingNode.SelectSingleNode("encoding-date");
-				if (encodingDate != null)
-					encoding.EncodingDate = Convert.ToDateTime(encodingDate.InnerText);
-			}
+                encoding.Description = GetInnerTextOfChildTag(encodingNode, "encoding-description");
 
-			return encoding;
-		}
+                var encodingDate = encodingNode.SelectSingleNode("encoding-date");
+                if (encodingDate != null)
+                    encoding.EncodingDate = Convert.ToDateTime(encodingDate.InnerText);
+            }
 
-		private static string GetInnerTextOfChildTag(XmlNode encodingNode, string tagName)
-		{
-			var softwareStringBuilder = new StringBuilder();
-			
-			var encodingSoftwareNodes = encodingNode.SelectNodes(tagName);
+            return encoding;
+        }
 
-			if (encodingSoftwareNodes != null)
-			{
-				foreach (XmlNode node in encodingSoftwareNodes)
-				{
-					softwareStringBuilder.AppendLine(node.InnerText);
-				}
-			}
+        private static string GetInnerTextOfChildTag(XmlNode encodingNode, string tagName)
+        {
+            var softwareStringBuilder = new StringBuilder();
 
-			return softwareStringBuilder.ToString();
-		}
+            var encodingSoftwareNodes = encodingNode.SelectNodes(tagName);
 
-		private static XmlDocument GetXmlDocument(string filename)
-		{
-			var document = new XmlDocument();
+            if (encodingSoftwareNodes != null)
+            {
+                foreach (XmlNode node in encodingSoftwareNodes)
+                {
+                    softwareStringBuilder.AppendLine(node.InnerText);
+                }
+            }
 
-			var xml = GetFileContents(filename);
-			document.XmlResolver = null;
-			document.LoadXml(xml);
+            return softwareStringBuilder.ToString();
+        }
 
-			return document;
-		}
+        private static XmlDocument GetXmlDocument(string filename)
+        {
+            var document = new XmlDocument();
 
-		private static string GetFileContents(string filename)
-		{
-			using (var fileStream = new FileStream(filename, FileMode.Open))
-			using (var streamReader = new StreamReader(fileStream))
-			{
-				return streamReader.ReadToEnd();
-			}
-		}
-	}
+            var xml = GetFileContents(filename);
+            document.XmlResolver = null;
+            document.LoadXml(xml);
+
+            return document;
+        }
+
+        private static string GetFileContents(string filename)
+        {
+            using (var fileStream = new FileStream(filename, FileMode.Open))
+            using (var streamReader = new StreamReader(fileStream))
+            {
+                return streamReader.ReadToEnd();
+            }
+        }
+    }
 }
