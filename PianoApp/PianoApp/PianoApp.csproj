@@ -73,6 +73,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controllers\GuidesController.cs" />
     <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Models\Exception\BpmOutOfRangeException.cs" />
     <Compile Include="metronomeSound.cs" />
@@ -85,7 +86,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\GuidesController.cs" />
     <Compile Include="Controllers\InputController.cs" />
     <Compile Include="Controllers\MusicPieceController.cs" />
     <Compile Include="Controllers\PianoController.cs" />
