@@ -46,6 +46,7 @@ namespace PianoApp.Models
             outputDeviceMetronome.Init(metronomeSoundFile);
             outputDeviceMetronomeBeat.Init(metronomeBeatSoundFile);
 
+            primeSounds();
         }
 
         //start metronome with specified amount of countdown measures
@@ -93,10 +94,11 @@ namespace PianoApp.Models
                 }
                 else
                 {
-                    timer.Stop();
-                    onCountdownFinished(EventArgs.Empty);
+                    stopMetronome();
+                    countdownFinishedNewThread();
                 }
             }
+
             else
             {
                 if (countDown && elapsedBeats < beats * countDownAmount)
@@ -108,8 +110,8 @@ namespace PianoApp.Models
                 else if (countDown && elapsedBeats == beats * countDownAmount)
                 {
                     elapsedBeats = 0;
-                    
-                    onCountdownFinished(EventArgs.Empty);
+                    countDown = false;
+                    countdownFinishedNewThread();
                 }
 
                 if (elapsedBeats == 0)
@@ -173,13 +175,33 @@ namespace PianoApp.Models
             }
         }
 
+        private void countdownFinishedNewThread()
+        {
+            new Thread(() =>
+            {
+                onCountdownFinished(EventArgs.Empty);
+            }).Start();
+        }
+
         private void resetValues()
         {
-            countDown = false;
-            countDownAmount = 0;
             beats = 0;
             elapsedBeats = 0;
+            countDown = false;
+            countDownOnly = false;
+            countDownAmount = 0;
             elapsedCountdown = 0;
+        }
+
+        private void primeSounds()
+        {
+            metronomeSoundFile.Volume = 0.0f;
+            metronomeBeatSoundFile.Volume = 0.0f;
+            outputDeviceMetronomeBeat.Play();
+            outputDeviceMetronome.Play();
+            Thread.Sleep(1000);
+            metronomeSoundFile.Volume = 1.0f;
+            metronomeBeatSoundFile.Volume = 1.0f;
         }
     }
 }

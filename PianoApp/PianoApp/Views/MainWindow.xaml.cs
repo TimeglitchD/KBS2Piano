@@ -234,7 +234,7 @@ namespace PianoApp
                 //set value in metronome and start it.
                 if(metronomeEnabled)
                 {
-                    metronome.startMetronome(bpmValue, 4);
+                    metronome.startMetronome(bpmValue, 4, 1);
                 } else
                 {
                     metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
