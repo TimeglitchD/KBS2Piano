@@ -50,7 +50,7 @@ namespace PianoApp.Views
             drawMetronomeMenu();
 
             // Start button
-            Button startBtn = new Button();
+            
             startBtn.FontSize = 25;
             startBtn.Name = "startBtn";
             startBtn.Content = "▶";
@@ -101,6 +101,9 @@ namespace PianoApp.Views
 
             try
             {
+                CheckPause();
+                // Set value to int
+                bpmValue = int.Parse(bpmTB.Text);
 
                 // Set value to int
                 bpmValue = (float)int.Parse(bpmTB.Text);
