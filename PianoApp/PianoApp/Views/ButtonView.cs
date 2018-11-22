@@ -67,11 +67,11 @@ namespace PianoApp.Views
             SelectSheetMusic.Content = "Selecteer \n muziekstuk";
 
             // Set height/width based on column height/widht
-            SelectSheetMusic.Width = menuGrid.ColumnDefinitions[0].Width.Value - 10;
+            SelectSheetMusic.Width = menuGrid.ColumnDefinitions[0].Width.Value - 15;
             SelectSheetMusic.Height = 40;
 
             // Center and stick to bottom in column
-            SelectSheetMusic.HorizontalAlignment = HorizontalAlignment.Center;
+            SelectSheetMusic.HorizontalAlignment = HorizontalAlignment.Left;
             SelectSheetMusic.VerticalAlignment = VerticalAlignment.Bottom;
             SelectSheetMusic.Click += SelectSheetMusic_Click;
             Grid.SetColumn(SelectSheetMusic, 0);
@@ -274,7 +274,7 @@ namespace PianoApp.Views
         public void drawMetronomeMenu()
         {
             metronomeButton = new Button();
-            metronomeButton.Width = 120;
+            metronomeButton.Width = menuGrid.ColumnDefinitions[4].Width.Value -10;
             metronomeButton.Height = 40;
             metronomeButton.Content = "Metronoom: Uit";
             metronomeButton.Click += onMetronomeButtonClick;
