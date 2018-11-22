@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using MusicXml.Domain;
+using PianoApp.Models.Exception;
 using Timer = System.Threading.Timer;
 
 namespace PianoApp.Controllers
@@ -17,7 +18,20 @@ namespace PianoApp.Controllers
     {
         public int _bpm;
 
-        public int Bpm { get; set; }
+        public int Bpm
+        {
+            get
+            {
+                return _bpm;
+            }
+            set
+            {
+                if (value < 0 || value > 300) throw new BpmOutOfRangeException($"Bpm waarde ligt niet tussen de 0 en de 300 ({value})");
+
+                _bpm = value;
+            }
+        }
+
         public NoteType Note { get; set; }
 
         public PianoController Piano;
@@ -28,7 +42,7 @@ namespace PianoApp.Controllers
 
         private float _divs;
         private float _timing;
-        private float _definedBpm = 60;
+        private float _definedBpm = 10;
 
         private Dictionary<Note, Timeout> _activeNoteAndTimeoutDict = new Dictionary<Note, Timeout>();
         private Dictionary<Note, float> _toDoNoteDict = new Dictionary<Note, float>();

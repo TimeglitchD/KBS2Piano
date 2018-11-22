@@ -51,7 +51,6 @@ namespace PianoApp.Views
         {
             try
             {
-
                 sv.MPc.CreateMusicPiece(selectedPiece);
                 Console.WriteLine("Piece loaded.");
                 //succesfull at opening xml file.

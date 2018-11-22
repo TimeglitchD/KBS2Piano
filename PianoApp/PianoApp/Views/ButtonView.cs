@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace PianoApp.Views
 {
@@ -23,6 +24,8 @@ namespace PianoApp.Views
         private ComboBox notesCB = new ComboBox();
         private bool paused = false;
         private Button startBtn = new Button();
+        private Button resetButton = new Button();
+
         private metronomeSound metronome = new metronomeSound();
         private bool metronomeEnabled = false;
         private Button metronomeButton;
@@ -39,7 +42,6 @@ namespace PianoApp.Views
 
             // Define all columns for menuGrid
             DefineGridRowsMenuGrid();
-            menuGrid.ShowGridLines = true;
 
             // Draw menu items
             DrawBpmMenu();
@@ -89,8 +91,16 @@ namespace PianoApp.Views
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
         {
+
+            if (mPc.Guide.Score == null)
+            {
+                MessageBox.Show("Je hebt geen muziekstuk ingeladen!", "Foutmelding");
+                return;
+            }
+
             try
             {
+               
                 // Set value to int
                 bpmValue = int.Parse(bpmTB.Text);
 
@@ -109,6 +119,13 @@ namespace PianoApp.Views
 
             Console.WriteLine(mPc.Guide.Bpm);
             Console.WriteLine(mPc.Guide.Note);
+
+            // Set buttons enabled false or readonly if playing
+            notesCB.IsEnabled = false;
+            bpmTB.IsReadOnly = true;
+            bpmTB.Background = Brushes.LightGray;
+
+            mPc.Guide.Start();
         }
 
 
@@ -157,10 +174,35 @@ namespace PianoApp.Views
             notesCB.SelectedIndex = 0;
             Grid.SetColumn(notesCB, 3);
 
+            // Create resetbutton if isPlaying
+            resetButton = new Button();
+            resetButton.FontSize = 25;
+            resetButton.Name = "resetBtn";
+            resetButton.Content = "◼";
+            resetButton.Width = 40;
+            resetButton.Height = 40;
+            resetButton.HorizontalAlignment = HorizontalAlignment.Right;
+            resetButton.Click += ResetButton_Click;
+            Grid.SetColumn(resetButton, 5);
+
             // Add items to grid
             menuGrid.Children.Add(txt1);
             menuGrid.Children.Add(bpmTB);
             menuGrid.Children.Add(notesCB);
+            menuGrid.Children.Add(resetButton);
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Muziekstuk is gestopt....!");
+
+            // Set buttons enabled or readonly false if resetting music
+            bpmTB.IsReadOnly = false;
+            bpmTB.Background = Brushes.White;
+            notesCB.IsEnabled = true;
+
+            // TODO
+            mPc.Guide.Start();
         }
 
         private void DefineGridRowsMenuGrid()
