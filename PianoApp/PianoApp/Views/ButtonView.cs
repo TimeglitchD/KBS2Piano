@@ -82,7 +82,7 @@ namespace PianoApp.Views
             menuGrid.Children.Add(SelectSheetMusic);
             myGrid.Children.Add(menuGrid);
 
-
+            metronome.countdownFinished += countdownFinished;
         }
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
