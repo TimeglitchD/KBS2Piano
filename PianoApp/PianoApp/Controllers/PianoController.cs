@@ -13,7 +13,7 @@ namespace PianoApp.Controllers
     {
         public PianoModel PianoModel { get; set; } = new PianoModel();
 
-        public void UpdatePianoKeys(Dictionary<Note, float> noteAndTimeoutDictionary)
+        public void UpdatePianoKeys(Dictionary<Note, GuidesController.Timeout> noteAndTimeoutDictionary)
         {
             //go over all keys and compare to note when true set active true on the corresponding key...
             foreach (var keyValuePair in noteAndTimeoutDictionary)
@@ -29,24 +29,20 @@ namespace PianoApp.Controllers
                 }
             }
         }
-            //public void UpdatePianoKeys()
-            //{
-            //    Console.WriteLine("Updating piano keys...");
-            //}
 
-            public DockPanel DrawPianoController()
+        public DockPanel DrawPianoController()
+        {
+            if (PianoModel == null)
             {
-                if (PianoModel == null)
-                {
-                    Console.WriteLine("No piano found");
-                    return null;
-                }
-                else
-                {
-                    Console.WriteLine("Piano found");
-                    return PianoModel.DrawPianoModel();
-                }
+                Console.WriteLine("No piano found");
+                return null;
             }
+            else
+            {
+                Console.WriteLine("Piano found");
+                return PianoModel.DrawPianoModel();
+            }
+        }
 
     }
 }
