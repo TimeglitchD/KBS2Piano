@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using MusicXml.Domain;
+using PianoApp.Models.Exception;
 
 namespace PianoApp.Controllers
 {
@@ -14,7 +15,18 @@ namespace PianoApp.Controllers
     {
         public int _bpm;
 
-        public int Bpm { get; set; }
+        public int Bpm {
+            get
+            {
+                return _bpm;
+            }
+            set
+            {
+                if (value < 0 || value > 300) throw new BpmOutOfRangeException($"Bpm waarde ligt niet tussen de 0 en de 300 ({value})");
+
+                _bpm = value;
+            }
+        }
         public NoteType Note { get; set; }
 
         public PianoController Piano;
@@ -87,7 +99,6 @@ namespace PianoApp.Controllers
                                         tempDict.Remove(keyValuePair.Key);
                                     }
                                 }
-
                                 _activeNoteAndTimeoutDict = new Dictionary<Note, float>(tempDict);
 
                                 //Piano.UpdatePianoKeys(_activeNoteAndTimeoutDict);

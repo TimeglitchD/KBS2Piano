@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace PianoApp.Models.Exception
 {
-    class BpmOutOfRangeException : SystemException
+    public class BpmOutOfRangeException : SystemException
     {
         public BpmOutOfRangeException()
         {

@@ -9,9 +9,9 @@ using System.Timers;
 using NAudio.Wave;
 using System.IO;
 
-namespace PianoApp.Models
+namespace PianoApp
 {
-    class metronomeSound
+    public class metronomeSound
     {
         private DirectSoundOut outputDeviceMetronome;
         private DirectSoundOut outputDeviceMetronomeBeat;
@@ -28,8 +28,7 @@ namespace PianoApp.Models
         private bool countDownOnly = false;
         private int countDownAmount;
         private int elapsedCountdown;
-        
-
+       
         public metronomeSound()
         {
             metronomeSoundFile = new AudioFileReader(System.AppDomain.CurrentDomain.BaseDirectory + @"/sounds/metronome.wav");
@@ -141,6 +140,11 @@ namespace PianoApp.Models
                   }).Start();
                 
             }
+        }
+
+        public bool getCountdown()
+        {
+            return countDown;
         }
     }
 }
