@@ -270,7 +270,7 @@ namespace PianoApp.Views
             else
             {
                 paused = true;
-                startBtn.Content = "||";
+                startBtn.Content = "❚❚";
             }
         }
 
