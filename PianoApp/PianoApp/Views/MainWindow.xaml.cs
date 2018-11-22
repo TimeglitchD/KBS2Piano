@@ -42,10 +42,7 @@ namespace PianoApp
         
         private Grid myGrid = new Grid();
 
-
-
-
-
+        private metronomeSound metronome;
 
         public MainWindow()
         {
@@ -87,7 +84,8 @@ namespace PianoApp
 
             bv = new ButtonView(myGrid, sv, nv);
 
-
+            metronome = bv.metronome;
+            metronome.countdownFinished += countdownFinished;
         }
 
         private void DefineRowMyGrid()
@@ -108,6 +106,12 @@ namespace PianoApp
             myGrid.RowDefinitions.Add(rowDef3);
 
             
+        }
+
+        private void countdownFinished(object sender, EventArgs e)
+        {
+            //start guide here
+            System.Windows.MessageBox.Show("countdown finished");
         }
     }
 

@@ -24,7 +24,7 @@ namespace PianoApp.Views
         private bool paused = false;
         private Button startBtn = new Button();
 
-        private metronomeSound metronome = new metronomeSound();
+        public metronomeSound metronome = new metronomeSound();
         private bool metronomeEnabled = false;
         private Button metronomeButton;
 
@@ -81,8 +81,6 @@ namespace PianoApp.Views
             Grid.SetRow(menuGrid, 0);
             menuGrid.Children.Add(SelectSheetMusic);
             myGrid.Children.Add(menuGrid);
-
-            metronome.countdownFinished += countdownFinished;
         }
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
@@ -252,12 +250,6 @@ namespace PianoApp.Views
                 metronomeEnabled = true;
                 metronomeButton.Content = "Metronoom: Aan";
             }
-        }
-
-        private void countdownFinished(object sender, EventArgs e)
-        {
-            //start guide here
-            System.Windows.MessageBox.Show("countdown finished");
         }
     }
 }
