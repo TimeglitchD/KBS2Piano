@@ -16,9 +16,9 @@ namespace PianoApp.Controllers
 {
     public class GuidesController
     {
-        public int _bpm;
+        public float _bpm;
 
-        public int Bpm
+        public float Bpm
         {
             get
             {
@@ -42,13 +42,12 @@ namespace PianoApp.Controllers
 
         private float _divs;
         private float _timing;
-        private float _definedBpm = 10;
 
         private Dictionary<Note, Timeout> _activeNoteAndTimeoutDict = new Dictionary<Note, Timeout>();
         private Dictionary<Note, float> _toDoNoteDict = new Dictionary<Note, float>();
         private Stopwatch _stopwatch;
 
-        private bool _isPlaying = false;
+        public bool _isPlaying = true;
 
         private System.Timers.Timer _timer;
 
@@ -90,7 +89,7 @@ namespace PianoApp.Controllers
         private void SetAttributes()
         {
             //set timing of music piece
-            _timing = 60 / _definedBpm;
+            _timing = 60 / _bpm;
 
             _divs = 6;
             //            //Set the divisions
@@ -136,7 +135,7 @@ namespace PianoApp.Controllers
             {
                 Console.WriteLine("STOP");
             }
-            
+
 
             var tempActiveNoteDict = new Dictionary<Note, Timeout>(_activeNoteAndTimeoutDict);
 
@@ -156,6 +155,7 @@ namespace PianoApp.Controllers
         public bool Start()
         {
             _stopwatch = Stopwatch.StartNew();
+
             //Set the attributes from the current music piece
             SetAttributes();
             //Fill the to do list with notes from the current music piece
@@ -167,7 +167,7 @@ namespace PianoApp.Controllers
             timerStaffOne.Enabled = true;
 
             System.Timers.Timer timerStaffTwo = new System.Timers.Timer();
-            timerStaffOne.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 2);
+            timerStaffTwo.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 2);
             timerStaffTwo.Interval = (ReturnFirstNoteTimeout(2));
             timerStaffTwo.Enabled = true;
 

@@ -25,12 +25,13 @@ namespace PianoApp.Views
         private bool paused = false;
         private Button startBtn = new Button();
         private Button resetButton = new Button();
+        private Button SelectSheetMusic = new Button();
 
         private metronomeSound metronome = new metronomeSound();
         private bool metronomeEnabled = false;
         private Button metronomeButton;
 
-        int bpmValue = -1;
+        float bpmValue = -1.0f;
 
 
         public ButtonView(Grid myGrid, StaveView sv, NoteView nv)
@@ -59,7 +60,7 @@ namespace PianoApp.Views
 
 
             // Add the button to the Grid
-            Button SelectSheetMusic = new Button();
+            SelectSheetMusic = new Button();
             SelectSheetMusic.Name = "SelectSheetMusic";
             SelectSheetMusic.Content = "Selecteer \n muziekstuk";
 
@@ -100,10 +101,10 @@ namespace PianoApp.Views
 
             try
             {
-               
-                // Set value to int
-                bpmValue = int.Parse(bpmTB.Text);
 
+                // Set value to int
+                bpmValue = (float)int.Parse(bpmTB.Text);
+                //bpmValue = (float)bpmValueInt;
                 // Set values in GuideController
                 mPc.Guide.Bpm = bpmValue;
                 mPc.Guide.SetNote(notesCB.Text);
@@ -111,10 +112,12 @@ namespace PianoApp.Views
             catch (FormatException)
             {
                 MessageBox.Show("De ingevoerde waarde moet een getal zijn!");
+                return;
             }
             catch (BpmOutOfRangeException ex)
             {
                 MessageBox.Show(ex.Message);
+                return;
             }
 
             Console.WriteLine(mPc.Guide.Bpm);
@@ -123,9 +126,12 @@ namespace PianoApp.Views
             // Set buttons enabled false or readonly if playing
             notesCB.IsEnabled = false;
             bpmTB.IsReadOnly = true;
+            SelectSheetMusic.IsEnabled = false;
             bpmTB.Background = Brushes.LightGray;
+            Console.WriteLine(mPc.Guide._isPlaying);
 
             mPc.Guide.Start();
+            Console.WriteLine(mPc.Guide._isPlaying);
         }
 
 
