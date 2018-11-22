@@ -7,10 +7,11 @@ using System.Windows.Shapes;
 
 namespace PianoApp.Models
 {
-    class BlackKey : KeyModel
+    public class BlackKey : KeyModel
     {
         public string Type { get; set; } = "Black";
         public Rectangle blackKey { get; set; } = new Rectangle();
+        public string color { get; set; }
 
         public BlackKey()
         {
@@ -33,10 +34,12 @@ namespace PianoApp.Models
             if (Active)
             {
                 blackKey.Fill = System.Windows.Media.Brushes.Aquamarine;
+                color = System.Windows.Media.Brushes.Aquamarine.ToString();
             }
             else
             {
                 blackKey.Fill = System.Windows.Media.Brushes.Black;
+                color = System.Windows.Media.Brushes.Black.ToString();
             }
         }
     }

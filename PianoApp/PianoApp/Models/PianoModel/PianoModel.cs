@@ -10,11 +10,12 @@ namespace PianoApp.Models
     public class PianoModel
     {
         public List<OctaveModel> OctaveModelList { get; set; } = new List<OctaveModel>();
-        public int Amount { get; set; } = 6;
+        public int Amount { get; set; }
         private DockPanel piano = new DockPanel();
         public PianoModel()
         {
             piano.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            Amount = 6;
             for (int i = 0; i < Amount; i++)
             {
                 OctaveModelList.Add(new OctaveModel(i));
