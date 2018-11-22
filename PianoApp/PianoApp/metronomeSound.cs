@@ -23,6 +23,7 @@ namespace PianoApp.Models
 
         private System.Timers.Timer timer;
 
+        //values for keeping track of current position
         private int beats;
         private int elapsedBeats = 0;
 
@@ -36,9 +37,11 @@ namespace PianoApp.Models
 
         public metronomeSound()
         {
+            //get soundfiles relative to exe file
             metronomeSoundFile = new AudioFileReader(System.AppDomain.CurrentDomain.BaseDirectory + @"/sounds/metronome.wav");
             metronomeBeatSoundFile = new AudioFileReader(System.AppDomain.CurrentDomain.BaseDirectory + @"/sounds/metronomeBeat.wav");
 
+            //emptyy guid so sounds play through default audio device
             Guid guid = Guid.Empty;
             outputDeviceMetronomeBeat = new DirectSoundOut(guid, 50);
             outputDeviceMetronome = new DirectSoundOut(guid, 50);
@@ -49,7 +52,7 @@ namespace PianoApp.Models
             primeSounds();
         }
 
-        //start metronome with specified amount of countdown measures
+        //start metronome with specified amount of countdown measures. Raise event after countdown is done to start guide
         public void startMetronome(int bpm, int beats, int countDownAmount)
         {
             this.countDown = true;
@@ -67,13 +70,14 @@ namespace PianoApp.Models
             t.Start();
         }
 
+        //start metronome with countdown only. Raise event after countdown is done.
         public void startMetronomeCountDownOnly(int bpm, int beats, int countDownAmount)
         {
             countDownOnly = true;
             startMetronome(bpm, beats, countDownAmount);
         }
 
-        //force stop metronome
+        //stop metronome
         public void stopMetronome()
         {
             this.countDown = false;
@@ -81,7 +85,83 @@ namespace PianoApp.Models
             resetValues();
         }
 
-        //event that fires on every beat
+        //function runs in new thread.
+        private void metronomeTimer(int interval)
+        {
+            //Thread.CurrentThread.IsBackground = true;
+            timer = new System.Timers.Timer();
+            timer.Elapsed += new ElapsedEventHandler(this.timer_tick);
+            timer.Interval = interval;
+            timer.Start();
+        }
+
+        //sound play function
+        private void playMetronome(bool isBeat)
+        {
+            if (isBeat)
+            {
+                new Thread(() =>
+                {
+                    Thread.CurrentThread.IsBackground = true;
+                    metronomeBeatSoundFile.CurrentTime = System.TimeSpan.Zero;
+                    outputDeviceMetronomeBeat.Play();
+                }).Start();
+                
+            }
+            else
+            {
+                 new Thread(() =>
+                  {
+                      Thread.CurrentThread.IsBackground = true;
+                      metronomeSoundFile.CurrentTime = System.TimeSpan.Zero;
+                      outputDeviceMetronome.Play();
+                  }).Start();
+                
+            }
+        }
+
+        //raise countdownfinished-event in new thread
+        private void countdownFinishedNewThread()
+        {
+            new Thread(() =>
+            {
+                onCountdownFinished(EventArgs.Empty);
+            }).Start();
+        }
+
+        //countdownfinished event
+        private void onCountdownFinished(EventArgs e)
+        {
+            if(countdownFinished != null)
+            {
+                countdownFinished(this, e);
+            }
+        }
+
+        //resets all values so metronome functions as expected when started after using stopmetronome.
+        private void resetValues()
+        {
+            beats = 0;
+            elapsedBeats = 0;
+            countDown = false;
+            countDownOnly = false;
+            countDownAmount = 0;
+            elapsedCountdown = 0;
+        }
+
+        //Silently plays the sounds so there's no unexpected delay when starting the countdown
+        private void primeSounds()
+        {
+            metronomeSoundFile.Volume = 0.0f;
+            metronomeBeatSoundFile.Volume = 0.0f;
+            outputDeviceMetronomeBeat.Play();
+            outputDeviceMetronome.Play();
+            Thread.Sleep(1000);
+            metronomeSoundFile.Volume = 1.0f;
+            metronomeBeatSoundFile.Volume = 1.0f;
+        }
+
+        //event handler on every beat
         private void timer_tick(object sender, EventArgs e)
         {
             if (countDownOnly)
@@ -130,78 +210,6 @@ namespace PianoApp.Models
                     elapsedBeats++;
                 }
             }
-        }
-
-        //function runs in new thread.
-        private void metronomeTimer(int interval)
-        {
-            //Thread.CurrentThread.IsBackground = true;
-            timer = new System.Timers.Timer();
-            timer.Elapsed += new ElapsedEventHandler(this.timer_tick);
-            timer.Interval = interval;
-            timer.Start();
-        }
-
-        //sound play function
-        private void playMetronome(bool isBeat)
-        {
-            if (isBeat)
-            {
-                new Thread(() =>
-                {
-                    Thread.CurrentThread.IsBackground = true;
-                    metronomeBeatSoundFile.CurrentTime = System.TimeSpan.Zero;
-                    outputDeviceMetronomeBeat.Play();
-                }).Start();
-                
-            }
-            else
-            {
-                 new Thread(() =>
-                  {
-                      Thread.CurrentThread.IsBackground = true;
-                      metronomeSoundFile.CurrentTime = System.TimeSpan.Zero;
-                      outputDeviceMetronome.Play();
-                  }).Start();
-                
-            }
-        }
-
-        private void onCountdownFinished(EventArgs e)
-        {
-            if(countdownFinished != null)
-            {
-                countdownFinished(this, e);
-            }
-        }
-
-        private void countdownFinishedNewThread()
-        {
-            new Thread(() =>
-            {
-                onCountdownFinished(EventArgs.Empty);
-            }).Start();
-        }
-
-        private void resetValues()
-        {
-            beats = 0;
-            elapsedBeats = 0;
-            countDown = false;
-            countDownOnly = false;
-            countDownAmount = 0;
-            elapsedCountdown = 0;
-        }
-
-        private void primeSounds()
-        {
-            metronomeSoundFile.Volume = 0.0f;
-            metronomeBeatSoundFile.Volume = 0.0f;
-            outputDeviceMetronomeBeat.Play();
-            outputDeviceMetronome.Play();
-            Thread.Sleep(1000);
-            metronomeSoundFile.Volume = 1.0f;
-            metronomeBeatSoundFile.Volume = 1.0f;
         }
     }
 }
