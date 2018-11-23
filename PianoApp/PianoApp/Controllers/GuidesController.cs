@@ -114,7 +114,7 @@ namespace PianoApp.Controllers
         {
             
             //First remove the first note
-//            RemoveFirstNoteFromToDoDict(staffNumber);
+            RemoveFirstNoteFromToDoDict(staffNumber);
             try
             {
                 _activeNoteAndTimeoutDict.Add(_toDoNoteDict.Keys.First(), new Timeout()
