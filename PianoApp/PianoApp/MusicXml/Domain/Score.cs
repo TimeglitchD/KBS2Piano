@@ -17,5 +17,7 @@ namespace MusicXml.Domain
 		public List<Part> Parts { get; internal set; }
 
         public int systems { get; internal set; }
+
+        public double scale { get; internal set; }
 	}
 }

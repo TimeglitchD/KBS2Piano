@@ -145,8 +145,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 1;
-                        }
+                        }else
                         if (pitch.Octave == 4)
+                        {
+                            row = 8;
+                        }
+                        else
                         {
                             row = 8;
                         }
@@ -155,8 +159,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 2;
-                        }
+                        }else
                         if (pitch.Octave == 4)
+                        {
+                            row = 9;
+                        }
+                        else
                         {
                             row = 9;
                         }
@@ -165,8 +173,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 3;
-                        }
+                        }else
                         if (pitch.Octave == 4)
+                        {
+                            row = 10;
+                        }
+                        else
                         {
                             row = 10;
                         }
@@ -175,8 +187,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 4;
-                        }
+                        }else
                         if (pitch.Octave == 4)
+                        {
+                            row = 11;
+                        }
+                        else
                         {
                             row = 11;
                         }
@@ -185,8 +201,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 5;
-                        }
+                        }else
                         if (pitch.Octave == 4)
+                        {
+                            row = 12;
+                        }
+                        else
                         {
                             row = 12;
                         }
@@ -195,8 +215,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 6;
-                        }
+                        }else
                         if (pitch.Octave == 4)
+                        {
+                            row = 13;
+                        }
+                        else
                         {
                             row = 13;
                         }
@@ -217,8 +241,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 4)
                         {
                             row = 1;
-                        }
+                        }else
                         if (pitch.Octave == 3)
+                        {
+                            row = 8;
+                        }
+                        else
                         {
                             row = 8;
                         }
@@ -227,8 +255,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 4)
                         {
                             row = 2;
-                        }
+                        }else
                         if (pitch.Octave == 3)
+                        {
+                            row = 9;
+                        }
+                        else
                         {
                             row = 9;
                         }
@@ -237,8 +269,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 4)
                         {
                             row = 3;
-                        }
+                        }else
                         if (pitch.Octave == 3)
+                        {
+                            row = 10;
+                        }
+                        else
                         {
                             row = 10;
                         }
@@ -247,8 +283,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 4;
-                        }
+                        }else
                         if (pitch.Octave == 2)
+                        {
+                            row = 11;
+                        }
+                        else
                         {
                             row = 11;
                         }
@@ -257,8 +297,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 5;
-                        }
+                        }else
                         if (pitch.Octave == 2)
+                        {
+                            row = 12;
+                        }
+                        else
                         {
                             row = 12;
                         }
@@ -267,8 +311,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 6;
-                        }
+                        }else
                         if (pitch.Octave == 2)
+                        {
+                            row = 13;
+                        }
+                        else
                         {
                             row = 13;
                         }

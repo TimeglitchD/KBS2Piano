@@ -183,7 +183,7 @@ namespace PianoApp.Views
             notesCB.Items.Add("Kwart noot");
 
             // Set first item selected
-            notesCB.SelectedIndex = 0;
+            notesCB.SelectedIndex = 2;
             Grid.SetColumn(notesCB, 3);
 
             // Create resetbutton if isPlaying

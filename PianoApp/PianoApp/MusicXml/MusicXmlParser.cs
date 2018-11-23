@@ -25,6 +25,20 @@ namespace MusicXml
 
             var partNodes = document.SelectNodes("score-partwise/part-list/score-part");
 
+
+            var layoutNode = document.SelectSingleNode("score-partwise/defaults/page-layout");
+            var marginNode = layoutNode.SelectSingleNode("page-margins");
+            double width = Convert.ToDouble(layoutNode.SelectSingleNode("page-width").InnerText);
+            Console.WriteLine(width);
+            var marginlistLeft = marginNode.SelectNodes("left-margin");
+            var marginlistRight = marginNode.SelectNodes("right-margin");
+            double marginLeft = Convert.ToDouble(marginlistLeft.Item(0).InnerText);
+            Console.WriteLine(marginLeft);
+            double marginRight = Convert.ToDouble(marginlistLeft.Item(0).InnerText);
+            Console.WriteLine(marginRight);
+
+            score.scale = (width - marginLeft - marginRight) / 1055;
+
             if (partNodes != null)
             {
                 foreach (XmlNode partNode in partNodes)
