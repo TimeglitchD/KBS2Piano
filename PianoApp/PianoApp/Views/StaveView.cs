@@ -15,11 +15,10 @@ namespace PianoApp.Views
         public MusicPieceController MPc { get; }
         private Grid myGrid;
 
-        public StaveView(Grid myGrid)
+        public StaveView(Grid myGrid, MusicPieceController mPc)
         {
             this.myGrid = myGrid;
-            PianoController pC = new PianoController();
-            MPc = new MusicPieceController() { Piano = pC };
+            MPc = mPc;
             sheet = new StackPanel();
             DrawMusic();
         }

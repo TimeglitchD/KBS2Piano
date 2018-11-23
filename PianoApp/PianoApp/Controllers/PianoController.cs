@@ -4,14 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Threading;
 using MusicXml.Domain;
 using PianoApp.Models;
+using PianoApp.Views;
 
 namespace PianoApp.Controllers
 {
     public class PianoController
     {
         public PianoModel PianoModel { get; set; } = new PianoModel();
+        public PianoView PianoView { get; set; }
 
         public void UpdatePianoKeys(Dictionary<Note, GuidesController.Timeout> noteAndTimeoutDictionary)
         {
@@ -23,9 +27,16 @@ namespace PianoApp.Controllers
                     if (keyValuePair.Key.Pitch.Step.ToString() == keyModel.Step.ToString() && keyValuePair.Key.Pitch.Alter == keyModel.Alter)
                     {
                         keyModel.Active = true;
+                        keyModel.KeyRect.Dispatcher.BeginInvoke((Action) (() => keyModel.Color()));
+                        
+
                         Console.WriteLine(keyValuePair.Key.XPos);
                         Console.WriteLine($"Note {keyValuePair.Key.Pitch.Step}{keyValuePair.Key.Pitch.Octave}{keyValuePair.Key.Pitch.Alter} key pressed: {keyModel.Step}{PianoModel.OctaveModelList[keyValuePair.Key.Pitch.Octave].Position}{keyModel.Alter}");
                     }
+                    else
+                    {
+                        keyModel.Active = false;
+                    }                    
                 }
             }
         }

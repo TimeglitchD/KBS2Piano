@@ -61,9 +61,15 @@ namespace PianoApp
 
             mPc = new MusicPieceController() { Piano = pC };
 
+
             DrawMenu();
             InitializeComponent();
             Show();
+        }
+
+        public void OnNoteIntersect(object source, EventArgs e)
+        {
+            Console.WriteLine("updateddddddddddddddd!!!!!!!!!!!!!!!!");
         }
 
         private void DrawMenu()
@@ -136,16 +142,19 @@ namespace PianoApp
             Content = myGrid;
 
             //Create the staves
-            pv = new PianoView(myGrid);
-            sv = new StaveView(myGrid);
-            Content = pv.myGrid;
-                       
+            
+            sv = new StaveView(myGrid, mPc);
+            pv = new PianoView(myGrid, mPc);
+
+
+
 
             //Draw the notes
             nv = new NoteView(sv);
             nv.DrawNotes();
 
         }
+
 
         private void DrawBpmMenu()
         {

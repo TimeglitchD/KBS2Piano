@@ -15,6 +15,7 @@ namespace PianoApp.Controllers
 {
     public class GuidesController
     {
+
         public int _bpm;
 
         public int Bpm { get; set; }
@@ -33,6 +34,9 @@ namespace PianoApp.Controllers
         private Dictionary<Note, Timeout> _activeNoteAndTimeoutDict = new Dictionary<Note, Timeout>();
         private Dictionary<Note, float> _toDoNoteDict = new Dictionary<Note, float>();
         private Stopwatch _stopwatch;
+
+        private System.Timers.Timer _timerStaffOne;
+        private System.Timers.Timer _timerStaffTwo;
 
         private bool _isPlaying = false;
 
@@ -103,33 +107,45 @@ namespace PianoApp.Controllers
 
         private void RemoveFirstNoteFromToDoDict(int staffNumber)
         {
-            _toDoNoteDict.Remove(_toDoNoteDict.Keys.First());
+            if (_toDoNoteDict.Count > 0) _toDoNoteDict.Remove(_toDoNoteDict.Keys.First());
         }
 
         private void NoteIntersectEvent(object source, ElapsedEventArgs e, int staffNumber)
         {
+            
             //First remove the first note
-            RemoveFirstNoteFromToDoDict(staffNumber);
-            _activeNoteAndTimeoutDict.Add(_toDoNoteDict.Keys.First(), new Timeout()
+//            RemoveFirstNoteFromToDoDict(staffNumber);
+            try
             {
-                NoteTimeout = _toDoNoteDict.Values.First(),
-                TimeAdded = _stopwatch.ElapsedMilliseconds
-            });
+                _activeNoteAndTimeoutDict.Add(_toDoNoteDict.Keys.First(), new Timeout()
+                {
+                    NoteTimeout = _toDoNoteDict.Values.First(),
+                    TimeAdded = _stopwatch.ElapsedMilliseconds
+                });
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
 
-            var tempActiveNoteDict = new Dictionary<Note, Timeout>(_activeNoteAndTimeoutDict);
+            Dictionary<Note, Timeout> tempActiveNoteDict;
+            tempActiveNoteDict = new Dictionary<Note, Timeout>(_activeNoteAndTimeoutDict);
 
             //Remove keys that are done
-            foreach (var keyValuePair in _activeNoteAndTimeoutDict.Where(t => _stopwatch.ElapsedMilliseconds > t.Value.NoteTimeout + t.Value.TimeAdded))
+            foreach (var keyValuePair in _activeNoteAndTimeoutDict.Where(t => _stopwatch.ElapsedMilliseconds >= (t.Value.NoteTimeout * 1000) + t.Value.TimeAdded))
             {
                 tempActiveNoteDict.Remove(keyValuePair.Key);
             }
 
-            _activeNoteAndTimeoutDict = new Dictionary<Note, Timeout>(tempActiveNoteDict);
+            _activeNoteAndTimeoutDict = tempActiveNoteDict;
 
             Piano.UpdatePianoKeys(_activeNoteAndTimeoutDict);
+
+//            if (_toDoNoteDict.Count < 1)
+//            {
+//                this.Stop();
+//            }
         }
-
-
 
         public bool Start()
         {
@@ -139,22 +155,23 @@ namespace PianoApp.Controllers
             //Fill the to do list with notes from the current music piece
             FillToDoList();
 
-            System.Timers.Timer timerStaffOne = new System.Timers.Timer();
-            timerStaffOne.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 1);
-            timerStaffOne.Interval = (ReturnFirstNoteTimeout(1));
-            timerStaffOne.Enabled = true;
+            _timerStaffOne = new System.Timers.Timer();
+            _timerStaffOne.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 1);
+            _timerStaffOne.Interval = (ReturnFirstNoteTimeout(1));
+            _timerStaffOne.Enabled = true;
 
-            System.Timers.Timer timerStaffTwo = new System.Timers.Timer();
-            timerStaffOne.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 2);
-            timerStaffTwo.Interval = (ReturnFirstNoteTimeout(2));
-            timerStaffTwo.Enabled = true;
+            _timerStaffTwo = new System.Timers.Timer();
+            _timerStaffTwo.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 2);
+            _timerStaffTwo.Interval = (ReturnFirstNoteTimeout(2));
+            _timerStaffTwo.Enabled = true;
 
             return true;
         }
 
         public bool Stop()
         {
-            _isPlaying = false;
+            _timerStaffOne.Enabled = false;
+            _timerStaffTwo.Enabled = false;
             return true;
         }
 

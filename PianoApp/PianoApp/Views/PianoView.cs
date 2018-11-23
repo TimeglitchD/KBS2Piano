@@ -18,16 +18,16 @@ namespace PianoApp.Views
     /// <summary>
     /// Interaction logic for PianoView.xaml
     /// </summary>
-    public partial class PianoView
+    public class PianoView
     {
-        private PianoController PC { get; }
+        public MusicPieceController MusicPieceController { get; set; }
         private DockPanel piano = new DockPanel();
         public Grid myGrid;
 
-
-        public PianoView(Grid myGrid)
+        public PianoView(Grid myGrid, MusicPieceController mPc)
         {
-            PC = new PianoController();
+            MusicPieceController = mPc;
+            MusicPieceController.Piano.PianoView = this;
             this.myGrid = myGrid;
             DrawPianoView();
         }
@@ -35,10 +35,10 @@ namespace PianoApp.Views
         public void DrawPianoView()
         {
             //clear the view
-            piano.Children.Clear();
-            
+            if (piano != null) piano.Children.Clear();
+
             //draw the piano
-            piano = PC.DrawPianoController();
+            piano = MusicPieceController.Piano.DrawPianoController();
             //piano.Orientation = Orientation.Horizontal;
             //zet stackpanel in de goede plek op het grid
             Grid.SetRow(piano, 2);
