@@ -188,7 +188,7 @@ namespace MusicXml
             return backup;
         }
 
-        private static Note GetNote(XmlNode noteNode, double scale)
+        private static Note GetNote(XmlNode noteNode)
         {
             var note = new Note();
 
@@ -212,11 +212,11 @@ namespace MusicXml
             if (xPos != null)
             {
                 note.XPos = float.Parse(xPos.Value, CultureInfo.InvariantCulture.NumberFormat);
-                note.XPos /= (float)scale;
+                
             }
             else
             {
-                note.XPos = 12 / (float)scale;
+                
             }
                 
             //HERE

@@ -63,7 +63,7 @@ namespace PianoApp
 
         private void DrawStaves()
         {
-            sv = new StaveView(myGrid);
+            sv = new StaveView(myGrid, mPc);
 
             metronomeSound sound = new metronomeSound();
             sound.startMetronome(120, 4, 1);
@@ -81,7 +81,7 @@ namespace PianoApp
             //menuGrid.ShowGridLines = true;
 
             // Define all rows for mainGrid
-            DefineRowMyGrid();
+            //DefineRowMyGrid();
             //Create the staves
             
             sv = new StaveView(myGrid, mPc);
@@ -95,81 +95,27 @@ namespace PianoApp
             nv.DrawNotes();
 
             bv = new ButtonView(myGrid, sv, nv);
-
-
-        private void DrawBpmMenu()
-        {
-            // Add the first text cell to the Grid
-            TextBlock txt1 = new TextBlock();
-            txt1.Text = "BPM =";
-            txt1.FontSize = 35;
-            txt1.Margin = new Thickness(0, 40, 0, -40);
-            txt1.FontWeight = FontWeights.Bold;
-            Grid.SetRow(txt1, 0);
-
-            // Add textbox to set bpm
-            bpmTB = new TextBox();
-            bpmTB.Width = 90;
-            bpmTB.FontSize = 30;
-            bpmTB.Name = "bpmTB";
-            bpmTB.Text = "60";
-            bpmTB.Height = 40;
-            bpmTB.Margin = new Thickness(-940, -5, 0, -40);
-            Grid.SetRow(bpmTB, 0);
-
-            // Add combobox to set bpm to notes
-            notesCB = new ComboBox();
-            notesCB.Width = 130;
-            notesCB.Height = 40;
-            notesCB.FontSize = 20;
-
-            // Add items to combobox
-            notesCB.Items.Add("Hele noot");
-            notesCB.Items.Add("Halve noot");
-            notesCB.Items.Add("Kwart noot");
-
-            // Set first item selected
-            notesCB.SelectedIndex = 0;
-            notesCB.Margin = new Thickness(-700, -5, 0, -40);
-            Grid.SetRow(notesCB, 0);
-
-            // Add items to grid
-            myGrid.Children.Add(txt1);
-            myGrid.Children.Add(bpmTB);
-            myGrid.Children.Add(notesCB);
         }
 
-        public void drawMetronomeMenu()
-        {
-            metronomeButton = new Button();
-            metronomeButton.Width = 120;
-            metronomeButton.Height = 40;
-            metronomeButton.Content = "Metronoom: Uit";
-            metronomeButton.Click += onMetronomeButtonClick;
-            metronomeButton.Margin = new Thickness(-300, -5, 0, -40);
-            myGrid.Children.Add(metronomeButton);
+        //private void DefineRowMyGrid()
+        //{
+        //    // Define new row
+        //    RowDefinition rowDef1 = new RowDefinition();
+        //    RowDefinition rowDef2 = new RowDefinition();
+        //    RowDefinition rowDef3 = new RowDefinition();
 
-        }
+        //    // Add lenght to rows
+        //    rowDef1.Height = new GridLength(50, GridUnitType.Star);
+        //    rowDef2.Height = new GridLength(500, GridUnitType.Star);
+        //    rowDef3.Height = new GridLength(200, GridUnitType.Star);
 
-        private void DefineRowMyGrid()
-        {
-            // Define new row
-            RowDefinition rowDef1 = new RowDefinition();
-            RowDefinition rowDef2 = new RowDefinition();
-            RowDefinition rowDef3 = new RowDefinition();
-
-            // Add lenght to rows
-            rowDef1.Height = new GridLength(50, GridUnitType.Star);
-            rowDef2.Height = new GridLength(500, GridUnitType.Star);
-            rowDef3.Height = new GridLength(200, GridUnitType.Star);
-
-            // Add row to mainGrid
-            myGrid.RowDefinitions.Add(rowDef1);
-            myGrid.RowDefinitions.Add(rowDef2);
-            myGrid.RowDefinitions.Add(rowDef3);
+        //    // Add row to mainGrid
+        //    myGrid.RowDefinitions.Add(rowDef1);
+        //    myGrid.RowDefinitions.Add(rowDef2);
+        //    myGrid.RowDefinitions.Add(rowDef3);
 
             
-        }
+        //}
 
         private void countdownFinished(object sender, EventArgs e)
         {

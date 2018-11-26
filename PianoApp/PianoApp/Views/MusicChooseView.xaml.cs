@@ -67,7 +67,7 @@ namespace PianoApp.Views
 
         public void Start()
         {
-            sv.MPc.Guide.Start();
+            sv.MusicPieceController.Guide.Start();
         }
 
         //event updates file path based on selection

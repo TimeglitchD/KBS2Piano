@@ -39,7 +39,7 @@ namespace PianoApp.Views
             this.myGrid = myGrid;
             this.nv = nv;
             this.sv = sv;
-            this.mPc = sv.MPc;
+            this.mPc = sv.MusicPieceController;
 
             // Define all columns for menuGrid
             DefineGridRowsMenuGrid();
@@ -157,7 +157,7 @@ namespace PianoApp.Views
             // Add textbox to set bpm
             bpmTB = new TextBox();
             bpmTB.Width = menuGrid.ColumnDefinitions[1].Width.Value - 10;
-            bpmTB.Height = myGrid.RowDefinitions[1].Height.Value;
+            bpmTB.Height = 40;
             bpmTB.HorizontalAlignment = HorizontalAlignment.Left;
             bpmTB.VerticalAlignment = VerticalAlignment.Bottom;
             bpmTB.FontSize = 30;
