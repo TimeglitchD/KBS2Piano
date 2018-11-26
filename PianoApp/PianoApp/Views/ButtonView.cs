@@ -98,7 +98,6 @@ namespace PianoApp.Views
                 MessageBox.Show("Je hebt geen muziekstuk ingeladen!", "Foutmelding");
                 return;
             }
-
             try
             {
                 // Set value to int
@@ -128,6 +127,7 @@ namespace PianoApp.Views
                 MessageBox.Show(ex.Message);
                 return;
             }
+            
             CheckPause();
             Console.WriteLine(mPc.Guide.Bpm);
             Console.WriteLine(mPc.Guide.Note);
@@ -213,9 +213,15 @@ namespace PianoApp.Views
             bpmTB.Background = Brushes.White;
             notesCB.IsEnabled = true;
             metronomeButton.IsEnabled = true;
-
-            // TODO
-            //mPc.Guide.Start();
+            metronome.stopMetronome();
+            //start countdown and start guide from beginning
+            if(metronomeEnabled)
+            {
+                metronome.startMetronome(bpmValue, 4, 1);
+            } else
+            {
+                metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+            }
         }
 
         private void DefineGridRowsMenuGrid()
