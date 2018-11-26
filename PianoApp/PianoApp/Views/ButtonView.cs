@@ -208,12 +208,12 @@ namespace PianoApp.Views
         {
             Console.WriteLine("Muziekstuk is gestopt....!");
 
-            // Set buttons enabled or readonly false if resetting music
-            bpmTB.IsReadOnly = false;
-            bpmTB.Background = Brushes.White;
-            notesCB.IsEnabled = true;
-            metronomeButton.IsEnabled = true;
-            metronome.stopMetronome();
+            //// Set buttons enabled or readonly false if resetting music
+            //bpmTB.IsReadOnly = false;
+            //bpmTB.Background = Brushes.White;
+            //notesCB.IsEnabled = true;
+            //metronomeButton.IsEnabled = true;
+            //metronome.stopMetronome();
             //start countdown and start guide from beginning
             if(metronomeEnabled)
             {
