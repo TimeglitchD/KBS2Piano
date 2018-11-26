@@ -107,15 +107,23 @@ namespace PianoApp.Views
                 mPc.Guide.Bpm = bpmValue;
                 mPc.Guide.SetNote(notesCB.Text);
 
-                //set value in metronome and start it.
-                if (metronomeEnabled)
+                if (!paused)
                 {
-                    metronome.startMetronome(bpmValue, 4, 1);
+                    //set value in metronome and start it.
+                    if (metronomeEnabled)
+                    {
+                        metronome.startMetronome(bpmValue, 4, 1);
+                    }
+                    else
+                    {
+                        metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+                    }
                 }
                 else
                 {
-                    metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+                    mPc.Guide.Stop();
                 }
+                
             }
             catch (FormatException)
             {
@@ -215,7 +223,7 @@ namespace PianoApp.Views
             metronomeButton.IsEnabled = true;
             metronome.stopMetronome();
 
-            mPc.Guide.Stop();
+            mPc.Guide.Start();
             //start countdown and start guide from beginning
             if (metronomeEnabled)
             {

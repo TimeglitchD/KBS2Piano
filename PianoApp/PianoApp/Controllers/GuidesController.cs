@@ -34,7 +34,6 @@ namespace PianoApp.Controllers
 
         public PianoController Piano;
         public SheetController Sheet;
-        private float _definedBpm = 180;
 
         public Score Score;
 
@@ -96,7 +95,7 @@ namespace PianoApp.Controllers
 
             _divs = 2;
 
-            _interval = (int)(1000.0 / (_definedBpm / 60.0));
+            _interval = (int)(1000.0 / (_bpm / 60.0));
 
             //            //Set the divisions
             //            foreach (var scorePart in Score.Parts)
@@ -181,8 +180,6 @@ namespace PianoApp.Controllers
 
         public bool Start()
         {
-            _stopwatch = Stopwatch.StartNew();
-
             //Set the attributes from the current music piece
             SetAttributes();
             //Fill the to do list with notes from the current music piece
