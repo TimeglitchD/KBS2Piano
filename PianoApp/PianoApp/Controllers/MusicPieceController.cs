@@ -81,28 +81,11 @@ namespace PianoApp.Controllers
         private void AddMeasuresToGreatStaffs()
         {
             double maxWidth = 0;
-            //int lastItem = 0;
             int staff = 0;
 
             foreach (var scorePart in _score.Parts)
             {
-                //for (var i = 0; i < scorePart.Measures.Count; i++)
-                //{
-                //    if (i >= lastItem)
-                //    {
-                //        if (maxWidth < _maxStaffWidth)
-                //        {
-                //            greatStaffModel.MeasureList.Add(scorePart.Measures[i]);
-                //            maxWidth += (double)scorePart.Measures[i].Width;
-                //            lastItem++;
-                //        }
-                //        else
-                //        {
-                //            maxWidth = 0;
-                //            break;
-                //        }
-                //    }
-                //}
+
                 foreach (var measure in scorePart.Measures)
                 {
                     maxWidth += (double)measure.Width;
