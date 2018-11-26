@@ -44,6 +44,7 @@ namespace PianoApp.Controllers
         private int currentStaff = 0;
         private bool atStaffEndOne = false;
         private bool atStaffEndTwo = false;
+        public event EventHandler staffEndReached;
 
         public struct Timeout
         {
@@ -156,8 +157,7 @@ namespace PianoApp.Controllers
                         }
                     }
                 }
-
-                goToNextStaff();
+                goToNextStaff();                    
             }
             catch (Exception exception)
             {
@@ -198,9 +198,16 @@ namespace PianoApp.Controllers
         {
             if(atStaffEndOne && atStaffEndTwo)
             {
+                atStaffEndOne = false;
+                atStaffEndTwo = false;
+
                 currentStaff++;
                 stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
-                System.Windows.MessageBox.Show("next staff");
+
+                if (staffEndReached != null)
+                {
+                    staffEndReached(this, EventArgs.Empty);
+                }
             }
         }
 

@@ -21,7 +21,9 @@ namespace PianoApp.Controllers
         public GuidesController Guide { get; set; } = new GuidesController();
 
         public SheetModel Sheet { get; set; }
-         
+
+        public event EventHandler staffEndReached;
+
         //1055 is max length of one staff
         private const double _maxStaffWidth = 1055;
 
@@ -39,6 +41,7 @@ namespace PianoApp.Controllers
 
             AddNotesToMeasures();
 
+            Guide.staffEndReached += staffEndReached;
         }
 
         public StackPanel DrawMusicPiece()

@@ -273,11 +273,6 @@ namespace PianoApp
                 startBtn.Content = "||";
             }
         }
-
-        public void scrollToNextGreatStave()
-        {
-            sv.scrollToNext(200);
-        }
     }
 
     public enum NoteType

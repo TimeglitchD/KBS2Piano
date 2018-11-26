@@ -22,6 +22,8 @@ namespace PianoApp.Views
             MusicPieceController = mPc;
             sheet = new StackPanel();
             DrawMusic();
+
+            MusicPieceController.staffEndReached += scrollToNext;
         }
 
         public void DrawMusic()
@@ -49,10 +51,10 @@ namespace PianoApp.Views
 
         }
 
-        public void scrollToNext(double offset)
+        public void scrollToNext(object sender, EventArgs e)
         {
             double location = scroll.VerticalOffset;
-            scroll.ScrollToVerticalOffset(location + offset);
+            scroll.ScrollToVerticalOffset(location + 200);
             scroll.UpdateLayout();
         }
     }
