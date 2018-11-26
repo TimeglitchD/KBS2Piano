@@ -13,7 +13,7 @@ namespace PianoApp.Controllers
 {
     public class MusicPieceController
     {
-        private Score _score;
+        public Score _score;
         public PianoController Piano;
 
         public GuidesController Guide { get; set; } = new GuidesController();
@@ -67,7 +67,7 @@ namespace PianoApp.Controllers
         private void AddGreatStaffsToSheet()
         {
 
-            for(int i = _score.systems; i > 0; i--)
+            for (int i = _score.Systems; i > 0; i--)
             {
                 Sheet.GreatStaffModelList.Add(new GreatStaffModel());
             }
@@ -77,36 +77,46 @@ namespace PianoApp.Controllers
             Console.WriteLine("================================");
         }
 
-        //Fill staffs width measures based on amount of measures in the piece
+        //Fill staffs with measures based on amount of measures in the piece
         private void AddMeasuresToGreatStaffs()
         {
             double maxWidth = 0;
-            int lastItem = 0;
+            //int lastItem = 0;
+            int staff = 0;
 
-            foreach (var greatStaffModel in Sheet.GreatStaffModelList)
+            foreach (var scorePart in _score.Parts)
             {
-                foreach (var scorePart in _score.Parts)
+                //for (var i = 0; i < scorePart.Measures.Count; i++)
+                //{
+                //    if (i >= lastItem)
+                //    {
+                //        if (maxWidth < _maxStaffWidth)
+                //        {
+                //            greatStaffModel.MeasureList.Add(scorePart.Measures[i]);
+                //            maxWidth += (double)scorePart.Measures[i].Width;
+                //            lastItem++;
+                //        }
+                //        else
+                //        {
+                //            maxWidth = 0;
+                //            break;
+                //        }
+                //    }
+                //}
+                foreach (var measure in scorePart.Measures)
                 {
-                    for (var i = 0; i < scorePart.Measures.Count; i++)
+                    maxWidth += (double)measure.Width;
+                    Console.WriteLine("WIDTH: " + maxWidth);
+                    if (maxWidth > +_maxStaffWidth)
                     {
-                        if (i >= lastItem)
-                        {
-                            if (maxWidth < _maxStaffWidth)
-                            {
-                                greatStaffModel.MeasureList.Add(scorePart.Measures[i]);
-                                maxWidth += (double)scorePart.Measures[i].Width;
-                                lastItem++;
-                            }
-                            else
-                            {
-                                maxWidth = 0;
-                                break;
-                            }
-                        }
+                        staff++;
+                        maxWidth = (double)measure.Width;
                     }
+                    Sheet.GreatStaffModelList[staff].MeasureList.Add(measure);
+
                 }
-                Console.WriteLine($"Amount measures added: {greatStaffModel.MeasureList.Count}");
             }
+            Console.WriteLine($"Amount measures added: {Sheet.GreatStaffModelList[staff].MeasureList.Count}");
             Console.WriteLine("================================");
         }
 
