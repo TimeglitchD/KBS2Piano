@@ -40,6 +40,11 @@ namespace PianoApp.Controllers
 
         private System.Timers.Timer _timer;
 
+        private List<PianoApp.Models.StaffModel> stafflist;
+        private int currentStaff = 0;
+        private bool atStaffEndOne = false;
+        private bool atStaffEndTwo = false;
+
         public struct Timeout
         {
             public float NoteTimeout { get; set; }
@@ -98,6 +103,8 @@ namespace PianoApp.Controllers
             //                    }
             //                }
             //            }
+
+            stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
         }
 
         private int ReturnFirstNoteTimeout(int staffNumber)
@@ -128,6 +135,9 @@ namespace PianoApp.Controllers
                     //Remove the note from to do 
                     RemoveFirstNoteFromToDoDict(tempList[i].Key);
 
+
+                    checkLastNote(_activeNoteAndTimeoutDict);
+
                     for (int j = i + 1; j < tempList.Count; j++)
                     {
                         if (tempList[i].Key != tempList[j].Key &&
@@ -145,6 +155,8 @@ namespace PianoApp.Controllers
                         }
                     }
                 }
+
+                goToNextStaff();
             }
             catch (Exception exception)
             {
@@ -163,6 +175,32 @@ namespace PianoApp.Controllers
 
             Piano.UpdatePianoKeys(_activeNoteAndTimeoutDict);
             Sheet.UpdateNotes(_activeNoteAndTimeoutDict);
+        }
+
+        private void checkLastNote(Dictionary<Note, Timeout> noteDict)
+        {
+            Note lastNoteStaffOne = stafflist[0].NoteList.Last();
+            Note lastNoteStaffTwo = stafflist[1].NoteList.Last();
+            Timeout temp = new Timeout();
+            if(noteDict.TryGetValue(lastNoteStaffOne, out temp))
+            {
+                atStaffEndOne = true;
+            }
+
+            if(noteDict.TryGetValue(lastNoteStaffTwo, out temp))
+            {
+                atStaffEndTwo = true;
+            }
+        }
+
+        private void goToNextStaff()
+        {
+            if(atStaffEndOne && atStaffEndTwo)
+            {
+                currentStaff++;
+                stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
+                System.Windows.MessageBox.Show("next staff");
+            }
         }
 
         public bool Start()
