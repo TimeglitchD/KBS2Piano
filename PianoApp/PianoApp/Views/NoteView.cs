@@ -21,7 +21,6 @@ namespace PianoApp.Views
         public NoteView(StaveView sv)
         {
             this.mPc = sv.MusicPieceController;
-            mPc.SheetController.NoteView = this;
             DrawNotes();
         }
 
@@ -32,26 +31,21 @@ namespace PianoApp.Views
             foreach (var greatStaff in mPc.Sheet.GreatStaffModelList)
             {
                 totalwidth = 0;
+                //if the piece is empty, draw the end
                 if(greatStaff.MeasureList.Count() == 0)
                 {
-                    DrawEnd(totalwidth, mPc.Sheet.GreatStaffModelList[idx]);
+                    DrawEnd(mPc.Sheet.GreatStaffModelList[idx]);
                 }
 
-                AddMeasureLine(greatStaff, totalwidth);
+                AddMeasureLine(greatStaff, 0);
 
 
                 foreach (var measure in greatStaff.MeasureList)
                 {
                     
                     totalwidth += measure.Width;
-                    if (measure == greatStaff.MeasureList.Last<Measure>() && greatStaff == mPc.Sheet.GreatStaffModelList.Last<GreatStaffModel>())
-                    {
-                        DrawEnd(totalwidth, greatStaff);
-                    }
-                    else
-                    {
-                        AddMeasureLine(greatStaff, totalwidth);
-                    }
+                    Console.WriteLine(totalwidth + "is width");
+                    
 
 
                     foreach (var measureElement in measure.MeasureElements)
@@ -60,6 +54,7 @@ namespace PianoApp.Views
                         {
                             var note = (Note)measureElement.Element;
                             StaffModel staff;
+                            //check whether the note belongs to the upper staff or not
                             if (note.Staff.Equals(1))
                             {
                                 staff = greatStaff.StaffList.First<StaffModel>();
@@ -73,7 +68,27 @@ namespace PianoApp.Views
                             Console.WriteLine("Note drawn");
                         }
                     }
+                    
+
+                    //check if this is the last measure of the piece
+                    if (measure == greatStaff.MeasureList.Last<Measure>() && greatStaff == mPc.Sheet.GreatStaffModelList.Last<GreatStaffModel>())
+                    {
+                        //draw the end if so
+                        DrawEnd(greatStaff);
+                    }
+                    else
+                    {
+                        if (measure != greatStaff.MeasureList.Last<Measure>())
+                        {
+                            AddMeasureLine(greatStaff, totalwidth);
+                        }
+
+                        //draw a measureline if not
+
+                    }
+
                     Console.WriteLine("Measure finished");
+                    AddMeasureLine(greatStaff, 1050);
                 }
 
                 Console.WriteLine("Great stave finished");
@@ -81,7 +96,7 @@ namespace PianoApp.Views
             Console.WriteLine("Notes finished.");
         }
 
-        private void DrawEnd(decimal totalwidth, GreatStaffModel greatStaff)
+        private void DrawEnd(GreatStaffModel greatStaff)
         {
             AddMeasureLine(greatStaff, 1055 - 10);
 
@@ -142,12 +157,19 @@ namespace PianoApp.Views
                 Console.WriteLine("clef is G");
                 switch (pitch.Step)
                 {
+                    default:
+                        row = 13;
+                        break;
                     case 'A':
                         if (pitch.Octave == 5)
                         {
                             row = 1;
-                        }
+                        }else
                         if (pitch.Octave == 4)
+                        {
+                            row = 8;
+                        }
+                        else
                         {
                             row = 8;
                         }
@@ -156,8 +178,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 2;
-                        }
+                        }else
                         if (pitch.Octave == 4)
+                        {
+                            row = 9;
+                        }
+                        else
                         {
                             row = 9;
                         }
@@ -166,8 +192,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 3;
-                        }
+                        }else
                         if (pitch.Octave == 4)
+                        {
+                            row = 10;
+                        }
+                        else
                         {
                             row = 10;
                         }
@@ -176,8 +206,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 4;
-                        }
+                        }else
                         if (pitch.Octave == 4)
+                        {
+                            row = 11;
+                        }
+                        else
                         {
                             row = 11;
                         }
@@ -186,8 +220,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 5;
-                        }
+                        }else
                         if (pitch.Octave == 4)
+                        {
+                            row = 12;
+                        }
+                        else
                         {
                             row = 12;
                         }
@@ -196,8 +234,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 6;
-                        }
+                        }else
                         if (pitch.Octave == 4)
+                        {
+                            row = 13;
+                        }
+                        else
                         {
                             row = 13;
                         }
@@ -214,12 +256,19 @@ namespace PianoApp.Views
                 Console.WriteLine("Clef is f");
                 switch (pitch.Step)
                 {
+                    default:
+                        row = 1;
+                        break;
                     case 'C':
                         if (pitch.Octave == 4)
                         {
                             row = 1;
-                        }
+                        }else
                         if (pitch.Octave == 3)
+                        {
+                            row = 8;
+                        }
+                        else
                         {
                             row = 8;
                         }
@@ -228,8 +277,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 4)
                         {
                             row = 2;
-                        }
+                        }else
                         if (pitch.Octave == 3)
+                        {
+                            row = 9;
+                        }
+                        else
                         {
                             row = 9;
                         }
@@ -238,8 +291,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 4)
                         {
                             row = 3;
-                        }
+                        }else
                         if (pitch.Octave == 3)
+                        {
+                            row = 10;
+                        }
+                        else
                         {
                             row = 10;
                         }
@@ -248,8 +305,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 4;
-                        }
+                        }else
                         if (pitch.Octave == 2)
+                        {
+                            row = 11;
+                        }
+                        else
                         {
                             row = 11;
                         }
@@ -258,8 +319,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 5;
-                        }
+                        }else
                         if (pitch.Octave == 2)
+                        {
+                            row = 12;
+                        }
+                        else
                         {
                             row = 12;
                         }
@@ -268,8 +333,12 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 6;
-                        }
+                        }else
                         if (pitch.Octave == 2)
+                        {
+                            row = 13;
+                        }
+                        else
                         {
                             row = 13;
                         }

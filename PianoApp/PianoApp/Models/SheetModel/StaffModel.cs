@@ -78,7 +78,7 @@ namespace PianoApp.Models
                     Line line = new Line();
                     line.Stroke = Brushes.Black;
                     line.X1 = 0;
-                    line.X2 = 1050;
+                    line.X2 = stave.Width-5;
                     line.HorizontalAlignment = HorizontalAlignment.Left;
                     line.VerticalAlignment = VerticalAlignment.Center;
                     line.StrokeThickness = 1;
