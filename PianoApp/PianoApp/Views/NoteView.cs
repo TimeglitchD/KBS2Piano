@@ -32,7 +32,7 @@ namespace PianoApp.Views
             {
                 totalwidth = 0;
                 //if the piece is empty, draw the end
-                if (greatStaff.MeasureList.Count() == 0)
+                if(greatStaff.MeasureList.Count() == 0)
                 {
                     DrawEnd(mPc.Sheet.GreatStaffModelList[idx]);
                 }
@@ -42,10 +42,10 @@ namespace PianoApp.Views
 
                 foreach (var measure in greatStaff.MeasureList)
                 {
-
+                    
                     totalwidth += measure.Width;
                     Console.WriteLine(totalwidth + "is width");
-
+                    
 
 
                     foreach (var measureElement in measure.MeasureElements)
@@ -53,7 +53,6 @@ namespace PianoApp.Views
                         if (measureElement.Type.Equals(MeasureElementType.Note))
                         {
                             var note = (Note)measureElement.Element;
-
                             StaffModel staff;
                             //check whether the note belongs to the upper staff or not
                             if (note.Staff.Equals(1))
@@ -65,21 +64,11 @@ namespace PianoApp.Views
                                 staff = greatStaff.StaffList.Last<StaffModel>();
                             }
                             Grid staveGrid = staff.stave;
-
-
-                            if (note.IsRest)
-                            {
-                                DrawRest(note.XPos, note.Pitch, staff, staveGrid, totalwidth, measure.Width);
-                            }
-                            else
-                            {
-                                GNote(note.XPos, note.Pitch, staff, staveGrid, totalwidth, measure.Width);
-                            }
+                            GNote(note.XPos, note.Pitch, staff, staveGrid, totalwidth, measure.Width);
                             Console.WriteLine("Note drawn");
-
                         }
                     }
-
+                    
 
                     //check if this is the last measure of the piece
                     if (measure == greatStaff.MeasureList.Last<Measure>() && greatStaff == mPc.Sheet.GreatStaffModelList.Last<GreatStaffModel>())
@@ -89,11 +78,12 @@ namespace PianoApp.Views
                     }
                     else
                     {
-                        //draw a measureline if not
                         if (measure != greatStaff.MeasureList.Last<Measure>())
                         {
                             AddMeasureLine(greatStaff, totalwidth);
                         }
+
+                        //draw a measureline if not
 
                     }
 
@@ -104,25 +94,6 @@ namespace PianoApp.Views
                 Console.WriteLine("Great stave finished");
             }
             Console.WriteLine("Notes finished.");
-        }
-
-        private void DrawRest(float x, Pitch pitch, StaffModel staff, Grid staveGrid, decimal totalwidth, decimal width)
-        {
-            Rectangle note = GetRest();
-
-
-            Thickness margin = note.Margin;
-            margin.Left = x + (float)totalwidth - (float)width;
-            note.Margin = margin;
-
-            int row = CheckRow(pitch, staff.Number);
-
-            Grid.SetRow(note, row - 1);
-            Grid.SetRowSpan(note, 3);
-            Grid.SetColumn(note, 1);
-            note.HorizontalAlignment = HorizontalAlignment.Left;
-            note.VerticalAlignment = VerticalAlignment.Center;
-            staveGrid.Children.Add(note);
         }
 
         private void DrawEnd(GreatStaffModel greatStaff)
@@ -193,8 +164,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 1;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 4)
                         {
                             row = 8;
@@ -208,8 +178,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 2;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 4)
                         {
                             row = 9;
@@ -223,8 +192,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 3;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 4)
                         {
                             row = 10;
@@ -238,8 +206,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 4;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 4)
                         {
                             row = 11;
@@ -253,8 +220,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 5;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 4)
                         {
                             row = 12;
@@ -268,8 +234,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 6;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 4)
                         {
                             row = 13;
@@ -298,8 +263,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 4)
                         {
                             row = 1;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 3)
                         {
                             row = 8;
@@ -313,8 +277,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 4)
                         {
                             row = 2;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 3)
                         {
                             row = 9;
@@ -328,8 +291,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 4)
                         {
                             row = 3;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 3)
                         {
                             row = 10;
@@ -343,8 +305,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 4;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 2)
                         {
                             row = 11;
@@ -358,8 +319,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 5;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 2)
                         {
                             row = 12;
@@ -373,8 +333,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 6;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 2)
                         {
                             row = 13;
@@ -402,17 +361,6 @@ namespace PianoApp.Views
             note.Width = 15;
             note.Height = note.Width;
             return note;
-        }
-
-        private Rectangle GetRest()
-        {
-            Rectangle rct = new Rectangle();
-            rct.Fill = Brushes.Black;
-            rct.Stroke = Brushes.Black;
-            rct.Width = 15;
-            rct.Height = rct.Width;
-
-            return rct;
         }
 
         private void AddMeasureLine(GreatStaffModel greatStaff, decimal totalwidth)
