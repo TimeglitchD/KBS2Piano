@@ -212,12 +212,10 @@ namespace PianoApp
             {
                 metronomeEnabled = false;
                 metronomeButton.Content = "Metronoom: Uit";
-                sv.scrollToNext(200);
             } else
             {
                 metronomeEnabled = true;
                 metronomeButton.Content = "Metronoom: Aan";
-                sv.scrollToNext(200);
             }
         }
 
@@ -275,7 +273,13 @@ namespace PianoApp
                 startBtn.Content = "||";
             }
         }
+
+        public void scrollToNextGreatStave()
+        {
+            sv.scrollToNext(200);
+        }
     }
+
     public enum NoteType
     {
         Quarter,

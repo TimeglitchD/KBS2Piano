@@ -55,7 +55,5 @@ namespace PianoApp.Views
             scroll.ScrollToVerticalOffset(location + offset);
             scroll.UpdateLayout();
         }
-
-
     }
 }

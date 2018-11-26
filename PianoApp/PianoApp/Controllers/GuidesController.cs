@@ -125,6 +125,7 @@ namespace PianoApp.Controllers
                         NoteTimeout = tempList[i].Value,
                         TimeAdded = _stopwatch.ElapsedMilliseconds
                     });
+
                     //Remove the note from to do 
                     RemoveFirstNoteFromToDoDict(tempList[i].Key);
 
