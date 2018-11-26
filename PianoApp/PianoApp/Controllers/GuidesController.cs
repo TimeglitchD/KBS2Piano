@@ -11,10 +11,22 @@ namespace PianoApp.Controllers
 {
     public class GuidesController
     {
+        public float _bpm;
 
-        public int _bpm;
+        public float Bpm
+        {
+            get
+            {
+                return _bpm;
+            }
+            set
+            {
+                if (value < 0 || value > 300) throw new BpmOutOfRangeException($"Bpm waarde ligt niet tussen de 0 en de 300 ({value})");
 
-        public int Bpm { get; set; }
+                _bpm = value;
+            }
+        }
+
         public NoteType Note { get; set; }
 
         public PianoController Piano;
@@ -84,7 +96,7 @@ namespace PianoApp.Controllers
         private void SetAttributes()
         {
             //set timing of music piece
-            _timing = 60 / _definedBpm;
+            _timing = 60 / _bpm;
 
             _divs = 2;
 

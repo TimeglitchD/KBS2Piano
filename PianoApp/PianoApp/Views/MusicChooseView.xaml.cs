@@ -65,6 +65,11 @@ namespace PianoApp.Views
             }
         }
 
+        public void Start()
+        {
+            sv.MPc.Guide.Start();
+        }
+
         //event updates file path based on selection
         private void DataGrid_SelectionChanged(object sender, RoutedEventArgs e)
         {

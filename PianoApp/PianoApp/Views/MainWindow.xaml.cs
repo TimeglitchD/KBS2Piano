@@ -30,28 +30,21 @@ namespace PianoApp
 
         private MusicChooseView mCv;
         private PianoView pv;
-
-        private MusicPieceController mPc;
+        private StaveView sv;
 
         private StackPanel staves = new StackPanel();
         private StackPanel piano = new StackPanel();
 
-        private StaveView sv;
         private NoteView nv;
+        public ButtonView bv;
         
         private Grid myGrid = new Grid();
 
-        private TextBox bpmTB = new TextBox();
-        private ComboBox notesCB = new ComboBox();
+        private metronomeSound metronome;
 
-        private bool paused = false;
-        private Button startBtn = new Button();
-
-        int bpmValue = -1;
-
-        private metronomeSound metronome = new metronomeSound();
-        private bool metronomeEnabled = false;
-        private Button metronomeButton;
+        Button startBtn = new Button();
+        Button resetButton = new Button();
+        private MusicPieceController mPc;
 
         public MainWindow()
         {
@@ -68,6 +61,14 @@ namespace PianoApp
             Show();
         }
 
+        private void DrawStaves()
+        {
+            sv = new StaveView(myGrid);
+
+            metronomeSound sound = new metronomeSound();
+            sound.startMetronome(120, 4, 1);
+        }
+
         private void DrawMenu()
         {
             // Create the Grid
@@ -76,67 +77,11 @@ namespace PianoApp
                 ShowGridLines = true
             };
 
-            
-            // Define the Rows
-            RowDefinition rowDef1 = new RowDefinition();
-            RowDefinition rowDef2 = new RowDefinition();
-            RowDefinition rowDef3 = new RowDefinition();
-            rowDef1.Height = new GridLength(1, GridUnitType.Star);
-            rowDef2.Height = new GridLength(5, GridUnitType.Star);
-            rowDef3.Height = new GridLength(2, GridUnitType.Star);
-            myGrid.RowDefinitions.Add(rowDef1);
-            myGrid.RowDefinitions.Add(rowDef2);
-            myGrid.RowDefinitions.Add(rowDef3);
+            // show menuGrid lines
+            //menuGrid.ShowGridLines = true;
 
-            // Draw menu items
-            DrawBpmMenu();
-
-            drawMetronomeMenu();
-
-            // Add the button to the Grid
-            Button SelectSheetMusic = new Button();
-            SelectSheetMusic.Name = "SelectSheetMusic";
-            SelectSheetMusic.Content = "Select sheet music";
-            SelectSheetMusic.VerticalAlignment = VerticalAlignment.Center;
-            SelectSheetMusic.Width = 100;
-            SelectSheetMusic.Height = 80;
-            SelectSheetMusic.Click += SelectSheetMusic_Click;
-            Grid.SetRow(SelectSheetMusic, 0);
-
-            // Add the second text cell to the Grid
-            TextBlock txt2 = new TextBlock();
-            txt2.Text = "STAVES";
-            txt2.FontSize = 12;
-            txt2.FontWeight = FontWeights.Bold;
-            Grid.SetRow(txt2, 1);
-
-
-            // Add the third text cell to the Grid
-            TextBlock txt3 = new TextBlock();
-            txt3.Text = "PIANO";
-            txt3.FontSize = 12;
-            txt3.FontWeight = FontWeights.Bold;
-            Grid.SetRow(txt3, 2);
-
-
-            // Start button
-            startBtn.FontSize = 25;
-            startBtn.Name = "startBtn";
-            startBtn.Content = "▶";
-            startBtn.Width = 40;
-            startBtn.Height = 40;
-            startBtn.Margin = new Thickness(-500, -5, 0, -40);
-            startBtn.Click += StartBtn_Click;
-            Grid.SetRow(startBtn, 0);
-
-            // Add the TextBlock elements to the Grid Children collection
-            myGrid.Children.Add(txt2);
-            myGrid.Children.Add(txt3);
-            myGrid.Children.Add(SelectSheetMusic);
-            myGrid.Children.Add(startBtn);
-
-            Content = myGrid;
-
+            // Define all rows for mainGrid
+            DefineRowMyGrid();
             //Create the staves
             
             sv = new StaveView(myGrid, mPc);
@@ -149,7 +94,7 @@ namespace PianoApp
             nv = new NoteView(sv);
             nv.DrawNotes();
 
-        }
+            bv = new ButtonView(myGrid, sv, nv);
 
 
         private void DrawBpmMenu()
@@ -206,72 +151,36 @@ namespace PianoApp
 
         }
 
-        private void onMetronomeButtonClick(object sender, RoutedEventArgs e)
+        private void DefineRowMyGrid()
         {
-            if(metronomeEnabled)
-            {
-                metronomeEnabled = false;
-                metronomeButton.Content = "Metronoom: Uit";
-            } else
-            {
-                metronomeEnabled = true;
-                metronomeButton.Content = "Metronoom: Aan";
-            }
+            // Define new row
+            RowDefinition rowDef1 = new RowDefinition();
+            RowDefinition rowDef2 = new RowDefinition();
+            RowDefinition rowDef3 = new RowDefinition();
+
+            // Add lenght to rows
+            rowDef1.Height = new GridLength(50, GridUnitType.Star);
+            rowDef2.Height = new GridLength(500, GridUnitType.Star);
+            rowDef3.Height = new GridLength(200, GridUnitType.Star);
+
+            // Add row to mainGrid
+            myGrid.RowDefinitions.Add(rowDef1);
+            myGrid.RowDefinitions.Add(rowDef2);
+            myGrid.RowDefinitions.Add(rowDef3);
+
+            
         }
 
-        private void StartBtn_Click(object sender, RoutedEventArgs e)
+        private void countdownFinished(object sender, EventArgs e)
         {
-            try
+            //start guide here
+            MessageBox.Show("countdown finished");
+            if(mPc.Guide.Score == null)
             {
-                CheckPause();
-                // Set value to int
-                bpmValue = int.Parse(bpmTB.Text);
-
-                // Throw custom exception
-                if(bpmValue < 0 || bpmValue > 300) throw new BpmOutOfRangeException($"Bpm waarde ligt niet tussen de 0 en de 300 ({bpmValue})");
-
-                // Set values in GuideController
-                mPc.Guide.Bpm = bpmValue;
-                mPc.Guide.SetNote(notesCB.Text);
-
-                //set value in metronome and start it.
-                if(metronomeEnabled)
-                {
-                    metronome.startMetronome(bpmValue, 4);
-                }
-
-                //mPc.Guide.Start();
+                Console.WriteLine("Doet niet");
+                return;
             }
-            catch (FormatException)
-            {
-                MessageBox.Show("De ingevoerde waarde moet een getal zijn!");
-            }
-            catch (BpmOutOfRangeException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            Console.WriteLine(mPc.Guide.Bpm);
-            Console.WriteLine(mPc.Guide.Note);
-        }
-
-        private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
-        {
-            mCv = new MusicChooseView(sv, nv);
-            mCv.Show();
-        }
-
-        private void CheckPause()
-        {
-            if (paused)
-            {
-                paused = false;
-                startBtn.Content = "▶";
-            } else
-            {
-                paused = true;
-                startBtn.Content = "||";
-            }
+            mPc.Guide.Start();
         }
     }
 
