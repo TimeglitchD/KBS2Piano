@@ -14,6 +14,7 @@ namespace PianoApp.Views
         private StackPanel sheet;
         public MusicPieceController MusicPieceController { get; }
         private Grid myGrid;
+        private ScrollViewer scroll;
 
         public StaveView(Grid myGrid, MusicPieceController mPc)
         {
@@ -34,7 +35,7 @@ namespace PianoApp.Views
             Console.WriteLine("Sheet drawn.");
 
             //scrollbar
-            ScrollViewer scroll = new ScrollViewer();
+           scroll = new ScrollViewer();
             scroll.Visibility = Visibility.Visible;
             Grid.SetRow(scroll, 1);
 
@@ -46,6 +47,11 @@ namespace PianoApp.Views
 
             myGrid.Children.Add(scroll);
 
+        }
+
+        public void scrollToNext()
+        {
+            scroll.lo
         }
 
 
