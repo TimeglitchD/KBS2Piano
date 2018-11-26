@@ -55,7 +55,14 @@ namespace MusicXml
 								decimal w;
 								if (measureWidthAttribute != null && decimal.TryParse(measureWidthAttribute.InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture,out w))
 									measure.Width = w;
-							}
+
+							    var measureNumberAttribute = measureNode.Attributes["number"];
+
+							    int n;
+							    if (measureNumberAttribute != null && int.TryParse(measureNumberAttribute.InnerText , out n))
+							        measure.Number = n;
+
+                            }
 
 							var attributesNode = measureNode.SelectSingleNode("attributes");
 
@@ -97,6 +104,9 @@ namespace MusicXml
 								{
 									var newNote = GetNote(node);
 									measureElement = new MeasureElement {Type = MeasureElementType.Note, Element = newNote};
+
+								    var note = (Note) measureElement.Element;
+								    note.MeasureNumber = measure.Number;
 								}
 								else if (node.Name == "backup")
 								{

@@ -1,3 +1,5 @@
+using System.Windows.Media;
+using System.Windows.Shapes;
 using System.Xml;
 
 namespace MusicXml.Domain
@@ -12,6 +14,10 @@ namespace MusicXml.Domain
 			Staff = -1;
 			IsChordTone = false;
 		}
+
+	    public bool Duplicate { get; set; } = false;
+
+	    public int MeasureNumber { get; set; }
 
 	    public float XPos { get; internal set; }
 
@@ -32,5 +38,30 @@ namespace MusicXml.Domain
 		public bool IsRest { get; internal set; }
 		
         public string Accidental { get; internal set; }
+
+	    public bool Active { get; set; } = false;
+
+	    public Ellipse ell = new Ellipse();
+
+        public Ellipse GetNote()
+	    {
+	        Color();
+	        ell.Stroke = Brushes.Black;
+	        ell.Width = 15;
+	        ell.Height = ell.Width;
+	        return ell;
+	    }
+
+        public void Color()
+	    {
+	        if (Active)
+	        {
+	            ell.Fill = System.Windows.Media.Brushes.Blue;
+	        }
+	        else
+	        {
+	            ell.Fill = System.Windows.Media.Brushes.Black;
+	        }
+	    }
     }
 }

@@ -51,16 +51,14 @@ namespace PianoApp.Views
         {
             try
             {
-
-                sv.MPc.CreateMusicPiece(selectedPiece);
+                sv.MusicPieceController.CreateMusicPiece(selectedPiece);
                 Console.WriteLine("Piece loaded.");
                 //succesfull at opening xml file.
-                sv.MPc.Guide.Start();
+                sv.MusicPieceController.Guide.Start();
                 sv.DrawMusic();
                 nv.DrawNotes();
                 //draw the new staves with notes
                 this.Close();
-                
             } catch(Exception ex)
             {
                 System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);

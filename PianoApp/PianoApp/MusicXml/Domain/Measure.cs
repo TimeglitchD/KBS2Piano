@@ -10,6 +10,8 @@ namespace MusicXml.Domain
 			MeasureElements = new List<MeasureElement>();
 		}
 
+	    public int Number { get; set; }
+
 		public decimal Width { get; internal set; }
 		
 		// This can be any musicXML element in the measure tag, i.e. note, backup, etc

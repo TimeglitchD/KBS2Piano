@@ -12,13 +12,13 @@ namespace PianoApp.Views
     public class StaveView
     {
         private StackPanel sheet;
-        public MusicPieceController MPc { get; }
+        public MusicPieceController MusicPieceController { get; }
         private Grid myGrid;
 
         public StaveView(Grid myGrid, MusicPieceController mPc)
         {
             this.myGrid = myGrid;
-            MPc = mPc;
+            MusicPieceController = mPc;
             sheet = new StackPanel();
             DrawMusic();
         }
@@ -30,7 +30,7 @@ namespace PianoApp.Views
             Console.WriteLine("Sheet cleared.");
 
             //draw in the new sheet
-            sheet = MPc.DrawMusicPiece();
+            sheet = MusicPieceController.DrawMusicPiece();
             Console.WriteLine("Sheet drawn.");
 
             //scrollbar

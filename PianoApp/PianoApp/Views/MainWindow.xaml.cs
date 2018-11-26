@@ -57,19 +57,15 @@ namespace PianoApp
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             PianoController pC = new PianoController();
+            SheetController sC = new SheetController();
 
 
-            mPc = new MusicPieceController() { Piano = pC };
+            mPc = new MusicPieceController() { Piano = pC ,SheetController = sC};
 
 
             DrawMenu();
             InitializeComponent();
             Show();
-        }
-
-        public void OnNoteIntersect(object source, EventArgs e)
-        {
-            Console.WriteLine("updateddddddddddddddd!!!!!!!!!!!!!!!!");
         }
 
         private void DrawMenu()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -19,24 +20,29 @@ namespace PianoApp.Controllers
 
         public void UpdatePianoKeys(Dictionary<Note, GuidesController.Timeout> noteAndTimeoutDictionary)
         {
-            //go over all keys and compare to note when true set active true on the corresponding key...
-            foreach (var keyValuePair in noteAndTimeoutDictionary)
-            {
-                foreach (var keyModel in PianoModel.OctaveModelList[keyValuePair.Key.Pitch.Octave].KeyModelList)
-                {
-                    if (keyValuePair.Key.Pitch.Step.ToString() == keyModel.Step.ToString() && keyValuePair.Key.Pitch.Alter == keyModel.Alter)
-                    {
-                        keyModel.Active = true;
-                        keyModel.KeyRect.Dispatcher.BeginInvoke((Action) (() => keyModel.Color()));
-                        
+            var tempDict = new Dictionary<Note, GuidesController.Timeout>(noteAndTimeoutDictionary);
 
-                        Console.WriteLine(keyValuePair.Key.XPos);
-                        Console.WriteLine($"Note {keyValuePair.Key.Pitch.Step}{keyValuePair.Key.Pitch.Octave}{keyValuePair.Key.Pitch.Alter} key pressed: {keyModel.Step}{PianoModel.OctaveModelList[keyValuePair.Key.Pitch.Octave].Position}{keyModel.Alter}");
-                    }
-                    else
+            //go over all keys and compare to note when true set active true on the corresponding key...
+            foreach (var keyValuePair in tempDict)
+            {
+                //.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave))
+                foreach (var octaveModel in PianoModel.OctaveModelList)
+                {
+                    foreach (var keyModel in octaveModel.KeyModelList)
                     {
-                        keyModel.Active = false;
-                    }                    
+                        if (keyValuePair.Key.Pitch.Step.ToString() == keyModel.Step.ToString() &&
+                            keyValuePair.Key.Pitch.Alter           == keyModel.Alter &&
+                            keyValuePair.Key.Pitch.Octave          == octaveModel.Position)
+                        {
+                            keyModel.Active = true;
+                            keyModel.KeyRect.Dispatcher.BeginInvoke((Action)(() => keyModel.Color()));
+                        }
+                        else
+                        {
+                            keyModel.Active = false;
+                            keyModel.KeyRect.Dispatcher.BeginInvoke((Action)(() => keyModel.Color()));
+                        }
+                    }
                 }
             }
         }

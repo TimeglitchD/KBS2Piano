@@ -25,9 +25,6 @@ namespace PianoApp.Models
             Color();
             keyRect.Width = width/2;
             keyRect.Height = 115;
-            //blackKey.Stroke = System.Windows.Media.Brushes.FloralWhite;
-            
-            //blackKey.StrokeThickness = 5;
             return keyRect;
         }
 
