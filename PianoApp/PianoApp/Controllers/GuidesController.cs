@@ -5,16 +5,31 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Timers;
-using Key = System.Windows.Input.Key;
+using System.Windows;
+using MusicXml.Domain;
+using PianoApp.Models.Exception;
+using Timer = System.Threading.Timer;
 
 namespace PianoApp.Controllers
 {
     public class GuidesController
     {
+        public float _bpm;
 
-        public int _bpm;
+        public float Bpm
+        {
+            get
+            {
+                return _bpm;
+            }
+            set
+            {
+                if (value < 0 || value > 300) throw new BpmOutOfRangeException($"Bpm waarde ligt niet tussen de 0 en de 300 ({value})");
 
-        public int Bpm { get; set; }
+                _bpm = value;
+            }
+        }
+
         public NoteType Note { get; set; }
 
         public PianoController Piano;
@@ -26,19 +41,17 @@ namespace PianoApp.Controllers
 
         private float _divs;
         private float _timing;
-        private float _definedBpm = 180;
-        private int _interval;
+        private System.Timers.Timer _timerStaffOne;
+        private System.Timers.Timer _timerStaffTwo;
 
         private Dictionary<Note, Timeout> _activeNoteAndTimeoutDict = new Dictionary<Note, Timeout>();
         private Dictionary<Note, float> _toDoNoteDict = new Dictionary<Note, float>();
         private Stopwatch _stopwatch;
-
-        private System.Timers.Timer _timerStaffOne;
-        private System.Timers.Timer _timerStaffTwo;
-
-        private bool _isPlaying = false;
+      
+        public bool _isPlaying = true;
 
         private System.Timers.Timer _timer;
+        private int _interval;
 
         public struct Timeout
         {
@@ -78,11 +91,11 @@ namespace PianoApp.Controllers
         private void SetAttributes()
         {
             //set timing of music piece
-            _timing = 60 / _definedBpm;
+            _timing = 60 / _bpm;
 
             _divs = 2;
 
-            _interval = (int)(1000.0 / (_definedBpm / 60.0));
+            _interval = (int)(1000.0 / (_bpm / 60.0));
 
             //            //Set the divisions
             //            foreach (var scorePart in Score.Parts)
@@ -166,8 +179,8 @@ namespace PianoApp.Controllers
         }
 
         public bool Start()
-        {            
-            ////Set the attributes from the current music piece
+        {
+            //Set the attributes from the current music piece
             SetAttributes();
             //Fill the to do list with notes from the current music piece
             FillToDoList();
@@ -178,12 +191,12 @@ namespace PianoApp.Controllers
             _timerStaffOne.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 1);
             _timerStaffOne.Interval = _interval;
 
-//            _timerStaffTwo = new System.Timers.Timer();
-//            _timerStaffTwo.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 2);
-//            _timerStaffTwo.Interval = (ReturnFirstNoteTimeout(2));
+            _timerStaffTwo = new System.Timers.Timer();
+            _timerStaffTwo.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 2);
+            _timerStaffTwo.Interval = (ReturnFirstNoteTimeout(2));
 
             _timerStaffOne.Enabled = true;
-//            _timerStaffTwo.Enabled = true;
+            _timerStaffTwo.Enabled = true;
 
             return true;
         }
