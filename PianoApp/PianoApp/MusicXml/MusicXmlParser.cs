@@ -15,7 +15,7 @@ namespace MusicXml
             var document = GetXmlDocument(filename);
 
             var score = new Score();
-            score.Systems = 0;
+            score.systems = 0;
 
             var movementTitleNode = document.SelectSingleNode("score-partwise/movement-title");
             if (movementTitleNode != null)
@@ -37,8 +37,7 @@ namespace MusicXml
             double marginRight = Convert.ToDouble(marginlistLeft.Item(0).InnerText);
             Console.WriteLine(marginRight);
 
-            score.Scale = (width - marginLeft - marginRight) / 1055;
-            Console.WriteLine("Scale is: "+score.Scale);
+            score.scale = (width - marginLeft - marginRight) / 1055;
 
             if (partNodes != null)
             {
@@ -70,13 +69,13 @@ namespace MusicXml
                                 var measureWidthAttribute = measureNode.Attributes["width"];
                                 decimal w;
                                 if (measureWidthAttribute != null && decimal.TryParse(measureWidthAttribute.InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out w))
-                                    measure.Width = w/(decimal)score.Scale;
+                                    measure.Width = w;
                             }
 
 
                             if (measureNode.SelectSingleNode("print") != null)
                             {
-                                score.Systems++;
+                                score.systems++;
                             }
 
 
@@ -118,7 +117,7 @@ namespace MusicXml
 
                                 if (node.Name == "note")
                                 {
-                                    var newNote = GetNote(node, score.Scale);
+                                    var newNote = GetNote(node);
                                     measureElement = new MeasureElement { Type = MeasureElementType.Note, Element = newNote };
                                 }
                                 else if (node.Name == "backup")
@@ -171,7 +170,7 @@ namespace MusicXml
             return backup;
         }
 
-        private static Note GetNote(XmlNode noteNode, double scale)
+        private static Note GetNote(XmlNode noteNode)
         {
             var note = new Note();
 
@@ -193,26 +192,7 @@ namespace MusicXml
 
             var xPos = noteNode.Attributes["default-x"];
             if (xPos != null)
-            {
                 note.XPos = float.Parse(xPos.Value, CultureInfo.InvariantCulture.NumberFormat);
-                note.XPos /= (float)scale;
-            }
-            else
-            {
-                note.XPos = 12 / (float)scale;
-            }
-                
-            //HERE
-            var rest = noteNode.SelectSingleNode("rest");
-            if (rest == null)
-            {
-                
-                note.IsRest = false;
-            }
-            else
-            {
-                note.IsRest = true;
-            }
 
             note.Lyric = GetLyric(noteNode);
 
@@ -225,6 +205,10 @@ namespace MusicXml
             var chordNode = noteNode.SelectSingleNode("chord");
             if (chordNode != null)
                 note.IsChordTone = true;
+
+            var restNode = noteNode.SelectSingleNode("rest");
+            if (restNode != null)
+                note.IsRest = true;
 
             return note;
         }
@@ -249,7 +233,7 @@ namespace MusicXml
             }
             else
             {
-                pitch.Step = 'R';
+                return null;
             }
 
             return pitch;
