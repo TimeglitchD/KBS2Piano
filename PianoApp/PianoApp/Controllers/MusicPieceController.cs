@@ -82,29 +82,36 @@ namespace PianoApp.Controllers
             Console.WriteLine("================================");
         }
 
-        //Fill staffs with measures based on amount of measures in the piece
+        //Fill staffs width measures based on amount of measures in the piece
         private void AddMeasuresToGreatStaffs()
         {
             double maxWidth = 0;
-            int staff = 0;
+            int lastItem = 0;
 
-            foreach (var scorePart in _score.Parts)
+            foreach (var greatStaffModel in Sheet.GreatStaffModelList)
             {
-
-                foreach (var measure in scorePart.Measures)
+                foreach (var scorePart in _score.Parts)
                 {
-                    maxWidth += (double)measure.Width;
-                    Console.WriteLine("WIDTH: " + maxWidth);
-                    if (maxWidth > +_maxStaffWidth)
+                    for (var i = 0; i < scorePart.Measures.Count; i++)
                     {
-                        staff++;
-                        maxWidth = (double)measure.Width;
+                        if (i >= lastItem)
+                        {
+                            if (maxWidth < _maxStaffWidth)
+                            {
+                                greatStaffModel.MeasureList.Add(scorePart.Measures[i]);
+                                maxWidth += (double)scorePart.Measures[i].Width;
+                                lastItem++;
+                            }
+                            else
+                            {
+                                maxWidth = 0;
+                                break;
+                            }
+                        }
                     }
-                    Sheet.GreatStaffModelList[staff].MeasureList.Add(measure);
-
                 }
+                Console.WriteLine($"Amount measures added: {greatStaffModel.MeasureList.Count}");
             }
-            Console.WriteLine($"Amount measures added: {Sheet.GreatStaffModelList[staff].MeasureList.Count}");
             Console.WriteLine("================================");
         }
 

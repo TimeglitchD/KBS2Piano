@@ -49,16 +49,17 @@ namespace PianoApp.Views
 
         private void OnSelectClick(object sender, RoutedEventArgs e)
         {
+            sv.MusicPieceController.CreateMusicPiece(selectedPiece);
+            Console.WriteLine("Piece loaded.");
+            //succesfull at opening xml file.
+            sv.MusicPieceController.Guide.Start();
+            sv.DrawMusic();
+            nv.DrawNotes();
+            //draw the new staves with notes
+            this.Close();
             try
             {
-                sv.MusicPieceController.CreateMusicPiece(selectedPiece);
-                Console.WriteLine("Piece loaded.");
-                //succesfull at opening xml file.
-                sv.MusicPieceController.Guide.Start();
-                sv.DrawMusic();
-                nv.DrawNotes();
-                //draw the new staves with notes
-                this.Close();
+
             } catch(Exception ex)
             {
                 System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);

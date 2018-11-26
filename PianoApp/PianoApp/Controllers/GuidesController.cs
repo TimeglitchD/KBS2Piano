@@ -237,20 +237,13 @@ namespace PianoApp.Controllers
             _timerStaffOne.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 1);
             _timerStaffOne.Interval = _interval;
 
-//            _timerStaffTwo = new System.Timers.Timer();
-//            _timerStaffTwo.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 2);
-//            _timerStaffTwo.Interval = (ReturnFirstNoteTimeout(2));
-
             _timerStaffOne.Enabled = true;
-//            _timerStaffTwo.Enabled = true;
-
             return true;
         }
 
         public bool Stop()
         {
             _timerStaffOne.Enabled = false;
-            _timerStaffTwo.Enabled = false;
             return true;
         }
 

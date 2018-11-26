@@ -37,7 +37,7 @@ namespace PianoApp
 
         private NoteView nv;
         public ButtonView bv;
-        
+
         private Grid myGrid = new Grid();
 
         private metronomeSound metronome;
@@ -51,11 +51,9 @@ namespace PianoApp
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             PianoController pC = new PianoController();
             SheetController sC = new SheetController();
+            mPc = new MusicPieceController() { Piano = pC , SheetController = sC};
 
-
-            mPc = new MusicPieceController() { Piano = pC ,SheetController = sC};
-
-
+            //mPc.Guide.Start();
             DrawMenu();
             InitializeComponent();
             Show();
@@ -81,13 +79,11 @@ namespace PianoApp
             //menuGrid.ShowGridLines = true;
 
             // Define all rows for mainGrid
-            //DefineRowMyGrid();
+            DefineRowMyGrid();
             //Create the staves
-            
-            sv = new StaveView(myGrid, mPc);
             pv = new PianoView(myGrid, mPc);
-
-
+            sv = new StaveView(myGrid, mPc);
+            Content = pv.myGrid;
 
 
             //Draw the notes
@@ -95,33 +91,36 @@ namespace PianoApp
             nv.DrawNotes();
 
             bv = new ButtonView(myGrid, sv, nv);
+
+            metronome = bv.metronome;
+            metronome.countdownFinished += countdownFinished;
         }
 
-        //private void DefineRowMyGrid()
-        //{
-        //    // Define new row
-        //    RowDefinition rowDef1 = new RowDefinition();
-        //    RowDefinition rowDef2 = new RowDefinition();
-        //    RowDefinition rowDef3 = new RowDefinition();
+        private void DefineRowMyGrid()
+        {
+            // Define new row
+            RowDefinition rowDef1 = new RowDefinition();
+            RowDefinition rowDef2 = new RowDefinition();
+            RowDefinition rowDef3 = new RowDefinition();
 
-        //    // Add lenght to rows
-        //    rowDef1.Height = new GridLength(50, GridUnitType.Star);
-        //    rowDef2.Height = new GridLength(500, GridUnitType.Star);
-        //    rowDef3.Height = new GridLength(200, GridUnitType.Star);
+            // Add lenght to rows
+            rowDef1.Height = new GridLength(50, GridUnitType.Star);
+            rowDef2.Height = new GridLength(500, GridUnitType.Star);
+            rowDef3.Height = new GridLength(200, GridUnitType.Star);
 
-        //    // Add row to mainGrid
-        //    myGrid.RowDefinitions.Add(rowDef1);
-        //    myGrid.RowDefinitions.Add(rowDef2);
-        //    myGrid.RowDefinitions.Add(rowDef3);
+            // Add row to mainGrid
+            myGrid.RowDefinitions.Add(rowDef1);
+            myGrid.RowDefinitions.Add(rowDef2);
+            myGrid.RowDefinitions.Add(rowDef3);
 
-            
-        //}
+
+        }
 
         private void countdownFinished(object sender, EventArgs e)
         {
             //start guide here
             MessageBox.Show("countdown finished");
-            if(mPc.Guide.Score == null)
+            if (mPc.Guide.Score == null)
             {
                 Console.WriteLine("Doet niet");
                 return;
