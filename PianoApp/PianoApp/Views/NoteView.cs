@@ -144,7 +144,7 @@ namespace PianoApp.Views
 
         private void GNote(Note n, Pitch pitch, StaffModel staff, Grid staveGrid, decimal totalwidth, decimal width)
         {
-            Ellipse note = n.GetNote();
+            Ellipse note = GetNoteIcon();
 
 
             Thickness margin = note.Margin;
@@ -394,15 +394,15 @@ namespace PianoApp.Views
             return row;
         }
 
-//        public Ellipse GetNote()
-//        {
-//            Ellipse note = new Ellipse();
-//            note.Fill = Brushes.Black;
-//            note.Stroke = Brushes.Black;
-//            note.Width = 15;
-//            note.Height = note.Width;
-//            return note;
-//        }
+        public Ellipse GetNoteIcon()
+        {
+            Ellipse note = new Ellipse();
+            note.Fill = Brushes.Black;
+            note.Stroke = Brushes.Black;
+            note.Width = 15;
+            note.Height = note.Width;
+            return note;
+        }
 
         private Rectangle GetRest()
         {
