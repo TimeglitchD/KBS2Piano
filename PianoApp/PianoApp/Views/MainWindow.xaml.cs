@@ -90,6 +90,7 @@ namespace PianoApp
             nv.DrawNotes();
 
             bv = new ButtonView(myGrid, sv, nv);
+            bv.pianoStateChanged += pianoStateChanged;
 
             metronome = bv.metronome;
             metronome.countdownFinished += countdownFinished;
@@ -125,6 +126,19 @@ namespace PianoApp
                 return;
             }
             mPc.Guide.Start();
+        }
+
+        private void pianoStateChanged(object sender, EventArgs e)
+        {
+            if(bv.pianoEnabled)
+            {
+                pv.showPianoView();
+                myGrid.RowDefinitions[2].Height = new GridLength(200, GridUnitType.Star);
+            } else
+            {
+                pv.hidePianoView();
+                myGrid.RowDefinitions[2].Height = new GridLength(0);
+            }
         }
     }
 
