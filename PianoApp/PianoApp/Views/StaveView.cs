@@ -54,8 +54,12 @@ namespace PianoApp.Views
         public void scrollToNext(object sender, EventArgs e)
         {
             double location = scroll.VerticalOffset;
-            scroll.ScrollToVerticalOffset(location + 200);
-            scroll.UpdateLayout();
+
+            scroll.Dispatcher.BeginInvoke((Action)(() => scroll.ScrollToVerticalOffset(location + 200)));
+            scroll.Dispatcher.BeginInvoke((Action)(() => scroll.UpdateLayout()));
+
+//            scroll.ScrollToVerticalOffset(location + 200);
+//            scroll.UpdateLayout();
         }
     }
 }

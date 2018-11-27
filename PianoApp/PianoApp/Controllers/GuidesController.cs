@@ -101,7 +101,7 @@ namespace PianoApp.Controllers
 
             _divs = 2;
 
-            _interval = (int)(1000.0 / (_definedBpm / 60.0));
+            _interval = (int)(1000.0 / (_timing));
 
             //            //Set the divisions
             //            foreach (var scorePart in Score.Parts)
@@ -136,59 +136,63 @@ namespace PianoApp.Controllers
         {
             try
             {
-                var tempList = _toDoNoteDict.ToList();
-
-                for (int i = 0; i < 1; i++)
-                {
-                    //Add note to active Dictionary
-                    _activeNoteAndTimeoutDict.Add(tempList[i].Key, new Timeout()
-                    {
-                        NoteTimeout = tempList[i].Value,
-                        TimeAdded = _stopwatch.ElapsedMilliseconds
-                    });
-
-                    //Remove the note from to do 
-                    RemoveFirstNoteFromToDoDict(tempList[i].Key);
-
-
-                    checkLastNote(_activeNoteAndTimeoutDict);
-
-                    for (int j = i + 1; j < tempList.Count; j++)
-                    {
-                        if (tempList[i].Key != tempList[j].Key &&
-                            tempList[i].Key.XPos == tempList[j].Key.XPos &&
-                            tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
-                        {
-                            //Add note with same pos to active Dictionary
-                            _activeNoteAndTimeoutDict.Add(tempList[j].Key, new Timeout()
-                            {
-                                NoteTimeout = tempList[j].Value,
-                                TimeAdded = _stopwatch.ElapsedMilliseconds
-                            });
-                            //Remove the note with same pos from to do 
-                            RemoveFirstNoteFromToDoDict(tempList[j].Key);
-                        }
-                    }
-                }
-                goToNextStaff();                    
+                 
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception);
             }
 
+            var tempList = _toDoNoteDict.ToList();
+
+            for (int i = 0; i < 1; i++)
+            {
+                //Add note to active Dictionary
+                if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
+                    _activeNoteAndTimeoutDict.Add(tempList[i].Key, new Timeout()
+                    {
+                        NoteTimeout = tempList[i].Value,
+                        TimeAdded = _stopwatch.ElapsedMilliseconds
+                    });
+
+                //Remove the note from to do 
+                RemoveFirstNoteFromToDoDict(tempList[i].Key);
+
+
+                checkLastNote(_activeNoteAndTimeoutDict);
+
+                for (int j = i + 1; j < tempList.Count; j++)
+                {
+                    if (tempList[i].Key != tempList[j].Key &&
+                        tempList[i].Key.XPos == tempList[j].Key.XPos &&
+                        tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
+                    {
+                        //Add note with same pos to active Dictionary
+                        if(!_activeNoteAndTimeoutDict.ContainsKey(tempList[j].Key))
+                        _activeNoteAndTimeoutDict.Add(tempList[j].Key, new Timeout()
+                        {
+                            NoteTimeout = tempList[j].Value,
+                            TimeAdded = _stopwatch.ElapsedMilliseconds
+                        });
+                        //Remove the note with same pos from to do 
+                        RemoveFirstNoteFromToDoDict(tempList[j].Key);
+                    }
+                }
+            }
+            goToNextStaff();
+
             Dictionary<Note, Timeout> tempActiveNoteDict = new Dictionary<Note, Timeout>(_activeNoteAndTimeoutDict);
 
-            //Remove keys that are done
+            //Remove keys that are dones
             foreach (var keyValuePair in _activeNoteAndTimeoutDict.Where(t => _stopwatch.ElapsedMilliseconds >= (t.Value.NoteTimeout * 1000) + t.Value.TimeAdded))
             {
                 tempActiveNoteDict.Remove(keyValuePair.Key);
             }
 
-            _activeNoteAndTimeoutDict = new Dictionary<Note, Timeout>(tempActiveNoteDict);
+//            _activeNoteAndTimeoutDict = tempActiveNoteDict;
 
-            Piano.UpdatePianoKeys(_activeNoteAndTimeoutDict);
-            Sheet.UpdateNotes(_activeNoteAndTimeoutDict);
+            Piano.UpdatePianoKeys(tempActiveNoteDict);
+            Sheet.UpdateNotes(tempActiveNoteDict);
         }
 
         private void checkLastNote(Dictionary<Note, Timeout> noteDict)

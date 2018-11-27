@@ -52,7 +52,7 @@ namespace PianoApp.Views
             sv.MusicPieceController.CreateMusicPiece(selectedPiece);
             Console.WriteLine("Piece loaded.");
             //succesfull at opening xml file.
-            sv.MusicPieceController.Guide.Start();
+//            sv.MusicPieceController.Guide.Start();
             sv.DrawMusic();
             nv.DrawNotes();
             //draw the new staves with notes

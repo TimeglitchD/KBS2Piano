@@ -22,29 +22,46 @@ namespace PianoApp.Controllers
         {
             var tempDict = new Dictionary<Note, GuidesController.Timeout>(noteAndTimeoutDictionary);
 
+            foreach (var octaveModel in PianoModel.OctaveModelList)
+            {
+                foreach (var keyModel in octaveModel.KeyModelList)
+                {
+                    keyModel.Active = false;                    
+                }
+            }
+
             //go over all keys and compare to note when true set active true on the corresponding key...
             foreach (var keyValuePair in tempDict)
             {
                 //.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave))
-                foreach (var octaveModel in PianoModel.OctaveModelList)
+                foreach (var octaveModel in PianoModel.OctaveModelList.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave)))
                 {
                     foreach (var keyModel in octaveModel.KeyModelList)
                     {
                         if (keyValuePair.Key.Pitch.Step.ToString() == keyModel.Step.ToString() &&
-                            keyValuePair.Key.Pitch.Alter           == keyModel.Alter &&
-                            keyValuePair.Key.Pitch.Octave          == octaveModel.Position)
+                            keyValuePair.Key.Pitch.Alter           == keyModel.Alter)
                         {
                             keyModel.Active = true;
-                            keyModel.KeyRect.Dispatcher.BeginInvoke((Action)(() => keyModel.Color()));
                         }
                         else
                         {
-                            keyModel.Active = false;
-                            keyModel.KeyRect.Dispatcher.BeginInvoke((Action)(() => keyModel.Color()));
+                            keyModel.Active = false;                            
                         }
+                       
                     }
                 }
             }
+
+            foreach (var octaveModel in PianoModel.OctaveModelList)
+            {
+                foreach (var keyModel in octaveModel.KeyModelList)
+                {
+                    keyModel.KeyRect.Dispatcher.BeginInvoke((Action)(() => keyModel.Color()));
+                }
+            }
+
+
+            
         }
 
         public DockPanel DrawPianoController()
