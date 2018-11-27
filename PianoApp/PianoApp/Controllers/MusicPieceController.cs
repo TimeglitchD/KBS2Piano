@@ -13,12 +13,16 @@ namespace PianoApp.Controllers
 {
     public class MusicPieceController
     {
-        private Score _score;
+        public Score _score;
         public PianoController Piano;
+
+        public SheetController SheetController;
 
         public GuidesController Guide { get; set; } = new GuidesController();
 
         public SheetModel Sheet { get; set; }
+
+        public event EventHandler staffEndReached;
 
         //1055 is max length of one staff
         private const double _maxStaffWidth = 1055;
@@ -27,9 +31,9 @@ namespace PianoApp.Controllers
         {
             _score = MusicXmlParser.GetScore(filename);
 
-            Guide = new GuidesController() { Score = _score, Piano = Piano };
+            Guide = new GuidesController() { Score = _score, Piano = Piano , Sheet = SheetController};
 
-            Sheet = new SheetModel();
+            Sheet = SheetController.SheetModel;
 
             AddGreatStaffsToSheet();
 
@@ -37,6 +41,7 @@ namespace PianoApp.Controllers
 
             AddNotesToMeasures();
 
+            Guide.staffEndReached += staffEndReached;
         }
 
         public StackPanel DrawMusicPiece()
@@ -67,7 +72,7 @@ namespace PianoApp.Controllers
         private void AddGreatStaffsToSheet()
         {
 
-            for(int i = _score.systems; i > 0; i--)
+            for (int i = _score.Systems; i > 0; i--)
             {
                 Sheet.GreatStaffModelList.Add(new GreatStaffModel());
             }
@@ -141,6 +146,5 @@ namespace PianoApp.Controllers
             }
             Console.WriteLine("================================");
         }
-
     }
 }

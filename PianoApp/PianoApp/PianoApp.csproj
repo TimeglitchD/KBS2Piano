@@ -73,6 +73,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controllers\SheetController.cs" />
     <Compile Include="Controllers\GuidesController.cs" />
     <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Models\Exception\BpmOutOfRangeException.cs" />

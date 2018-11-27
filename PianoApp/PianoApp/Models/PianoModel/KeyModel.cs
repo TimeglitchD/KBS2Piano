@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace PianoApp.Models
 {
@@ -13,8 +16,10 @@ namespace PianoApp.Models
         public Step Step { get; set; }
         public bool Active { get; set; } = false;
         public string type { get; set; }
+        public Rectangle KeyRect { get; set; } = new Rectangle();
 
-       public virtual Rectangle Draw(float width)
+
+        public virtual Rectangle Draw(float width)
         {
             return null;
         }
@@ -22,6 +27,7 @@ namespace PianoApp.Models
         {
 
         }
+
     }
 }
 
