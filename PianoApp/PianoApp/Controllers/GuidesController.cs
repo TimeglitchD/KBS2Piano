@@ -97,7 +97,7 @@ namespace PianoApp.Controllers
         private void SetAttributes()
         {
             //set timing of music piece
-            _timing = 60 / _bpm;
+            _timing = _bpm / 60;
 
             _divs = 2;
 

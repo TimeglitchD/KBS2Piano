@@ -119,13 +119,12 @@ namespace PianoApp
         private void countdownFinished(object sender, EventArgs e)
         {
             //start guide here
-            MessageBox.Show("countdown finished");
             if (mPc.Guide.Score == null)
             {
-                Console.WriteLine("Doet niet");
+                Console.WriteLine("Error");
                 return;
             }
-            mPc.Guide.Start();
+            sv.MusicPieceController.Guide.Start();
         }
     }
 
