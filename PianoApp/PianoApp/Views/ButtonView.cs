@@ -126,7 +126,7 @@ namespace PianoApp.Views
                 return;
             }
             
-            CheckPause();
+//            CheckPause();
             Console.WriteLine(mPc.Guide.Bpm);
             Console.WriteLine(mPc.Guide.Note);
 
@@ -185,21 +185,21 @@ namespace PianoApp.Views
             Grid.SetColumn(notesCB, 3);
 
             // Create resetbutton if isPlaying
-            resetButton = new Button();
-            resetButton.FontSize = 25;
-            resetButton.Name = "resetBtn";
-            resetButton.Content = "◼";
-            resetButton.Width = 40;
-            resetButton.Height = 40;
-            resetButton.HorizontalAlignment = HorizontalAlignment.Right;
-            resetButton.Click += ResetButton_Click;
-            Grid.SetColumn(resetButton, 5);
+//            resetButton = new Button();
+//            resetButton.FontSize = 25;
+//            resetButton.Name = "resetBtn";
+//            resetButton.Content = "◼";
+//            resetButton.Width = 40;
+//            resetButton.Height = 40;
+//            resetButton.HorizontalAlignment = HorizontalAlignment.Right;
+//            resetButton.Click += ResetButton_Click;
+            //Grid.SetColumn(resetButton, 5);
 
             // Add items to grid
             menuGrid.Children.Add(txt1);
             menuGrid.Children.Add(bpmTB);
             menuGrid.Children.Add(notesCB);
-            menuGrid.Children.Add(resetButton);
+//            menuGrid.Children.Add(resetButton);
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
