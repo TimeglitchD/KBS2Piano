@@ -103,20 +103,20 @@ namespace PianoApp.Controllers
 
             _interval = (int)(1000.0 / (_timing));
 
-            //            //Set the divisions
-            //            foreach (var scorePart in Score.Parts)
-            //            {
-            //                //Access all measures inside the music piece
-            //                foreach (var scorePartMeasure in scorePart.Measures)
-            //                {
-            //
-            //                    if (scorePartMeasure.Attributes != null)
-            //                    {
-            //                        //get the amount of divisions and beats from current part.
-            //                        _divs = scorePartMeasure.Attributes.Divisions;
-            //                    }
-            //                }
-            //            }
+            //Set the divisions
+            foreach (var scorePart in Score.Parts)
+            {
+                //Access all measures inside the music piece
+                foreach (var scorePartMeasure in scorePart.Measures)
+                {
+                    if (scorePartMeasure.Attributes != null)
+                    {
+                        //get the amount of divisions and beats from current part.
+                        _divs = scorePartMeasure.Attributes.Divisions;
+                        break;
+                    }
+                }
+            }
 
             stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
         }
@@ -145,6 +145,9 @@ namespace PianoApp.Controllers
 
             var tempList = _toDoNoteDict.ToList();
 
+            var noteStaffOne = tempList.First(n => n.Key.Staff.Equals(1));
+            var noteStaffTwo = tempList.First(n => n.Key.Staff.Equals(2));
+
             for (int i = 0; i < 1; i++)
             {
                 //Add note to active Dictionary
@@ -158,13 +161,13 @@ namespace PianoApp.Controllers
                 //Remove the note from to do 
                 RemoveFirstNoteFromToDoDict(tempList[i].Key);
 
-
                 checkLastNote(_activeNoteAndTimeoutDict);
 
                 for (int j = i + 1; j < tempList.Count; j++)
                 {
                     if (tempList[i].Key != tempList[j].Key &&
-                        tempList[i].Key.XPos == tempList[j].Key.XPos &&
+                        tempList[j].Key.XPos > tempList[i].Key.XPos - 1 &&
+                        tempList[j].Key.XPos < tempList[i].Key.XPos + 1 &&
                         tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
                     {
                         //Add note with same pos to active Dictionary
@@ -190,7 +193,7 @@ namespace PianoApp.Controllers
             }
 
 //            _activeNoteAndTimeoutDict = tempActiveNoteDict;
-
+        
             Piano.UpdatePianoKeys(tempActiveNoteDict);
             Sheet.UpdateNotes(tempActiveNoteDict);
         }
