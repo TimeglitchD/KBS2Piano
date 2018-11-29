@@ -46,17 +46,23 @@ namespace PianoApp.Controllers
                 return;
             }
 
+            NoteEvent noteEvent;
+
+            try
+            {
+                noteEvent = (NoteEvent)e.MidiEvent;
+            } catch (Exception)
+            {
+                return;
+            }
+
             if(MidiEvent.IsNoteOn(e.MidiEvent))
             {
-                NoteEvent noteEvent;
-                noteEvent = (NoteEvent)e.MidiEvent;
                 currentlyPressedKeys.Add(noteEvent.NoteNumber);
                 Console.WriteLine("----------on----------");
                 Console.WriteLine(noteEvent.NoteNumber.ToString() + noteEvent.NoteName);
             }else
             {
-                NoteEvent noteEvent;
-                noteEvent = (NoteEvent)e.MidiEvent;
                 currentlyPressedKeys.Remove(noteEvent.NoteNumber);
                 Console.WriteLine("----------off----------");
                 Console.WriteLine(noteEvent.NoteNumber.ToString() + noteEvent.NoteName);
