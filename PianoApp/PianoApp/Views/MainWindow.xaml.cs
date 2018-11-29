@@ -45,14 +45,15 @@ namespace PianoApp
         Button startBtn = new Button();
         Button resetButton = new Button();
         private MusicPieceController mPc;
+        private NonKeyboardInputController nKiC = new NonKeyboardInputController();
 
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            PianoController pC = new PianoController();
+            PianoController pC = new PianoController() {NonKeyboardInputController = nKiC};
             SheetController sC = new SheetController();
             mPc = new MusicPieceController() { Piano = pC , SheetController = sC};
-
+            
             //mPc.Guide.Start();
             DrawMenu();
             InitializeComponent();
