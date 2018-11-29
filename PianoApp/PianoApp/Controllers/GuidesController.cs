@@ -223,6 +223,7 @@ namespace PianoApp.Controllers
         {            
             ////Set the attributes from the current music piece
             SetAttributes();
+
             //Fill the to do list with notes from the current music piece
             FillToDoList();
 
@@ -234,6 +235,14 @@ namespace PianoApp.Controllers
 
             _timerStaffOne.Enabled = true;
             return true;
+        }
+
+        public void ResetMusicPiece()
+        {
+            _stopwatch.Stop();
+            _timerStaffOne.Stop();
+            _toDoNoteDict.Clear();
+            _activeNoteAndTimeoutDict.Clear();
         }
 
         public bool Stop()
