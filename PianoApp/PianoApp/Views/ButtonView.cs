@@ -101,10 +101,11 @@ namespace PianoApp.Views
             {
                 // Set value to int
                 bpmValue = (float)int.Parse(bpmTB.Text);
-                //bpmValue = (float)bpmValueInt;
+
                 // Set values in GuideController
                 mPc.Guide.Bpm = bpmValue;
                 mPc.Guide.SetNote(notesCB.Text);
+
                 //set value in metronome and start it.
                 if (metronomeEnabled)
                 {
@@ -131,6 +132,7 @@ namespace PianoApp.Views
             Console.WriteLine(mPc.Guide.Note);
 
             // Set buttons enabled false or readonly if playing
+            resetButton.IsEnabled = true;
             notesCB.IsEnabled = false;
             bpmTB.IsReadOnly = true;
             SelectSheetMusic.IsEnabled = false;
@@ -185,35 +187,32 @@ namespace PianoApp.Views
             Grid.SetColumn(notesCB, 3);
 
             // Create resetbutton if isPlaying
-//            resetButton = new Button();
-//            resetButton.FontSize = 25;
-//            resetButton.Name = "resetBtn";
-//            resetButton.Content = "◼";
-//            resetButton.Width = 40;
-//            resetButton.Height = 40;
-//            resetButton.HorizontalAlignment = HorizontalAlignment.Right;
-//            resetButton.Click += ResetButton_Click;
-            //Grid.SetColumn(resetButton, 5);
+            resetButton = new Button();
+            resetButton.FontSize = 25;
+            resetButton.Name = "resetBtn";
+            resetButton.Content = "◼";
+            resetButton.Width = 40;
+            resetButton.Height = 40;
+            resetButton.HorizontalAlignment = HorizontalAlignment.Right;
+            resetButton.Click += ResetButton_Click;
+            resetButton.IsEnabled = false;
+            Grid.SetColumn(resetButton, 5);
 
             // Add items to grid
             menuGrid.Children.Add(txt1);
             menuGrid.Children.Add(bpmTB);
             menuGrid.Children.Add(notesCB);
-//            menuGrid.Children.Add(resetButton);
+            menuGrid.Children.Add(resetButton);
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Muziekstuk is gestopt....!");
+            metronome.stopMetronome();
 
-            //// Set buttons enabled or readonly false if resetting music
-            //bpmTB.IsReadOnly = false;
-            //bpmTB.Background = Brushes.White;
-            //notesCB.IsEnabled = true;
-            //metronomeButton.IsEnabled = true;
-            //metronome.stopMetronome();
+            mPc.Guide.ResetMusicPiece();
+
             //start countdown and start guide from beginning
-            if(metronomeEnabled)
+            if (metronomeEnabled)
             {
                 metronome.startMetronome(bpmValue, 4, 1);
             } else

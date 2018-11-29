@@ -13,7 +13,7 @@ namespace PianoApp.Controllers
 {
     public class MusicPieceController
     {
-        public Score _score;
+        private Score _score;
         public PianoController Piano;
 
         public SheetController SheetController;
@@ -74,7 +74,7 @@ namespace PianoApp.Controllers
         private void AddGreatStaffsToSheet()
         {
 
-            for (int i = _score.Systems; i > 0; i--)
+            for(int i = _score.Systems; i > 0; i--)
             {
                 Sheet.GreatStaffModelList.Add(new GreatStaffModel());
             }
