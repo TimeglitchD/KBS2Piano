@@ -63,8 +63,9 @@ namespace PianoApp.Controllers
 
         private List<int> activeKeys;
 
-        public GuidesController()
+        public GuidesController(MidiController midi)
         {
+            this.midi = midi;
             midi.midiInputChanged += inputChanged;
         }
 

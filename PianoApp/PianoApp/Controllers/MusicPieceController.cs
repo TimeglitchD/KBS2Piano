@@ -18,7 +18,7 @@ namespace PianoApp.Controllers
 
         public SheetController SheetController;
 
-        public GuidesController Guide { get; set; } = new GuidesController();
+        public GuidesController Guide { get; set; }
 
         public MidiController MidiController;
 
@@ -33,7 +33,7 @@ namespace PianoApp.Controllers
         {
             _score = MusicXmlParser.GetScore(filename);
 
-            Guide = new GuidesController() { Score = _score, Piano = Piano , Sheet = SheetController , midi = MidiController};
+            Guide = new GuidesController(MidiController) { Score = _score, Piano = Piano , Sheet = SheetController};
 
             Sheet = SheetController.SheetModel;
 
