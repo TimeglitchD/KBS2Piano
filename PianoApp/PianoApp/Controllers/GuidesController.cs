@@ -79,7 +79,7 @@ namespace PianoApp.Controllers
                         if (measureElement.Type.Equals(MeasureElementType.Note))
                         {
                             var note = (Note)measureElement.Element;
-                            
+
                             if (note.Pitch == null) continue;
                             //Get the duration of the current note
                             var dur = note.Duration;
@@ -183,7 +183,7 @@ namespace PianoApp.Controllers
             }
 
             //            _activeNoteAndTimeoutDict = tempActiveNoteDict;
-
+            //tempActiveNoteDict.
             Piano.UpdatePianoKeys(tempActiveNoteDict);
             Sheet.UpdateNotes(tempActiveNoteDict);
         }

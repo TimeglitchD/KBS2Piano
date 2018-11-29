@@ -17,6 +17,7 @@ namespace PianoApp.Models
         public bool Active { get; set; } = false;
         public string type { get; set; }
         public Rectangle KeyRect { get; set; } = new Rectangle();
+        public int FingerNum { get; set; } = 0;
 
 
         public virtual Rectangle Draw(float width)

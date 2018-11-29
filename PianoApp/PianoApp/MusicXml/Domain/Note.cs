@@ -39,6 +39,8 @@ namespace MusicXml.Domain
 		
         public string Accidental { get; internal set; }
 
+        public int FingerNum { get; set; }
+
 	    public bool Active { get; set; } = false;
 
 	    public NoteState State { get; set; } = NoteState.Idle;

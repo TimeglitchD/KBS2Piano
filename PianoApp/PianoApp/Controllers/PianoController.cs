@@ -43,10 +43,12 @@ namespace PianoApp.Controllers
                             keyValuePair.Key.Pitch.Alter           == keyModel.Alter)
                         {
                             keyModel.Active = true;
+                            keyModel.FingerNum = keyValuePair.Key.FingerNum;
                         }
                         else
                         {
-                            keyModel.Active = false;                            
+                            keyModel.Active = false;
+                            keyModel.FingerNum = 0;
                         }
                        
                     }
