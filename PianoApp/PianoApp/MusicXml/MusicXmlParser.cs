@@ -15,7 +15,7 @@ namespace MusicXml
             var document = GetXmlDocument(filename);
 
             var score = new Score();
-            score.systems = 0;
+            score.Systems = 0;
 
             var movementTitleNode = document.SelectSingleNode("score-partwise/movement-title");
             if (movementTitleNode != null)
@@ -37,7 +37,8 @@ namespace MusicXml
             double marginRight = Convert.ToDouble(marginlistLeft.Item(0).InnerText);
             Console.WriteLine(marginRight);
 
-            score.scale = (width - marginLeft - marginRight) / 1055;
+            score.Scale = (width - marginLeft - marginRight) / 1055;
+            Console.WriteLine("Scale is: " + score.Scale);
 
             if (partNodes != null)
             {
@@ -69,27 +70,27 @@ namespace MusicXml
                                 var measureWidthAttribute = measureNode.Attributes["width"];
                                 decimal w;
                                 if (measureWidthAttribute != null && decimal.TryParse(measureWidthAttribute.InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out w))
-                                    measure.Width = w;
+                                    measure.Width = w / (decimal)score.Scale;
                             }
-							if (measureNode.Attributes != null)
-							{
-								var measureWidthAttribute = measureNode.Attributes["width"];
-								decimal w;
-								if (measureWidthAttribute != null && decimal.TryParse(measureWidthAttribute.InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture,out w))
-									measure.Width = w;
+                            if (measureNode.Attributes != null)
+                            {
+                                var measureWidthAttribute = measureNode.Attributes["width"];
+                                decimal w;
+                                if (measureWidthAttribute != null && decimal.TryParse(measureWidthAttribute.InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out w))
+                                    measure.Width = w;
 
-							    var measureNumberAttribute = measureNode.Attributes["number"];
+                                var measureNumberAttribute = measureNode.Attributes["number"];
 
-							    int n;
-							    if (measureNumberAttribute != null && int.TryParse(measureNumberAttribute.InnerText , out n))
-							        measure.Number = n;
+                                int n;
+                                if (measureNumberAttribute != null && int.TryParse(measureNumberAttribute.InnerText, out n))
+                                    measure.Number = n;
 
                             }
 
 
                             if (measureNode.SelectSingleNode("print") != null)
                             {
-                                score.systems++;
+                                score.Systems++;
                             }
 
 
@@ -128,22 +129,23 @@ namespace MusicXml
                             foreach (XmlNode node in childNodes)
                             {
                                 MeasureElement measureElement = null;
-								if (node.Name == "note")
-								{
-									var newNote = GetNote(node);
-									measureElement = new MeasureElement {Type = MeasureElementType.Note, Element = newNote};
 
-								    var note = (Note) measureElement.Element;
-								    note.MeasureNumber = measure.Number;
-								}
-								else if (node.Name == "backup")
-								{
-									measureElement = new MeasureElement {Type = MeasureElementType.Backup, Element = GetBackupElement(node)};
-								}
-								else if (node.Name == "forward")
-								{
-									measureElement = new MeasureElement {Type = MeasureElementType.Forward, Element = GetForwardElement(node)};
-								}
+                                if (node.Name == "note")
+                                {
+                                    var newNote = GetNote(node);
+                                    measureElement = new MeasureElement { Type = MeasureElementType.Note, Element = newNote };
+
+                                    var note = (Note)measureElement.Element;
+                                    note.MeasureNumber = measure.Number;
+                                }
+                                else if (node.Name == "backup")
+                                {
+                                    measureElement = new MeasureElement { Type = MeasureElementType.Backup, Element = GetBackupElement(node) };
+                                }
+                                else if (node.Name == "forward")
+                                {
+                                    measureElement = new MeasureElement { Type = MeasureElementType.Forward, Element = GetForwardElement(node) };
+                                }
 
                                 if (measureElement != null)
                                     measure.MeasureElements.Add(measureElement);
@@ -207,19 +209,21 @@ namespace MusicXml
                 note.Accidental = accidental.InnerText;
 
             var xPos = noteNode.Attributes["default-x"];
-            if (xPos != null) { 
+            if (xPos != null)
+            {
                 note.XPos = float.Parse(xPos.Value, CultureInfo.InvariantCulture.NumberFormat);
+
             }
             else
             {
-                
+
             }
-                
+
             //HERE
             var rest = noteNode.SelectSingleNode("rest");
             if (rest == null)
             {
-                
+
                 note.IsRest = false;
             }
             else
@@ -238,10 +242,6 @@ namespace MusicXml
             var chordNode = noteNode.SelectSingleNode("chord");
             if (chordNode != null)
                 note.IsChordTone = true;
-
-            var restNode = noteNode.SelectSingleNode("rest");
-            if (restNode != null)
-                note.IsRest = true;
 
             return note;
         }
@@ -266,7 +266,7 @@ namespace MusicXml
             }
             else
             {
-                return null;
+                pitch.Step = 'R';
             }
 
             return pitch;

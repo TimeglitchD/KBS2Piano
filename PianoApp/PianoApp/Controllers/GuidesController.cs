@@ -79,7 +79,7 @@ namespace PianoApp.Controllers
                         if (measureElement.Type.Equals(MeasureElementType.Note))
                         {
                             var note = (Note)measureElement.Element;
-
+                            
                             if (note.Pitch == null) continue;
                             //Get the duration of the current note
                             var dur = note.Duration;
@@ -88,6 +88,9 @@ namespace PianoApp.Controllers
 
                             if (!_toDoNoteDict.ContainsKey(note))
                                 _toDoNoteDict.Add(note, timeout);
+
+                           
+
                         }
                     }
                 }
@@ -238,10 +241,29 @@ namespace PianoApp.Controllers
 
         public void ResetMusicPiece()
         {
+            foreach (var scorePart in Score.Parts)
+            {
+                //Access all measures inside the music piece
+                foreach (var scorePartMeasure in scorePart.Measures)
+                {
+                    //Access te elements inside a measure
+                    foreach (var measureElement in scorePartMeasure.MeasureElements)
+                    {
+                        //Access the element if it is a note
+                        if (measureElement.Type.Equals(MeasureElementType.Note))
+                        {
+                            var note = (Note)measureElement.Element;
+                            note.setIdle();
+                        }
+                    }
+                }
+            }
             _stopwatch.Stop();
             _timerStaffOne.Stop();
             _toDoNoteDict.Clear();
             _activeNoteAndTimeoutDict.Clear();
+
+            
         }
 
         public bool Stop()

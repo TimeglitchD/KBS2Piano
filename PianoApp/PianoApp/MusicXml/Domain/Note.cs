@@ -54,6 +54,11 @@ namespace MusicXml.Domain
 	        return ell;
 	    }
 
+        public void setIdle()
+        {
+            State = NoteState.Idle;
+        }
+
         public void Color()
 	    {
 	        if (State.Equals(NoteState.Active))

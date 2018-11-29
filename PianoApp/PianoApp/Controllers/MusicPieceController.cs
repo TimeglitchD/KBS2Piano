@@ -72,7 +72,7 @@ namespace PianoApp.Controllers
         private void AddGreatStaffsToSheet()
         {
 
-            for(int i = _score.systems; i > 0; i--)
+            for(int i = _score.Systems; i > 0; i--)
             {
                 Sheet.GreatStaffModelList.Add(new GreatStaffModel());
             }
