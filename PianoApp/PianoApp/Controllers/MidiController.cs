@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using NAudio;
 using NAudio.Midi;
 using PianoApp.Models;
 
 namespace PianoApp.Controllers
 {
-    class MidiController
+    public class MidiController
     {
         public MidiIn midiIn;
 
         public event EventHandler midiInputChanged;
 
         public List<int> currentlyPressedKeys;
+
+        public Thread MidiThread { get; set; }
+
+        private MidiControllerEventArgs midiArgs = new MidiControllerEventArgs();
 
         public MidiController()
         {
@@ -31,7 +35,12 @@ namespace PianoApp.Controllers
             currentlyPressedKeys = new List<int>();
             midiIn.MessageReceived += midiInReceived;
             midiIn.ErrorReceived += midiIn_ErrorReceived;
-            midiIn.Start();
+
+            MidiThread = new Thread(() => {
+                midiIn.Start();
+            });
+
+            MidiThread.Start();
         }
 
         public bool midiAvailable()
@@ -59,11 +68,15 @@ namespace PianoApp.Controllers
             if(MidiEvent.IsNoteOn(e.MidiEvent))
             {
                 currentlyPressedKeys.Add(noteEvent.NoteNumber);
+                midiArgs.ActiveKeys = currentlyPressedKeys;
+                OnMidiInputChanged(midiArgs);
                 Console.WriteLine("----------on----------");
                 Console.WriteLine(noteEvent.NoteNumber.ToString() + noteEvent.NoteName);
-            }else
+            } else
             {
                 currentlyPressedKeys.Remove(noteEvent.NoteNumber);
+                midiArgs.ActiveKeys = currentlyPressedKeys;
+                OnMidiInputChanged(midiArgs);
                 Console.WriteLine("----------off----------");
                 Console.WriteLine(noteEvent.NoteNumber.ToString() + noteEvent.NoteName);
             }
@@ -73,6 +86,14 @@ namespace PianoApp.Controllers
         {
             Console.WriteLine(String.Format("Time {0} Message 0x{1:X8} Event {2}",
                 e.Timestamp, e.RawMessage, e.MidiEvent));
+        }
+
+        private void OnMidiInputChanged(MidiControllerEventArgs e)
+        {
+            if(midiInputChanged != null)
+            {
+                midiInputChanged(this, e);
+            }
         }
 
     }

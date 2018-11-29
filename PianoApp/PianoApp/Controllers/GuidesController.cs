@@ -59,6 +59,15 @@ namespace PianoApp.Controllers
         private bool atStaffEndTwo = false;
         public event EventHandler staffEndReached;
 
+        public MidiController midi;
+
+        private List<int> activeKeys;
+
+        public GuidesController()
+        {
+            midi.midiInputChanged += inputChanged;
+        }
+
         public struct Timeout
         {
             public float NoteTimeout { get; set; }
@@ -258,6 +267,13 @@ namespace PianoApp.Controllers
             }
         }
 
+        private void inputChanged(object sender, EventArgs e)
+        {
+            //why
+            MidiControllerEventArgs eventArgs = e as MidiControllerEventArgs;
+
+            activeKeys = eventArgs.ActiveKeys;
+        }
     }
 
     public enum NoteType

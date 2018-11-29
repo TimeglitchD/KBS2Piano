@@ -51,10 +51,10 @@ namespace PianoApp
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             PianoController pC = new PianoController();
             SheetController sC = new SheetController();
-            mPc = new MusicPieceController() { Piano = pC , SheetController = sC};
+            MidiController mC = new MidiController();
+            mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC};
 
-            MidiController midi = new MidiController();
-            System.Windows.MessageBox.Show(midi.midiAvailable().ToString());
+            
 
             //mPc.Guide.Start();
             DrawMenu();
@@ -126,6 +126,7 @@ namespace PianoApp
             {
                 Console.WriteLine("Error");
                 return;
+                
             }
             sv.MusicPieceController.Guide.Start();
         }

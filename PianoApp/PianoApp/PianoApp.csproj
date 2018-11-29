@@ -74,6 +74,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controllers\MidiController.cs" />
+    <Compile Include="Controllers\MidiControllerEventArgs.cs" />
     <Compile Include="Controllers\SheetController.cs" />
     <Compile Include="Controllers\GuidesController.cs" />
     <Compile Include="DatabaseConnection.cs" />
