@@ -20,7 +20,8 @@ namespace PianoApp.Views
 
         public NoteView(StaveView sv)
         {
-            this.mPc = sv.MPc;
+            this.mPc = sv.MusicPieceController;
+            mPc.SheetController.NoteView = this;
             DrawNotes();
         }
 
@@ -68,7 +69,7 @@ namespace PianoApp.Views
                                 staff = greatStaff.StaffList.Last<StaffModel>();
                             }
                             Grid staveGrid = staff.stave;
-                            GNote(note.XPos, note.Pitch, staff, staveGrid, totalwidth, measure.Width);
+                            GNote(note, note.Pitch, staff, staveGrid, totalwidth, measure.Width);
                             Console.WriteLine("Note drawn");
                         }
                     }
@@ -97,13 +98,13 @@ namespace PianoApp.Views
             greatstaffgrid.Children.Add(endline);
         }
 
-        private void GNote(float x, Pitch pitch, StaffModel staff, Grid staveGrid, decimal totalwidth, decimal width)
+        private void GNote(Note n, Pitch pitch, StaffModel staff, Grid staveGrid, decimal totalwidth, decimal width)
         {
-            Ellipse note = GetNote();
+            Ellipse note = n.GetNote();
 
 
             Thickness margin = note.Margin;
-            margin.Left = x + (float)totalwidth - (float)width;
+            margin.Left = n.XPos + (float)totalwidth - (float)width;
             note.Margin = margin;
 
             int row = CheckRow(pitch, staff.Number);
@@ -115,7 +116,7 @@ namespace PianoApp.Views
                 line.X1 = 0;
                 line.X2 = 15 + 7.5;
                 line.Stroke = Brushes.Black;
-                margin.Left = x + (float)totalwidth - (float)width - 7.5 / 2;
+                margin.Left = n.XPos + (float)totalwidth - (float)width - 7.5 / 2;
                 line.Margin = margin;
                 Grid.SetRow(line, row);
                 Grid.SetColumn(line, 1);
@@ -331,15 +332,15 @@ namespace PianoApp.Views
             return row;
         }
 
-        private Ellipse GetNote()
-        {
-            Ellipse note = new Ellipse();
-            note.Fill = Brushes.Black;
-            note.Stroke = Brushes.Black;
-            note.Width = 15;
-            note.Height = note.Width;
-            return note;
-        }
+//        public Ellipse GetNote()
+//        {
+//            Ellipse note = new Ellipse();
+//            note.Fill = Brushes.Black;
+//            note.Stroke = Brushes.Black;
+//            note.Width = 15;
+//            note.Height = note.Width;
+//            return note;
+//        }
 
         private void AddMeasureLine(GreatStaffModel greatStaff, decimal totalwidth)
         {
@@ -362,7 +363,7 @@ namespace PianoApp.Views
             measureline.VerticalAlignment = VerticalAlignment.Stretch;
             greatstaffgrid.Children.Add(measureline);
         }
-
+        
         private Line Measureline()
         {
             Line line = new Line();

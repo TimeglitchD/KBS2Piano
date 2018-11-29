@@ -37,7 +37,7 @@ namespace PianoApp
 
         private NoteView nv;
         public ButtonView bv;
-        
+
         private Grid myGrid = new Grid();
 
         private metronomeSound metronome;
@@ -50,7 +50,8 @@ namespace PianoApp
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             PianoController pC = new PianoController();
-            mPc = new MusicPieceController() { Piano = pC };
+            SheetController sC = new SheetController();
+            mPc = new MusicPieceController() { Piano = pC , SheetController = sC};
 
             //mPc.Guide.Start();
             DrawMenu();
@@ -60,7 +61,7 @@ namespace PianoApp
 
         private void DrawStaves()
         {
-            sv = new StaveView(myGrid);
+            sv = new StaveView(myGrid, mPc);
 
             metronomeSound sound = new metronomeSound();
             sound.startMetronome(120, 4, 1);
@@ -80,8 +81,8 @@ namespace PianoApp
             // Define all rows for mainGrid
             DefineRowMyGrid();
             //Create the staves
-            pv = new PianoView(myGrid);
-            sv = new StaveView(myGrid);
+            pv = new PianoView(myGrid, mPc);
+            sv = new StaveView(myGrid, mPc);
             Content = pv.myGrid;
 
 
@@ -112,19 +113,18 @@ namespace PianoApp
             myGrid.RowDefinitions.Add(rowDef2);
             myGrid.RowDefinitions.Add(rowDef3);
 
-            
+
         }
 
         private void countdownFinished(object sender, EventArgs e)
         {
             //start guide here
-            MessageBox.Show("countdown finished");
-            if(mPc.Guide.Score == null)
+            if (mPc.Guide.Score == null)
             {
-                Console.WriteLine("Doet niet");
+                Console.WriteLine("Error");
                 return;
             }
-            mPc.Guide.Start();
+            sv.MusicPieceController.Guide.Start();
         }
     }
 

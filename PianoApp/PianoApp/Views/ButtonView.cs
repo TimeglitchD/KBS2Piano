@@ -39,7 +39,7 @@ namespace PianoApp.Views
             this.myGrid = myGrid;
             this.nv = nv;
             this.sv = sv;
-            this.mPc = sv.MPc;
+            this.mPc = sv.MusicPieceController;
 
             // Define all columns for menuGrid
             DefineGridRowsMenuGrid();
@@ -91,8 +91,7 @@ namespace PianoApp.Views
         }
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
-        {
-
+        {           
             if (mPc.Guide.Score == null)
             {
                 MessageBox.Show("Je hebt geen muziekstuk ingeladen!", "Foutmelding");
@@ -106,7 +105,6 @@ namespace PianoApp.Views
                 // Set values in GuideController
                 mPc.Guide.Bpm = bpmValue;
                 mPc.Guide.SetNote(notesCB.Text);
-
                 //set value in metronome and start it.
                 if (metronomeEnabled)
                 {
@@ -128,7 +126,7 @@ namespace PianoApp.Views
                 return;
             }
             
-            CheckPause();
+//            CheckPause();
             Console.WriteLine(mPc.Guide.Bpm);
             Console.WriteLine(mPc.Guide.Note);
 
@@ -157,7 +155,7 @@ namespace PianoApp.Views
             // Add textbox to set bpm
             bpmTB = new TextBox();
             bpmTB.Width = menuGrid.ColumnDefinitions[1].Width.Value - 10;
-            bpmTB.Height = myGrid.RowDefinitions[1].Height.Value;
+            bpmTB.Height = 40;
             bpmTB.HorizontalAlignment = HorizontalAlignment.Left;
             bpmTB.VerticalAlignment = VerticalAlignment.Bottom;
             bpmTB.FontSize = 30;
@@ -187,21 +185,21 @@ namespace PianoApp.Views
             Grid.SetColumn(notesCB, 3);
 
             // Create resetbutton if isPlaying
-            resetButton = new Button();
-            resetButton.FontSize = 25;
-            resetButton.Name = "resetBtn";
-            resetButton.Content = "◼";
-            resetButton.Width = 40;
-            resetButton.Height = 40;
-            resetButton.HorizontalAlignment = HorizontalAlignment.Right;
-            resetButton.Click += ResetButton_Click;
-            Grid.SetColumn(resetButton, 5);
+//            resetButton = new Button();
+//            resetButton.FontSize = 25;
+//            resetButton.Name = "resetBtn";
+//            resetButton.Content = "◼";
+//            resetButton.Width = 40;
+//            resetButton.Height = 40;
+//            resetButton.HorizontalAlignment = HorizontalAlignment.Right;
+//            resetButton.Click += ResetButton_Click;
+            //Grid.SetColumn(resetButton, 5);
 
             // Add items to grid
             menuGrid.Children.Add(txt1);
             menuGrid.Children.Add(bpmTB);
             menuGrid.Children.Add(notesCB);
-            menuGrid.Children.Add(resetButton);
+//            menuGrid.Children.Add(resetButton);
         }
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
