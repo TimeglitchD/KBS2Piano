@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PianoApp.Controllers
 {
-    class NonKeyboardInputController
+    public class NonKeyboardInputController
     {
+        
     }
 }

@@ -17,7 +17,7 @@ namespace PianoApp.Controllers
     {
         public PianoModel PianoModel { get; set; } = new PianoModel();
         public PianoView PianoView { get; set; }
-        public NonKeyboardInputController NonKeyboardInputController { get; set; };
+        public NonKeyboardInputController NonKeyboardInputController { get; set; }
 
         public void UpdatePianoKeys(Dictionary<Note, GuidesController.Timeout> noteAndTimeoutDictionary)
         {
