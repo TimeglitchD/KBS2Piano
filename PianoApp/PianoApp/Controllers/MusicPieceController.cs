@@ -32,6 +32,7 @@ namespace PianoApp.Controllers
             _score = MusicXmlParser.GetScore(filename);
 
             Guide = new GuidesController() { Score = _score, Piano = Piano , Sheet = SheetController};
+            Piano.score = _score;
 
             Sheet = SheetController.SheetModel;
 

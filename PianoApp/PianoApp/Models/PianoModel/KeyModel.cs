@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusicXml.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,7 @@ namespace PianoApp.Models
         public bool Active { get; set; } = false;
         public string type { get; set; }
         public Rectangle KeyRect { get; set; } = new Rectangle();
+        public int StaffNumber;
 
 
         public virtual Rectangle Draw(float width)
@@ -24,6 +26,11 @@ namespace PianoApp.Models
             return null;
         }
        public virtual void Color()
+        {
+
+        }
+
+        public virtual void ColorUpdate()
         {
 
         }

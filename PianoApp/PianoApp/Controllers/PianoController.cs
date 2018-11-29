@@ -17,6 +17,7 @@ namespace PianoApp.Controllers
     {
         public PianoModel PianoModel { get; set; } = new PianoModel();
         public PianoView PianoView { get; set; }
+        public Score score { get; set; }
 
         public void UpdatePianoKeys(Dictionary<Note, GuidesController.Timeout> noteAndTimeoutDictionary)
         {
@@ -42,6 +43,7 @@ namespace PianoApp.Controllers
                             keyValuePair.Key.Pitch.Alter           == keyModel.Alter)
                         {
                             keyModel.Active = true;
+                            keyModel.StaffNumber = keyValuePair.Key.Staff;
                         }
                         else
                         {
@@ -56,7 +58,7 @@ namespace PianoApp.Controllers
             {
                 foreach (var keyModel in octaveModel.KeyModelList)
                 {
-                    keyModel.KeyRect.Dispatcher.BeginInvoke((Action)(() => keyModel.Color()));
+                    keyModel.KeyRect.Dispatcher.BeginInvoke((Action)(() => keyModel.ColorUpdate()));
                 }
             }
 
