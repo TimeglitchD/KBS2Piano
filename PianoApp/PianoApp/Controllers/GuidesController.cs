@@ -99,24 +99,24 @@ namespace PianoApp.Controllers
             //set timing of music piece
             _timing = _bpm / 60;
 
-            _divs = 2;
+            _divs = 1;
 
             _interval = (int)(1000.0 / (_timing));
 
-            //            //Set the divisions
-            //            foreach (var scorePart in Score.Parts)
-            //            {
-            //                //Access all measures inside the music piece
-            //                foreach (var scorePartMeasure in scorePart.Measures)
-            //                {
-            //
-            //                    if (scorePartMeasure.Attributes != null)
-            //                    {
-            //                        //get the amount of divisions and beats from current part.
-            //                        _divs = scorePartMeasure.Attributes.Divisions;
-            //                    }
-            //                }
-            //            }
+            //Set the divisions
+            foreach (var scorePart in Score.Parts)
+            {
+                //Access all measures inside the music piece
+                foreach (var scorePartMeasure in scorePart.Measures)
+                {
+                    if (scorePartMeasure.Attributes != null)
+                    {
+                        //get the amount of divisions and beats from current part.
+                        _divs = scorePartMeasure.Attributes.Divisions;
+                        break;
+                    }
+                }
+            }
 
             stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
         }
@@ -134,15 +134,6 @@ namespace PianoApp.Controllers
 
         private void NoteIntersectEvent(object source, ElapsedEventArgs e, int staffNumber)
         {
-            try
-            {
-                 
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-            }
-
             var tempList = _toDoNoteDict.ToList();
 
             for (int i = 0; i < 1; i++)
@@ -158,13 +149,13 @@ namespace PianoApp.Controllers
                 //Remove the note from to do 
                 RemoveFirstNoteFromToDoDict(tempList[i].Key);
 
-
                 checkLastNote(_activeNoteAndTimeoutDict);
 
                 for (int j = i + 1; j < tempList.Count; j++)
                 {
                     if (tempList[i].Key != tempList[j].Key &&
-                        tempList[i].Key.XPos == tempList[j].Key.XPos &&
+                        tempList[j].Key.XPos > tempList[i].Key.XPos - 1 &&
+                        tempList[j].Key.XPos < tempList[i].Key.XPos + 1 &&
                         tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
                     {
                         //Add note with same pos to active Dictionary
@@ -190,7 +181,7 @@ namespace PianoApp.Controllers
             }
 
 //            _activeNoteAndTimeoutDict = tempActiveNoteDict;
-
+        
             Piano.UpdatePianoKeys(tempActiveNoteDict);
             Sheet.UpdateNotes(tempActiveNoteDict);
         }
