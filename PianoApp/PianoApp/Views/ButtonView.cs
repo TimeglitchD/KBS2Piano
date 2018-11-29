@@ -295,13 +295,14 @@ namespace PianoApp.Views
         public void drawPianoMenu()
         {
             pianoButton = new Button();
-            pianoButton.Width = menuGrid.ColumnDefinitions[7].Width.Value - 10;
+            pianoButton.Width = menuGrid.ColumnDefinitions[5].Width.Value - 10;
             pianoButton.Height = 40;
-            pianoButton.Content = "Virtual Piano: On";
+            pianoButton.Content = "🎹";
+            pianoButton.FontSize = 25;
             pianoButton.Click += onPianoButtonClick;
             pianoButton.HorizontalAlignment = HorizontalAlignment.Right;
             pianoButton.VerticalAlignment = VerticalAlignment.Bottom;
-            Grid.SetColumn(pianoButton, 7);
+            Grid.SetColumn(pianoButton, 5);
             menuGrid.Children.Add(pianoButton);
         }
 
