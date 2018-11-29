@@ -99,7 +99,7 @@ namespace PianoApp.Controllers
             //set timing of music piece
             _timing = _bpm / 60;
 
-            _divs = 2;
+            _divs = 1;
 
             _interval = (int)(1000.0 / (_timing));
 
@@ -134,19 +134,7 @@ namespace PianoApp.Controllers
 
         private void NoteIntersectEvent(object source, ElapsedEventArgs e, int staffNumber)
         {
-            try
-            {
-                 
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception);
-            }
-
             var tempList = _toDoNoteDict.ToList();
-
-            var noteStaffOne = tempList.First(n => n.Key.Staff.Equals(1));
-            var noteStaffTwo = tempList.First(n => n.Key.Staff.Equals(2));
 
             for (int i = 0; i < 1; i++)
             {
