@@ -27,10 +27,11 @@ namespace PianoApp.Controllers
 
         public void initializeMidi()
         {
-            midiIn = new MidiIn(0);
-            midiIn.Start();
+            midiIn = new MidiIn(0);            
             currentlyPressedKeys = new List<int>();
-            midiIn.MessageReceived += new EventHandler<MidiInMessageEventArgs>(midiInReceived);
+            midiIn.MessageReceived += midiInReceived;
+            midiIn.ErrorReceived += midiIn_ErrorReceived;
+            midiIn.Start();
         }
 
         public bool midiAvailable()
@@ -45,21 +46,27 @@ namespace PianoApp.Controllers
                 return;
             }
 
-            if(e.MidiEvent.CommandCode == MidiCommandCode.NoteOn)
+            if(MidiEvent.IsNoteOn(e.MidiEvent))
             {
                 NoteEvent noteEvent;
                 noteEvent = (NoteEvent)e.MidiEvent;
                 currentlyPressedKeys.Add(noteEvent.NoteNumber);
+                Console.WriteLine("----------on----------");
+                Console.WriteLine(noteEvent.NoteNumber.ToString() + noteEvent.NoteName);
+            }else
+            {
+                NoteEvent noteEvent;
+                noteEvent = (NoteEvent)e.MidiEvent;
+                currentlyPressedKeys.Remove(noteEvent.NoteNumber);
+                Console.WriteLine("----------off----------");
                 Console.WriteLine(noteEvent.NoteNumber.ToString() + noteEvent.NoteName);
             }
+        }
 
-            //if(e.MidiEvent.CommandCode == MidiCommandCode.NoteOff)
-            //{
-            //    NoteEvent noteEvent;
-            //    noteEvent = (NoteEvent)e.MidiEvent;
-            //    currentlyPressedKeys.Remove(noteEvent.NoteNumber);
-            //    System.Windows.MessageBox.Show(noteEvent.NoteNumber.ToString() + noteEvent.NoteName);
-            //}
+        void midiIn_ErrorReceived(object sender, MidiInMessageEventArgs e)
+        {
+            Console.WriteLine(String.Format("Time {0} Message 0x{1:X8} Event {2}",
+                e.Timestamp, e.RawMessage, e.MidiEvent));
         }
 
     }
