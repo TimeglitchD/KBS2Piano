@@ -169,6 +169,7 @@
     <Folder Include="MusicXml\Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\piano.png" />
     <Content Include="MusicXml\MusicXml.csproj" />
   </ItemGroup>
   <ItemGroup>

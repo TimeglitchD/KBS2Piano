@@ -297,7 +297,7 @@ namespace PianoApp.Views
             pianoButton = new Button();
             pianoButton.Width = menuGrid.ColumnDefinitions[5].Width.Value - 10;
             pianoButton.Height = 40;
-            pianoButton.Content = "🎹";
+
             pianoButton.FontSize = 25;
             pianoButton.Click += onPianoButtonClick;
             pianoButton.HorizontalAlignment = HorizontalAlignment.Right;
