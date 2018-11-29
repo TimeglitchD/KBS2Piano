@@ -99,8 +99,6 @@ namespace PianoApp.Controllers
             //set timing of music piece
             _timing = _bpm / 60;
 
-            _divs = 1;
-
             _interval = (int)(1000.0 / (_timing));
 
             //Set the divisions
@@ -168,7 +166,7 @@ namespace PianoApp.Controllers
                         //Remove the note with same pos from to do 
                         RemoveFirstNoteFromToDoDict(tempList[j].Key);
                     }
-                }
+                }               
             }
             goToNextStaff();
 
@@ -178,10 +176,11 @@ namespace PianoApp.Controllers
             foreach (var keyValuePair in _activeNoteAndTimeoutDict.Where(t => _stopwatch.ElapsedMilliseconds >= (t.Value.NoteTimeout * 1000) + t.Value.TimeAdded))
             {
                 tempActiveNoteDict.Remove(keyValuePair.Key);
+                keyValuePair.Key.State = NoteState.Wrong;
             }
 
-//            _activeNoteAndTimeoutDict = tempActiveNoteDict;
-        
+            //            _activeNoteAndTimeoutDict = tempActiveNoteDict;
+
             Piano.UpdatePianoKeys(tempActiveNoteDict);
             Sheet.UpdateNotes(tempActiveNoteDict);
         }
@@ -223,6 +222,7 @@ namespace PianoApp.Controllers
         {            
             ////Set the attributes from the current music piece
             SetAttributes();
+
             //Fill the to do list with notes from the current music piece
             FillToDoList();
 
@@ -234,6 +234,14 @@ namespace PianoApp.Controllers
 
             _timerStaffOne.Enabled = true;
             return true;
+        }
+
+        public void ResetMusicPiece()
+        {
+            _stopwatch.Stop();
+            _timerStaffOne.Stop();
+            _toDoNoteDict.Clear();
+            _activeNoteAndTimeoutDict.Clear();
         }
 
         public bool Stop()
