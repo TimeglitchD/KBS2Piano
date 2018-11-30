@@ -59,6 +59,16 @@ namespace PianoApp.Controllers
         private bool atStaffEndTwo = false;
         public event EventHandler staffEndReached;
 
+        public MidiController midi;
+
+        public List<int> ActiveKeys;
+
+        public GuidesController(MidiController midi)
+        {
+            this.midi = midi;
+//            midi.midiInputChanged += inputChanged;
+        }
+
         public struct Timeout
         {
             public float NoteTimeout { get; set; }
@@ -79,7 +89,7 @@ namespace PianoApp.Controllers
                         if (measureElement.Type.Equals(MeasureElementType.Note))
                         {
                             var note = (Note)measureElement.Element;
-
+                            
                             if (note.Pitch == null) continue;
                             //Get the duration of the current note
                             var dur = note.Duration;
@@ -98,8 +108,6 @@ namespace PianoApp.Controllers
         {
             //set timing of music piece
             _timing = _bpm / 60;
-
-            _divs = 1;
 
             _interval = (int)(1000.0 / (_timing));
 
@@ -168,7 +176,7 @@ namespace PianoApp.Controllers
                         //Remove the note with same pos from to do 
                         RemoveFirstNoteFromToDoDict(tempList[j].Key);
                     }
-                }
+                }               
             }
             goToNextStaff();
 
@@ -178,13 +186,15 @@ namespace PianoApp.Controllers
             foreach (var keyValuePair in _activeNoteAndTimeoutDict.Where(t => _stopwatch.ElapsedMilliseconds >= (t.Value.NoteTimeout * 1000) + t.Value.TimeAdded))
             {
                 tempActiveNoteDict.Remove(keyValuePair.Key);
+                keyValuePair.Key.State = NoteState.Wrong;
             }
 
-//            _activeNoteAndTimeoutDict = tempActiveNoteDict;
-        
+            //            _activeNoteAndTimeoutDict = tempActiveNoteDict;
+
             Piano.UpdatePianoKeys(tempActiveNoteDict);
             Sheet.UpdateNotes(tempActiveNoteDict);
         }
+
 
         private void checkLastNote(Dictionary<Note, Timeout> noteDict)
         {
@@ -223,6 +233,7 @@ namespace PianoApp.Controllers
         {            
             ////Set the attributes from the current music piece
             SetAttributes();
+
             //Fill the to do list with notes from the current music piece
             FillToDoList();
 
@@ -234,6 +245,33 @@ namespace PianoApp.Controllers
 
             _timerStaffOne.Enabled = true;
             return true;
+        }
+
+        public void ResetMusicPiece()
+        {
+            foreach (var scorePart in Score.Parts)
+            {
+                //Access all measures inside the music piece
+                foreach (var scorePartMeasure in scorePart.Measures)
+                {
+                    //Access te elements inside a measure
+                    foreach (var measureElement in scorePartMeasure.MeasureElements)
+                    {
+                        //Access the element if it is a note
+                        if (measureElement.Type.Equals(MeasureElementType.Note))
+                        {
+                            var note = (Note)measureElement.Element;
+                            note.setIdle();
+                        }
+                    }
+                }
+            }
+            _stopwatch.Stop();
+            _timerStaffOne.Stop();
+            _toDoNoteDict.Clear();
+            _activeNoteAndTimeoutDict.Clear();
+
+            
         }
 
         public bool Stop()
@@ -258,6 +296,10 @@ namespace PianoApp.Controllers
             }
         }
 
+        public void UpdatePianoKeys(List<int> activeKeys)
+        {
+            Piano.UpdatePressedPianoKeys(activeKeys);
+        }
     }
 
     public enum NoteType
