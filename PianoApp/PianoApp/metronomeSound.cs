@@ -160,6 +160,7 @@ namespace PianoApp
         {
             metronomeSoundFile.Volume = 0.0f;
             metronomeBeatSoundFile.Volume = 0.0f;
+            Thread.Sleep(500);
             outputDeviceMetronomeBeat.Play();
             outputDeviceMetronome.Play();
             Thread.Sleep(1000);

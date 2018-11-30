@@ -66,7 +66,7 @@ namespace PianoApp.Controllers
         public GuidesController(MidiController midi)
         {
             this.midi = midi;
-            midi.midiInputChanged += inputChanged;
+            this.midi.midiInputChanged += inputChanged;
         }
 
         public struct Timeout
@@ -304,6 +304,7 @@ namespace PianoApp.Controllers
             MidiControllerEventArgs eventArgs = e as MidiControllerEventArgs;
 
             activeKeys = eventArgs.ActiveKeys;
+            Console.WriteLine("ok");
         }
     }
 
