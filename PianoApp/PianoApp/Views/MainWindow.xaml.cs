@@ -55,8 +55,6 @@ namespace PianoApp
             MidiController mC = new MidiController();
             mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC};
 
-            
-
             //mPc.Guide.Start();
             DrawMenu();
             InitializeComponent();
