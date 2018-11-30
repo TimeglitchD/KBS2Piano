@@ -25,6 +25,7 @@ namespace PianoApp.Views
         private DatabaseConnection connection;
         private StaveView sv;
         private NoteView nv;
+       
 
         //selected piece's file location
         private string selectedPiece;
@@ -36,7 +37,6 @@ namespace PianoApp.Views
             connection = new DatabaseConnection();
             this.sv = sv;
             this.nv = nv;
-
             //add sheet records to tab
             populateTab(1, SheetMusic);
         }
@@ -58,7 +58,8 @@ namespace PianoApp.Views
                 nv.DrawNotes();
                 //draw the new staves with notes
                 this.Close();
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);
             }
@@ -80,5 +81,15 @@ namespace PianoApp.Views
             titleBox.Text = selected.Row["Title"] as String;
             descBox.Text = selected.Row["Description"] as String;
         }
+
+        private void SearchTerm_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SheetMusic.Items.Clear();
+            DataView dv = connection.getSheetMusic(1).Tables["Music"].DefaultView;
+            dv.RowFilter = $"description LIKE '%{SearchTerm}%'";
+            SheetMusic.ItemsSource = dv;
+            SheetMusic.Items.Refresh();
+        }
     }
 }
+

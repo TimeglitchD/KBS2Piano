@@ -31,5 +31,6 @@
         <TextBox x:Name="titleBox" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="21" Margin="507.667,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242"/>
         <Label Content="Description" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,126,0,0" VerticalAlignment="Top" Width="242"/>
         <TextBox x:Name="descBox" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="200" Margin="507.667,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242"/>
+        <TextBox x:Name="SearchTerm" Grid.Column="1" HorizontalAlignment="Left" Height="19" Margin="333.2,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" TextChanged="SearchTerm_TextChanged"/>
     </Grid>
 </Window>
