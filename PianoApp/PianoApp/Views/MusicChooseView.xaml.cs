@@ -84,11 +84,11 @@ namespace PianoApp.Views
 
         private void SearchTerm_TextChanged(object sender, TextChangedEventArgs e)
         {
-            SheetMusic.Items.Clear();
+            //SheetMusic.Items.Clear();
             DataView dv = connection.getSheetMusic(1).Tables["Music"].DefaultView;
-            dv.RowFilter = $"description LIKE '%{SearchTerm}%'";
-            SheetMusic.ItemsSource = dv;
-            SheetMusic.Items.Refresh();
+            dv.RowFilter = $"Description LIKE '%{SearchTerm}%'";
+            //SheetMusic.ItemsSource = dv;
+            //SheetMusic.Items.Refresh();
         }
     }
 }
