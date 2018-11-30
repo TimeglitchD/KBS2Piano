@@ -35,9 +35,15 @@ namespace PianoApp.Controllers
                 int octave = (int)Math.Floor((decimal)pressedKey / 12);
                 int keyNumber = pressedKey - ((12 * octave) - 1);
 
+                
+
                 foreach (var octaveModel in PianoModel.OctaveModelList.Where(o => o.Position == octave))
                 {
-                    octaveModel.KeyModelList[keyNumber - 1].Active = true;
+                    var tempList = new List<KeyModel>(octaveModel.KeyModelList);
+                    var blackKeysRemovedList = tempList.FindAll(n => n.Alter != -1);
+
+                    blackKeysRemovedList[keyNumber - 1].Active = true;
+
                 }
             }
 

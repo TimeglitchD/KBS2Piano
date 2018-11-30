@@ -48,6 +48,7 @@ namespace PianoApp.Controllers
             MidiController.Guide = Guide;
         }
 
+
         public StackPanel DrawMusicPiece()
         {
             if (Sheet == null)

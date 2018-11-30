@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -52,7 +53,7 @@ namespace PianoApp.Controllers
 
         private void midiInReceived(object sender, MidiInMessageEventArgs e)
         {
-            if (e.MidiEvent == null || Guide == null)
+            if (e.MidiEvent == null)
             {
                 return;
             }
@@ -70,19 +71,12 @@ namespace PianoApp.Controllers
             if(MidiEvent.IsNoteOn(e.MidiEvent))
             {
                 currentlyPressedKeys.Add(noteEvent.NoteNumber);
-                midiArgs.ActiveKeys = currentlyPressedKeys;
-                //                OnMidiInputChanged(midiArgs);  
-                Guide.ActiveKeys = currentlyPressedKeys;
-                Guide.UpdatePianoKeys(currentlyPressedKeys);
+                Guide?.UpdatePianoKeys(currentlyPressedKeys);
                 Console.WriteLine("key press");
-
             } else
             {
                 currentlyPressedKeys.Remove(noteEvent.NoteNumber);
-                midiArgs.ActiveKeys = currentlyPressedKeys;
-//                OnMidiInputChanged(midiArgs);
-                Guide.ActiveKeys = currentlyPressedKeys;
-                Guide.UpdatePianoKeys(currentlyPressedKeys);
+                Guide?.UpdatePianoKeys(currentlyPressedKeys);
             }
         }
 
