@@ -38,7 +38,7 @@ namespace MusicXml
             Console.WriteLine(marginRight);
 
             score.Scale = (width - marginLeft - marginRight) / 1055;
-            Console.WriteLine("Scale is: "+score.Scale);
+            Console.WriteLine("Scale is: " + score.Scale);
 
             if (partNodes != null)
             {
@@ -70,20 +70,20 @@ namespace MusicXml
                                 var measureWidthAttribute = measureNode.Attributes["width"];
                                 decimal w;
                                 if (measureWidthAttribute != null && decimal.TryParse(measureWidthAttribute.InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out w))
-                                    measure.Width = w/(decimal)score.Scale;
+                                    measure.Width = w / (decimal)score.Scale;
                             }
-							if (measureNode.Attributes != null)
-							{
-								var measureWidthAttribute = measureNode.Attributes["width"];
-								decimal w;
-								if (measureWidthAttribute != null && decimal.TryParse(measureWidthAttribute.InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture,out w))
-									measure.Width = w;
+                            if (measureNode.Attributes != null)
+                            {
+                                var measureWidthAttribute = measureNode.Attributes["width"];
+                                decimal w;
+                                if (measureWidthAttribute != null && decimal.TryParse(measureWidthAttribute.InnerText, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out w))
+                                    measure.Width = w;
 
-							    var measureNumberAttribute = measureNode.Attributes["number"];
+                                var measureNumberAttribute = measureNode.Attributes["number"];
 
-							    int n;
-							    if (measureNumberAttribute != null && int.TryParse(measureNumberAttribute.InnerText , out n))
-							        measure.Number = n;
+                                int n;
+                                if (measureNumberAttribute != null && int.TryParse(measureNumberAttribute.InnerText, out n))
+                                    measure.Number = n;
 
                             }
 
@@ -130,22 +130,22 @@ namespace MusicXml
                             {
                                 MeasureElement measureElement = null;
 
-								if (node.Name == "note")
-								{
-									var newNote = GetNote(node);
-									measureElement = new MeasureElement {Type = MeasureElementType.Note, Element = newNote};
+                                if (node.Name == "note")
+                                {
+                                    var newNote = GetNote(node);
+                                    measureElement = new MeasureElement { Type = MeasureElementType.Note, Element = newNote };
 
-								    var note = (Note) measureElement.Element;
-								    note.MeasureNumber = measure.Number;
-								}
-								else if (node.Name == "backup")
-								{
-									measureElement = new MeasureElement {Type = MeasureElementType.Backup, Element = GetBackupElement(node)};
-								}
-								else if (node.Name == "forward")
-								{
-									measureElement = new MeasureElement {Type = MeasureElementType.Forward, Element = GetForwardElement(node)};
-								}
+                                    var note = (Note)measureElement.Element;
+                                    note.MeasureNumber = measure.Number;
+                                }
+                                else if (node.Name == "backup")
+                                {
+                                    measureElement = new MeasureElement { Type = MeasureElementType.Backup, Element = GetBackupElement(node) };
+                                }
+                                else if (node.Name == "forward")
+                                {
+                                    measureElement = new MeasureElement { Type = MeasureElementType.Forward, Element = GetForwardElement(node) };
+                                }
 
                                 if (measureElement != null)
                                     measure.MeasureElements.Add(measureElement);
@@ -212,18 +212,18 @@ namespace MusicXml
             if (xPos != null)
             {
                 note.XPos = float.Parse(xPos.Value, CultureInfo.InvariantCulture.NumberFormat);
-                
+
             }
             else
             {
-                
+
             }
-                
+
             //HERE
             var rest = noteNode.SelectSingleNode("rest");
             if (rest == null)
             {
-                
+
                 note.IsRest = false;
             }
             else
