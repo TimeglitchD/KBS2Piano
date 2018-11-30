@@ -11,6 +11,7 @@ namespace PianoApp
     public class DatabaseConnection
     {
         private string connectionString;
+        public DataSet dataSet = new DataSet();
 
         public DatabaseConnection()
         {
@@ -28,14 +29,14 @@ namespace PianoApp
                 {
                     SqlDataAdapter dataAdapter = new SqlDataAdapter();
                     SqlCommand command = connection.CreateCommand();
-                    DataSet dataSet = new DataSet();
                     command.CommandText = "SELECT * FROM music WHERE type =" + type;
                     dataAdapter.SelectCommand = command;
                     connection.Open();
                     dataAdapter.Fill(dataSet, "Music");
                     connection.Close();
                     return dataSet;
-                } catch(Exception)
+                }
+                catch (Exception)
                 {
                     return null;
                 }
@@ -69,7 +70,8 @@ namespace PianoApp
                 this.ExcecuteCommandNoOutput(command.ToString());
                 return true;
 
-            } catch (SqlException ex)
+            }
+            catch (SqlException ex)
             {
                 return false;
             }

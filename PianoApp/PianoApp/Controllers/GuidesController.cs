@@ -61,12 +61,12 @@ namespace PianoApp.Controllers
 
         public MidiController midi;
 
-        private List<int> activeKeys;
+        public List<int> ActiveKeys;
 
         public GuidesController(MidiController midi)
         {
             this.midi = midi;
-            this.midi.midiInputChanged += inputChanged;
+//            midi.midiInputChanged += inputChanged;
         }
 
         public struct Timeout
@@ -98,9 +98,6 @@ namespace PianoApp.Controllers
 
                             if (!_toDoNoteDict.ContainsKey(note))
                                 _toDoNoteDict.Add(note, timeout);
-
-                           
-
                         }
                     }
                 }
@@ -197,6 +194,7 @@ namespace PianoApp.Controllers
             Piano.UpdatePianoKeys(tempActiveNoteDict);
             Sheet.UpdateNotes(tempActiveNoteDict);
         }
+
 
         private void checkLastNote(Dictionary<Note, Timeout> noteDict)
         {
@@ -298,13 +296,9 @@ namespace PianoApp.Controllers
             }
         }
 
-        private void inputChanged(object sender, EventArgs e)
+        public void UpdatePianoKeys(List<int> activeKeys)
         {
-            //why
-            MidiControllerEventArgs eventArgs = e as MidiControllerEventArgs;
-
-            activeKeys = eventArgs.ActiveKeys;
-            Console.WriteLine("ok");
+            Piano.UpdatePressedPianoKeys(activeKeys);
         }
     }
 

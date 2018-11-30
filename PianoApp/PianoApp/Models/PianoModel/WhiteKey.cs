@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusicXml.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,6 @@ namespace PianoApp.Models
     public class WhiteKey : KeyModel
     {
         public string Type { get; set; } = "White";
-        public Rectangle whiteKey { get; set; } = new Rectangle();
 
         public WhiteKey()
         {
@@ -20,22 +20,32 @@ namespace PianoApp.Models
         public override Rectangle Draw(float width)
         {
             Color();
-            whiteKey.Stroke = System.Windows.Media.Brushes.Black;
-            whiteKey.Width = width;
-            whiteKey.Height = 182;
-            return whiteKey;
+            KeyRect.Stroke = System.Windows.Media.Brushes.Black;
+            KeyRect.Width = width;
+            KeyRect.Height = 182;
+            return KeyRect;
         }
 
-        public override void Color()
+        public override void ColorUpdate()
         {
-            if (Active)
+            if (StaffNumber == 1 && Active)
             {
-                whiteKey.Fill = System.Windows.Media.Brushes.Aquamarine;
+                KeyRect.Fill = System.Windows.Media.Brushes.Blue;
+            }
+            else if (StaffNumber == 2 && Active)
+            {
+                KeyRect.Fill = System.Windows.Media.Brushes.Purple;
             }
             else
             {
-                whiteKey.Fill = System.Windows.Media.Brushes.FloralWhite;
+                Color();
             }
+        }
+
+
+        public override void Color()
+        {
+            KeyRect.Fill = System.Windows.Media.Brushes.FloralWhite;
         }
     }
 }

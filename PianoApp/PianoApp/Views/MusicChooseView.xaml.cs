@@ -25,6 +25,9 @@ namespace PianoApp.Views
         private DatabaseConnection connection;
         private StaveView sv;
         private NoteView nv;
+        private DataView dv;
+        private bool hasBeenClicked = false;
+
 
         //selected piece's file location
         private string selectedPiece;
@@ -36,7 +39,7 @@ namespace PianoApp.Views
             connection = new DatabaseConnection();
             this.sv = sv;
             this.nv = nv;
-
+            this.dv = connection.getSheetMusic(1).Tables["Music"].DefaultView;
             //add sheet records to tab
             populateTab(1, SheetMusic);
         }
@@ -44,22 +47,22 @@ namespace PianoApp.Views
         //fill tab based on type
         public void populateTab(int Type, DataGrid grid)
         {
-            grid.ItemsSource = connection.getSheetMusic(1).Tables["Music"].DefaultView;
+            grid.ItemsSource = dv;
         }
 
         private void OnSelectClick(object sender, RoutedEventArgs e)
         {
-            sv.MusicPieceController.CreateMusicPiece(selectedPiece);
-            Console.WriteLine("Piece loaded.");
-            //succesfull at opening xml file.
-            sv.DrawMusic();
-            nv.DrawNotes();
-            //draw the new staves with notes
-            this.Close();
             try
             {
-
-            } catch(Exception ex)
+                sv.MusicPieceController.CreateMusicPiece(selectedPiece);
+                Console.WriteLine("Piece loaded.");
+                //succesfull at opening xml file.
+                sv.DrawMusic();
+                nv.DrawNotes();
+                //draw the new staves with notes
+                this.Close();
+            }
+            catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);
             }
@@ -81,5 +84,12 @@ namespace PianoApp.Views
             titleBox.Text = selected.Row["Title"] as String;
             descBox.Text = selected.Row["Description"] as String;
         }
+
+        private void SearchTerm_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            dv.RowFilter = $"Description LIKE '%{SearchTerm.Text}%' OR Title Like '%{SearchTerm.Text}%'";
+        }
+
     }
 }
+

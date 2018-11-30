@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusicXml.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,32 +13,41 @@ namespace PianoApp.Models
     class BlackKey : KeyModel
     {
         public string Type { get; set; } = "Black";
-        public Rectangle keyRect;
 
         public BlackKey()
         {
             base.type = Type;
-            keyRect = base.KeyRect;
         }
 
         public override Rectangle Draw(float width)
         {
             Color();
-            keyRect.Width = width/2;
-            keyRect.Height = 115;
-            return keyRect;
+            KeyRect.Width = width / 2;
+            KeyRect.Height = 115;
+            return KeyRect;
         }
 
-        public override void Color()
+
+        public override void ColorUpdate()
         {
-            if (Active)
+            if (StaffNumber == 1 && Active)
             {
-                keyRect.Fill = System.Windows.Media.Brushes.Red;
+                KeyRect.Fill = System.Windows.Media.Brushes.Blue;
+            }
+            else if (StaffNumber == 2 && Active)
+            {
+                KeyRect.Fill = System.Windows.Media.Brushes.Purple;
             }
             else
             {
-                keyRect.Fill = System.Windows.Media.Brushes.Black;
+                Color();
             }
+        }
+
+
+        public override void Color()
+        {
+            KeyRect.Fill = System.Windows.Media.Brushes.Black;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace PianoApp.Controllers
 
         private MidiControllerEventArgs midiArgs = new MidiControllerEventArgs();
 
+        public GuidesController Guide;
+
         public MidiController()
         {
             if(midiAvailable())
@@ -34,7 +37,7 @@ namespace PianoApp.Controllers
             midiIn = new MidiIn(0);            
             currentlyPressedKeys = new List<int>();
             midiIn.MessageReceived += midiInReceived;
-            midiIn.ErrorReceived += midiIn_ErrorReceived;
+            midiIn.ErrorReceived += midiIn_ErrorReceived;            
 
             MidiThread = new Thread(() => {
                 midiIn.Start();
@@ -68,17 +71,12 @@ namespace PianoApp.Controllers
             if(MidiEvent.IsNoteOn(e.MidiEvent))
             {
                 currentlyPressedKeys.Add(noteEvent.NoteNumber);
-                midiArgs.ActiveKeys = currentlyPressedKeys;
-                OnMidiInputChanged(midiArgs);
-                Console.WriteLine("----------on----------");
-                Console.WriteLine(noteEvent.NoteNumber.ToString() + noteEvent.NoteName);
+                Guide?.UpdatePianoKeys(currentlyPressedKeys);
+                Console.WriteLine("key press");
             } else
             {
                 currentlyPressedKeys.Remove(noteEvent.NoteNumber);
-                midiArgs.ActiveKeys = currentlyPressedKeys;
-                OnMidiInputChanged(midiArgs);
-                Console.WriteLine("----------off----------");
-                Console.WriteLine(noteEvent.NoteNumber.ToString() + noteEvent.NoteName);
+                Guide?.UpdatePianoKeys(currentlyPressedKeys);
             }
         }
 
@@ -88,12 +86,9 @@ namespace PianoApp.Controllers
                 e.Timestamp, e.RawMessage, e.MidiEvent));
         }
 
-        private void OnMidiInputChanged(MidiControllerEventArgs e)
+        protected virtual void OnMidiInputChanged(MidiControllerEventArgs e)
         {
-            if(midiInputChanged != null)
-            {
-                midiInputChanged(this, e);
-            }
+            midiInputChanged?.Invoke(this, e);
         }
 
     }

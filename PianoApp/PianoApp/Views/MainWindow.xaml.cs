@@ -58,8 +58,6 @@ namespace PianoApp
             kC = new KeyboardController();
             mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC , KeyboardController = kC };
 
-            
-
             //mPc.Guide.Start();
             DrawMenu();
             InitializeComponent();
@@ -98,6 +96,7 @@ namespace PianoApp
             nv.DrawNotes();
 
             bv = new ButtonView(myGrid, sv, nv);
+            bv.pianoStateChanged += pianoStateChanged;
 
             metronome = bv.metronome;
             metronome.countdownFinished += countdownFinished;
@@ -143,6 +142,19 @@ namespace PianoApp
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             kC.KeyUp(e);
+        }
+
+        private void pianoStateChanged(object sender, EventArgs e)
+        {
+            if(bv.pianoEnabled)
+            {
+                myGrid.RowDefinitions[2].Height = new GridLength(200, GridUnitType.Star);
+                myGrid.RowDefinitions[1].Height = new GridLength(500, GridUnitType.Star);
+            } else
+            {
+                myGrid.RowDefinitions[2].Height = new GridLength(0);
+                myGrid.RowDefinitions[1].Height = new GridLength(700, GridUnitType.Star);
+            }
         }
     }
 

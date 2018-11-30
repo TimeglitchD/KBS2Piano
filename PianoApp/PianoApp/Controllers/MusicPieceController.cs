@@ -46,7 +46,10 @@ namespace PianoApp.Controllers
             AddNotesToMeasures();
 
             Guide.staffEndReached += staffEndReached;
+
+            MidiController.Guide = Guide;
         }
+
 
         public StackPanel DrawMusicPiece()
         {
