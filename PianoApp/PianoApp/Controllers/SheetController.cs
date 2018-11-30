@@ -48,7 +48,7 @@ namespace PianoApp.Controllers
 //                                {
 //                                    note.State = NoteState.Idle;                                    
 //                                }
-                                note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
+                                note.ell.Dispatcher.BeginInvoke((Action)(() => note.ColorUpdate()));
                             }
                         }
                     }

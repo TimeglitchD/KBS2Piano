@@ -63,10 +63,12 @@ namespace PianoApp.Views
                             if (note.Staff.Equals(1))
                             {
                                 staff = greatStaff.StaffList.First<StaffModel>();
+
                             }
                             else
                             {
                                 staff = greatStaff.StaffList.Last<StaffModel>();
+                                
                             }
                             Grid staveGrid = staff.stave;
                             GNote(note, note.Pitch, staff, staveGrid, totalwidth, measure.Width);
