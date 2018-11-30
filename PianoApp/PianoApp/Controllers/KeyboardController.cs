@@ -11,11 +11,14 @@ namespace PianoApp.Controllers
     {
         public List<int> currentlyPressedKeys = new List<int>();
 
+        public GuidesController Guide;
+
         private int keyOffset = 0;
 
         public void KeyDown(KeyEventArgs e)
         {
             int pressedKey = -1;
+
             switch(e.Key)
             {
                 case Key.Q:
@@ -124,6 +127,10 @@ namespace PianoApp.Controllers
 
             currentlyPressedKeys.Add(pressedKey);
 
+            
+            Guide?.UpdatePianoKeys(currentlyPressedKeys);
+
+            Console.WriteLine("----------On----------");
             Console.WriteLine(pressedKey.ToString());
         }
 
@@ -238,6 +245,9 @@ namespace PianoApp.Controllers
 
             currentlyPressedKeys.Remove(pressedKey);
 
+            Guide?.UpdatePianoKeys(currentlyPressedKeys);
+
+            Console.WriteLine("----------Off----------");
             Console.WriteLine(pressedKey.ToString());
         }
     }

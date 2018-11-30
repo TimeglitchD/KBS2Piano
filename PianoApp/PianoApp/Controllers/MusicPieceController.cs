@@ -48,6 +48,8 @@ namespace PianoApp.Controllers
             Guide.staffEndReached += staffEndReached;
 
             MidiController.Guide = Guide;
+
+            KeyboardController.Guide = Guide;
         }
 
 
