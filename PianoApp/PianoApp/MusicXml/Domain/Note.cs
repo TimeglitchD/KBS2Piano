@@ -41,6 +41,8 @@ namespace MusicXml.Domain
 
 	    public bool Active { get; set; } = false;
 
+	    public NoteState State { get; set; } = NoteState.Idle;
+
 	    public Ellipse ell = new Ellipse();
 
         public Ellipse GetNote()
@@ -52,16 +54,37 @@ namespace MusicXml.Domain
 	        return ell;
 	    }
 
+        public void setIdle()
+        {
+            State = NoteState.Idle;
+        }
+
         public void Color()
 	    {
-	        if (Active)
+	        if (State.Equals(NoteState.Active))
 	        {
 	            ell.Fill = System.Windows.Media.Brushes.Blue;
 	        }
+	        else if(State.Equals(NoteState.Wrong))
+	        {
+	            ell.Fill = System.Windows.Media.Brushes.Red;
+	        }
+            else if (State.Equals(NoteState.Good))
+            {
+                ell.Fill = System.Windows.Media.Brushes.Green;
+            }
 	        else
 	        {
 	            ell.Fill = System.Windows.Media.Brushes.Black;
 	        }
-	    }
+        }
+    }
+
+    public enum NoteState
+    {
+        Active,
+        Idle,
+        Wrong,
+        Good
     }
 }

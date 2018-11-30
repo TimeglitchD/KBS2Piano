@@ -42,14 +42,13 @@ namespace PianoApp.Controllers
 
                                 if (keyValuePair.Key.XPos == note.XPos && keyValuePair.Key.MeasureNumber == note.MeasureNumber)
                                 {
-                                    note.Active = true;
-                                    note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
+                                    note.State = NoteState.Active;
                                 }
-                                else
-                                {
-                                    note.Active = false;
-                                    note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
-                                }
+//                                else if(!note.State.Equals(NoteState.Good) && !note.State.Equals(NoteState.Wrong))
+//                                {
+//                                    note.State = NoteState.Idle;                                    
+//                                }
+                                note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
                             }
                         }
                     }
