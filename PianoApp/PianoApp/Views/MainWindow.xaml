@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:PianoApp"
         mc:Ignorable="d"
         Title="KeyBoard Hero" Height="720" Width="1280"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        KeyDown="Window_KeyDown"
+        KeyUp="Window_KeyUp">
+
 
 </Window>

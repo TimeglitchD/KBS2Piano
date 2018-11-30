@@ -22,6 +22,8 @@ namespace PianoApp.Controllers
 
         public MidiController MidiController;
 
+        public KeyboardController KeyboardController;
+
         public SheetModel Sheet { get; set; }
 
         public event EventHandler staffEndReached;

@@ -42,6 +42,8 @@ namespace PianoApp
 
         private metronomeSound metronome;
 
+        private KeyboardController kC;
+
         Button startBtn = new Button();
         Button resetButton = new Button();
         private MusicPieceController mPc;
@@ -52,7 +54,8 @@ namespace PianoApp
             PianoController pC = new PianoController();
             SheetController sC = new SheetController();
             MidiController mC = new MidiController();
-            mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC};
+            kC = new KeyboardController();
+            mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC , KeyboardController = kC };
 
             
 
@@ -129,6 +132,16 @@ namespace PianoApp
                 
             }
             sv.MusicPieceController.Guide.Start();
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            kC.KeyDown(e);
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            kC.KeyUp(e);
         }
     }
 
