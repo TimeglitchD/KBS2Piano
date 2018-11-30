@@ -25,7 +25,9 @@ namespace PianoApp.Views
         private DatabaseConnection connection;
         private StaveView sv;
         private NoteView nv;
-       
+        private DataView dv;
+        private bool hasBeenClicked = false;
+
 
         //selected piece's file location
         private string selectedPiece;
@@ -37,6 +39,7 @@ namespace PianoApp.Views
             connection = new DatabaseConnection();
             this.sv = sv;
             this.nv = nv;
+            this.dv = connection.getSheetMusic(1).Tables["Music"].DefaultView;
             //add sheet records to tab
             populateTab(1, SheetMusic);
         }
@@ -44,7 +47,7 @@ namespace PianoApp.Views
         //fill tab based on type
         public void populateTab(int Type, DataGrid grid)
         {
-            grid.ItemsSource = connection.getSheetMusic(1).Tables["Music"].DefaultView;
+            grid.ItemsSource = dv;
         }
 
         private void OnSelectClick(object sender, RoutedEventArgs e)
@@ -84,12 +87,9 @@ namespace PianoApp.Views
 
         private void SearchTerm_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //SheetMusic.Items.Clear();
-            DataView dv = connection.getSheetMusic(1).Tables["Music"].DefaultView;
-            dv.RowFilter = $"Description LIKE '%{SearchTerm}%'";
-            //SheetMusic.ItemsSource = dv;
-            //SheetMusic.Items.Refresh();
+            dv.RowFilter = $"Description LIKE '%{SearchTerm.Text}%' OR Title Like '%{SearchTerm.Text}%'";
         }
+
     }
 }
 
