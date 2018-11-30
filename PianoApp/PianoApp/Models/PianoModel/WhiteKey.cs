@@ -40,16 +40,34 @@ namespace PianoApp.Models
                 whiteKey.Fill = Brushes.FloralWhite;
             }
 
-            if(FingerNum > 0)
-            {
-                Label fingerNumLabel = new Label();
 
-                whiteKey.SetValue(Grid.ColumnProperty, 1);
-                fingerNumLabel.FontSize = 40;
-                fingerNumLabel.Margin = new Thickness(5, 0, 5, -30);
+            if (FingerNum > 0)
+            {
+                // set color
+                SolidColorBrush Color = Brushes.Aquamarine;
+
+                // create new canvas
+                Canvas canvas = new Canvas();
+                canvas.Background = Color;
+                canvas.Height = 600;
+                canvas.Width = 300;
+
+                // create new label
+                Label fingerNumLabel = new Label();
+                fingerNumLabel.FontWeight = FontWeights.Bold;
+
+                fingerNumLabel.FontSize = 120;
+                fingerNumLabel.Height = 200;
+                fingerNumLabel.Width = 200;
                 fingerNumLabel.Content = FingerNum.ToString();
-                fingerNumLabel.Background = Brushes.Aquamarine;
-                BitmapCacheBrush bcb = new BitmapCacheBrush(fingerNumLabel);
+                fingerNumLabel.Background = Color;
+                fingerNumLabel.Margin = new Thickness(91, 400, 0, 0);
+
+                // add label to canvas
+                canvas.Children.Add(fingerNumLabel);
+
+                // add canvas to bipmapcachebrush
+                BitmapCacheBrush bcb = new BitmapCacheBrush(canvas);
                 whiteKey.Fill = bcb;
             }
         }
