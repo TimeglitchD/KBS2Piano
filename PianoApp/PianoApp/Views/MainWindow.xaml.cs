@@ -132,12 +132,12 @@ namespace PianoApp
         {
             if(bv.pianoEnabled)
             {
-                pv.showPianoView();
                 myGrid.RowDefinitions[2].Height = new GridLength(200, GridUnitType.Star);
+                myGrid.RowDefinitions[1].Height = new GridLength(500, GridUnitType.Star);
             } else
             {
-                pv.hidePianoView();
                 myGrid.RowDefinitions[2].Height = new GridLength(0);
+                myGrid.RowDefinitions[1].Height = new GridLength(700, GridUnitType.Star);
             }
         }
     }

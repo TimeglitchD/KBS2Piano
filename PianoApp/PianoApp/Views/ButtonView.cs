@@ -37,6 +37,8 @@ namespace PianoApp.Views
 
         float bpmValue = -1.0f;
 
+        private TextBlock pianoText;
+        private TextDecorationCollection strikeTrough = new TextDecorationCollection();
 
         public ButtonView(Grid myGrid, StaveView sv, NoteView nv)
         {
@@ -294,11 +296,18 @@ namespace PianoApp.Views
 
         public void drawPianoMenu()
         {
+            TextDecoration strikeTroughDecoration = new TextDecoration();
+            strikeTroughDecoration.Location = TextDecorationLocation.Strikethrough;
+            strikeTroughDecoration.Pen = new Pen(Brushes.Red, 3);
+            strikeTrough.Add(strikeTroughDecoration);
+            pianoText = new TextBlock();
+            pianoText.Text = "🎹";
+            pianoText.TextDecorations = strikeTrough;
             pianoButton = new Button();
-            pianoButton.Width = menuGrid.ColumnDefinitions[5].Width.Value - 10;
+            pianoButton.Content = pianoText;
+            pianoButton.Width = 40;
             pianoButton.Height = 40;
-
-            pianoButton.FontSize = 25;
+            pianoButton.FontSize = 20;
             pianoButton.Click += onPianoButtonClick;
             pianoButton.HorizontalAlignment = HorizontalAlignment.Right;
             pianoButton.VerticalAlignment = VerticalAlignment.Bottom;
@@ -325,12 +334,12 @@ namespace PianoApp.Views
             if (pianoEnabled)
             {
                 pianoEnabled = false;
-                pianoButton.Content = "Virtual Piano: Off";
+                pianoText.TextDecorations = null;
             }
             else
             {
                 pianoEnabled = true;
-                pianoButton.Content = "Virtual Piano: On";
+                pianoText.TextDecorations = strikeTrough;
             }
 
             //fire event after changing boolean to get correct state
