@@ -45,8 +45,6 @@ namespace MusicXml.Domain
 
 	    public Ellipse ell = new Ellipse();
 
-        public int StaffNumber;
-
         public Ellipse GetNote()
 	    {
 	        Color();
@@ -65,13 +63,13 @@ namespace MusicXml.Domain
 	    {
             if(State.Equals(NoteState.Active))
             {
-                if (StaffNumber == 1)
+                if (Staff == 1)
                 {
-                    ell.Fill = System.Windows.Media.Brushes.Blue;
+                    ell.Fill = System.Windows.Media.Brushes.Aquamarine;
                 }
-                else if(StaffNumber == 2)
+                else if(Staff == 2)
                 {
-                    ell.Fill = System.Windows.Media.Brushes.Purple;
+                    ell.Fill = System.Windows.Media.Brushes.DarkOrchid;
                 }
 
             }
@@ -89,6 +87,7 @@ namespace MusicXml.Domain
 	        }
         }
     }
+
 
     public enum NoteState
     {
