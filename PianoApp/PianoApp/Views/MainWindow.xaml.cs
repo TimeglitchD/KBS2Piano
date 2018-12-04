@@ -125,6 +125,7 @@ namespace PianoApp
                 Console.WriteLine("Error");
                 return;
             }
+            Console.WriteLine("Metronoom klaar");
             sv.MusicPieceController.Guide.Start();
         }
     }

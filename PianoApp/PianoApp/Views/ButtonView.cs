@@ -50,7 +50,7 @@ namespace PianoApp.Views
             drawMetronomeMenu();
 
             // Start button
-            
+
             startBtn.FontSize = 25;
             startBtn.Name = "startBtn";
             startBtn.Content = "▶";
@@ -91,7 +91,7 @@ namespace PianoApp.Views
         }
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
-        {           
+        {
             if (mPc.Guide.Score == null)
             {
                 MessageBox.Show("Je hebt geen muziekstuk ingeladen!", "Foutmelding");
@@ -106,6 +106,7 @@ namespace PianoApp.Views
                 mPc.Guide.Bpm = bpmValue;
                 mPc.Guide.SetNote(notesCB.Text);
 
+                Console.WriteLine("Start");
                 //set value in metronome and start it.
                 if (metronomeEnabled)
                 {
@@ -126,8 +127,8 @@ namespace PianoApp.Views
                 MessageBox.Show(ex.Message);
                 return;
             }
-            
-//            CheckPause();
+
+            //            CheckPause();
             Console.WriteLine(mPc.Guide.Bpm);
             Console.WriteLine(mPc.Guide.Note);
 
@@ -162,7 +163,7 @@ namespace PianoApp.Views
             bpmTB.VerticalAlignment = VerticalAlignment.Bottom;
             bpmTB.FontSize = 30;
             bpmTB.Name = "bpmTB";
-            bpmTB.Text = "60";
+            bpmTB.Text = "160";
             bpmTB.Height = 40;
             Grid.SetColumn(bpmTB, 2);
 
@@ -190,7 +191,7 @@ namespace PianoApp.Views
             resetButton = new Button();
             resetButton.FontSize = 25;
             resetButton.Name = "resetBtn";
-            resetButton.Content = "◼";
+            resetButton.Content = "⟲";
             resetButton.Width = 40;
             resetButton.Height = 40;
             resetButton.HorizontalAlignment = HorizontalAlignment.Right;
@@ -207,18 +208,20 @@ namespace PianoApp.Views
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
-            metronome.stopMetronome();
-
             mPc.Guide.ResetMusicPiece();
 
-            //start countdown and start guide from beginning
+            metronome.stopMetronome();
+
             if (metronomeEnabled)
             {
                 metronome.startMetronome(bpmValue, 4, 1);
-            } else
+            }
+            else
             {
                 metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
             }
+
+
         }
 
         private void DefineGridRowsMenuGrid()
@@ -274,7 +277,7 @@ namespace PianoApp.Views
         public void drawMetronomeMenu()
         {
             metronomeButton = new Button();
-            metronomeButton.Width = menuGrid.ColumnDefinitions[4].Width.Value -10;
+            metronomeButton.Width = menuGrid.ColumnDefinitions[4].Width.Value - 10;
             metronomeButton.Height = 40;
             metronomeButton.Content = "Metronoom: Uit";
             metronomeButton.Click += onMetronomeButtonClick;

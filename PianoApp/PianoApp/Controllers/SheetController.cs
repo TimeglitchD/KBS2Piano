@@ -15,6 +15,8 @@ namespace PianoApp.Controllers
         public SheetModel SheetModel { get; set; } = new SheetModel();
         public NoteView NoteView { get; set; }
 
+
+
         public void UpdateNotes(Dictionary<Note, GuidesController.Timeout> noteAndTimeoutDictionary)
         {
             var tempDict = new Dictionary<Note, GuidesController.Timeout>(noteAndTimeoutDictionary);

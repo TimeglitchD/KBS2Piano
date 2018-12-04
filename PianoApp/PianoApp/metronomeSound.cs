@@ -8,6 +8,7 @@ using System.Threading;
 using System.Timers;
 using NAudio.Wave;
 using System.IO;
+using System.Windows;
 
 namespace PianoApp
 {

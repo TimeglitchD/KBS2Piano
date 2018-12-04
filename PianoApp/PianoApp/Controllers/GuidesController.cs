@@ -4,9 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Timers;
-using Key = System.Windows.Input.Key;
 
 namespace PianoApp.Controllers
 {
@@ -152,6 +150,7 @@ namespace PianoApp.Controllers
 
                 checkLastNote(_activeNoteAndTimeoutDict);
 
+
                 for (int j = i + 1; j < tempList.Count; j++)
                 {
                     if (tempList[i].Key != tempList[j].Key &&
@@ -226,7 +225,7 @@ namespace PianoApp.Controllers
             ////Set the attributes from the current music piece
             SetAttributes();
 
-            //Fill the to do list with notes from the current music piece
+            //Fill the to do list with notes from the current music     
             FillToDoList();
 
             _stopwatch = Stopwatch.StartNew();
@@ -254,16 +253,27 @@ namespace PianoApp.Controllers
                         {
                             var note = (Note)measureElement.Element;
                             note.setIdle();
+                            note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
                         }
                     }
                 }
             }
+
+            foreach (var octaveModel in Piano.PianoModel.OctaveModelList)
+            {
+                foreach (var keyModel in octaveModel.KeyModelList)
+                {
+                    keyModel.Active = false;
+                    keyModel.FingerNum = 0;
+                    keyModel.KeyRect.Dispatcher.BeginInvoke((Action)(() => keyModel.Color()));
+                }
+            }
+
             _stopwatch.Stop();
             _timerStaffOne.Stop();
             _toDoNoteDict.Clear();
             _activeNoteAndTimeoutDict.Clear();
-
-            
+            SetAttributes();
         }
 
         public bool Stop()
