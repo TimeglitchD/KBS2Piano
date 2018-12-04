@@ -46,6 +46,16 @@ namespace PianoApp.Views
             myGrid.Children.Add(piano);
             Console.WriteLine("Piano drawn");
         }
+
+        public void hidePianoView()
+        {
+            piano.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        public void showPianoView()
+        {
+            piano.Visibility = System.Windows.Visibility.Visible;
+        }
     }
 }
 
