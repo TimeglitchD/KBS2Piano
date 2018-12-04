@@ -163,7 +163,7 @@ namespace PianoApp.Views
             bpmTB.VerticalAlignment = VerticalAlignment.Bottom;
             bpmTB.FontSize = 30;
             bpmTB.Name = "bpmTB";
-            bpmTB.Text = "160";
+            bpmTB.Text = "60";
             bpmTB.Height = 40;
             Grid.SetColumn(bpmTB, 2);
 
