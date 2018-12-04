@@ -40,6 +40,8 @@ namespace PianoApp.Views
         private TextBlock pianoText;
         private TextDecorationCollection strikeTrough = new TextDecorationCollection();
 
+        private bool running = false;
+
         public ButtonView(Grid myGrid, StaveView sv, NoteView nv)
         {
             this.myGrid = myGrid;
@@ -105,6 +107,9 @@ namespace PianoApp.Views
                 MessageBox.Show("Je hebt geen muziekstuk ingeladen!", "Foutmelding");
                 return;
             }
+
+            if (running)
+                return;
             try
             {
                 // Set value to int
@@ -123,6 +128,8 @@ namespace PianoApp.Views
                 {
                     metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
                 }
+
+                running = true;
             }
             catch (FormatException)
             {
