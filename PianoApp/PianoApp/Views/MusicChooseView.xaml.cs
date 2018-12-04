@@ -40,7 +40,8 @@ namespace PianoApp.Views
             this.nv = nv;
             musicView = connection.getSheetMusic(1).Tables["Music"].DefaultView;
 
-            scoreView = getHighestFive();
+            DataTable ScoreTable = connection.getSheetScore().Tables["Score"];
+            scoreView = getHighestFive(ScoreTable);
             scoreView.RowFilter = "Id = 0";
 
             //add sheet records to tab
@@ -116,16 +117,13 @@ namespace PianoApp.Views
             scoreView.RowFilter = $"Id = {id}";
         }
 
-        public DataView getHighestFive()
+        private DataView getHighestFive(DataTable score)
         {
-            DataTable productDataTable = connection.getSheetScore().Tables["Score"];
-            DataTable cloneDataTable = productDataTable.Clone();
+            DataTable firstFiveRows = score.AsEnumerable()                
+                .Take(5)
+                .CopyToDataTable();
 
-            for (int i = 0; i < 5; i++)
-            {
-                cloneDataTable.ImportRow(productDataTable.Rows[i]);
-            }
-            return cloneDataTable.DefaultView;
+            return firstFiveRows.DefaultView;
         }
     }
 
