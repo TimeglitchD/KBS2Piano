@@ -257,7 +257,7 @@ namespace PianoApp.Views
             menuGrid.ColumnDefinitions.Add(colDef9);
         }
 
-        private void CheckPause()
+        private bool CheckPause()
         {
             if (paused)
             {
@@ -269,6 +269,7 @@ namespace PianoApp.Views
                 paused = true;
                 startBtn.Content = "❚❚";
             }
+            return paused;
         }
 
         public void drawMetronomeMenu()

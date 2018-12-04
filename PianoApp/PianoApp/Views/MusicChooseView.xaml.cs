@@ -25,9 +25,8 @@ namespace PianoApp.Views
         private DatabaseConnection connection;
         private StaveView sv;
         private NoteView nv;
-        private DataView dv;
-        private bool hasBeenClicked = false;
-
+        private DataView musicView;
+        private DataView scoreView;
 
         //selected piece's file location
         private string selectedPiece;
@@ -39,18 +38,62 @@ namespace PianoApp.Views
             connection = new DatabaseConnection();
             this.sv = sv;
             this.nv = nv;
-            this.dv = connection.getSheetMusic(1).Tables["Music"].DefaultView;
+            musicView = connection.getSheetMusic(1).Tables["Music"].DefaultView;
+
+            scoreView = getHighestFive();
+            scoreView.RowFilter = "Id = 0";
+
             //add sheet records to tab
-            populateTab(1, SheetMusic);
+            populateTab(SheetMusic, musicView);
+
+            //Add Score records to tab
+            populateTab(ScoreGrid, scoreView);
+
         }
 
         //fill tab based on type
-        public void populateTab(int Type, DataGrid grid)
+        public void populateTab(DataGrid grid, DataView dv)
         {
             grid.ItemsSource = dv;
         }
 
         private void OnSelectClick(object sender, RoutedEventArgs e)
+        {
+            SelectPiece();
+        }
+
+        public void Start()
+        {
+            sv.MusicPieceController.Guide.Start();
+        }
+
+        //event updates file path based on selection
+        private void SheetMusic_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            DataGrid dg = sender as DataGrid;
+            DataRowView selected = dg.CurrentItem as DataRowView;
+            selectedPiece = selected.Row["Location"] as String;
+
+            //update textBoxes
+            titleBox.Text = selected.Row["Title"].ToString();
+            descBox.Text = selected.Row["Description"] as String;
+
+            string id = selected.Row["Id"].ToString();
+            ChangeScoreView(id);
+
+        }
+
+        private void SearchTerm_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            musicView.RowFilter = $"Description LIKE '%{SearchTerm.Text}%' OR Title Like '%{SearchTerm.Text}%'";
+        }
+
+        private void SheetMusic_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            SelectPiece();
+        }
+
+        private void SelectPiece()
         {
             try
             {
@@ -68,28 +111,23 @@ namespace PianoApp.Views
             }
         }
 
-        public void Start()
+        private void ChangeScoreView(string id)
         {
-            sv.MusicPieceController.Guide.Start();
+            scoreView.RowFilter = $"Id = {id}";
         }
 
-        //event updates file path based on selection
-        private void DataGrid_SelectionChanged(object sender, RoutedEventArgs e)
+        public DataView getHighestFive()
         {
-            DataGrid dg = sender as DataGrid;
-            DataRowView selected = dg.CurrentItem as DataRowView;
-            selectedPiece = selected.Row["Location"] as String;
+            DataTable productDataTable = connection.getSheetScore().Tables["Score"];
+            DataTable cloneDataTable = productDataTable.Clone();
 
-            //update textBoxes
-            titleBox.Text = selected.Row["Title"] as String;
-            descBox.Text = selected.Row["Description"] as String;
+            for (int i = 0; i < 5; i++)
+            {
+                cloneDataTable.ImportRow(productDataTable.Rows[i]);
+            }
+            return cloneDataTable.DefaultView;
         }
-
-        private void SearchTerm_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            dv.RowFilter = $"Description LIKE '%{SearchTerm.Text}%' OR Title Like '%{SearchTerm.Text}%'";
-        }
-
     }
+
 }
 
