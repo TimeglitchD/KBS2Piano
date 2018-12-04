@@ -13,7 +13,7 @@ namespace PianoApp.Controllers
 
         public GuidesController Guide;
 
-        private int keyOffset = 0;
+        private int keyOffset = 48;
 
         public void KeyDown(KeyEventArgs e)
         {
