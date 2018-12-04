@@ -24,6 +24,8 @@ namespace PianoApp.Controllers
 
         public event EventHandler staffEndReached;
 
+        public event EventHandler GoToFirstStaff;
+
         //1055 is max length of one staff
         private const double _maxStaffWidth = 1055;
 
@@ -42,6 +44,7 @@ namespace PianoApp.Controllers
             AddNotesToMeasures();
 
             Guide.staffEndReached += staffEndReached;
+            Guide.GoToFirstStaff += GoToFirstStaff;
         }
 
         public StackPanel DrawMusicPiece()

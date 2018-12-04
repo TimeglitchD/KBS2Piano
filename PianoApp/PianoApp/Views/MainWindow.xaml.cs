@@ -37,6 +37,7 @@ namespace PianoApp
 
         private NoteView nv;
         public ButtonView bv;
+        public bool show = true;
 
         private Grid myGrid = new Grid();
 
@@ -51,12 +52,13 @@ namespace PianoApp
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             PianoController pC = new PianoController() {NonKeyboardInputController = nKiC};
-            SheetController sC = new SheetController();
+            SheetController sC = new SheetController(); 
             mPc = new MusicPieceController() { Piano = pC , SheetController = sC};
-            
+
+
             //mPc.Guide.Start();
             DrawMenu();
-            InitializeComponent();
+            InitializeComponent();           
             Show();
         }
 

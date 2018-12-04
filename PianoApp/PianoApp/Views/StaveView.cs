@@ -24,6 +24,7 @@ namespace PianoApp.Views
             DrawMusic();
 
             MusicPieceController.staffEndReached += scrollToNext;
+            MusicPieceController.GoToFirstStaff += ScrollToTop;
         }
 
         public void DrawMusic()
@@ -49,6 +50,14 @@ namespace PianoApp.Views
 
             myGrid.Children.Add(scroll);
 
+        }
+
+        public void ScrollToTop(object sender, EventArgs e)
+        {
+            double location = scroll.VerticalOffset;
+
+            scroll.Dispatcher.BeginInvoke((Action)(() => scroll.ScrollToVerticalOffset(0)));
+            scroll.Dispatcher.BeginInvoke((Action)(() => scroll.UpdateLayout()));
         }
 
         public void scrollToNext(object sender, EventArgs e)

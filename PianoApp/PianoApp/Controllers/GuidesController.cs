@@ -56,6 +56,7 @@ namespace PianoApp.Controllers
         private bool atStaffEndOne = false;
         private bool atStaffEndTwo = false;
         public event EventHandler staffEndReached;
+        public event EventHandler GoToFirstStaff;
 
         public struct Timeout
         {
@@ -267,6 +268,10 @@ namespace PianoApp.Controllers
                     keyModel.FingerNum = 0;
                     keyModel.KeyRect.Dispatcher.BeginInvoke((Action)(() => keyModel.Color()));
                 }
+            }
+            if (GoToFirstStaff != null)
+            {
+                GoToFirstStaff(this, EventArgs.Empty);
             }
 
             _stopwatch.Stop();

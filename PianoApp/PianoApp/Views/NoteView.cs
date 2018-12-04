@@ -124,7 +124,7 @@ namespace PianoApp.Views
                 line.VerticalAlignment = VerticalAlignment.Center;
                 staveGrid.Children.Add(line);
             }
-
+        
             Grid.SetRow(note, row - 1);
             Grid.SetRowSpan(note, 3);
             Grid.SetColumn(note, 1);
