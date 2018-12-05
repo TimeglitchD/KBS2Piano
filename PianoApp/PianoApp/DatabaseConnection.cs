@@ -11,6 +11,7 @@ namespace PianoApp
     public class DatabaseConnection
     {
         private string connectionString;
+        public DataSet dataSet = new DataSet();
 
         public DatabaseConnection()
         {
@@ -20,7 +21,7 @@ namespace PianoApp
         }
 
         //get a dataset of sheet music based on type specified.
-        public DataSet getSheetMusic(int type)
+        public DataSet getSheetMusic(int id)
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
@@ -28,14 +29,81 @@ namespace PianoApp
                 {
                     SqlDataAdapter dataAdapter = new SqlDataAdapter();
                     SqlCommand command = connection.CreateCommand();
-                    DataSet dataSet = new DataSet();
-                    command.CommandText = "SELECT * FROM music WHERE type =" + type;
+                    command.CommandText = $"SELECT * FROM Music";
                     dataAdapter.SelectCommand = command;
                     connection.Open();
                     dataAdapter.Fill(dataSet, "Music");
                     connection.Close();
                     return dataSet;
-                } catch(Exception)
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
+
+        public DataSet getSheetScore()
+        {
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                try
+                {
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = $"SELECT * FROM Score ORDER BY Scored DESC";
+                    dataAdapter.SelectCommand = command;
+                    connection.Open();
+                    dataAdapter.Fill(dataSet, "Score");
+                    connection.Close();
+                    return dataSet;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
+
+        public DataSet get5SheetScore(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                try
+                {
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = $"SELECT TOP(5) Id, Date, Time, Scored FROM Score WHERE Id = {id} ORDER BY Scored DESC";
+                    dataAdapter.SelectCommand = command;
+                    connection.Open();
+                    dataAdapter.Fill(dataSet, "Score");
+                    connection.Close();
+                    return dataSet;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
+
+
+        public DataSet GetDataFromDB(string query, string table)
+        {
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                try
+                {
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = query;
+                    dataAdapter.SelectCommand = command;
+                    connection.Open();
+                    dataAdapter.Fill(dataSet, table);
+                    connection.Close();
+                    return dataSet;
+                }
+                catch (Exception)
                 {
                     return null;
                 }
@@ -69,7 +137,8 @@ namespace PianoApp
                 this.ExcecuteCommandNoOutput(command.ToString());
                 return true;
 
-            } catch (SqlException ex)
+            }
+            catch (SqlException ex)
             {
                 return false;
             }

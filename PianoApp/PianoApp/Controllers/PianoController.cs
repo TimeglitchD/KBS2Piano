@@ -17,6 +17,39 @@ namespace PianoApp.Controllers
     {
         public PianoModel PianoModel { get; set; } = new PianoModel();
         public PianoView PianoView { get; set; }
+        public NonKeyboardInputController NonKeyboardInputController { get; set; }
+     
+
+        public void UpdatePressedPianoKeys(List<int> activeKeysFromKeyboard)
+        {
+             foreach (var octaveModel in PianoModel.OctaveModelList)
+            {
+                foreach (var keyModel in octaveModel.KeyModelList)
+                {
+                    keyModel.Active = false;                    
+                }
+            }
+
+            foreach (var pressedKey in activeKeysFromKeyboard)
+            {
+                //octave - 1 * 12;
+                int octave = (int)Math.Floor((decimal)pressedKey / 12);
+                int keyNumber = pressedKey - ((12 * octave) - 1);
+
+                
+
+                foreach (var octaveModel in PianoModel.OctaveModelList.Where(o => o.Position == octave))
+                {
+                    var tempList = new List<KeyModel>(octaveModel.KeyModelList);
+                    var blackKeysRemovedList = tempList.FindAll(n => n.Alter != -1);
+
+                    blackKeysRemovedList[keyNumber - 1].Active = true;
+
+                }
+            }
+
+            Redraw();
+        }
 
         public void UpdatePianoKeys(Dictionary<Note, GuidesController.Timeout> noteAndTimeoutDictionary)
         {
@@ -42,26 +75,33 @@ namespace PianoApp.Controllers
                             keyValuePair.Key.Pitch.Alter           == keyModel.Alter)
                         {
                             keyModel.Active = true;
+                            keyModel.FingerNum = keyValuePair.Key.FingerNum;
+                            keyModel.StaffNumber = keyValuePair.Key.Staff;
                         }
                         else
                         {
-                            keyModel.Active = false;                            
+                            keyModel.Active = false;
+                            keyModel.FingerNum = 0;
                         }
                        
                     }
                 }
             }
 
+
+            Redraw();
+  
+        }
+
+        private void Redraw()
+        {
             foreach (var octaveModel in PianoModel.OctaveModelList)
             {
                 foreach (var keyModel in octaveModel.KeyModelList)
                 {
-                    keyModel.KeyRect.Dispatcher.BeginInvoke((Action)(() => keyModel.Color()));
+                    keyModel.KeyRect.Dispatcher.BeginInvoke((Action)(() => keyModel.ColorUpdate()));
                 }
             }
-
-
-            
         }
 
         public DockPanel DrawPianoController()

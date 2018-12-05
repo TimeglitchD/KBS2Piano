@@ -208,6 +208,20 @@ namespace MusicXml
             if (accidental != null)
                 note.Accidental = accidental.InnerText;
 
+            var notations = noteNode.SelectSingleNode("notations");
+            if(notations != null)
+            {
+                var technical = notations.SelectSingleNode("technical");
+                if(technical != null)
+                {
+                    var fingering = technical.SelectSingleNode("fingering");
+                    if(fingering != null)
+                    {
+                        note.FingerNum = Convert.ToInt32(fingering.InnerText);
+                    }
+                }
+            }
+
             var xPos = noteNode.Attributes["default-x"];
             if (xPos != null)
             {

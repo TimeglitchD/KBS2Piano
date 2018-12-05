@@ -45,8 +45,6 @@ namespace PianoAppTests
             // Act
             mPc.Guide.SetNote(note);
 
-            Console.WriteLine(result);
-
             // Assert
             Assert.AreEqual((NoteType)mPc.Guide.Note, result);
         }

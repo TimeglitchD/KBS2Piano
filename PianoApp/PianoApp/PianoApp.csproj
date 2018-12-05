@@ -73,6 +73,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controllers\MidiController.cs" />
+    <Compile Include="Controllers\MidiControllerEventArgs.cs" />
+    <Compile Include="Controllers\NonKeyboardInputController.cs" />
     <Compile Include="Controllers\SheetController.cs" />
     <Compile Include="Controllers\GuidesController.cs" />
     <Compile Include="DatabaseConnection.cs" />
@@ -172,6 +175,7 @@
     <Folder Include="MusicXml\Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\piano.png" />
     <Content Include="MusicXml\MusicXml.csproj" />
   </ItemGroup>
   <ItemGroup>

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using MusicXml.Domain;
 
 namespace PianoApp.Models
 {
     public class PianoModel
     {
         public List<OctaveModel> OctaveModelList { get; set; } = new List<OctaveModel>();
-        public int Amount { get; set; } = 6;
+        public int Amount { get; set; } = 5;
         private DockPanel piano = new DockPanel();
         public PianoModel()
         {

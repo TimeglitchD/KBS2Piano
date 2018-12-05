@@ -44,7 +44,11 @@ namespace MusicXml.Domain
 
         public string Accidental { get; internal set; }
 
+        public int FingerNum { get; set; }
+
         public bool Active { get; set; } = false;
+
+        public NoteState State { get; set; } = NoteState.Idle;
 
         public string Stem { get; internal set; }
 
@@ -91,28 +95,53 @@ namespace MusicXml.Domain
                     case "eighth":
                         if (Stem == "up")
                         {
-                            notebase.Content = "á";
+                            if (IsChordTone)
+                            {
+                                notebase.Content = "â";
+                            }
+                            else
+                            {
+                                notebase.Content = "á";
+                            }
                         }
                         else
                         {
-                            notebase.Content = "ñ";
+                            if (IsChordTone)
+                            {
+                                notebase.Content = "ò";
+                            }
+                            else
+                            {
+                                notebase.Content = "ñ";
+                            }
                         }
                         break;
                     case "16th":
                         if (Stem == "up")
                         {
-                            notebase.Content = "à";
+                            if (IsChordTone)
+                            {
+                                notebase.Content = "â";
+                            }
+                            else
+                            {
+                                notebase.Content = "à";
+                            }
                         }
                         else
                         {
-                            notebase.Content = "ð";
+                            if (IsChordTone)
+                            {
+                                notebase.Content = "ò";
+                            }
+                            else
+                            {
+                                notebase.Content = "ð";
+                            }
                         }
                         break;
                 }
                 note.Add(notebase);
-
-
-
 
             }
             else
@@ -134,6 +163,11 @@ namespace MusicXml.Domain
             Color();
 
             return note;
+        }
+
+        public void setIdle()
+        {
+            State = NoteState.Idle;
         }
 
         public void Color()
@@ -193,15 +227,34 @@ namespace MusicXml.Domain
         {
             Shape shp = (Shape)sh;
 
-            if (Active)
+            if (State.Equals(NoteState.Active))
             {
-                shp.Stroke = Brushes.Blue;
-                shp.Fill = Brushes.Blue;
+                if (Staff == 1)
+                {
+                    shp.Fill = Brushes.Aquamarine;
+                    shp.Stroke = Brushes.Aquamarine;
+                }
+                else if (Staff == 2)
+                {
+                    shp.Fill = Brushes.DarkOrchid;
+                    shp.Stroke = Brushes.DarkOrchid;
+                }
+
+            }
+            else if (State.Equals(NoteState.Wrong))
+            {
+                shp.Fill = Brushes.Red;
+                shp.Stroke = Brushes.Red;
+            }
+            else if (State.Equals(NoteState.Good))
+            {
+                shp.Fill = Brushes.Green;
+                shp.Stroke = Brushes.Green;
             }
             else
             {
-                shp.Stroke = Brushes.Black;
                 shp.Fill = Brushes.Black;
+                shp.Stroke = Brushes.Black;
             }
         }
 
@@ -209,14 +262,40 @@ namespace MusicXml.Domain
         {
             Label shp = (Label)sh;
 
-            if (Active)
+            if (State.Equals(NoteState.Active))
             {
-                shp.Foreground = Brushes.Blue;
+                if (Staff == 1)
+                {
+                    shp.Foreground = Brushes.Aquamarine;
+                }
+                else if (Staff == 2)
+                {
+                    shp.Foreground = Brushes.DarkOrchid;
+                }
+
+            }
+            else if (State.Equals(NoteState.Wrong))
+            {
+                shp.Foreground = Brushes.Red;
+            }
+            else if (State.Equals(NoteState.Good))
+            {
+                shp.Foreground = Brushes.Green;
             }
             else
             {
                 shp.Foreground = Brushes.Black;
             }
+
+        }
+
+
+        public enum NoteState
+        {
+            Active,
+            Idle,
+            Wrong,
+            Good
         }
     }
 }

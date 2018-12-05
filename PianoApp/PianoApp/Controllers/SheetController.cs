@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MusicXml.Domain;
 using PianoApp.Models;
 using PianoApp.Views;
+using static MusicXml.Domain.Note;
 
 namespace PianoApp.Controllers
 {
@@ -14,6 +15,8 @@ namespace PianoApp.Controllers
     {
         public SheetModel SheetModel { get; set; } = new SheetModel();
         public NoteView NoteView { get; set; }
+
+
 
         public void UpdateNotes(Dictionary<Note, GuidesController.Timeout> noteAndTimeoutDictionary)
         {
@@ -25,6 +28,8 @@ namespace PianoApp.Controllers
                 {
                     foreach (var staffModel in greatStaffModel.StaffList.Where(s => s.Number == keyValuePair.Key.Staff))
                     {
+                        //this.staffNumber = staffModel.;
+                        
                         foreach (var note in staffModel.NoteList)
                         {
                             if (note.Pitch != null)
@@ -42,14 +47,14 @@ namespace PianoApp.Controllers
 
                                 if (keyValuePair.Key.XPos == note.XPos && keyValuePair.Key.MeasureNumber == note.MeasureNumber)
                                 {
-                                    note.Active = true;
-                                    note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
+                                    note.State = NoteState.Active;
                                 }
-                                else
-                                {
-                                    note.Active = false;
-                                    note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
-                                }
+                                //                                else if(!note.State.Equals(NoteState.Good) && !note.State.Equals(NoteState.Wrong))
+                                //                                {
+                                //                                    note.State = NoteState.Idle;                                    
+                                //                                }
+                                
+                                note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
                             }
                         }
                     }

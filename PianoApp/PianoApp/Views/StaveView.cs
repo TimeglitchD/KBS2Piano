@@ -15,6 +15,7 @@ namespace PianoApp.Views
         public MusicPieceController MusicPieceController { get; }
         private Grid myGrid;
         private ScrollViewer scroll;
+        private double location;
 
         public StaveView(Grid myGrid, MusicPieceController mPc)
         {
@@ -24,6 +25,8 @@ namespace PianoApp.Views
             DrawMusic();
 
             MusicPieceController.staffEndReached += scrollToNext;
+            MusicPieceController.GoToFirstStaff += ScrollToTop;
+            MusicPieceController.HoldPosition += ScrollToCurrent;
         }
 
         public void DrawMusic()
@@ -37,7 +40,7 @@ namespace PianoApp.Views
             Console.WriteLine("Sheet drawn.");
 
             //scrollbar
-           scroll = new ScrollViewer();
+            scroll = new ScrollViewer();
             scroll.Visibility = Visibility.Visible;
             Grid.SetRow(scroll, 1);
 
@@ -51,15 +54,30 @@ namespace PianoApp.Views
 
         }
 
-        public void scrollToNext(object sender, EventArgs e)
+        public void ScrollToTop(object sender, EventArgs e)
         {
             double location = scroll.VerticalOffset;
 
+            scroll.Dispatcher.BeginInvoke((Action)(() => scroll.ScrollToVerticalOffset(0)));
+            scroll.Dispatcher.BeginInvoke((Action)(() => scroll.UpdateLayout()));
+        }
+
+        public void scrollToNext(object sender, EventArgs e)
+        {
+            location = scroll.VerticalOffset;
+
             scroll.Dispatcher.BeginInvoke((Action)(() => scroll.ScrollToVerticalOffset(location + 200)));
             scroll.Dispatcher.BeginInvoke((Action)(() => scroll.UpdateLayout()));
+            location += 200;
 
 //            scroll.ScrollToVerticalOffset(location + 200);
 //            scroll.UpdateLayout();
+        }
+
+        public void ScrollToCurrent(object sender, EventArgs e)
+        {
+            scroll.Dispatcher.BeginInvoke((Action)(() => scroll.ScrollToVerticalOffset(location)));
+            scroll.Dispatcher.BeginInvoke((Action)(() => scroll.UpdateLayout()));
         }
     }
 }

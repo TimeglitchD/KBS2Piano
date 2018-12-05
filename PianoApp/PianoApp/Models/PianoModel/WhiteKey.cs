@@ -1,8 +1,12 @@
-﻿using System;
+﻿using MusicXml.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Shapes;
 
 namespace PianoApp.Models
@@ -10,7 +14,6 @@ namespace PianoApp.Models
     public class WhiteKey : KeyModel
     {
         public string Type { get; set; } = "White";
-        public Rectangle whiteKey { get; set; } = new Rectangle();
 
         public WhiteKey()
         {
@@ -20,22 +23,67 @@ namespace PianoApp.Models
         public override Rectangle Draw(float width)
         {
             Color();
-            whiteKey.Stroke = System.Windows.Media.Brushes.Black;
-            whiteKey.Width = width;
-            whiteKey.Height = 182;
-            return whiteKey;
+            KeyRect.Stroke = System.Windows.Media.Brushes.Black;
+            KeyRect.Width = width;
+            KeyRect.Height = 182;
+            return KeyRect;
         }
 
-        public override void Color()
+        public override void ColorUpdate()
         {
-            if (Active)
+            SolidColorBrush color = Brushes.FloralWhite;
+            if (StaffNumber == 1 && Active)
             {
-                whiteKey.Fill = System.Windows.Media.Brushes.Aquamarine;
+                color = Brushes.Blue;
+                KeyRect.Fill = color;
+                SetFingerNum(color);
+            }
+            else if (StaffNumber == 2 && Active)
+            {
+                color = Brushes.Purple;
+                KeyRect.Fill = color;
+                SetFingerNum(color);
             }
             else
             {
-                whiteKey.Fill = System.Windows.Media.Brushes.FloralWhite;
+                Color();
             }
+        }
+
+        private void SetFingerNum(SolidColorBrush Color)
+        {
+            if (FingerNum > 0)
+            {
+                // create new canvas
+                Canvas canvas = new Canvas();
+                canvas.Background = Color;
+                canvas.Height = 600;
+                canvas.Width = 300;
+
+                // create new label
+                Label fingerNumLabel = new Label();
+                fingerNumLabel.FontWeight = FontWeights.Bold;
+
+                fingerNumLabel.FontSize = 120;
+                fingerNumLabel.Height = 200;
+                fingerNumLabel.Width = 200;
+                fingerNumLabel.Content = FingerNum.ToString();
+                fingerNumLabel.Background = Color;
+                fingerNumLabel.Margin = new Thickness(91, 400, 0, 0);
+
+                // add label to canvas
+                canvas.Children.Add(fingerNumLabel);
+
+                // add canvas to bipmapcachebrush
+                BitmapCacheBrush bcb = new BitmapCacheBrush(canvas);
+                KeyRect.Fill = bcb;
+            }
+        }
+
+
+        public override void Color()
+        {
+            KeyRect.Fill = System.Windows.Media.Brushes.FloralWhite;
         }
     }
 }

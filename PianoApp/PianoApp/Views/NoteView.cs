@@ -35,13 +35,12 @@ namespace PianoApp.Views
             {
                 stave = greatStaff;
                 totalwidth = 0;
-                //if the piece is empty, draw the end
-                if (greatStaff.MeasureList.Count() == 0)
+                if(greatStaff.MeasureList.Count() == 0)
                 {
                     DrawEnd(mPc.Sheet.GreatStaffModelList[idx]);
                 }
 
-                AddMeasureLine(greatStaff, 0);
+                AddMeasureLine(greatStaff, totalwidth);
 
                 foreach (var measure in greatStaff.MeasureList)
                 {
@@ -54,6 +53,7 @@ namespace PianoApp.Views
 
                 foreach (var measure in greatStaff.MeasureList)
                 {
+
 
                     totalwidth += measure.Width * scale;
 
@@ -103,11 +103,12 @@ namespace PianoApp.Views
                         {
                             AddMeasureLine(greatStaff, totalwidth);
                         }
-
+                        else
+                        {
+                            AddMeasureLine(greatStaff, 1050);
+                        }
                     }
-
                     Console.WriteLine("Measure finished");
-                    AddMeasureLine(greatStaff, 1050);
                 }
 
                 Console.WriteLine("Great stave finished");
@@ -345,110 +346,8 @@ namespace PianoApp.Views
                         sh.VerticalAlignment = VerticalAlignment.Center;
                         staveGrid.Children.Add(sh);
                     }
-
-
-
-                    //    Shape shape = (Shape)obj;
-
-                    //    Thickness margin = shape.Margin;
-                    //    margin.Left = n.XPos * (float)scale + (float)totalwidth - (float)width;
-                    //    shape.Margin = margin;
-
-                    //    int row = CheckRow(pitch, staff.Number);
-                    //    if (row != 0)
-                    //    {
-
-
-
-                    //        //check if this shape is the base of the note
-                    //        if (shape.Name == "base")
-                    //        {
-                    //            //draws small line when needed
-                    //            if (row == 1 || row == 13)
-                    //            {
-                    //                Line line = new Line();
-                    //                line.X1 = 0;
-                    //                line.X2 = 15 + 7.5;
-                    //                line.Stroke = Brushes.Black;
-                    //                margin.Left = n.XPos * (float)scale + (float)totalwidth - (float)width - 7.5 / 2;
-                    //                line.Margin = margin;
-                    //                Grid.SetRow(line, row);
-                    //                Grid.SetColumn(line, 1);
-                    //                line.HorizontalAlignment = HorizontalAlignment.Left;
-                    //                line.VerticalAlignment = VerticalAlignment.Center;
-                    //                staveGrid.Children.Add(line);
-                    //            }
-
-                    //            Grid.SetRowSpan(shape, 3);
-                    //            Grid.SetRow(shape, row - 1);
-
-
-                    //        }
-                    //        else if (shape.Name != "dot")
-                    //        //check which way the stem should be drawn
-                    //        {
-                    //            Grid.SetRowSpan(shape, 6);
-                    //            if (n.Stem != null)
-                    //            {
-                    //                if (n.Stem == "down")
-                    //                {
-                    //                    Grid.SetRow(shape, row);
-                    //                }
-                    //                else
-                    //                {
-
-                    //                    margin.Left += 14;
-                    //                    shape.Margin = margin;
-                    //                    if (row - 5 > 0)
-                    //                    {
-                    //                        Grid.SetRow(shape, row - 5);
-                    //                    }
-                    //                    else
-                    //                    {
-                    //                        Grid.SetRow(shape, 1);
-                    //                    }
-                    //                }
-                    //            }
-                    //            else
-                    //            {
-                    //                Grid.SetRow(shape, row);
-                    //            }
-
-                    //        }
-                    //        else
-                    //        {
-
-                    //            //draw the dot in the correct position
-                    //            margin.Left += 20;
-                    //            shape.Margin = margin;
-                    //            if(row > 3)
-                    //            {
-                    //                if (row % 2 == 0)
-                    //                {
-                    //                    Grid.SetRow(shape, row - 1);
-                    //                }
-                    //                else
-                    //                {
-                    //                    Grid.SetRow(shape, row - 2);
-                    //                }
-                    //            }
-                    //            else
-                    //            {
-                    //                Grid.SetRow(shape, row);
-                    //            }
-
-                    //            Grid.SetRowSpan(shape, 3);
-                    //        }
-
-                    //        Grid.SetColumn(shape, 1);
-                    //        shape.HorizontalAlignment = HorizontalAlignment.Left;
-                    //        shape.VerticalAlignment = VerticalAlignment.Center;
-                    //        staveGrid.Children.Add(shape);
-                    //    }
                 }
             }
-
-
         }
 
         private int CheckRow(Pitch pitch, int staff)
@@ -485,8 +384,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 1;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 4)
                         {
                             row = 8;
@@ -509,8 +407,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 2;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 4)
                         {
                             row = 9;
@@ -533,8 +430,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 3;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 4)
                         {
                             row = 10;
@@ -557,8 +453,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 4;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 4)
                         {
                             row = 11;
@@ -581,8 +476,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 5;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 4)
                         {
                             row = 12;
@@ -605,8 +499,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 6;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 4)
                         {
                             row = 13;
@@ -641,8 +534,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 4)
                         {
                             row = 1;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 3)
                         {
                             row = 8;
@@ -713,8 +605,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 4;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 2)
                         {
                             row = 11;
@@ -737,8 +628,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 5;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 2)
                         {
                             row = 12;
@@ -761,8 +651,7 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 6;
-                        }
-                        else
+                        }else
                         if (pitch.Octave == 2)
                         {
                             row = 13;
@@ -806,8 +695,6 @@ namespace PianoApp.Views
 
             return row;
         }
-
-
 
         private void AddMeasureLine(GreatStaffModel greatStaff, decimal totalwidth)
         {
