@@ -80,6 +80,7 @@ namespace PianoApp.Views
             StopBtn.Height = 40;
             StopBtn.HorizontalAlignment = HorizontalAlignment.Center;
             StopBtn.Click += StopBtn_Click;
+            StopBtn.IsEnabled = false;
             Grid.SetColumn(StopBtn, 6);
 
 
@@ -110,7 +111,25 @@ namespace PianoApp.Views
 
         private void StopBtn_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            // Pause piece
+            StartButtonFunc();
+            MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het muziekstuk wilt stoppen?", "Muziekstuk stoppen", MessageBoxButton.YesNo);
+
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                // Stukk resetten
+                var CurrentWindow = Application.Current.Windows[0];
+
+                MainWindow window = new MainWindow();
+                window.Show();
+
+                CurrentWindow.Close();
+            } else if(messageBoxResult == MessageBoxResult.No)
+            {
+                // If no is clicked, resume musicpiece by countdown
+                StartButtonFunc();
+            }
+
         }
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
@@ -205,6 +224,7 @@ namespace PianoApp.Views
             bpmTB.IsReadOnly = true;
             SelectSheetMusic.IsEnabled = false;
             metronomeButton.IsEnabled = false;
+            StopBtn.IsEnabled = true;
             bpmTB.Background = Brushes.LightGray;
         }
 
@@ -378,13 +398,13 @@ namespace PianoApp.Views
         {
             if (!metronomeEnabled)
             {
-                
+
                 metronomeText.Text = "🔉";
                 metronomeEnabled = true;
             }
             else
             {
-                
+
                 metronomeText.Text = "🔇";
                 metronomeEnabled = false;
             }
