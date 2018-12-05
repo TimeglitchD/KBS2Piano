@@ -358,5 +358,13 @@ namespace PianoApp.Views
                 pianoStateChanged(this, e);
             }
         }
+
+        public void AddCountdownText()
+        {
+            TextBlock number = new TextBlock();
+            number.Text = (4 - metronome.elapsedBeats).ToString();
+            Console.WriteLine(number.Text);
+            startBtn.Content = number;
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace PianoApp.Views
             Console.WriteLine("Sheet drawn.");
 
             //scrollbar
-           scroll = new ScrollViewer();
+            scroll = new ScrollViewer();
             scroll.Visibility = Visibility.Visible;
             Grid.SetRow(scroll, 1);
 

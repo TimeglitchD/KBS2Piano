@@ -19,6 +19,7 @@ using PianoApp.Controllers;
 using PianoApp.Views;
 using PianoApp.Models;
 using PianoApp.Models.Exception;
+using System.Threading;
 
 namespace PianoApp
 {
@@ -97,6 +98,7 @@ namespace PianoApp
 
             metronome = bv.metronome;
             metronome.countdownFinished += countdownFinished;
+            metronome.countDownTickElapsed += CountDownTickElapsed;
         }
 
         private void DefineRowMyGrid()
@@ -126,9 +128,13 @@ namespace PianoApp
             {
                 Console.WriteLine("Error");
                 return;
-                
             }
             sv.MusicPieceController.Guide.Start();
+        }
+
+        private void CountDownTickElapsed(object sender, EventArgs e)
+        {
+            this.Dispatcher.Invoke(bv.AddCountdownText);
         }
 
         private void pianoStateChanged(object sender, EventArgs e)
