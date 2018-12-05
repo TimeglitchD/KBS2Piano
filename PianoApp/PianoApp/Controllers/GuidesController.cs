@@ -139,7 +139,7 @@ namespace PianoApp.Controllers
             if (_toDoNoteDict.Count > 0) _toDoNoteDict.Remove(_toDoNoteDict.Keys.First(t => t.Equals(note)));
         }
 
-        private void NoteIntersectEvent(object source, ElapsedEventArgs e, int staffNumber)
+        private void NoteIntersectEvent(object source, EventArgs e, int staffNumber)
         {
             var tempList = _toDoNoteDict.ToList();
 
@@ -242,7 +242,7 @@ namespace PianoApp.Controllers
             _timerStaffOne = new System.Timers.Timer();
             _timerStaffOne.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 1);
             _timerStaffOne.Interval = _interval;
-
+            NoteIntersectEvent(this, EventArgs.Empty, 1);
             _timerStaffOne.Enabled = true;
             return true;
         }

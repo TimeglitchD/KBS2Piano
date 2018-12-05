@@ -27,6 +27,13 @@ namespace PianoApp.Models
             return Sheet;
 
         }
+
+        //function to reset sheetmodel, so new staffs don't get the old sheet as parent
+        public void Reset()
+        {
+            GreatStaffModelList = new List<GreatStaffModel>();
+            Sheet = new StackPanel();
+        }
     }
 
 }
