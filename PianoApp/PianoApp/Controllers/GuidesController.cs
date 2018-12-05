@@ -58,6 +58,7 @@ namespace PianoApp.Controllers
         private bool atStaffEndTwo = false;
         public event EventHandler staffEndReached;
         public event EventHandler GoToFirstStaff;
+        public event EventHandler HoldPosition;
 
         public MidiController midi;
 
@@ -194,6 +195,10 @@ namespace PianoApp.Controllers
             //tempActiveNoteDict.
             Piano.UpdatePianoKeys(tempActiveNoteDict);
             Sheet.UpdateNotes(tempActiveNoteDict);
+            if(HoldPosition != null)
+            {
+                HoldPosition(this, EventArgs.Empty);
+            }
         }
 
 
