@@ -14,7 +14,6 @@ namespace PianoApp.Models
     public class WhiteKey : KeyModel
     {
         public string Type { get; set; } = "White";
-        public Rectangle whiteKey { get; set; } = new Rectangle();
 
         public WhiteKey()
         {
@@ -24,33 +23,37 @@ namespace PianoApp.Models
         public override Rectangle Draw(float width)
         {
             Color();
-            whiteKey.Stroke = Brushes.Black;
-            whiteKey.Width = width;
-            whiteKey.Height = 182;
-            return whiteKey;
+            KeyRect.Stroke = System.Windows.Media.Brushes.Black;
+            KeyRect.Width = width;
+            KeyRect.Height = 182;
+            return KeyRect;
         }
 
         public override void ColorUpdate()
         {
+            SolidColorBrush color = Brushes.FloralWhite;
             if (StaffNumber == 1 && Active)
             {
-                KeyRect.Fill = System.Windows.Media.Brushes.Aquamarine;
+                color = Brushes.Blue;
+                KeyRect.Fill = color;
+                SetFingerNum(color);
             }
             else if (StaffNumber == 2 && Active)
             {
-                whiteKey.Fill = Brushes.Aquamarine;
+                color = Brushes.Purple;
+                KeyRect.Fill = color;
+                SetFingerNum(color);
             }
             else
             {
-                whiteKey.Fill = Brushes.FloralWhite;
+                Color();
             }
+        }
 
-
+        private void SetFingerNum(SolidColorBrush Color)
+        {
             if (FingerNum > 0)
             {
-                // set color
-                SolidColorBrush Color = Brushes.Aquamarine;
-
                 // create new canvas
                 Canvas canvas = new Canvas();
                 canvas.Background = Color;
@@ -73,12 +76,7 @@ namespace PianoApp.Models
 
                 // add canvas to bipmapcachebrush
                 BitmapCacheBrush bcb = new BitmapCacheBrush(canvas);
-                whiteKey.Fill = bcb;
-                KeyRect.Fill = System.Windows.Media.Brushes.DarkOrchid;
-            }
-            else
-            {
-                Color();
+                KeyRect.Fill = bcb;
             }
         }
 
