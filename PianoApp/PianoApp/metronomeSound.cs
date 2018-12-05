@@ -192,6 +192,7 @@ namespace PianoApp
                 else
                 {
                     stopMetronome();
+                    eventNewThread(onCountDownTickElapsed);
                     eventNewThread(onCountdownFinished);
                 }
             }
@@ -209,6 +210,7 @@ namespace PianoApp
                 {
                     elapsedBeats = 0;
                     countDown = false;
+                    eventNewThread(onCountDownTickElapsed);
                     eventNewThread(onCountdownFinished);
                 }
 

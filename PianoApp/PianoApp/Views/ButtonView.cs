@@ -160,6 +160,8 @@ namespace PianoApp.Views
                 return;
             }
 
+            
+
             try
             {
                 // Set value to int
@@ -175,6 +177,8 @@ namespace PianoApp.Views
                     // If piece is paused, check if piece is paused
                     if (mPc.Guide.paused)
                     {
+                        startBtn.IsEnabled = false;
+
                         // If paused continu piece by metronome
                         if (metronomeEnabled)
                         {
@@ -193,6 +197,8 @@ namespace PianoApp.Views
                 }
                 else
                 {
+                    startBtn.IsEnabled = false;
+
                     //set value in metronome and start it.
                     if (metronomeEnabled)
                     {
@@ -432,10 +438,16 @@ namespace PianoApp.Views
 
         public void AddCountdownText()
         {
+            startBtn.IsEnabled = false;
             TextBlock number = new TextBlock();
             number.Text = (4 - metronome.elapsedBeats).ToString();
             Console.WriteLine(number.Text);
             startBtn.Content = number;
+            if(4 - metronome.elapsedBeats == 4)
+            {
+                startBtn.IsEnabled = true;
+                startBtn.Content = "❚❚";
+            }
         }
     }
 }
