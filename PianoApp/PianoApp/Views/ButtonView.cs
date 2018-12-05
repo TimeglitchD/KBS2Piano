@@ -25,6 +25,7 @@ namespace PianoApp.Views
         private ComboBox notesCB = new ComboBox();
         private bool paused = false;
         private Button startBtn = new Button();
+        private Button StopBtn = new Button();
         private Button resetButton = new Button();
         private Button SelectSheetMusic = new Button();
 
@@ -51,7 +52,7 @@ namespace PianoApp.Views
             this.nv = nv;
             this.sv = sv;
             this.mPc = sv.MusicPieceController;
-
+            //menuGrid.ShowGridLines = true;
             // Define all columns for menuGrid
             DefineGridRowsMenuGrid();
 
@@ -63,7 +64,6 @@ namespace PianoApp.Views
             drawPianoMenu();
 
             // Start button
-
             startBtn.FontSize = 25;
             startBtn.Name = "startBtn";
             startBtn.Content = "▶";
@@ -71,7 +71,16 @@ namespace PianoApp.Views
             startBtn.Height = 40;
             startBtn.HorizontalAlignment = HorizontalAlignment.Center;
             startBtn.Click += StartBtn_Click;
-            Grid.SetColumn(startBtn, 6);
+            Grid.SetColumn(startBtn, 5);
+
+            StopBtn.FontSize = 25;
+            StopBtn.Name = "stopBtn";
+            StopBtn.Content = "◼";
+            StopBtn.Width = 40;
+            StopBtn.Height = 40;
+            StopBtn.HorizontalAlignment = HorizontalAlignment.Center;
+            StopBtn.Click += StopBtn_Click;
+            Grid.SetColumn(StopBtn, 6);
 
 
             // Add the button to the Grid
@@ -91,11 +100,17 @@ namespace PianoApp.Views
 
             // Add the TextBlock elements to the Grid Children collection
             menuGrid.Children.Add(startBtn);
+            menuGrid.Children.Add(StopBtn);
 
             // Add menuGrid to myGrid
             Grid.SetRow(menuGrid, 0);
             menuGrid.Children.Add(SelectSheetMusic);
             myGrid.Children.Add(menuGrid);
+        }
+
+        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
@@ -287,13 +302,13 @@ namespace PianoApp.Views
 
             // Set Lenght of the columns
             colDef1.Width = new GridLength(100, GridUnitType.Star);
-            colDef2.Width = new GridLength(100, GridUnitType.Star);
+            colDef2.Width = new GridLength(110, GridUnitType.Star);
             colDef3.Width = new GridLength(100, GridUnitType.Star);
             colDef4.Width = new GridLength(160, GridUnitType.Star);
-            colDef5.Width = new GridLength(120, GridUnitType.Star);
-            colDef6.Width = new GridLength(100, GridUnitType.Star);
-            colDef7.Width = new GridLength(100, GridUnitType.Star);
-            colDef8.Width = new GridLength(130, GridUnitType.Star);
+            colDef5.Width = new GridLength(80, GridUnitType.Star);
+            colDef6.Width = new GridLength(50, GridUnitType.Star);
+            colDef7.Width = new GridLength(50, GridUnitType.Star);
+            colDef8.Width = new GridLength(50, GridUnitType.Star);
             colDef9.Width = new GridLength(500, GridUnitType.Star);
 
             // Add columns to menuGrid
@@ -333,9 +348,8 @@ namespace PianoApp.Views
             metronomeButton.Height = 40;
             metronomeButton.FontSize = 25;
             metronomeButton.Click += onMetronomeButtonClick;
-            metronomeButton.HorizontalAlignment = HorizontalAlignment.Right;
-            metronomeButton.VerticalAlignment = VerticalAlignment.Bottom;
-            Grid.SetColumn(metronomeButton, 5);
+            metronomeButton.HorizontalAlignment = HorizontalAlignment.Center;
+            Grid.SetColumn(metronomeButton, 7);
             menuGrid.Children.Add(metronomeButton);
         }
 
@@ -354,9 +368,9 @@ namespace PianoApp.Views
             pianoButton.Height = 40;
             pianoButton.FontSize = 20;
             pianoButton.Click += onPianoButtonClick;
-            pianoButton.HorizontalAlignment = HorizontalAlignment.Right;
+            pianoButton.HorizontalAlignment = HorizontalAlignment.Center;
             pianoButton.VerticalAlignment = VerticalAlignment.Bottom;
-            Grid.SetColumn(pianoButton, 7);
+            Grid.SetColumn(pianoButton, 8);
             menuGrid.Children.Add(pianoButton);
         }
 
