@@ -27,6 +27,8 @@ namespace PianoApp.Controllers
                 {
                     foreach (var staffModel in greatStaffModel.StaffList.Where(s => s.Number == keyValuePair.Key.Staff))
                     {
+                        //this.staffNumber = staffModel.;
+                        
                         foreach (var note in staffModel.NoteList)
                         {
                             if (note.Pitch != null)
@@ -46,10 +48,11 @@ namespace PianoApp.Controllers
                                 {
                                     note.State = NoteState.Active;
                                 }
-//                                else if(!note.State.Equals(NoteState.Good) && !note.State.Equals(NoteState.Wrong))
-//                                {
-//                                    note.State = NoteState.Idle;                                    
-//                                }
+                                //                                else if(!note.State.Equals(NoteState.Good) && !note.State.Equals(NoteState.Wrong))
+                                //                                {
+                                //                                    note.State = NoteState.Idle;                                    
+                                //                                }
+                                
                                 note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
                             }
                         }

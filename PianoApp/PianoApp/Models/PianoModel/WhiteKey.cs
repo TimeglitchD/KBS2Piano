@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusicXml.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,9 +30,13 @@ namespace PianoApp.Models
             return whiteKey;
         }
 
-        public override void Color()
+        public override void ColorUpdate()
         {
-            if (Active)
+            if (StaffNumber == 1 && Active)
+            {
+                KeyRect.Fill = System.Windows.Media.Brushes.Aquamarine;
+            }
+            else if (StaffNumber == 2 && Active)
             {
                 whiteKey.Fill = Brushes.Aquamarine;
             }
@@ -69,7 +74,18 @@ namespace PianoApp.Models
                 // add canvas to bipmapcachebrush
                 BitmapCacheBrush bcb = new BitmapCacheBrush(canvas);
                 whiteKey.Fill = bcb;
+                KeyRect.Fill = System.Windows.Media.Brushes.DarkOrchid;
             }
+            else
+            {
+                Color();
+            }
+        }
+
+
+        public override void Color()
+        {
+            KeyRect.Fill = System.Windows.Media.Brushes.FloralWhite;
         }
     }
 }

@@ -124,7 +124,6 @@ namespace PianoApp
                     metronomeSoundFile.CurrentTime = System.TimeSpan.Zero;
                     outputDeviceMetronome.Play();
                 }).Start();
-
             }
         }
 

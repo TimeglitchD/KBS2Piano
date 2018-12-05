@@ -52,9 +52,10 @@ namespace PianoApp
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             PianoController pC = new PianoController() {NonKeyboardInputController = nKiC};
-            SheetController sC = new SheetController(); 
-            mPc = new MusicPieceController() { Piano = pC , SheetController = sC};
 
+            SheetController sC = new SheetController();
+            MidiController mC = new MidiController();
+            mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC};
 
             //mPc.Guide.Start();
             DrawMenu();
@@ -94,6 +95,7 @@ namespace PianoApp
             nv.DrawNotes();
 
             bv = new ButtonView(myGrid, sv, nv);
+            bv.pianoStateChanged += pianoStateChanged;
 
             metronome = bv.metronome;
             metronome.countdownFinished += countdownFinished;
@@ -126,9 +128,23 @@ namespace PianoApp
             {
                 Console.WriteLine("Error");
                 return;
+                
             }
             Console.WriteLine("Metronoom klaar");
             sv.MusicPieceController.Guide.Start();
+        }
+
+        private void pianoStateChanged(object sender, EventArgs e)
+        {
+            if(bv.pianoEnabled)
+            {
+                myGrid.RowDefinitions[2].Height = new GridLength(200, GridUnitType.Star);
+                myGrid.RowDefinitions[1].Height = new GridLength(500, GridUnitType.Star);
+            } else
+            {
+                myGrid.RowDefinitions[2].Height = new GridLength(0);
+                myGrid.RowDefinitions[1].Height = new GridLength(700, GridUnitType.Star);
+            }
         }
     }
 

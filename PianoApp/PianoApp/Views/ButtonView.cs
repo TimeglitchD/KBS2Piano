@@ -32,8 +32,16 @@ namespace PianoApp.Views
         private bool metronomeEnabled = false;
         private Button metronomeButton;
 
+        private Button pianoButton;
+        public bool pianoEnabled = true;
+        public event EventHandler pianoStateChanged;
+
         float bpmValue = -1.0f;
 
+        private TextBlock pianoText;
+        private TextDecorationCollection strikeTrough = new TextDecorationCollection();
+
+        private bool running = false;
 
         public ButtonView(Grid myGrid, StaveView sv, NoteView nv)
         {
@@ -49,6 +57,8 @@ namespace PianoApp.Views
             DrawBpmMenu();
 
             drawMetronomeMenu();
+
+            drawPianoMenu();
 
             // Start button
 
@@ -98,6 +108,9 @@ namespace PianoApp.Views
                 MessageBox.Show("Je hebt geen muziekstuk ingeladen!", "Foutmelding");
                 return;
             }
+
+            if (running)
+                return;
             try
             {
                 // Set value to int
@@ -117,6 +130,8 @@ namespace PianoApp.Views
                 {
                     metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
                 }
+
+                running = true;
             }
             catch (FormatException)
             {
@@ -249,7 +264,7 @@ namespace PianoApp.Views
             colDef5.Width = new GridLength(120, GridUnitType.Star);
             colDef6.Width = new GridLength(100, GridUnitType.Star);
             colDef7.Width = new GridLength(100, GridUnitType.Star);
-            colDef8.Width = new GridLength(100, GridUnitType.Star);
+            colDef8.Width = new GridLength(130, GridUnitType.Star);
             colDef9.Width = new GridLength(500, GridUnitType.Star);
 
             // Add columns to menuGrid
@@ -264,7 +279,7 @@ namespace PianoApp.Views
             menuGrid.ColumnDefinitions.Add(colDef9);
         }
 
-        private void CheckPause()
+        private bool CheckPause()
         {
             if (paused)
             {
@@ -276,6 +291,7 @@ namespace PianoApp.Views
                 paused = true;
                 startBtn.Content = "❚❚";
             }
+            return paused;
         }
 
         public void drawMetronomeMenu()
@@ -283,13 +299,34 @@ namespace PianoApp.Views
             metronomeButton = new Button();
             metronomeButton.Width = menuGrid.ColumnDefinitions[4].Width.Value - 10;
             metronomeButton.Height = 40;
-            metronomeButton.Content = "Metronoom: Uit";
+            metronomeButton.Content = "Metronome: Off";
             metronomeButton.Click += onMetronomeButtonClick;
             metronomeButton.HorizontalAlignment = HorizontalAlignment.Right;
             metronomeButton.VerticalAlignment = VerticalAlignment.Bottom;
             Grid.SetColumn(metronomeButton, 4);
             menuGrid.Children.Add(metronomeButton);
 
+        }
+
+        public void drawPianoMenu()
+        {
+            TextDecoration strikeTroughDecoration = new TextDecoration();
+            strikeTroughDecoration.Location = TextDecorationLocation.Strikethrough;
+            strikeTroughDecoration.Pen = new Pen(Brushes.Red, 3);
+            strikeTrough.Add(strikeTroughDecoration);
+            pianoText = new TextBlock();
+            pianoText.Text = "🎹";
+            pianoText.TextDecorations = strikeTrough;
+            pianoButton = new Button();
+            pianoButton.Content = pianoText;
+            pianoButton.Width = 40;
+            pianoButton.Height = 40;
+            pianoButton.FontSize = 20;
+            pianoButton.Click += onPianoButtonClick;
+            pianoButton.HorizontalAlignment = HorizontalAlignment.Right;
+            pianoButton.VerticalAlignment = VerticalAlignment.Bottom;
+            Grid.SetColumn(pianoButton, 5);
+            menuGrid.Children.Add(pianoButton);
         }
 
         private void onMetronomeButtonClick(object sender, RoutedEventArgs e)
@@ -303,6 +340,26 @@ namespace PianoApp.Views
             {
                 metronomeEnabled = true;
                 metronomeButton.Content = "Metronoom: Aan";
+            }
+        }
+
+        private void onPianoButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (pianoEnabled)
+            {
+                pianoEnabled = false;
+                pianoText.TextDecorations = null;
+            }
+            else
+            {
+                pianoEnabled = true;
+                pianoText.TextDecorations = strikeTrough;
+            }
+
+            //fire event after changing boolean to get correct state
+            if (pianoStateChanged != null)
+            {
+                pianoStateChanged(this, e);
             }
         }
     }

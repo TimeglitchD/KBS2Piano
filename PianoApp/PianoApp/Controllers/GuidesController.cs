@@ -58,6 +58,16 @@ namespace PianoApp.Controllers
         public event EventHandler staffEndReached;
         public event EventHandler GoToFirstStaff;
 
+        public MidiController midi;
+
+        public List<int> ActiveKeys;
+
+        public GuidesController(MidiController midi)
+        {
+            this.midi = midi;
+//            midi.midiInputChanged += inputChanged;
+        }
+
         public struct Timeout
         {
             public float NoteTimeout { get; set; }
@@ -87,9 +97,6 @@ namespace PianoApp.Controllers
 
                             if (!_toDoNoteDict.ContainsKey(note))
                                 _toDoNoteDict.Add(note, timeout);
-
-                           
-
                         }
                     }
                 }
@@ -187,6 +194,7 @@ namespace PianoApp.Controllers
             Piano.UpdatePianoKeys(tempActiveNoteDict);
             Sheet.UpdateNotes(tempActiveNoteDict);
         }
+
 
         private void checkLastNote(Dictionary<Note, Timeout> noteDict)
         {
@@ -303,6 +311,10 @@ namespace PianoApp.Controllers
             }
         }
 
+        public void UpdatePianoKeys(List<int> activeKeys)
+        {
+            Piano.UpdatePressedPianoKeys(activeKeys);
+        }
     }
 
     public enum NoteType

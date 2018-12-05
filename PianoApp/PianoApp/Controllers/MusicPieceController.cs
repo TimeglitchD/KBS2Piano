@@ -18,7 +18,9 @@ namespace PianoApp.Controllers
 
         public SheetController SheetController;
 
-        public GuidesController Guide { get; set; } = new GuidesController();
+        public GuidesController Guide { get; set; }
+
+        public MidiController MidiController;
 
         public SheetModel Sheet { get; set; }
 
@@ -33,7 +35,7 @@ namespace PianoApp.Controllers
         {
             _score = MusicXmlParser.GetScore(filename);
 
-            Guide = new GuidesController() { Score = _score, Piano = Piano , Sheet = SheetController};
+            Guide = new GuidesController(MidiController) { Score = _score, Piano = Piano , Sheet = SheetController};
 
             Sheet = SheetController.SheetModel;
 
@@ -45,7 +47,9 @@ namespace PianoApp.Controllers
 
             Guide.staffEndReached += staffEndReached;
             Guide.GoToFirstStaff += GoToFirstStaff;
+            MidiController.Guide = Guide;
         }
+
 
         public StackPanel DrawMusicPiece()
         {
