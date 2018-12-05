@@ -17,6 +17,8 @@ namespace PianoApp.Views
     {
 
         private MusicPieceController mPc;
+        private decimal scale;
+        private GreatStaffModel stave;
 
         public NoteView(StaveView sv)
         {
@@ -31,6 +33,7 @@ namespace PianoApp.Views
             int idx = 0;
             foreach (var greatStaff in mPc.Sheet.GreatStaffModelList)
             {
+                stave = greatStaff;
                 totalwidth = 0;
                 //if the piece is empty, draw the end
                 if (greatStaff.MeasureList.Count() == 0)
@@ -40,37 +43,51 @@ namespace PianoApp.Views
 
                 AddMeasureLine(greatStaff, 0);
 
+                foreach (var measure in greatStaff.MeasureList)
+                {
+                    scale += measure.Width;
+                }
+                if (scale != 0)
+                {
+                    scale = 1050 / scale;
+                }
 
                 foreach (var measure in greatStaff.MeasureList)
                 {
 
-                    totalwidth += measure.Width;
-                    Console.WriteLine(totalwidth + "is width");
+                    totalwidth += measure.Width * scale;
 
-
-
-                    foreach (var measureElement in measure.MeasureElements)
+                    //make a list with all the notes
+                    List<Note> notelist = new List<Note>();
+                    foreach (var measureel in measure.MeasureElements)
                     {
-                        if (measureElement.Type.Equals(MeasureElementType.Note))
+                        if (measureel.Type.Equals(MeasureElementType.Note))
                         {
-                            var note = (Note)measureElement.Element;
-
-                            StaffModel staff;
-                            //check whether the note belongs to the upper staff or not
-                            if (note.Staff.Equals(1))
-                            {
-                                staff = greatStaff.StaffList.First<StaffModel>();
-                            }
-                            else
-                            {
-                                staff = greatStaff.StaffList.Last<StaffModel>();
-                            }
-                            Grid staveGrid = staff.stave;
-                            GNote(note, note.Pitch, staff, staveGrid, totalwidth, measure.Width);
-                            Console.WriteLine("Note drawn");
-
+                            Note noot = (Note)measureel.Element;
+                            notelist.Add(noot);
                         }
                     }
+                    //get the first note
+                    Note prevnote = notelist.First();
+
+                    foreach (var note in notelist)
+                    {
+                        StaffModel staff;
+                        //check whether the note belongs to the upper staff or not
+                        if (note.Staff.Equals(1))
+                        {
+                            staff = greatStaff.StaffList.First<StaffModel>();
+                        }
+                        else
+                        {
+                            staff = greatStaff.StaffList.Last<StaffModel>();
+                        }
+                        Grid staveGrid = staff.stave;
+                        GNote(note, note.Pitch, staff, staveGrid, totalwidth, measure.Width * scale, prevnote);
+                        prevnote = note;
+
+                    }
+
 
 
                     //check if this is the last measure of the piece
@@ -98,30 +115,12 @@ namespace PianoApp.Views
             Console.WriteLine("Notes finished.");
         }
 
-        private void DrawRest(float x, Pitch pitch, StaffModel staff, Grid staveGrid, decimal totalwidth, decimal width)
-        {
-            Rectangle note = GetRest();
-
-
-            Thickness margin = note.Margin;
-            margin.Left = x + (float)totalwidth - (float)width;
-            note.Margin = margin;
-
-            int row = CheckRow(pitch, staff.Number);
-
-            Grid.SetRow(note, row - 1);
-            Grid.SetRowSpan(note, 3);
-            Grid.SetColumn(note, 1);
-            note.HorizontalAlignment = HorizontalAlignment.Left;
-            note.VerticalAlignment = VerticalAlignment.Center;
-            staveGrid.Children.Add(note);
-        }
 
         private void DrawEnd(GreatStaffModel greatStaff)
         {
             AddMeasureLine(greatStaff, 1055 - 10);
 
-            Line endline = Measureline();
+            Line endline = GetSymbolMeasureline();
             Grid greatstaffgrid = greatStaff.GreatStaffGrid;
             Grid.SetColumn(endline, 1);
             endline.StrokeThickness = 5;
@@ -134,39 +133,322 @@ namespace PianoApp.Views
             greatstaffgrid.Children.Add(endline);
         }
 
-        private void GNote(Note n, Pitch pitch, StaffModel staff, Grid staveGrid, decimal totalwidth, decimal width)
+        //decide if it's a rest or a note and draw it
+        private void GNote(Note n, Pitch pitch, StaffModel staff, Grid staveGrid, decimal totalwidth, decimal width, Note prevnote)
         {
-            Ellipse note = n.GetNote();
 
-
-            Thickness margin = note.Margin;
-            margin.Left = n.XPos + (float)totalwidth - (float)width;
-            note.Margin = margin;
-
-            int row = CheckRow(pitch, staff.Number);
-
-            //draws small line when needed
-            if (row == 1 || row == 13)
+            float pos = prevnote.XPos;
+            if (n.IsRest)
             {
-                Line line = new Line();
-                line.X1 = 0;
-                line.X2 = 15 + 7.5;
-                line.Stroke = Brushes.Black;
-                margin.Left = n.XPos + (float)totalwidth - (float)width - 7.5 / 2;
-                line.Margin = margin;
-                Grid.SetRow(line, row);
-                Grid.SetColumn(line, 1);
-                line.HorizontalAlignment = HorizontalAlignment.Left;
-                line.VerticalAlignment = VerticalAlignment.Center;
-                staveGrid.Children.Add(line);
+                List<object> restlist = n.GetNote();
+
+                if (prevnote != n)
+                {
+                    if (!prevnote.IsRest)
+                    {
+                        pos = pos * (float)scale + 20;
+                    }
+                    else
+                    {
+                        pos += 20;
+                    }
+
+                    if (prevnote.Dot)
+                    {
+                        pos += 10;
+                    }
+                }
+                else
+                {
+                    pos = 0;
+                }
+
+
+                //if we've entered a new staff, set the position back to the beginning
+                if (prevnote.Staff != n.Staff)
+                {
+                    if (n.MeasureNumber == stave.MeasureList.First<Measure>().Number)
+                    {
+                        pos = 70;
+                    }
+                    else
+                    {
+                        pos = 0;
+                    }
+                }
+
+
+                foreach (var item in restlist)
+                {
+                    try
+                    {
+                        Label rest = (Label)item;
+                        Thickness margin = rest.Margin;
+                        switch (n.Type)
+                        {
+                            //default is whole
+                            default:
+                                Grid.SetRow(rest, 1);
+                                margin.Left = (float)totalwidth - (float)width / 2;
+                                margin.Top = -5;
+                                break;
+                            case "half":
+                                Grid.SetRow(rest, 1);
+                                margin.Left = pos + (float)totalwidth - (float)width;
+                                margin.Top = -15;
+                                break;
+                            case "quarter":
+                                Grid.SetRow(rest, 1);
+                                margin.Left = pos + (float)totalwidth - (float)width;
+                                break;
+                            case "eighth":
+                                Grid.SetRow(rest, 1);
+                                margin.Left = pos + (float)totalwidth - (float)width;
+                                margin.Top = 5;
+                                break;
+                            case "16th":
+                                Grid.SetRow(rest, 1);
+                                margin.Left = pos + (float)totalwidth - (float)width;
+                                margin.Top = 5;
+                                break;
+                        }
+                        n.XPos = pos;
+                        Console.WriteLine("POSITION: " + n.XPos);
+                        margin.Top -= 15;
+                        rest.Margin = margin;
+
+                        Grid.SetRowSpan(rest, 20);
+                        Grid.SetColumn(rest, 1);
+                        rest.HorizontalAlignment = HorizontalAlignment.Left;
+                        rest.VerticalAlignment = VerticalAlignment.Center;
+                        staveGrid.Children.Add(rest);
+                    }
+                    catch
+                    {
+                        Shape rest = (Shape)item;
+                        Thickness margin = rest.Margin;
+                        //draw the dot in the correct position
+                        margin.Left = pos + (float)totalwidth - (float)width + 30;
+                        rest.Margin = margin;
+                        Grid.SetRow(rest, 6);
+                        Grid.SetColumn(rest, 1);
+                        rest.HorizontalAlignment = HorizontalAlignment.Left;
+                        rest.VerticalAlignment = VerticalAlignment.Center;
+                        staveGrid.Children.Add(rest);
+                    }
+
+                }
+            }
+            else
+            {
+                List<object> note = n.GetNote();
+                foreach (object obj in note)
+                {
+                    int row = CheckRow(pitch, staff.Number);
+
+                    try
+                    {
+                        Label lb = (Label)obj;
+
+                        Thickness margin = lb.Margin;
+                        margin.Left = n.XPos * (float)scale + (float)totalwidth - (float)width - 5;
+                        margin.Top -= 22;
+
+                        switch (n.Stem)
+                        {
+                            default:
+                                margin.Top -= 0;
+                                break;
+                            case "up":
+                                margin.Top -= 43;
+                                break;
+                            case "down":
+                                //STARTINGPOINT
+                                break;
+                        }
+
+                        switch (n.Type)
+                        {
+                            default:
+                                margin.Top -= 16;
+                                break;
+                            case "half":
+                                break;
+                            case "quarter":
+                                break;
+                            case "eighth":
+                                //STARTINGPOINT
+                                break;
+                            case "16th":
+                                break;
+                        }
+                        lb.Margin = margin;
+                        margin.Top = 0;
+
+
+                        if (row != 0)
+                        {
+
+                            //draws small line when needed
+                            if (row == 1 || row == 13)
+                            {
+                                Line line = new Line();
+                                line.X1 = 0;
+                                line.X2 = 15 + 7.5;
+                                line.Stroke = Brushes.Black;
+                                margin.Left = n.XPos * (float)scale + (float)totalwidth - (float)width - 7.5 / 2;
+                                line.Margin = margin;
+                                Grid.SetRow(line, row);
+                                Grid.SetColumn(line, 1);
+                                line.HorizontalAlignment = HorizontalAlignment.Left;
+                                line.VerticalAlignment = VerticalAlignment.Center;
+                                staveGrid.Children.Add(line);
+                            }
+
+                            Grid.SetRowSpan(lb, 20);
+                            Grid.SetRow(lb, row);
+
+                            Grid.SetColumn(lb, 1);
+                            lb.HorizontalAlignment = HorizontalAlignment.Left;
+                            lb.VerticalAlignment = VerticalAlignment.Top;
+                            staveGrid.Children.Add(lb);
+                        }
+                    }
+                    catch (System.InvalidCastException)
+                    {
+                        Shape sh = (Shape)obj;
+
+                        Thickness margin = sh.Margin;
+                        margin.Left = n.XPos * (float)scale + (float)totalwidth - (float)width;
+                        sh.Margin = margin;
+
+                        //draw the dot in the correct position
+                        margin.Left += 20;
+                        sh.Margin = margin;
+                        if (row > 2)
+                        {
+                            if (row % 2 == 0)
+                            {
+                                Grid.SetRow(sh, row);
+                            }
+                            else
+                            {
+                                Grid.SetRow(sh, row - 1);
+                            }
+                        }
+                        else
+                        {
+                            Grid.SetRow(sh, row);
+                        }
+                        Grid.SetColumn(sh, 1);
+                        sh.HorizontalAlignment = HorizontalAlignment.Left;
+                        sh.VerticalAlignment = VerticalAlignment.Center;
+                        staveGrid.Children.Add(sh);
+                    }
+
+
+
+                    //    Shape shape = (Shape)obj;
+
+                    //    Thickness margin = shape.Margin;
+                    //    margin.Left = n.XPos * (float)scale + (float)totalwidth - (float)width;
+                    //    shape.Margin = margin;
+
+                    //    int row = CheckRow(pitch, staff.Number);
+                    //    if (row != 0)
+                    //    {
+
+
+
+                    //        //check if this shape is the base of the note
+                    //        if (shape.Name == "base")
+                    //        {
+                    //            //draws small line when needed
+                    //            if (row == 1 || row == 13)
+                    //            {
+                    //                Line line = new Line();
+                    //                line.X1 = 0;
+                    //                line.X2 = 15 + 7.5;
+                    //                line.Stroke = Brushes.Black;
+                    //                margin.Left = n.XPos * (float)scale + (float)totalwidth - (float)width - 7.5 / 2;
+                    //                line.Margin = margin;
+                    //                Grid.SetRow(line, row);
+                    //                Grid.SetColumn(line, 1);
+                    //                line.HorizontalAlignment = HorizontalAlignment.Left;
+                    //                line.VerticalAlignment = VerticalAlignment.Center;
+                    //                staveGrid.Children.Add(line);
+                    //            }
+
+                    //            Grid.SetRowSpan(shape, 3);
+                    //            Grid.SetRow(shape, row - 1);
+
+
+                    //        }
+                    //        else if (shape.Name != "dot")
+                    //        //check which way the stem should be drawn
+                    //        {
+                    //            Grid.SetRowSpan(shape, 6);
+                    //            if (n.Stem != null)
+                    //            {
+                    //                if (n.Stem == "down")
+                    //                {
+                    //                    Grid.SetRow(shape, row);
+                    //                }
+                    //                else
+                    //                {
+
+                    //                    margin.Left += 14;
+                    //                    shape.Margin = margin;
+                    //                    if (row - 5 > 0)
+                    //                    {
+                    //                        Grid.SetRow(shape, row - 5);
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                        Grid.SetRow(shape, 1);
+                    //                    }
+                    //                }
+                    //            }
+                    //            else
+                    //            {
+                    //                Grid.SetRow(shape, row);
+                    //            }
+
+                    //        }
+                    //        else
+                    //        {
+
+                    //            //draw the dot in the correct position
+                    //            margin.Left += 20;
+                    //            shape.Margin = margin;
+                    //            if(row > 3)
+                    //            {
+                    //                if (row % 2 == 0)
+                    //                {
+                    //                    Grid.SetRow(shape, row - 1);
+                    //                }
+                    //                else
+                    //                {
+                    //                    Grid.SetRow(shape, row - 2);
+                    //                }
+                    //            }
+                    //            else
+                    //            {
+                    //                Grid.SetRow(shape, row);
+                    //            }
+
+                    //            Grid.SetRowSpan(shape, 3);
+                    //        }
+
+                    //        Grid.SetColumn(shape, 1);
+                    //        shape.HorizontalAlignment = HorizontalAlignment.Left;
+                    //        shape.VerticalAlignment = VerticalAlignment.Center;
+                    //        staveGrid.Children.Add(shape);
+                    //    }
+                }
             }
 
-            Grid.SetRow(note, row - 1);
-            Grid.SetRowSpan(note, 3);
-            Grid.SetColumn(note, 1);
-            note.HorizontalAlignment = HorizontalAlignment.Left;
-            note.VerticalAlignment = VerticalAlignment.Center;
-            staveGrid.Children.Add(note);
+
         }
 
         private int CheckRow(Pitch pitch, int staff)
@@ -175,11 +457,29 @@ namespace PianoApp.Views
             if (staff == 1)
             {
                 //if clef is G
-                Console.WriteLine("clef is G");
                 switch (pitch.Step)
                 {
                     default:
-                        row = 13;
+                        row = 0;
+                        break;
+                    case 'B':
+                        if (pitch.Octave == 4)
+                        {
+                            row = 7;
+                        }
+                        else
+                        {
+                            if (pitch.Octave > 4)
+                            {
+                                row = 7;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 7;
+                                //Draw 8vb
+                            }
+                        }
                         break;
                     case 'A':
                         if (pitch.Octave == 5)
@@ -193,7 +493,16 @@ namespace PianoApp.Views
                         }
                         else
                         {
-                            row = 8;
+                            if (pitch.Octave > 5)
+                            {
+                                row = 1;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 8;
+                                //Draw 8vb
+                            }
                         }
                         break;
                     case 'G':
@@ -208,7 +517,16 @@ namespace PianoApp.Views
                         }
                         else
                         {
-                            row = 9;
+                            if (pitch.Octave > 5)
+                            {
+                                row = 2;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 9;
+                                //Draw 8vb
+                            }
                         }
                         break;
                     case 'F':
@@ -223,7 +541,16 @@ namespace PianoApp.Views
                         }
                         else
                         {
-                            row = 10;
+                            if (pitch.Octave > 5)
+                            {
+                                row = 3;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 10;
+                                //Draw 8vb
+                            }
                         }
                         break;
                     case 'E':
@@ -238,7 +565,16 @@ namespace PianoApp.Views
                         }
                         else
                         {
-                            row = 11;
+                            if (pitch.Octave > 5)
+                            {
+                                row = 4;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 11;
+                                //Draw 8vb
+                            }
                         }
                         break;
                     case 'D':
@@ -253,7 +589,16 @@ namespace PianoApp.Views
                         }
                         else
                         {
-                            row = 12;
+                            if (pitch.Octave > 5)
+                            {
+                                row = 5;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 12;
+                                //Draw 8vb
+                            }
                         }
                         break;
                     case 'C':
@@ -268,23 +613,29 @@ namespace PianoApp.Views
                         }
                         else
                         {
-                            row = 13;
+                            if (pitch.Octave > 5)
+                            {
+                                row = 6;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 13;
+                                //Draw 8vb
+                            }
                         }
                         break;
-                    case 'B':
-                        row = 7;
-                        break;
+
 
                 }
             }
             if (staff == 2)
             {
                 //if clef is F
-                Console.WriteLine("Clef is f");
                 switch (pitch.Step)
                 {
                     default:
-                        row = 1;
+                        row = 0;
                         break;
                     case 'C':
                         if (pitch.Octave == 4)
@@ -298,37 +649,64 @@ namespace PianoApp.Views
                         }
                         else
                         {
-                            row = 8;
+                            if (pitch.Octave > 4)
+                            {
+                                row = 1;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 8;
+                                //Draw 8vb
+                            }
                         }
                         break;
                     case 'B':
-                        if (pitch.Octave == 4)
+                        if (pitch.Octave == 3)
                         {
                             row = 2;
                         }
                         else
-                        if (pitch.Octave == 3)
+                        if (pitch.Octave == 2)
                         {
                             row = 9;
                         }
                         else
                         {
-                            row = 9;
+                            if (pitch.Octave > 3)
+                            {
+                                row = 2;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 9;
+                                //Draw 8vb
+                            }
                         }
                         break;
                     case 'A':
-                        if (pitch.Octave == 4)
+                        if (pitch.Octave == 3)
                         {
                             row = 3;
                         }
                         else
-                        if (pitch.Octave == 3)
+                        if (pitch.Octave == 2)
                         {
                             row = 10;
                         }
                         else
                         {
-                            row = 10;
+                            if (pitch.Octave > 3)
+                            {
+                                row = 3;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 10;
+                                //Draw 8vb
+                            }
                         }
                         break;
                     case 'G':
@@ -343,7 +721,16 @@ namespace PianoApp.Views
                         }
                         else
                         {
-                            row = 11;
+                            if (pitch.Octave > 3)
+                            {
+                                row = 4;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 11;
+                                //Draw 8vb
+                            }
                         }
                         break;
                     case 'F':
@@ -358,7 +745,16 @@ namespace PianoApp.Views
                         }
                         else
                         {
-                            row = 12;
+                            if (pitch.Octave > 3)
+                            {
+                                row = 5;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 12;
+                                //Draw 8vb
+                            }
                         }
                         break;
                     case 'E':
@@ -373,11 +769,36 @@ namespace PianoApp.Views
                         }
                         else
                         {
-                            row = 13;
+                            if (pitch.Octave > 3)
+                            {
+                                row = 6;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 13;
+                                //Draw 8vb
+                            }
                         }
                         break;
                     case 'D':
-                        row = 7;
+                        if (pitch.Octave == 3)
+                        {
+                            row = 7;
+                        }
+                        else
+                        {
+                            if (pitch.Octave > 4)
+                            {
+                                row = 7;
+                                //Draw 8va
+                            }
+                            else
+                            {
+                                row = 7;
+                                //Draw 8vb
+                            }
+                        }
                         break;
 
                 }
@@ -386,30 +807,11 @@ namespace PianoApp.Views
             return row;
         }
 
-//        public Ellipse GetNote()
-//        {
-//            Ellipse note = new Ellipse();
-//            note.Fill = Brushes.Black;
-//            note.Stroke = Brushes.Black;
-//            note.Width = 15;
-//            note.Height = note.Width;
-//            return note;
-//        }
 
-        private Rectangle GetRest()
-        {
-            Rectangle rct = new Rectangle();
-            rct.Fill = Brushes.Black;
-            rct.Stroke = Brushes.Black;
-            rct.Width = 15;
-            rct.Height = rct.Width;
-
-            return rct;
-        }
 
         private void AddMeasureLine(GreatStaffModel greatStaff, decimal totalwidth)
         {
-            Line measureline = Measureline();
+            Line measureline = GetSymbolMeasureline();
             Grid greatstaffgrid = greatStaff.GreatStaffGrid;
             Grid.SetColumn(measureline, 1);
             measureline.HorizontalAlignment = HorizontalAlignment.Left;
@@ -428,8 +830,10 @@ namespace PianoApp.Views
             measureline.VerticalAlignment = VerticalAlignment.Stretch;
             greatstaffgrid.Children.Add(measureline);
         }
-        
-        private Line Measureline()
+
+        //every drawn symbol
+
+        private Line GetSymbolMeasureline()
         {
             Line line = new Line();
             line.Y1 = 23;
@@ -437,5 +841,7 @@ namespace PianoApp.Views
             line.Stroke = Brushes.Black;
             return line;
         }
+
+
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using MusicXml.Domain;
 
 namespace PianoApp.Models
@@ -15,9 +16,18 @@ namespace PianoApp.Models
         public List<Measure> MeasureList { get; set; } = new List<Measure>();
         private StackPanel GreatStaff = new StackPanel();
         public Grid GreatStaffGrid { get; } = new Grid();
+        public static FontFamily Metdemo { get; set; }
+        public static FontFamily Notehedz { get; set; }
+
 
         public GreatStaffModel()
         {
+            Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + @"/MetDemo.ttf");
+            Metdemo = new FontFamily(uri, "MetDemo");
+
+            Uri uri2 = new Uri(AppDomain.CurrentDomain.BaseDirectory + @"/NoteHedz170.ttf");
+            Notehedz = new FontFamily(uri2, "NoteHedz");
+
             StaffList.Add(new StaffModel(){Number = 1});
             StaffList.Add(new StaffModel(){Number = 2});
         }
@@ -40,6 +50,30 @@ namespace PianoApp.Models
             }
 
             Grid.SetColumn(GreatStaff, 1);
+
+            Thickness thickness = new Thickness();
+            thickness.Top = -3;
+            thickness.Bottom = -3;
+
+            Label gkey = new Label();
+            gkey.FontFamily = Metdemo;
+            gkey.Content = ":   ";
+            gkey.Margin = thickness;
+            gkey.HorizontalAlignment = HorizontalAlignment.Left;
+            gkey.VerticalAlignment = VerticalAlignment.Top;
+            gkey.FontSize = 54;
+            Grid.SetColumn(gkey, 1);
+            GreatStaffGrid.Children.Add(gkey);
+
+            Label fkey = new Label();
+            fkey.FontFamily = Metdemo;
+            fkey.Content = "$   ";
+            fkey.Margin = thickness;
+            fkey.HorizontalAlignment = HorizontalAlignment.Left;
+            fkey.VerticalAlignment = VerticalAlignment.Bottom;
+            fkey.FontSize = 54;
+            Grid.SetColumn(fkey, 1);
+            GreatStaffGrid.Children.Add(fkey);
 
             Label accolade = new Label();
             accolade.Content = "{";
