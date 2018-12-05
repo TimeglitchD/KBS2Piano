@@ -20,7 +20,7 @@ namespace PianoApp.Controllers
             }
             set
             {
-                if (value < 0 || value > 300) throw new BpmOutOfRangeException($"Bpm waarde ligt niet tussen de 0 en de 300 ({value})");
+                if (value < 1 || value > 300) throw new BpmOutOfRangeException($"Bpm waarde ligt niet tussen de 1 en de 300 ({value})");
 
                 _bpm = value;
             }
