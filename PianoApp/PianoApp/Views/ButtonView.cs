@@ -31,6 +31,7 @@ namespace PianoApp.Views
         public metronomeSound metronome = new metronomeSound();
         private bool metronomeEnabled = false;
         private Button metronomeButton;
+        public bool _isStarted = false;
 
         private Button pianoButton;
         public bool pianoEnabled = true;
@@ -95,25 +96,35 @@ namespace PianoApp.Views
             menuGrid.Children.Add(SelectSheetMusic);
             myGrid.Children.Add(menuGrid);
         }
+
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
             mCv = new MusicChooseView(sv, nv);
             mCv.Show();
         }
 
+        public void TriggerStartBtnBySpaceKeyDown()
+        {
+            StartButtonFunc();
+        }
+
         private void StartBtn_Click(object sender, RoutedEventArgs e)
+        {
+            StartButtonFunc();
+        }
+
+        private void StartButtonFunc()
         {
             try
             {
-                if(mPc.Guide.Score != null);
-            } catch (Exception)
+                if (mPc.Guide.Score != null) ;
+            }
+            catch (Exception)
             {
                 MessageBox.Show("Je hebt geen muziekstuk ingeladen!", "Foutmelding");
                 return;
             }
 
-            if (running)
-                return;
             try
             {
                 // Set value to int
@@ -123,18 +134,43 @@ namespace PianoApp.Views
                 mPc.Guide.Bpm = bpmValue;
                 mPc.Guide.SetNote(notesCB.Text);
 
-                Console.WriteLine("Start");
-                //set value in metronome and start it.
-                if (metronomeEnabled)
+                // Check if piece is starten
+                if (_isStarted)
                 {
-                    metronome.startMetronome(bpmValue, 4, 1);
+                    // If piece is paused, check if piece is paused
+                    if (mPc.Guide.paused)
+                    {
+                        // If paused continu piece by metronome
+                        if (metronomeEnabled)
+                        {
+                            metronome.startMetronome(bpmValue, 4, 1);
+                        }
+                        else
+                        {
+                            metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+                        }
+                    }
+                    // If piece is not paused, pause piece
+                    else
+                    {
+                        mPc.Guide.Pause();
+                    }
                 }
                 else
                 {
-                    metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+                    //set value in metronome and start it.
+                    if (metronomeEnabled)
+                    {
+                        metronome.startMetronome(bpmValue, 4, 1);
+                    }
+                    else
+                    {
+                        metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+                    }
                 }
 
-                running = true;
+                // Set value startbutton
+                CheckPause();
             }
             catch (FormatException)
             {
@@ -146,13 +182,6 @@ namespace PianoApp.Views
                 MessageBox.Show(ex.Message);
                 return;
             }
-            
-
-
-
-            //            CheckPause();
-            Console.WriteLine(mPc.Guide.Bpm);
-            Console.WriteLine(mPc.Guide.Note);
 
             // Set buttons enabled false or readonly if playing
             resetButton.IsEnabled = true;
@@ -230,9 +259,11 @@ namespace PianoApp.Views
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
+            mPc.Guide.paused = false;
+            _isStarted = false;
             mPc.Guide.ResetMusicPiece();
-
             metronome.stopMetronome();
+            CheckPause();
 
             if (metronomeEnabled)
             {
@@ -242,8 +273,6 @@ namespace PianoApp.Views
             {
                 metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
             }
-
-
         }
 
         private void DefineGridRowsMenuGrid()
@@ -328,7 +357,7 @@ namespace PianoApp.Views
             pianoButton.Click += onPianoButtonClick;
             pianoButton.HorizontalAlignment = HorizontalAlignment.Right;
             pianoButton.VerticalAlignment = VerticalAlignment.Bottom;
-            Grid.SetColumn(pianoButton, 5);
+            Grid.SetColumn(pianoButton, 7);
             menuGrid.Children.Add(pianoButton);
         }
 

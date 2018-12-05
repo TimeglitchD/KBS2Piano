@@ -48,6 +48,7 @@ namespace PianoApp.Controllers
         private System.Timers.Timer _timerStaffTwo;
 
         private bool _isPlaying = false;
+        public bool paused = false;
 
         private System.Timers.Timer _timer;
 
@@ -227,6 +228,20 @@ namespace PianoApp.Controllers
                     staffEndReached(this, EventArgs.Empty);
                 }
             }
+        }
+
+        public void Pause()
+        {
+            if (paused)
+            {
+                _timerStaffOne.Enabled = true;
+            }
+            else
+            {
+                _timerStaffOne.Enabled = false;
+            }
+           
+            paused = !paused;
         }
 
         public bool Start()

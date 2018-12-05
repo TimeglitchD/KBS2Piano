@@ -51,15 +51,15 @@ namespace PianoApp
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            PianoController pC = new PianoController() {NonKeyboardInputController = nKiC};
+            PianoController pC = new PianoController() { NonKeyboardInputController = nKiC };
 
             SheetController sC = new SheetController();
             MidiController mC = new MidiController();
-            mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC};
+            mPc = new MusicPieceController() { Piano = pC, SheetController = sC, MidiController = mC };
 
             //mPc.Guide.Start();
             DrawMenu();
-            InitializeComponent();           
+            InitializeComponent();
             Show();
         }
 
@@ -128,19 +128,36 @@ namespace PianoApp
             {
                 Console.WriteLine("Error");
                 return;
-                
+
             }
             Console.WriteLine("Metronoom klaar");
-            sv.MusicPieceController.Guide.Start();
+            if (bv._isStarted)
+            {
+                sv.MusicPieceController.Guide.Pause();
+            } else if (!bv._isStarted)
+            {
+                sv.MusicPieceController.Guide.Start();
+                bv._isStarted = true;
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            // ... Test for F5 key.
+            if (e.Key == Key.Space)
+            {
+                bv.TriggerStartBtnBySpaceKeyDown();
+            }
         }
 
         private void pianoStateChanged(object sender, EventArgs e)
         {
-            if(bv.pianoEnabled)
+            if (bv.pianoEnabled)
             {
                 myGrid.RowDefinitions[2].Height = new GridLength(200, GridUnitType.Star);
                 myGrid.RowDefinitions[1].Height = new GridLength(500, GridUnitType.Star);
-            } else
+            }
+            else
             {
                 myGrid.RowDefinitions[2].Height = new GridLength(0);
                 myGrid.RowDefinitions[1].Height = new GridLength(700, GridUnitType.Star);
