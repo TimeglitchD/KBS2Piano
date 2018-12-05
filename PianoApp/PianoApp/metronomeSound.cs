@@ -26,7 +26,7 @@ namespace PianoApp
 
         //values for keeping track of current position
         private int beats;
-        private int elapsedBeats = 0;
+        public int elapsedBeats = 0;
 
         private bool countDown = false;
         private bool countDownOnly = false;
@@ -34,6 +34,7 @@ namespace PianoApp
         private int elapsedCountdown;
 
         public event EventHandler countdownFinished;
+        public event EventHandler countDownTickElapsed;
 
 
         public metronomeSound()
@@ -127,12 +128,12 @@ namespace PianoApp
             }
         }
 
-        //raise countdownfinished-event in new thread
-        private void countdownFinishedNewThread()
+        //raise event in new thread so timer doesn't get delayed
+        private void eventNewThread(Action<EventArgs> method)
         {
             new Thread(() =>
             {
-                onCountdownFinished(EventArgs.Empty);
+                method(EventArgs.Empty);
             }).Start();
         }
 
@@ -142,6 +143,14 @@ namespace PianoApp
             if (countdownFinished != null)
             {
                 countdownFinished(this, e);
+            }
+        }
+
+        private void onCountDownTickElapsed(EventArgs e)
+        {
+            if(countDownTickElapsed != null)
+            {
+                countDownTickElapsed(this, e);
             }
         }
 
@@ -177,12 +186,13 @@ namespace PianoApp
                 {
                     this.playMetronome(true);
                     elapsedBeats++;
+                    eventNewThread(onCountDownTickElapsed);
                     return;
                 }
                 else
                 {
                     stopMetronome();
-                    countdownFinishedNewThread();
+                    eventNewThread(onCountdownFinished);
                 }
             }
 
@@ -192,13 +202,14 @@ namespace PianoApp
                 {
                     this.playMetronome(true);
                     elapsedBeats++;
+                    eventNewThread(onCountDownTickElapsed);
                     return;
                 }
                 else if (countDown && elapsedBeats == beats * countDownAmount)
                 {
                     elapsedBeats = 0;
                     countDown = false;
-                    countdownFinishedNewThread();
+                    eventNewThread(onCountdownFinished);
                 }
 
                 if (elapsedBeats == 0)

@@ -40,6 +40,7 @@ namespace PianoApp.Views
         float bpmValue = -1.0f;
 
         private TextBlock pianoText;
+        private TextBlock metronomeText;
         private TextDecorationCollection strikeTrough = new TextDecorationCollection();
 
         private bool running = false;
@@ -192,8 +193,6 @@ namespace PianoApp.Views
             bpmTB.Background = Brushes.LightGray;
         }
 
-
-
         private void DrawBpmMenu()
         {
             // Add the first text cell to the Grid
@@ -217,8 +216,6 @@ namespace PianoApp.Views
             bpmTB.Text = "60";
             bpmTB.Height = 40;
             Grid.SetColumn(bpmTB, 2);
-
-
 
             // Add combobox to set bpm to notes
             notesCB = new ComboBox();
@@ -248,7 +245,7 @@ namespace PianoApp.Views
             resetButton.HorizontalAlignment = HorizontalAlignment.Right;
             resetButton.Click += ResetButton_Click;
             resetButton.IsEnabled = false;
-            Grid.SetColumn(resetButton, 5);
+            Grid.SetColumn(resetButton, 4);
 
             // Add items to grid
             menuGrid.Children.Add(txt1);
@@ -328,16 +325,17 @@ namespace PianoApp.Views
 
         public void drawMetronomeMenu()
         {
+            metronomeText = new TextBlock();
+            metronomeText.Text = "🔇";
             metronomeButton = new Button();
             metronomeButton.Width = menuGrid.ColumnDefinitions[4].Width.Value - 10;
             metronomeButton.Height = 40;
-            metronomeButton.Content = "Metronome: Off";
+            metronomeButton.FontSize = 25;
             metronomeButton.Click += onMetronomeButtonClick;
             metronomeButton.HorizontalAlignment = HorizontalAlignment.Right;
             metronomeButton.VerticalAlignment = VerticalAlignment.Bottom;
-            Grid.SetColumn(metronomeButton, 4);
+            Grid.SetColumn(metronomeButton, 5);
             menuGrid.Children.Add(metronomeButton);
-
         }
 
         public void drawPianoMenu()
@@ -363,15 +361,17 @@ namespace PianoApp.Views
 
         private void onMetronomeButtonClick(object sender, RoutedEventArgs e)
         {
-            if (metronomeEnabled)
+            if (!metronomeEnabled)
             {
-                metronomeEnabled = false;
-                metronomeButton.Content = "Metronoom: Uit";
+                
+                metronomeText.Text = "🔉";
+                metronomeEnabled = true;
             }
             else
             {
-                metronomeEnabled = true;
-                metronomeButton.Content = "Metronoom: Aan";
+                
+                metronomeText.Text = "🔇";
+                metronomeEnabled = false;
             }
         }
 
@@ -393,6 +393,14 @@ namespace PianoApp.Views
             {
                 pianoStateChanged(this, e);
             }
+        }
+
+        public void AddCountdownText()
+        {
+            TextBlock number = new TextBlock();
+            number.Text = (4 - metronome.elapsedBeats).ToString();
+            Console.WriteLine(number.Text);
+            startBtn.Content = number;
         }
     }
 }
