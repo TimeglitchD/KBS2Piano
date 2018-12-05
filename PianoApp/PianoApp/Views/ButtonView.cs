@@ -328,7 +328,8 @@ namespace PianoApp.Views
             metronomeText = new TextBlock();
             metronomeText.Text = "🔇";
             metronomeButton = new Button();
-            metronomeButton.Width = menuGrid.ColumnDefinitions[4].Width.Value - 10;
+            metronomeButton.Content = metronomeText;
+            metronomeButton.Width = 40;
             metronomeButton.Height = 40;
             metronomeButton.FontSize = 25;
             metronomeButton.Click += onMetronomeButtonClick;
