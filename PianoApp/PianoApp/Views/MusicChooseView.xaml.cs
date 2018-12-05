@@ -27,6 +27,7 @@ namespace PianoApp.Views
         private NoteView nv;
         private DataView musicView;
         private DataView scoreView;
+        private string id;
 
         //selected piece's file location
         private string selectedPiece;
@@ -40,8 +41,7 @@ namespace PianoApp.Views
             this.nv = nv;
             musicView = connection.getSheetMusic(1).Tables["Music"].DefaultView;
 
-            DataTable ScoreTable = connection.getSheetScore().Tables["Score"];
-            scoreView = getHighestFive(ScoreTable);
+            scoreView = getHighestFive(this.id);
             scoreView.RowFilter = "Id = 0";
 
             //add sheet records to tab
@@ -81,8 +81,9 @@ namespace PianoApp.Views
             titleBox.Text = selected.Row["Title"].ToString();
             descBox.Text = selected.Row["Description"] as String;
 
-            string id = selected.Row["Id"].ToString();
-            ChangeScoreView(id);
+           string test = selected.Row["Id"].ToString();
+           this.id = test;
+           ChangeScoreView(test);
 
         }
 
@@ -116,16 +117,20 @@ namespace PianoApp.Views
 
         private void ChangeScoreView(string id)
         {
-            scoreView.RowFilter = $"Id = {id}";
+            scoreView.RowFilter = $"Id = {id}"; 
         }
 
-        private DataView getHighestFive(DataTable score)
+        private DataView getHighestFive(string id)
         {
-            DataTable firstFiveRows = score.AsEnumerable()                
-                .Take(5)
-                .CopyToDataTable();
+            //   DataTable firstFiveRows = score.AsEnumerable()
+            //    .Take(10)
+            //    .CopyToDataTable();
 
-            return firstFiveRows.DefaultView;
+            //return firstFiveRows.DefaultView;
+            int numValue = Convert.ToInt32(id);
+            DataTable ScoreTableTest = connection.get5SheetScore(numValue).Tables["Score"];
+
+            return ScoreTableTest.DefaultView;
         }
     }
 
