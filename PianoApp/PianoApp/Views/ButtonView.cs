@@ -102,8 +102,11 @@ namespace PianoApp.Views
         }
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
-        {           
-            if (mPc.Guide.Score == null)
+        {
+            try
+            {
+                if(mPc.Guide.Score != null);
+            } catch (Exception)
             {
                 MessageBox.Show("Je hebt geen muziekstuk ingeladen!", "Foutmelding");
                 return;

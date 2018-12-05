@@ -37,6 +37,9 @@ namespace PianoApp.Controllers
 
             Sheet = SheetController.SheetModel;
 
+            //stop program from crashing when reloading musicpiece.
+            Sheet.Reset();
+
             AddGreatStaffsToSheet();
 
             AddMeasuresToGreatStaffs();
