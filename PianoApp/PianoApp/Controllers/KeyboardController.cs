@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAudio.Midi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -125,6 +126,7 @@ namespace PianoApp.Controllers
             if (pressedKey < 0 || currentlyPressedKeys.Contains(pressedKey))
                 return;
 
+            MidiOutput.play(pressedKey);
             currentlyPressedKeys.Add(pressedKey);
 
             
@@ -244,6 +246,7 @@ namespace PianoApp.Controllers
                 return;
 
             currentlyPressedKeys.Remove(pressedKey);
+            MidiOutput.stop(pressedKey);
 
             Guide?.UpdatePianoKeys();
 

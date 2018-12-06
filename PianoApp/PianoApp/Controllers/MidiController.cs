@@ -16,7 +16,6 @@ namespace PianoApp.Controllers
     public class MidiController
     {
         public MidiIn midiIn;
-        public MidiOut midiOut = new MidiOut(0);
 
         public event EventHandler midiInputChanged;
 
@@ -40,7 +39,6 @@ namespace PianoApp.Controllers
         {
             midiIn = new MidiIn(0); 
             
-            midiOut.Volume = 65535;
 
             midiIn.MessageReceived += midiInReceived;
             midiIn.ErrorReceived += midiIn_ErrorReceived;            
@@ -59,14 +57,6 @@ namespace PianoApp.Controllers
             return MidiIn.NumberOfDevices > 0;
         }
 
-        public void PlayNotes(Dictionary<Note, Timeout> notes)
-        {
-            foreach (var keyValuePair in notes)
-            {
-                var noteNumber = (int)keyValuePair.Key.Pitch.Step;
-                midiOut?.Send(MidiMessage.StartNote(noteNumber, 127, 1).RawData);
-            }
-        }
 
         private void midiInReceived(object sender, MidiInMessageEventArgs e)
         {
@@ -92,8 +82,8 @@ namespace PianoApp.Controllers
                 Guide.ActiveKeys = currentlyPressedKeys;
                 Guide.UpdatePianoKeys();
                 //Thread.Sleep inside GUI is just for example
-                
-                midiOut.Send(MidiMessage.StartNote(noteEvent.NoteNumber, 127, noteEvent.Channel).RawData);
+
+                MidiOutput.play(noteEvent.NoteNumber);
 
             } else
             {                
@@ -101,7 +91,7 @@ namespace PianoApp.Controllers
                 currentlyPressedKeys.Remove(noteEvent.NoteNumber);
                 Guide.ActiveKeys = currentlyPressedKeys;
                 Guide.UpdatePianoKeys();
-                midiOut.Send(MidiMessage.StopNote(noteEvent.NoteNumber, 127, noteEvent.Channel).RawData);
+                MidiOutput.stop(noteEvent.NoteNumber);
             }
         }
 

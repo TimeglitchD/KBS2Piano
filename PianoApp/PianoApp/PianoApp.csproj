@@ -82,6 +82,7 @@
     <Compile Include="Controllers\GuidesController.cs" />
     <Compile Include="DatabaseConnection.cs" />
     <Compile Include="Events\BpmEventArgs.cs" />
+    <Compile Include="MidiOutput.cs" />
     <Compile Include="Models\Exception\BpmOutOfRangeException.cs" />
     <Compile Include="metronomeSound.cs" />
     <Compile Include="MusicDatabaseDataSet1.Designer.cs">
