@@ -14,7 +14,7 @@ namespace PianoApp.Controllers
 
         public GuidesController Guide;
 
-        private int keyOffset = 48;
+        private int keyOffset = 47;
 
         public void KeyDown(KeyEventArgs e)
         {
@@ -118,8 +118,11 @@ namespace PianoApp.Controllers
                 case Key.OemPeriod:
                     pressedKey = keyOffset + 31;
                     break;
-                case Key.OemSemicolon:
-                    pressedKey = keyOffset + 32;
+                case Key.Up:
+                    octaveUp();
+                    break;
+                case Key.Down:
+                    octaveDown();
                     break;
             }
 
@@ -237,9 +240,6 @@ namespace PianoApp.Controllers
                 case Key.OemPeriod:
                     pressedKey = keyOffset + 31;
                     break;
-                case Key.OemSemicolon:
-                    pressedKey = keyOffset + 32;
-                    break;
             }
         
             if (pressedKey < 0 || !currentlyPressedKeys.Contains(pressedKey))
@@ -253,5 +253,22 @@ namespace PianoApp.Controllers
             Console.WriteLine("----------Off----------");
             Console.WriteLine(pressedKey.ToString());
         }
+
+        private void octaveUp()
+        {
+            if(keyOffset < 95)
+                keyOffset += 12;
+
+            MidiOutput.play(keyOffset);
+        }
+
+        private void octaveDown()
+        {
+            if(keyOffset > 0)
+                keyOffset -= 12;
+            
+            MidiOutput.play(keyOffset);
+        }
+
     }
 }
