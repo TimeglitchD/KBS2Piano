@@ -60,6 +60,7 @@ namespace PianoApp.Controllers
         public event EventHandler staffEndReached;
         public event EventHandler GoToFirstStaff;
         public event EventHandler HoldPosition;
+        public event EventHandler guideStopped;
 
         public MidiController midi;
 
@@ -329,7 +330,14 @@ namespace PianoApp.Controllers
         public bool Stop()
         {
             _timerStaffOne.Enabled = false;
+            onGuideStopped();
             return true;
+        }
+
+        public void onGuideStopped()
+        {
+            if (guideStopped != null)
+                guideStopped(this, EventArgs.Empty);
         }
 
         public void SetNote(string note)

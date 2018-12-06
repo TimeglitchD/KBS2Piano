@@ -60,6 +60,7 @@ namespace PianoApp
             MidiController mC = new MidiController();
             kC = new KeyboardController();
             mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC , KeyboardController = kC };
+            
 
             //mPc.Guide.Start();
             DrawMenu();
@@ -128,6 +129,7 @@ namespace PianoApp
 
         private void countdownFinished(object sender, EventArgs e)
         {
+            mPc.Guide.guideStopped += guideStopped;
             //start guide here
             if (mPc.Guide.Score == null)
             {
@@ -180,6 +182,11 @@ namespace PianoApp
                 myGrid.RowDefinitions[2].Height = new GridLength(0);
                 myGrid.RowDefinitions[1].Height = new GridLength(700, GridUnitType.Star);
             }
+        }
+
+        private void guideStopped(object sender, EventArgs e)
+        {
+            metronome.stopMetronome();
         }
     }
 
