@@ -96,6 +96,7 @@ namespace PianoApp.Views
 
         private void SelectPiece()
         {
+            Console.WriteLine(selectedPiece);
             try
             {
                 sv.MusicPieceController.CreateMusicPiece(selectedPiece);
@@ -105,11 +106,15 @@ namespace PianoApp.Views
                 nv.DrawNotes();
                 //draw the new staves with notes
                 this.Close();
+            }catch (ArgumentNullException ex)
+            {
+                MessageBox.Show("Je hebt geen muziekstuk geselecteerd");
             }
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);
             }
+           
         }
 
         private void ChangeScoreView(string id)
