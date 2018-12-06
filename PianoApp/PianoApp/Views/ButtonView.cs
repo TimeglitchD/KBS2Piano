@@ -227,6 +227,8 @@ namespace PianoApp.Views
                 // Stukk resetten
                 var CurrentWindow = Application.Current.Windows[0];
 
+                metronome.stopMetronome();
+
                 MainWindow window = new MainWindow();
                 window.Show();
 
