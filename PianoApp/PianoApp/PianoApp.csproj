@@ -76,6 +76,7 @@
     <Compile Include="Controllers\MidiController.cs" />
     <Compile Include="Controllers\MidiControllerEventArgs.cs" />
     <Compile Include="Controllers\NonKeyboardInputController.cs" />
+    <Compile Include="Controllers\PianoToneController.cs" />
     <Compile Include="Controllers\SheetController.cs" />
     <Compile Include="Controllers\GuidesController.cs" />
     <Compile Include="DatabaseConnection.cs" />

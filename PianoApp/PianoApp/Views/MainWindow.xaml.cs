@@ -53,6 +53,7 @@ namespace PianoApp
             PianoController pC = new PianoController() {NonKeyboardInputController = nKiC};
             SheetController sC = new SheetController();
             MidiController mC = new MidiController();
+            sC.MidiController = mC;
             mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC};
 
             //mPc.Guide.Start();

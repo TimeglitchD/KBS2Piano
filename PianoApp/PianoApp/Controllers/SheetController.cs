@@ -14,10 +14,11 @@ namespace PianoApp.Controllers
     {
         public SheetModel SheetModel { get; set; } = new SheetModel();
         public NoteView NoteView { get; set; }
+        public MidiController MidiController { get; set; }
 
-        public void UpdateNotes(Dictionary<Note, GuidesController.Timeout> noteAndTimeoutDictionary)
+        public void UpdateNotes(Dictionary<Note, Timeout> noteAndTimeoutDictionary)
         {
-            var tempDict = new Dictionary<Note, GuidesController.Timeout>(noteAndTimeoutDictionary);
+            var tempDict = new Dictionary<Note, Timeout>(noteAndTimeoutDictionary);
 
             foreach (var keyValuePair in tempDict)
             {
@@ -29,24 +30,14 @@ namespace PianoApp.Controllers
                         {
                             if (note.Pitch != null)
                             {
-
-                                //                                    if (keyValuePair.Key.Pitch.Step.ToString() == note.Pitch.Step.ToString() &&
-                                //                                        keyValuePair.Key.Pitch.Alter == note.Pitch.Alter &&
-                                //                                        keyValuePair.Key.Pitch.Octave == note.Pitch.Octave &&
-                                //                                        keyValuePair.Key.MeasureNumber == note.MeasureNumber &&
-                                //                                        keyValuePair.Key.XPos == note.XPos)
-                                //                                    {
-                                //                                        note.Active = true;
-                                //                                        note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
-                                //                                    }
-
                                 if (keyValuePair.Key.XPos == note.XPos && keyValuePair.Key.MeasureNumber == note.MeasureNumber)
                                 {
                                     note.State = NoteState.Active;
+//                                    MidiController.PlayNotes(noteAndTimeoutDictionary);
                                 }
-//                                else if(!note.State.Equals(NoteState.Good) && !note.State.Equals(NoteState.Wrong))
+//                                else
 //                                {
-//                                    note.State = NoteState.Idle;                                    
+//                                    note.State = NoteState.Idle;
 //                                }
                                 note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
                             }

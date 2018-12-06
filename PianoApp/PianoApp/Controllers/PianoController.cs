@@ -19,7 +19,7 @@ namespace PianoApp.Controllers
         public PianoView PianoView { get; set; }
         public NonKeyboardInputController NonKeyboardInputController { get; set; }
 
-        public void UpdatePressedPianoKeys(List<int> activeKeysFromKeyboard)
+        public void UpdatePressedPianoKeys(Dictionary<int, float> activeKeysFromKeyboard)
         {
              foreach (var octaveModel in PianoModel.OctaveModelList)
             {
@@ -31,28 +31,23 @@ namespace PianoApp.Controllers
 
             foreach (var pressedKey in activeKeysFromKeyboard)
             {
-                //octave - 1 * 12;
-                int octave = (int)Math.Floor((decimal)pressedKey / 12);
-                int keyNumber = pressedKey - ((12 * octave) - 1);
-
+                int octave = (int)Math.Floor((decimal)pressedKey.Key / 12);
+                int keyNumber = pressedKey.Key - ((12 * octave) - 1);
                 
-
                 foreach (var octaveModel in PianoModel.OctaveModelList.Where(o => o.Position == octave))
                 {
                     var tempList = new List<KeyModel>(octaveModel.KeyModelList);
                     var blackKeysRemovedList = tempList.FindAll(n => n.Alter != -1);
-
                     blackKeysRemovedList[keyNumber - 1].Active = true;
-
                 }
             }
 
             Redraw();
         }
 
-        public void UpdatePianoKeys(Dictionary<Note, GuidesController.Timeout> noteAndTimeoutDictionary)
+        public void UpdatePianoKeys(Dictionary<Note, Timeout> noteAndTimeoutDictionary)
         {
-            var tempDict = new Dictionary<Note, GuidesController.Timeout>(noteAndTimeoutDictionary);
+            var tempDict = new Dictionary<Note, Timeout>(noteAndTimeoutDictionary);
 
             foreach (var octaveModel in PianoModel.OctaveModelList)
             {
