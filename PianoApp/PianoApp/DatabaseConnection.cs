@@ -65,29 +65,6 @@ namespace PianoApp
             }
         }
 
-        public DataSet get5SheetScore(int id)
-        {
-            using (SqlConnection connection = new SqlConnection(this.connectionString))
-            {
-                try
-                {
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
-                    SqlCommand command = connection.CreateCommand();
-                    command.CommandText = $"SELECT TOP(5) Id, Date, Time, Scored FROM Score WHERE Id = {id} ORDER BY Scored DESC";
-                    dataAdapter.SelectCommand = command;
-                    connection.Open();
-                    dataAdapter.Fill(dataSet, "Score");
-                    connection.Close();
-                    return dataSet;
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
-            }
-        }
-
-
         public DataSet GetDataFromDB(string query, string table)
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
