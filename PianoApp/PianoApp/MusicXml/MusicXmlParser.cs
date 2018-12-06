@@ -91,6 +91,8 @@ namespace MusicXml
                             if (measureNode.SelectSingleNode("print") != null)
                             {
                                 score.Systems++;
+                                measure.NewSystem = true;
+                                Console.WriteLine("NEW SYSTEM: MEASURE "+measure.Number);
                             }
 
 
@@ -228,12 +230,7 @@ namespace MusicXml
                 note.XPos = float.Parse(xPos.Value, CultureInfo.InvariantCulture.NumberFormat);
 
             }
-            else
-            {
 
-            }
-
-            //HERE
             var rest = noteNode.SelectSingleNode("rest");
             if (rest == null)
             {
@@ -245,13 +242,32 @@ namespace MusicXml
                 note.IsRest = true;
             }
 
+            var dot = noteNode.SelectSingleNode("dot");
+            if (dot == null)
+            {
+
+                note.Dot = false;
+            }
+            else
+            {
+                note.Dot = true;
+            }
+
             note.Lyric = GetLyric(noteNode);
 
             note.Pitch = GetPitch(noteNode);
 
             var staffNode = noteNode.SelectSingleNode("staff");
             if (staffNode != null)
+            {
                 note.Staff = Convert.ToInt32(staffNode.InnerText);
+            }
+
+            var stemNode = noteNode.SelectSingleNode("stem");
+            if (stemNode != null)
+            {
+                note.Stem = stemNode.InnerText;
+            }
 
             var chordNode = noteNode.SelectSingleNode("chord");
             if (chordNode != null)
