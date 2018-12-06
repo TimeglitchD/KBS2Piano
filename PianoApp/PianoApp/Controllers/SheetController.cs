@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MusicXml.Domain;
 using PianoApp.Models;
 using PianoApp.Views;
+using static MusicXml.Domain.Note;
 
 namespace PianoApp.Controllers
 {
@@ -26,6 +27,8 @@ namespace PianoApp.Controllers
                 {
                     foreach (var staffModel in greatStaffModel.StaffList.Where(s => s.Number == keyValuePair.Key.Staff))
                     {
+                        //this.staffNumber = staffModel.;
+                        
                         foreach (var note in staffModel.NoteList)
                         {
                             if (note.Pitch != null)
@@ -35,10 +38,6 @@ namespace PianoApp.Controllers
                                     note.State = NoteState.Active;
 //                                    MidiController.PlayNotes(noteAndTimeoutDictionary);
                                 }
-//                                else
-//                                {
-//                                    note.State = NoteState.Idle;
-//                                }
                                 note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
                             }
                         }

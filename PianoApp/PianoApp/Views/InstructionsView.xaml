@@ -1,14 +1,12 @@
-﻿<Window x:Class="PianoApp.MainWindow"
+﻿<Window x:Class="PianoApp.Views.InstructionsView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PianoApp"
+        xmlns:local="clr-namespace:PianoApp.Views"
         mc:Ignorable="d"
-        Title="KeyBoard Hero" Height="720" Width="1280"
-        ResizeMode="NoResize"
-        KeyDown="Window_KeyDown"
-        KeyUp="Window_KeyUp">
-
-
+        Title="InstructionsView" Height="450" Width="800">
+    <Grid>
+        
+    </Grid>
 </Window>

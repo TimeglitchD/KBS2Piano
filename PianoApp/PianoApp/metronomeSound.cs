@@ -8,6 +8,8 @@ using System.Threading;
 using System.Timers;
 using NAudio.Wave;
 using System.IO;
+using System.Windows;
+using NAudio.Wave.SampleProviders;
 
 namespace PianoApp
 {
@@ -19,13 +21,16 @@ namespace PianoApp
         private AudioFileReader metronomeSoundFile;
         private AudioFileReader metronomeBeatSoundFile;
 
+        SampleChannel metronomeSoundChannel;
+        SampleChannel metronomeBeatChannel;
+
         private Thread t;
 
         private System.Timers.Timer timer;
 
         //values for keeping track of current position
         private int beats;
-        private int elapsedBeats = 0;
+        public int elapsedBeats = 0;
 
         private bool countDown = false;
         private bool countDownOnly = false;
@@ -33,6 +38,7 @@ namespace PianoApp
         private int elapsedCountdown;
 
         public event EventHandler countdownFinished;
+        public event EventHandler countDownTickElapsed;
 
 
         public metronomeSound()
@@ -46,8 +52,11 @@ namespace PianoApp
             outputDeviceMetronomeBeat = new DirectSoundOut(guid, 50);
             outputDeviceMetronome = new DirectSoundOut(guid, 50);
 
-            outputDeviceMetronome.Init(metronomeSoundFile);
-            outputDeviceMetronomeBeat.Init(metronomeBeatSoundFile);
+            metronomeSoundChannel = new SampleChannel(metronomeSoundFile);
+            metronomeBeatChannel = new SampleChannel(metronomeBeatSoundFile);
+
+            outputDeviceMetronome.Init(metronomeSoundChannel);
+            outputDeviceMetronomeBeat.Init(metronomeBeatChannel);
 
             primeSounds();
         }
@@ -126,12 +135,12 @@ namespace PianoApp
             }
         }
 
-        //raise countdownfinished-event in new thread
-        private void countdownFinishedNewThread()
+        //raise event in new thread so timer doesn't get delayed
+        private void eventNewThread(Action<EventArgs> method)
         {
             new Thread(() =>
             {
-                onCountdownFinished(EventArgs.Empty);
+                method(EventArgs.Empty);
             }).Start();
         }
 
@@ -141,6 +150,14 @@ namespace PianoApp
             if (countdownFinished != null)
             {
                 countdownFinished(this, e);
+            }
+        }
+
+        private void onCountDownTickElapsed(EventArgs e)
+        {
+            if(countDownTickElapsed != null)
+            {
+                countDownTickElapsed(this, e);
             }
         }
 
@@ -158,13 +175,13 @@ namespace PianoApp
         //Silently plays the sounds so there's no unexpected delay when starting the countdown
         private void primeSounds()
         {
-            metronomeSoundFile.Volume = 0.0f;
-            metronomeBeatSoundFile.Volume = 0.0f;
+            metronomeSoundChannel.Volume = 0f;
+            metronomeBeatChannel.Volume = 0f;
             outputDeviceMetronomeBeat.Play();
             outputDeviceMetronome.Play();
             Thread.Sleep(1000);
-            metronomeSoundFile.Volume = 1.0f;
-            metronomeBeatSoundFile.Volume = 1.0f;
+            metronomeSoundChannel.Volume = 1f;
+            metronomeBeatChannel.Volume = 1f;
         }
 
         //event handler on every beat
@@ -176,12 +193,14 @@ namespace PianoApp
                 {
                     this.playMetronome(true);
                     elapsedBeats++;
+                    eventNewThread(onCountDownTickElapsed);
                     return;
                 }
                 else
                 {
                     stopMetronome();
-                    countdownFinishedNewThread();
+                    eventNewThread(onCountDownTickElapsed);
+                    eventNewThread(onCountdownFinished);
                 }
             }
 
@@ -191,13 +210,15 @@ namespace PianoApp
                 {
                     this.playMetronome(true);
                     elapsedBeats++;
+                    eventNewThread(onCountDownTickElapsed);
                     return;
                 }
                 else if (countDown && elapsedBeats == beats * countDownAmount)
                 {
                     elapsedBeats = 0;
                     countDown = false;
-                    countdownFinishedNewThread();
+                    eventNewThread(onCountDownTickElapsed);
+                    eventNewThread(onCountdownFinished);
                 }
 
                 if (elapsedBeats == 0)

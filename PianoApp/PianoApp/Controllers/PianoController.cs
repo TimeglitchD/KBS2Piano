@@ -18,6 +18,7 @@ namespace PianoApp.Controllers
         public PianoModel PianoModel { get; set; } = new PianoModel();
         public PianoView PianoView { get; set; }
         public NonKeyboardInputController NonKeyboardInputController { get; set; }
+     
 
         public void UpdatePressedPianoKeys(Dictionary<int, float> activeKeysFromKeyboard)
         {
@@ -33,7 +34,7 @@ namespace PianoApp.Controllers
             {
                 int octave = (int)Math.Floor((decimal)pressedKey.Key / 12);
                 int keyNumber = pressedKey.Key - ((12 * octave) - 1);
-                
+
                 foreach (var octaveModel in PianoModel.OctaveModelList.Where(o => o.Position == octave))
                 {
                     var tempList = new List<KeyModel>(octaveModel.KeyModelList);
@@ -69,10 +70,13 @@ namespace PianoApp.Controllers
                             keyValuePair.Key.Pitch.Alter           == keyModel.Alter)
                         {
                             keyModel.Active = true;
+                            keyModel.FingerNum = keyValuePair.Key.FingerNum;
+                            keyModel.StaffNumber = keyValuePair.Key.Staff;
                         }
                         else
                         {
-                            keyModel.Active = false;                            
+                            keyModel.Active = false;
+                            keyModel.FingerNum = 0;
                         }
                        
                     }
@@ -81,8 +85,7 @@ namespace PianoApp.Controllers
 
 
             Redraw();
-
-            
+  
         }
 
         private void Redraw()
@@ -91,7 +94,7 @@ namespace PianoApp.Controllers
             {
                 foreach (var keyModel in octaveModel.KeyModelList)
                 {
-                    keyModel.KeyRect.Dispatcher.BeginInvoke((Action)(() => keyModel.Color()));
+                    keyModel.KeyRect.Dispatcher.BeginInvoke((Action)(() => keyModel.ColorUpdate()));
                 }
             }
         }

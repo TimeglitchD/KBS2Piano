@@ -19,6 +19,7 @@ using PianoApp.Controllers;
 using PianoApp.Views;
 using PianoApp.Models;
 using PianoApp.Models.Exception;
+using System.Threading;
 
 namespace PianoApp
 {
@@ -37,10 +38,13 @@ namespace PianoApp
 
         private NoteView nv;
         public ButtonView bv;
+        public bool show = true;
 
         private Grid myGrid = new Grid();
 
         private metronomeSound metronome;
+
+        private KeyboardController kC;
 
         Button startBtn = new Button();
         Button resetButton = new Button();
@@ -50,11 +54,15 @@ namespace PianoApp
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            PianoController pC = new PianoController() {NonKeyboardInputController = nKiC};
+            PianoController pC = new PianoController() { NonKeyboardInputController = nKiC };
+
             SheetController sC = new SheetController();
             MidiController mC = new MidiController();
+
             sC.MidiController = mC;
-            mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC};
+
+            kC = new KeyboardController();
+            mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC , KeyboardController = kC };
 
             //mPc.Guide.Start();
             DrawMenu();
@@ -94,9 +102,11 @@ namespace PianoApp
             nv.DrawNotes();
 
             bv = new ButtonView(myGrid, sv, nv);
+            bv.pianoStateChanged += pianoStateChanged;
 
             metronome = bv.metronome;
             metronome.countdownFinished += countdownFinished;
+            metronome.countDownTickElapsed += CountDownTickElapsed;
         }
 
         private void DefineRowMyGrid()
@@ -121,14 +131,70 @@ namespace PianoApp
 
         private void countdownFinished(object sender, EventArgs e)
         {
+            mPc.Guide.guideStopped += guideStopped;
             //start guide here
             if (mPc.Guide.Score == null)
             {
                 Console.WriteLine("Error");
                 return;
-                
+
             }
-            sv.MusicPieceController.Guide.Start();
+            Console.WriteLine("Metronoom klaar");
+            if (bv._isStarted)
+            {
+                sv.MusicPieceController.Guide.Pause();
+            } else if (!bv._isStarted)
+            {
+                sv.MusicPieceController.Guide.Start();
+                bv._isStarted = true;
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            kC.KeyDown(e);
+
+            // ... Test for F5 key.
+            if (e.Key == Key.Space)
+            {
+                bv.TriggerStartBtnBySpaceKeyDown();
+            }
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            kC.KeyUp(e);
+        }
+
+
+        private void CountDownTickElapsed(object sender, EventArgs e)
+        {
+            this.Dispatcher.Invoke(bv.AddCountdownText);
+        }
+
+        private void pianoStateChanged(object sender, EventArgs e)
+        {
+            if (bv.pianoEnabled)
+            {
+                myGrid.RowDefinitions[2].Height = new GridLength(200, GridUnitType.Star);
+                myGrid.RowDefinitions[1].Height = new GridLength(500, GridUnitType.Star);
+            }
+            else
+            {
+                myGrid.RowDefinitions[2].Height = new GridLength(0);
+                myGrid.RowDefinitions[1].Height = new GridLength(700, GridUnitType.Star);
+            }
+        }
+
+        private void guideStopped(object sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                bv._isStarted = false;
+                bv.DisableStartBtn();
+                //bv.DisableStopBtn();
+            });
+            metronome.stopMetronome();
         }
     }
 
