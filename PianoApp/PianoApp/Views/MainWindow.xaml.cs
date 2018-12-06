@@ -44,6 +44,8 @@ namespace PianoApp
 
         private metronomeSound metronome;
 
+        private KeyboardController kC;
+
         Button startBtn = new Button();
         Button resetButton = new Button();
         private MusicPieceController mPc;
@@ -56,7 +58,8 @@ namespace PianoApp
 
             SheetController sC = new SheetController();
             MidiController mC = new MidiController();
-            mPc = new MusicPieceController() { Piano = pC, SheetController = sC, MidiController = mC };
+            kC = new KeyboardController();
+            mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC , KeyboardController = kC };
 
             //mPc.Guide.Start();
             DrawMenu();
@@ -145,12 +148,20 @@ namespace PianoApp
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            kC.KeyDown(e);
+
             // ... Test for F5 key.
             if (e.Key == Key.Space)
             {
                 bv.TriggerStartBtnBySpaceKeyDown();
             }
         }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            kC.KeyUp(e);
+        }
+
 
         private void CountDownTickElapsed(object sender, EventArgs e)
         {

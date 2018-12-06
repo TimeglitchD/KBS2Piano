@@ -28,12 +28,15 @@ namespace PianoApp.Views
         private NoteView nv;
         private DataView musicView;
         private DataView scoreView;
+<<<<<<< HEAD
         private ButtonView bv;
         public string id;
 
         public int Bpm;
 
         public event EventHandler<BpmEventArgs> updateBpm;
+=======
+>>>>>>> b62b6075f4835eb8dac1116d1b3315df99736e98
 
         //selected piece's file location
         private string selectedPiece;
@@ -48,7 +51,7 @@ namespace PianoApp.Views
             this.bv = bv;
             musicView = connection.getSheetMusic(1).Tables["Music"].DefaultView;
 
-            scoreView = getHighestFive(this.id);
+            scoreView = connection.getSheetScore().Tables["Score"].DefaultView;
             scoreView.RowFilter = "Id = 0";
 
             //add sheet records to tab
@@ -88,10 +91,15 @@ namespace PianoApp.Views
             titleBox.Text = selected.Row["Title"].ToString();
             descBox.Text = selected.Row["Description"] as String;
 
+<<<<<<< HEAD
             string test = selected.Row["Id"].ToString();
             this.id = test;
             ChangeScoreView(test);
 
+=======
+           string Id = selected.Row["Id"].ToString();
+            ChangeScoreView(Id);
+>>>>>>> b62b6075f4835eb8dac1116d1b3315df99736e98
         }
 
         private void SearchTerm_TextChanged(object sender, TextChangedEventArgs e)
@@ -141,19 +149,6 @@ namespace PianoApp.Views
         private void ChangeScoreView(string id)
         {
             scoreView.RowFilter = $"Id = {id}";
-        }
-
-        private DataView getHighestFive(string id)
-        {
-            //   DataTable firstFiveRows = score.AsEnumerable()
-            //    .Take(10)
-            //    .CopyToDataTable();
-
-            //return firstFiveRows.DefaultView;
-            int numValue = Convert.ToInt32(id);
-            DataTable ScoreTableTest = connection.get5SheetScore(numValue).Tables["Score"];
-
-            return ScoreTableTest.DefaultView;
         }
     }
 

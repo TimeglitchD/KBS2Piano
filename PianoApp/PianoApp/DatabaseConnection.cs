@@ -64,7 +64,7 @@ namespace PianoApp
                 }
             }
         }
-
+        
         public DataSet get5SheetScore(int id)
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
@@ -86,7 +86,7 @@ namespace PianoApp
                 }
             }
         }
-
+        
         public DataSet GetDataFromDB(string query, string table)
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))

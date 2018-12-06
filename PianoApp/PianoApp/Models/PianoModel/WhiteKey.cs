@@ -34,13 +34,13 @@ namespace PianoApp.Models
             SolidColorBrush color = Brushes.FloralWhite;
             if (StaffNumber == 1 && Active)
             {
-                color = Brushes.Blue;
+                color = Brushes.Aquamarine;
                 KeyRect.Fill = color;
                 SetFingerNum(color);
             }
             else if (StaffNumber == 2 && Active)
             {
-                color = Brushes.Purple;
+                color = Brushes.DarkOrchid;
                 KeyRect.Fill = color;
                 SetFingerNum(color);
             }
