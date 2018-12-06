@@ -227,6 +227,14 @@ namespace PianoApp.Controllers
                 atStaffEndTwo = false;
 
                 currentStaff++;
+
+                if (currentStaff >= Sheet.SheetModel.GreatStaffModelList.Count)
+                {
+                    this.Stop();
+                    return;
+                }
+
+
                 stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
 
                 if (staffEndReached != null)

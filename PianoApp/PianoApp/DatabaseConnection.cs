@@ -114,9 +114,15 @@ namespace PianoApp
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
-                SqlCommand command = new SqlCommand(queryString, connection);
-                command.Connection.Open();
-                command.ExecuteNonQuery();
+                try
+                {
+                    SqlCommand command = new SqlCommand(queryString, connection);
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
+                } catch (Exception)
+                {
+
+                }
             }
         }
 
