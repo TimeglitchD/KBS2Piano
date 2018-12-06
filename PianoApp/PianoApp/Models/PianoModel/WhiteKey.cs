@@ -31,18 +31,15 @@ namespace PianoApp.Models
 
         public override void ColorUpdate()
         {
-            SolidColorBrush color = Brushes.FloralWhite;
             if (StaffNumber == 1 && Active)
             {
-                color = Brushes.Aquamarine;
-                KeyRect.Fill = color;
-                SetFingerNum(color);
+                KeyRect.Fill = System.Windows.Media.Brushes.Blue;
+                SetFingerNum(Brushes.Blue);
             }
             else if (StaffNumber == 2 && Active)
             {
-                color = Brushes.DarkOrchid;
-                KeyRect.Fill = color;
-                SetFingerNum(color);
+                KeyRect.Fill = System.Windows.Media.Brushes.Purple;
+                SetFingerNum(Brushes.Purple);
             }
             else
             {
