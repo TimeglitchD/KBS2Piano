@@ -186,6 +186,12 @@ namespace PianoApp
 
         private void guideStopped(object sender, EventArgs e)
         {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                bv._isStarted = false;
+                bv.DisableStartBtn();
+                //bv.DisableStopBtn();
+            });
             metronome.stopMetronome();
         }
     }

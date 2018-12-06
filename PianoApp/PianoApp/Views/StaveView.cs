@@ -51,12 +51,12 @@ namespace PianoApp.Views
             scroll.Content = sheet;
 
             myGrid.Children.Add(scroll);
-
+            location = 0;
         }
 
         public void ScrollToTop(object sender, EventArgs e)
         {
-            double location = scroll.VerticalOffset;
+            location = 0;
 
             scroll.Dispatcher.BeginInvoke((Action)(() => scroll.ScrollToVerticalOffset(0)));
             scroll.Dispatcher.BeginInvoke((Action)(() => scroll.UpdateLayout()));

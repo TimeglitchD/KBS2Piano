@@ -219,7 +219,11 @@ namespace PianoApp.Views
         private void StopBtn_Click(object sender, RoutedEventArgs e)
         {
             // Pause piece
-            StartButtonFunc();
+            if(_isStarted)
+            {
+                StartButtonFunc();
+            }
+            
             MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het muziekstuk wilt stoppen?", "Muziekstuk stoppen", MessageBoxButton.YesNo);
 
             if (messageBoxResult == MessageBoxResult.Yes)
@@ -237,7 +241,11 @@ namespace PianoApp.Views
             else if (messageBoxResult == MessageBoxResult.No)
             {
                 // If no is clicked, resume musicpiece by countdown
-                StartButtonFunc();
+                if(_isStarted)
+                {
+                    StartButtonFunc();
+                }
+                
             }
 
         }
@@ -347,9 +355,10 @@ namespace PianoApp.Views
             bpmTB.Background = Brushes.LightGray;
         }
 
-
-        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        private void ResetButton_Click(object sender, EventArgs e)
         {
+            sv.ScrollToTop(this, EventArgs.Empty);
+            StopBtn.IsEnabled = true;
             mPc.Guide.paused = false;
             _isStarted = false;
             mPc.Guide.ResetMusicPiece();
@@ -400,6 +409,16 @@ namespace PianoApp.Views
             {
                 pianoStateChanged(this, e);
             }
+        }
+
+        public void DisableStartBtn()
+        {
+            startBtn.IsEnabled = false;
+        }
+
+        public void DisableStopBtn()
+        {
+            StopBtn.IsEnabled = false;
         }
 
         public void AddCountdownText()

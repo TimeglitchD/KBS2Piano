@@ -70,6 +70,7 @@ namespace PianoApp.Views
             SelectPiece();
         }
 
+
         public void Start()
         {
             sv.MusicPieceController.Guide.Start();

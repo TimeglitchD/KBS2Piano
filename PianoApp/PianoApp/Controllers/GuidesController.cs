@@ -66,6 +66,8 @@ namespace PianoApp.Controllers
 
         public List<int> ActiveKeys;
 
+        public bool AtEnd = false;
+
         public GuidesController(MidiController midi)
         {
             this.midi = midi;
@@ -287,6 +289,8 @@ namespace PianoApp.Controllers
 
         public void ResetMusicPiece()
         {
+            currentStaff = 0;
+
             foreach (var scorePart in Score.Parts)
             {
                 //Access all measures inside the music piece
@@ -329,6 +333,7 @@ namespace PianoApp.Controllers
 
         public bool Stop()
         {
+            AtEnd = true;
             _timerStaffOne.Enabled = false;
             onGuideStopped();
             return true;
