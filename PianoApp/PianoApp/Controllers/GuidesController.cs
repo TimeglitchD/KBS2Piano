@@ -111,6 +111,14 @@ namespace PianoApp.Controllers
             //set timing of music piece
             _timing = _bpm / 60;
 
+            if(Note == NoteType.Half)
+            {
+                _timing = _timing / 2;
+            }else if(Note == NoteType.Whole)
+            {
+                _timing = _timing / 4;
+            }
+
             _interval = (int)(1000.0 / (_timing));
 
             //Set the divisions
