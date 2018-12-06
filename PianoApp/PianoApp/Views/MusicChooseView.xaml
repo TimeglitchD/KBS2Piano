@@ -15,12 +15,17 @@
         </Grid.ColumnDefinitions>
         <TabControl Margin="0,69,270,10" Grid.Column="1">
             <TabItem Header="Sheet music">
-                <DataGrid x:Name="SheetMusic" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged" MouseDoubleClick="SheetMusic_MouseDoubleClick">
+                <DataGrid x:Name="SheetMusic" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
+                    <DataGrid.RowStyle>
+                        <Style>
+                            <EventSetter Event="DataGridRow.MouseDoubleClick" Handler="SheetMusic_MouseDoubleClick"/>
+                        </Style>
+                    </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="200" Header="Title" Binding="{Binding Title}"/>
+                        <DataGridTextColumn Width="400" Header="Title" Binding="{Binding Title}"/>
                         <DataGridTextColumn Width="80" Header="Adding Date"  Binding="{Binding Date}"/>
                         <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
@@ -35,11 +40,11 @@
         <Label Content="Search" Grid.Column="1" HorizontalAlignment="Left" Margin="284.2,66,0,0" VerticalAlignment="Top" Width="48" Height="25"/>
 
         <Label Content="Top 5 attempts" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="503.2,313,0,0" VerticalAlignment="Top" Width="242"/>
-        <DataGrid Name="ScoreGrid"  AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="174" Margin="508.2,347,0,0" VerticalAlignment="Top" Width="241">
+        <DataGrid Name="ScoreGrid" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="174" Margin="508.2,347,0,0" VerticalAlignment="Top" Width="241">
             <DataGrid.Columns>
-                <DataGridTextColumn  Width="80" Binding="{Binding Date}" IsReadOnly="True" Header="Date"/>
+                <DataGridTextColumn  Width="65" Binding="{Binding Date}" IsReadOnly="True" Header="Date"/>
                 <DataGridTextColumn Width="80" Binding="{Binding Time}" IsReadOnly="True" Header="Time"/>
-                <DataGridTextColumn Width="55" Binding="{Binding Scored}" IsReadOnly="True" Header="Score"/>
+                <DataGridTextColumn Width="88" Binding="{Binding Scored}" IsReadOnly="True" Header="Score"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

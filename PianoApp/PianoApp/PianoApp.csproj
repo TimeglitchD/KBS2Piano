@@ -73,6 +73,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controllers\KeyboardController.cs" />
     <Compile Include="Controllers\MidiController.cs" />
     <Compile Include="Controllers\MidiControllerEventArgs.cs" />
     <Compile Include="Controllers\NonKeyboardInputController.cs" />

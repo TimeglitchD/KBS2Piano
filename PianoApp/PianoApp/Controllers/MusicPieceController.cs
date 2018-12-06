@@ -22,6 +22,8 @@ namespace PianoApp.Controllers
 
         public MidiController MidiController;
 
+        public KeyboardController KeyboardController;
+
         public SheetModel Sheet { get; set; }
 
         public event EventHandler staffEndReached;
@@ -54,6 +56,8 @@ namespace PianoApp.Controllers
             Guide.GoToFirstStaff += GoToFirstStaff;
             Guide.HoldPosition += this.HoldPosition;
             MidiController.Guide = Guide;
+
+            KeyboardController.Guide = Guide;
         }
 
 

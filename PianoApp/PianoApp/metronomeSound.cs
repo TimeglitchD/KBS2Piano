@@ -9,6 +9,7 @@ using System.Timers;
 using NAudio.Wave;
 using System.IO;
 using System.Windows;
+using NAudio.Wave.SampleProviders;
 
 namespace PianoApp
 {
@@ -19,6 +20,9 @@ namespace PianoApp
 
         private AudioFileReader metronomeSoundFile;
         private AudioFileReader metronomeBeatSoundFile;
+
+        SampleChannel metronomeSoundChannel;
+        SampleChannel metronomeBeatChannel;
 
         private Thread t;
 
@@ -48,8 +52,11 @@ namespace PianoApp
             outputDeviceMetronomeBeat = new DirectSoundOut(guid, 50);
             outputDeviceMetronome = new DirectSoundOut(guid, 50);
 
-            outputDeviceMetronome.Init(metronomeSoundFile);
-            outputDeviceMetronomeBeat.Init(metronomeBeatSoundFile);
+            metronomeSoundChannel = new SampleChannel(metronomeSoundFile);
+            metronomeBeatChannel = new SampleChannel(metronomeBeatSoundFile);
+
+            outputDeviceMetronome.Init(metronomeSoundChannel);
+            outputDeviceMetronomeBeat.Init(metronomeBeatChannel);
 
             primeSounds();
         }
@@ -168,13 +175,13 @@ namespace PianoApp
         //Silently plays the sounds so there's no unexpected delay when starting the countdown
         private void primeSounds()
         {
-            metronomeSoundFile.Volume = 0.0f;
-            metronomeBeatSoundFile.Volume = 0.0f;
+            metronomeSoundChannel.Volume = 0f;
+            metronomeBeatChannel.Volume = 0f;
             outputDeviceMetronomeBeat.Play();
             outputDeviceMetronome.Play();
             Thread.Sleep(1000);
-            metronomeSoundFile.Volume = 1.0f;
-            metronomeBeatSoundFile.Volume = 1.0f;
+            metronomeSoundChannel.Volume = 1f;
+            metronomeBeatChannel.Volume = 1f;
         }
 
         //event handler on every beat
