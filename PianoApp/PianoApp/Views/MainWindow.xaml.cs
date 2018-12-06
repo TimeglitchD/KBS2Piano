@@ -149,6 +149,12 @@ namespace PianoApp
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             kC.KeyDown(e);
+
+            // ... Test for F5 key.
+            if (e.Key == Key.Space)
+            {
+                bv.TriggerStartBtnBySpaceKeyDown();
+            }
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
@@ -156,14 +162,6 @@ namespace PianoApp
             kC.KeyUp(e);
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            // ... Test for F5 key.
-            if (e.Key == Key.Space)
-            {
-                bv.TriggerStartBtnBySpaceKeyDown();
-            }
-        }
 
         private void CountDownTickElapsed(object sender, EventArgs e)
         {
