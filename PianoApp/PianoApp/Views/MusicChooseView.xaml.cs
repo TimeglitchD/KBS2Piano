@@ -25,9 +25,9 @@ namespace PianoApp.Views
         private DatabaseConnection connection;
         private StaveView sv;
         private NoteView nv;
-        private DataView dv;
-        private bool hasBeenClicked = false;
-
+        private DataView musicView;
+        private DataView scoreView;
+        private string id;
 
         //selected piece's file location
         private string selectedPiece;
@@ -39,19 +39,67 @@ namespace PianoApp.Views
             connection = new DatabaseConnection();
             this.sv = sv;
             this.nv = nv;
-            this.dv = connection.getSheetMusic(1).Tables["Music"].DefaultView;
+            musicView = connection.getSheetMusic(1).Tables["Music"].DefaultView;
+
+            scoreView = getHighestFive(this.id);
+            scoreView.RowFilter = "Id = 0";
+
             //add sheet records to tab
-            populateTab(1, SheetMusic);
+            populateTab(SheetMusic, musicView);
+
+            //Add Score records to tab
+            populateTab(ScoreGrid, scoreView);
+
         }
 
         //fill tab based on type
-        public void populateTab(int Type, DataGrid grid)
+        public void populateTab(DataGrid grid, DataView dv)
         {
             grid.ItemsSource = dv;
         }
 
         private void OnSelectClick(object sender, RoutedEventArgs e)
         {
+            SelectPiece();
+        }
+
+        public void Start()
+        {
+            sv.MusicPieceController.Guide.Start();
+        }
+
+        //event updates file path based on selection
+        private void SheetMusic_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            DataGrid dg = sender as DataGrid;
+            DataRowView selected = dg.CurrentItem as DataRowView;
+            if (selected == null)
+                return;
+            selectedPiece = selected.Row["Location"] as String;
+
+            //update textBoxes
+            titleBox.Text = selected.Row["Title"].ToString();
+            descBox.Text = selected.Row["Description"] as String;
+
+           string test = selected.Row["Id"].ToString();
+           this.id = test;
+           ChangeScoreView(test);
+
+        }
+
+        private void SearchTerm_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            musicView.RowFilter = $"Description LIKE '%{SearchTerm.Text}%' OR Title Like '%{SearchTerm.Text}%'";
+        }
+
+        private void SheetMusic_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            SelectPiece();
+        }
+
+        private void SelectPiece()
+        {
+            Console.WriteLine(selectedPiece);
             try
             {
                 sv.MusicPieceController.CreateMusicPiece(selectedPiece);
@@ -61,35 +109,35 @@ namespace PianoApp.Views
                 nv.DrawNotes();
                 //draw the new staves with notes
                 this.Close();
+            }catch (ArgumentNullException ex)
+            {
+                MessageBox.Show("Je hebt geen muziekstuk geselecteerd");
             }
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);
             }
+           
         }
 
-        public void Start()
+        private void ChangeScoreView(string id)
         {
-            sv.MusicPieceController.Guide.Start();
+            scoreView.RowFilter = $"Id = {id}"; 
         }
 
-        //event updates file path based on selection
-        private void DataGrid_SelectionChanged(object sender, RoutedEventArgs e)
+        private DataView getHighestFive(string id)
         {
-            DataGrid dg = sender as DataGrid;
-            DataRowView selected = dg.CurrentItem as DataRowView;
-            selectedPiece = selected.Row["Location"] as String;
+            //   DataTable firstFiveRows = score.AsEnumerable()
+            //    .Take(10)
+            //    .CopyToDataTable();
 
-            //update textBoxes
-            titleBox.Text = selected.Row["Title"] as String;
-            descBox.Text = selected.Row["Description"] as String;
+            //return firstFiveRows.DefaultView;
+            int numValue = Convert.ToInt32(id);
+            DataTable ScoreTableTest = connection.get5SheetScore(numValue).Tables["Score"];
+
+            return ScoreTableTest.DefaultView;
         }
-
-        private void SearchTerm_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            dv.RowFilter = $"Description LIKE '%{SearchTerm.Text}%' OR Title Like '%{SearchTerm.Text}%'";
-        }
-
     }
+
 }
 

@@ -15,12 +15,12 @@
         </Grid.ColumnDefinitions>
         <TabControl Margin="0,69,270,10" Grid.Column="1">
             <TabItem Header="Sheet music">
-                <DataGrid x:Name="SheetMusic" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="DataGrid_SelectionChanged">
+                <DataGrid x:Name="SheetMusic" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged" MouseDoubleClick="SheetMusic_MouseDoubleClick">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="200" Header="Title" Binding="{Binding Title}"/>
-                        <DataGridTextColumn Width="200" Header="Description"  Binding="{Binding Description}"/>
-                        <DataGridTextColumn Width="75" Header="Date"  Binding="{Binding Date}"/>
+                        <DataGridTextColumn Width="80" Header="Adding Date"  Binding="{Binding Date}"/>
                         <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
@@ -30,8 +30,17 @@
         <Label Content="Title" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,69,0,0" VerticalAlignment="Top" Width="242"/>
         <TextBox x:Name="titleBox" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="21" Margin="507.667,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242"/>
         <Label Content="Description" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,126,0,0" VerticalAlignment="Top" Width="242"/>
-        <TextBox x:Name="descBox" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="200" Margin="507.667,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242"/>
+        <TextBox x:Name="descBox" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="148" Margin="507.2,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242"/>
         <TextBox x:Name="SearchTerm" Grid.Column="1" HorizontalAlignment="Left" Height="19" Margin="332.2,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" TextChanged="SearchTerm_TextChanged"/>
         <Label Content="Search" Grid.Column="1" HorizontalAlignment="Left" Margin="284.2,66,0,0" VerticalAlignment="Top" Width="48" Height="25"/>
+
+        <Label Content="Top 5 attempts" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="503.2,313,0,0" VerticalAlignment="Top" Width="242"/>
+        <DataGrid Name="ScoreGrid"  AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="174" Margin="508.2,347,0,0" VerticalAlignment="Top" Width="241">
+            <DataGrid.Columns>
+                <DataGridTextColumn  Width="80" Binding="{Binding Date}" IsReadOnly="True" Header="Date"/>
+                <DataGridTextColumn Width="80" Binding="{Binding Time}" IsReadOnly="True" Header="Time"/>
+                <DataGridTextColumn Width="55" Binding="{Binding Scored}" IsReadOnly="True" Header="Score"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

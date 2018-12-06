@@ -18,6 +18,7 @@ namespace PianoApp.Controllers
         public PianoModel PianoModel { get; set; } = new PianoModel();
         public PianoView PianoView { get; set; }
         public NonKeyboardInputController NonKeyboardInputController { get; set; }
+     
 
         public void UpdatePressedPianoKeys(List<int> activeKeysFromKeyboard)
         {
@@ -72,11 +73,13 @@ namespace PianoApp.Controllers
                             keyValuePair.Key.Pitch.Alter           == keyModel.Alter)
                         {
                             keyModel.Active = true;
+                            keyModel.FingerNum = keyValuePair.Key.FingerNum;
                             keyModel.StaffNumber = keyValuePair.Key.Staff;
                         }
                         else
                         {
-                            keyModel.Active = false;                            
+                            keyModel.Active = false;
+                            keyModel.FingerNum = 0;
                         }
                        
                     }

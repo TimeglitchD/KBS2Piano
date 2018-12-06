@@ -39,6 +39,8 @@ namespace MusicXml.Domain
 		
         public string Accidental { get; internal set; }
 
+        public int FingerNum { get; set; }
+
 	    public bool Active { get; set; } = false;
 
 	    public NoteState State { get; set; } = NoteState.Idle;
@@ -61,10 +63,18 @@ namespace MusicXml.Domain
 
         public void Color()
 	    {
-	        if (State.Equals(NoteState.Active))
-	        {
-	            ell.Fill = System.Windows.Media.Brushes.Blue;
-	        }
+            if(State.Equals(NoteState.Active))
+            {
+                if (Staff == 1)
+                {
+                    ell.Fill = System.Windows.Media.Brushes.Aquamarine;
+                }
+                else if(Staff == 2)
+                {
+                    ell.Fill = System.Windows.Media.Brushes.DarkOrchid;
+                }
+
+            }
 	        else if(State.Equals(NoteState.Wrong))
 	        {
 	            ell.Fill = System.Windows.Media.Brushes.Red;
@@ -79,6 +89,7 @@ namespace MusicXml.Domain
 	        }
         }
     }
+
 
     public enum NoteState
     {

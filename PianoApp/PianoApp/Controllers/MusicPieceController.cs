@@ -28,6 +28,10 @@ namespace PianoApp.Controllers
 
         public event EventHandler staffEndReached;
 
+        public event EventHandler GoToFirstStaff;
+
+        public event EventHandler HoldPosition;
+
         //1055 is max length of one staff
         private const double _maxStaffWidth = 1055;
 
@@ -39,6 +43,9 @@ namespace PianoApp.Controllers
 
             Sheet = SheetController.SheetModel;
 
+            //stop program from crashing when reloading musicpiece.
+            Sheet.Reset();
+
             AddGreatStaffsToSheet();
 
             AddMeasuresToGreatStaffs();
@@ -46,7 +53,8 @@ namespace PianoApp.Controllers
             AddNotesToMeasures();
 
             Guide.staffEndReached += staffEndReached;
-
+            Guide.GoToFirstStaff += GoToFirstStaff;
+            Guide.HoldPosition += this.HoldPosition;
             MidiController.Guide = Guide;
 
             KeyboardController.Guide = Guide;

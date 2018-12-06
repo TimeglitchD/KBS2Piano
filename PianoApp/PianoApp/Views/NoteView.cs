@@ -63,10 +63,12 @@ namespace PianoApp.Views
                             if (note.Staff.Equals(1))
                             {
                                 staff = greatStaff.StaffList.First<StaffModel>();
+
                             }
                             else
                             {
                                 staff = greatStaff.StaffList.Last<StaffModel>();
+                
                             }
                             Grid staveGrid = staff.stave;
                             GNote(note, note.Pitch, staff, staveGrid, totalwidth, measure.Width);
@@ -124,7 +126,7 @@ namespace PianoApp.Views
                 line.VerticalAlignment = VerticalAlignment.Center;
                 staveGrid.Children.Add(line);
             }
-
+        
             Grid.SetRow(note, row - 1);
             Grid.SetRowSpan(note, 3);
             Grid.SetColumn(note, 1);
