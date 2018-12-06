@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MusicXml.Domain;
 using PianoApp.Models;
 using PianoApp.Views;
+using static MusicXml.Domain.Note;
 
 namespace PianoApp.Controllers
 {

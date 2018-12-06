@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Timers;
+using static MusicXml.Domain.Note;
 
 namespace PianoApp.Controllers
 {

@@ -39,7 +39,7 @@ namespace PianoApp.Controllers
         {
             _score = MusicXmlParser.GetScore(filename);
 
-            Guide = new GuidesController(MidiController) { Score = _score, Piano = Piano , Sheet = SheetController};
+            Guide = new GuidesController(MidiController) { Score = _score, Piano = Piano, Sheet = SheetController };
 
             Sheet = SheetController.SheetModel;
 
@@ -89,7 +89,7 @@ namespace PianoApp.Controllers
         private void AddGreatStaffsToSheet()
         {
 
-            for(int i = _score.Systems; i > 0; i--)
+            for (int i = _score.Systems; i > 0; i--)
             {
                 Sheet.GreatStaffModelList.Add(new GreatStaffModel());
             }
@@ -102,32 +102,21 @@ namespace PianoApp.Controllers
         //Fill staffs width measures based on amount of measures in the piece
         private void AddMeasuresToGreatStaffs()
         {
-            double maxWidth = 0;
-            int lastItem = 0;
+            int greatstaff = 0;
 
-            foreach (var greatStaffModel in Sheet.GreatStaffModelList)
+            foreach (var scorePart in _score.Parts)
             {
-                foreach (var scorePart in _score.Parts)
+                foreach (var measure in scorePart.Measures)
                 {
-                    for (var i = 0; i < scorePart.Measures.Count; i++)
+                    if (measure.NewSystem && measure.Number != 1)
                     {
-                        if (i >= lastItem)
-                        {
-                            if (maxWidth < _maxStaffWidth)
-                            {
-                                greatStaffModel.MeasureList.Add(scorePart.Measures[i]);
-                                maxWidth += (double)scorePart.Measures[i].Width;
-                                lastItem++;
-                            }
-                            else
-                            {
-                                maxWidth = 0;
-                                break;
-                            }
-                        }
+                        greatstaff++;
                     }
+
+                    Sheet.GreatStaffModelList[greatstaff].MeasureList.Add(measure);
+
                 }
-                Console.WriteLine($"Amount measures added: {greatStaffModel.MeasureList.Count}");
+
             }
             Console.WriteLine("================================");
         }

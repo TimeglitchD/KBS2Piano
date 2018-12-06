@@ -28,15 +28,12 @@ namespace PianoApp.Views
         private NoteView nv;
         private DataView musicView;
         private DataView scoreView;
-<<<<<<< HEAD
         private ButtonView bv;
         public string id;
 
         public int Bpm;
 
         public event EventHandler<BpmEventArgs> updateBpm;
-=======
->>>>>>> b62b6075f4835eb8dac1116d1b3315df99736e98
 
         //selected piece's file location
         private string selectedPiece;
@@ -90,16 +87,10 @@ namespace PianoApp.Views
             //update textBoxes
             titleBox.Text = selected.Row["Title"].ToString();
             descBox.Text = selected.Row["Description"] as String;
-
-<<<<<<< HEAD
+            
             string test = selected.Row["Id"].ToString();
             this.id = test;
             ChangeScoreView(test);
-
-=======
-           string Id = selected.Row["Id"].ToString();
-            ChangeScoreView(Id);
->>>>>>> b62b6075f4835eb8dac1116d1b3315df99736e98
         }
 
         private void SearchTerm_TextChanged(object sender, TextChangedEventArgs e)
