@@ -83,7 +83,7 @@ namespace PianoApp.Views
                             staff = greatStaff.StaffList.Last<StaffModel>();
                         }
                         Grid staveGrid = staff.stave;
-                        GNote(note, note.Pitch, staff, staveGrid, totalwidth, measure.Width * scale, prevnote);
+                        GNote(note, note.Pitch, staff, staveGrid, totalwidth, measure.Width * scale, prevnote, measure);
                         prevnote = note;
 
                     }
@@ -135,7 +135,7 @@ namespace PianoApp.Views
         }
 
         //decide if it's a rest or a note and draw it
-        private void GNote(Note n, Pitch pitch, StaffModel staff, Grid staveGrid, decimal totalwidth, decimal width, Note prevnote)
+        private void GNote(Note n, Pitch pitch, StaffModel staff, Grid staveGrid, decimal totalwidth, decimal width, Note prevnote, Measure meas)
         {
 
             float pos = prevnote.XPos;
@@ -158,6 +158,14 @@ namespace PianoApp.Views
                     {
                         pos += 10;
                     }
+                }
+                else if(meas.NewSystem && meas.Number == 1)
+                {
+                    pos = 100;
+                }
+                else if(meas.NewSystem)
+                {
+                    pos = 80;
                 }
                 else
                 {

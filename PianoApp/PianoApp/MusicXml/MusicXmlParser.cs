@@ -91,6 +91,8 @@ namespace MusicXml
                             if (measureNode.SelectSingleNode("print") != null)
                             {
                                 score.Systems++;
+                                measure.NewSystem = true;
+                                Console.WriteLine("NEW SYSTEM: MEASURE "+measure.Number);
                             }
 
 
