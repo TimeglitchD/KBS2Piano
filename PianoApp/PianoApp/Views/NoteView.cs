@@ -16,7 +16,7 @@ namespace PianoApp.Views
     public class NoteView
     {
 
-        private MusicPieceController mPc;
+        public MusicPieceController mPc;
 
         public NoteView(StaveView sv)
         {

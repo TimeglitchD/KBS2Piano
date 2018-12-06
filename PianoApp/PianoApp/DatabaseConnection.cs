@@ -87,7 +87,6 @@ namespace PianoApp
             }
         }
 
-
         public DataSet GetDataFromDB(string query, string table)
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
@@ -111,7 +110,7 @@ namespace PianoApp
         }
 
         //function for update, insert, delete statements
-        private void ExcecuteCommandNoOutput(string queryString)
+        public void ExcecuteCommandNoOutput(string queryString)
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {

@@ -1,4 +1,5 @@
 ﻿using PianoApp.Controllers;
+using PianoApp.Events;
 using PianoApp.Models.Exception;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace PianoApp.Views
         private StaveView sv;
         private NoteView nv;
         private MusicPieceController mPc;
+        private string _musicPieceId;
 
         private TextBox bpmTB = new TextBox();
         private ComboBox notesCB = new ComboBox();
@@ -52,6 +54,7 @@ namespace PianoApp.Views
             this.nv = nv;
             this.sv = sv;
             this.mPc = sv.MusicPieceController;
+
             //menuGrid.ShowGridLines = true;
             // Define all columns for menuGrid
             DefineGridRowsMenuGrid();
@@ -69,7 +72,7 @@ namespace PianoApp.Views
             metronomeButton.FontSize = 25;
             metronomeButton.Click += onMetronomeButtonClick;
             metronomeButton.HorizontalAlignment = HorizontalAlignment.Center;
-            
+
 
             // Piano enable/disable button
             TextDecoration strikeTroughDecoration = new TextDecoration();
@@ -135,7 +138,6 @@ namespace PianoApp.Views
             myGrid.Children.Add(menuGrid);
         }
 
-
         private void DrawBpmMenu()
         {
             // Add the first text cell to the Grid
@@ -193,6 +195,12 @@ namespace PianoApp.Views
             menuGrid.Children.Add(resetButton);
         }
 
+        private void updateBpm(object sender, BpmEventArgs e)
+        {
+            bpmTB.Text = e.bpm.ToString();
+            _musicPieceId = e.Id;
+        }
+
         private bool CheckPause()
         {
             if (paused)
@@ -223,7 +231,8 @@ namespace PianoApp.Views
                 window.Show();
 
                 CurrentWindow.Close();
-            } else if(messageBoxResult == MessageBoxResult.No)
+            }
+            else if (messageBoxResult == MessageBoxResult.No)
             {
                 // If no is clicked, resume musicpiece by countdown
                 StartButtonFunc();
@@ -233,8 +242,11 @@ namespace PianoApp.Views
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
-            mCv = new MusicChooseView(sv, nv);
+            mCv = new MusicChooseView(sv, nv, this);
             mCv.Show();
+
+
+            mCv.updateBpm += updateBpm;
         }
 
         public void TriggerStartBtnBySpaceKeyDown()
@@ -305,6 +317,8 @@ namespace PianoApp.Views
                     {
                         metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
                     }
+                    DatabaseConnection dbCon = new DatabaseConnection();
+                    dbCon.ExcecuteCommandNoOutput($"UPDATE Music SET Bpm = ({Convert.ToInt32(bpmValue)}) WHERE Id = {_musicPieceId}");
                 }
 
                 // Set value startbutton
@@ -393,7 +407,7 @@ namespace PianoApp.Views
             number.Text = (4 - metronome.elapsedBeats).ToString();
             Console.WriteLine(number.Text);
             startBtn.Content = number;
-            if(4 - metronome.elapsedBeats == 4)
+            if (4 - metronome.elapsedBeats == 4)
             {
                 startBtn.IsEnabled = true;
                 startBtn.Content = "❚❚";
