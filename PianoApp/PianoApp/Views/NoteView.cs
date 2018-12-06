@@ -15,14 +15,10 @@ namespace PianoApp.Views
 {
     public class NoteView
     {
-
-<<<<<<< HEAD
-        public MusicPieceController mPc;
-=======
+        
         private MusicPieceController mPc;
         private decimal scale;
         private GreatStaffModel stave;
->>>>>>> 7a5a23a01af233ab78cfcf1c5e0e6e3e4014b2a0
 
         public NoteView(StaveView sv)
         {
