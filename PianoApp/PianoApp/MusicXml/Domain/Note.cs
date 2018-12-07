@@ -1,3 +1,4 @@
+using System;
 using PianoApp.Models;
 using System.Collections.Generic;
 using System.Windows.Controls;
@@ -174,14 +175,17 @@ namespace MusicXml.Domain
         {
             foreach (object sh in note)
             {
-                try
+
+                if (sh is Label)
                 {
                     ColorLabel(sh);
                 }
-                catch (System.InvalidCastException)
+                else
                 {
                     ColorShape(sh);
                 }
+
+
             }
         }
 

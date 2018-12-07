@@ -72,6 +72,7 @@ namespace PianoApp.Controllers
                 noteEvent = (NoteEvent)e.MidiEvent;
             } catch (Exception)
             {
+                Console.WriteLine("midicontroller exc");
                 return;
             }
             
@@ -82,7 +83,6 @@ namespace PianoApp.Controllers
                 Guide.ActiveKeys = currentlyPressedKeys;
                 Guide.UpdatePianoKeys();
                 //Thread.Sleep inside GUI is just for example
-
                 MidiOutput.play(noteEvent.NoteNumber);
 
             } else
