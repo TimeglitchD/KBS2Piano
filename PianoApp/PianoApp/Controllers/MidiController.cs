@@ -79,20 +79,25 @@ namespace PianoApp.Controllers
             if(MidiEvent.IsNoteOn(e.MidiEvent))
             {                
                 if (Guide == null) return;
-                currentlyPressedKeys.Add(noteEvent.NoteNumber, GuidesController.StopWatch.ElapsedMilliseconds);
+                
+                int calculatedNote =  offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
+
+                if (currentlyPressedKeys.ContainsKey(calculatedNote)) return;
+
+                currentlyPressedKeys.Add(calculatedNote, GuidesController.StopWatch.ElapsedMilliseconds);
                 Guide.ActiveKeys = currentlyPressedKeys;
                 Guide.UpdatePianoKeys();
                 //Thread.Sleep inside GUI is just for example
-                MidiOutput.play(noteEvent.NoteNumber);
+                MidiOutput.play(calculatedNote);
 
             } else
             {                
                 if (Guide == null) return;
-                currentlyPressedKeys.Remove(noteEvent.NoteNumber);
+                int calculatedNote = offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
+                currentlyPressedKeys.Remove(calculatedNote);
                 Guide.ActiveKeys = currentlyPressedKeys;
                 Guide.UpdatePianoKeys();
-                MidiOutput.stop(noteEvent.NoteNumber);
-                
+                MidiOutput.stop(calculatedNote);
             }
         }
 
@@ -105,6 +110,16 @@ namespace PianoApp.Controllers
         protected virtual void OnMidiInputChanged(MidiControllerEventArgs e)
         {
             midiInputChanged?.Invoke(this, e);
+        }
+
+        private int offsetNote(int currentNote, int offset)
+        {
+            Console.WriteLine("Calculating offset for key: " + currentNote.ToString() + " offset: " + offset.ToString());
+            int octave = (int)Math.Floor((decimal)currentNote / 12);
+            int baseNote = currentNote - octave * 12;
+            Console.WriteLine(baseNote.ToString());
+            Console.WriteLine((baseNote + offset).ToString());
+            return baseNote + offset;
         }
 
     }
