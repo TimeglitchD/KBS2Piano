@@ -133,7 +133,7 @@ namespace PianoApp.Controllers
             currentlyPressedKeys.Add(pressedKey);
 
             
-            Guide?.UpdatePianoKeys();
+//            Guide?.UpdatePianoKeys();
 
             Console.WriteLine("----------On----------");
             Console.WriteLine(pressedKey.ToString());
@@ -248,7 +248,7 @@ namespace PianoApp.Controllers
             currentlyPressedKeys.Remove(pressedKey);
             MidiOutput.stop(pressedKey);
 
-            Guide?.UpdatePianoKeys();
+//            Guide?.UpdatePianoKeys();
 
             Console.WriteLine("----------Off----------");
             Console.WriteLine(pressedKey.ToString());
