@@ -218,16 +218,16 @@ namespace PianoApp.Views
 
         private void StopBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Pause piece
-            if(_isStarted)
-            {
-                StartButtonFunc();
-            }
+            //// Pause piece
+            //if(_isStarted)
+            //{
+            //    StartButtonFunc();
+            //}
             
-            MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het muziekstuk wilt stoppen?", "Muziekstuk stoppen", MessageBoxButton.YesNo);
+            //MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het muziekstuk wilt stoppen?", "Muziekstuk stoppen", MessageBoxButton.YesNo);
 
-            if (messageBoxResult == MessageBoxResult.Yes)
-            {
+            //if (messageBoxResult == MessageBoxResult.Yes)
+            //{
                 // Stukk resetten
                 sv.ScrollToTop(this, EventArgs.Empty);
                 StopBtn.IsEnabled = true;
@@ -235,16 +235,16 @@ namespace PianoApp.Views
                 _isStarted = false;
                 mPc.Guide.ResetMusicPiece();
                 metronome.stopMetronome();
-            }
-            else if (messageBoxResult == MessageBoxResult.No)
-            {
-                // If no is clicked, resume musicpiece by countdown
-                if(_isStarted)
-                {
-                    StartButtonFunc();
-                }
+            //}
+            //else if (messageBoxResult == MessageBoxResult.No)
+            //{
+            //    // If no is clicked, resume musicpiece by countdown
+            //    if(_isStarted)
+            //    {
+            //        StartButtonFunc();
+            //    }
                 
-            }
+            //}
 
         }
 
