@@ -20,6 +20,7 @@ namespace PianoApp.Models
         public Rectangle KeyRect { get; set; } = new Rectangle();
         public int FingerNum { get; set; } = 0;
         public int StaffNumber;
+        public int KeyNumber { get; set; }
 
 
         public virtual Rectangle Draw(float width)

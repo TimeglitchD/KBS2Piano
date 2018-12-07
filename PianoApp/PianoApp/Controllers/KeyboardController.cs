@@ -5,12 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using PianoApp.Views;
 
 namespace PianoApp.Controllers
 {
     public class KeyboardController
     {
         public Dictionary<int, float> currentlyPressedKeys = new Dictionary<int, float>();
+
+        public PianoController PianoController;
 
         public GuidesController Guide;
 
@@ -264,6 +267,8 @@ namespace PianoApp.Controllers
             if(KeyOffset < 95)
                 KeyOffset += 12;
 
+            PianoController.Redraw();
+
             MidiOutput.play(KeyOffset);
 
             Console.WriteLine("current octave: " + CurrentOctave().ToString());
@@ -274,7 +279,10 @@ namespace PianoApp.Controllers
         {
             if(KeyOffset > 0)
                 KeyOffset -= 12;
-            
+
+            PianoController.Redraw();
+
+
             MidiOutput.play(KeyOffset);
 
             Console.WriteLine("current octave: " + CurrentOctave().ToString());

@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using PianoApp.Controllers;
 
 namespace PianoApp.Models
 {
@@ -84,7 +85,15 @@ namespace PianoApp.Models
 
         public override void Color()
         {
-            KeyRect.Fill = System.Windows.Media.Brushes.FloralWhite;
+            if (base.KeyNumber <= KeyboardController.KeyOffset ||
+               (base.KeyNumber >= KeyboardController.KeyOffset + 33))
+            {
+                KeyRect.Fill = System.Windows.Media.Brushes.DimGray;
+            }
+            else
+            {
+                KeyRect.Fill = System.Windows.Media.Brushes.FloralWhite;
+            }
         }
     }
 }

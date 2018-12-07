@@ -234,6 +234,8 @@ namespace PianoApp.Controllers
             }
         }
 
+
+
         private MockupNote getNoteFromNoteNumber(int nn)
         {
             int octave = (int)Math.Floor((decimal)nn / 12);

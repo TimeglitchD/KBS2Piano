@@ -86,7 +86,7 @@ namespace PianoApp.Controllers
   
         }
 
-        private void Redraw()
+        public void Redraw()
         {
             foreach (var octaveModel in PianoModel.OctaveModelList)
             {
