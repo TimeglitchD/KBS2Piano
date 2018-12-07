@@ -15,8 +15,7 @@ namespace PianoApp
         
         public static void play(int note)
         {
-            midiOut.Volume = 65535;
-
+            Console.WriteLine(note.ToString());
             midiOut?.Send(MidiMessage.StartNote(note, 127, 1).RawData);
         }
 
