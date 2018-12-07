@@ -92,6 +92,7 @@ namespace PianoApp.Controllers
                 Guide.ActiveKeys = currentlyPressedKeys;
                 Guide.UpdatePianoKeys();
                 MidiOutput.stop(noteEvent.NoteNumber);
+                
             }
         }
 

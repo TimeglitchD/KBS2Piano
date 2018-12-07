@@ -38,6 +38,10 @@ namespace PianoApp.Models
             {
                 KeyRect.Fill = System.Windows.Media.Brushes.DarkOrchid;
             }
+            else if (Active)
+            {
+                KeyRect.Fill = System.Windows.Media.Brushes.DarkSlateGray;
+            }
             else
             {
                 Color();

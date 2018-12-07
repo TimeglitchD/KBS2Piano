@@ -234,8 +234,8 @@ namespace MusicXml.Domain
             {
                 if (Staff == 1)
                 {
-                    shp.Fill = Brushes.Aquamarine;
-                    shp.Stroke = Brushes.Aquamarine;
+                    shp.Fill = Brushes.Blue;
+                    shp.Stroke = Brushes.Blue;
                 }
                 else if (Staff == 2)
                 {
@@ -269,7 +269,7 @@ namespace MusicXml.Domain
             {
                 if (Staff == 1)
                 {
-                    shp.Foreground = Brushes.Aquamarine;
+                    shp.Foreground = Brushes.Blue;
                 }
                 else if (Staff == 2)
                 {
