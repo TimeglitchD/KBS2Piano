@@ -456,9 +456,7 @@ namespace PianoApp.Controllers
 
         public bool Stop()
         {
-            AtEnd = true;
             _timerStaffOne.Enabled = false;
-            onGuideStopped();
             return true;
         }
 

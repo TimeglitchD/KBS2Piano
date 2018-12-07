@@ -234,6 +234,7 @@ namespace PianoApp.Views
                     }
                     catch
                     {
+                        Console.WriteLine("noteview exc");
                         Shape rest = (Shape)item;
                         Thickness margin = rest.Margin;
                         //draw the dot in the correct position
@@ -325,6 +326,7 @@ namespace PianoApp.Views
                     }
                     catch (System.InvalidCastException)
                     {
+                        Console.WriteLine("noteview 2 exc");
                         Shape sh = (Shape)obj;
 
                         Thickness margin = sh.Margin;
