@@ -10,7 +10,7 @@ namespace PianoApp.Controllers
 {
     public class KeyboardController
     {
-        public List<int> currentlyPressedKeys = new List<int>();
+        public Dictionary<int, float> currentlyPressedKeys = new Dictionary<int, float>();
 
         public GuidesController Guide;
 
@@ -126,14 +126,16 @@ namespace PianoApp.Controllers
                     break;
             }
 
-            if (pressedKey < 0 || currentlyPressedKeys.Contains(pressedKey))
+            if (pressedKey < 0 || currentlyPressedKeys.ContainsKey(pressedKey))
                 return;
 
             MidiOutput.play(pressedKey);
-            currentlyPressedKeys.Add(pressedKey);
+            currentlyPressedKeys.Add(pressedKey, GuidesController.StopWatch.ElapsedMilliseconds);
 
-            
-            Guide?.UpdatePianoKeys();
+            if (Guide == null)
+                return;
+
+                Guide.Piano.UpdatePressedPianoKeys(currentlyPressedKeys);
 
             Console.WriteLine("----------On----------");
             Console.WriteLine(pressedKey.ToString());
@@ -241,14 +243,17 @@ namespace PianoApp.Controllers
                     pressedKey = keyOffset + 31;
                     break;
             }
-        
-            if (pressedKey < 0 || !currentlyPressedKeys.Contains(pressedKey))
+
+            if (pressedKey < 0 || !currentlyPressedKeys.ContainsKey(pressedKey))
                 return;
 
             currentlyPressedKeys.Remove(pressedKey);
             MidiOutput.stop(pressedKey);
 
-            Guide?.UpdatePianoKeys();
+            if (Guide == null)
+                return;
+
+            Guide.Piano.UpdatePressedPianoKeys(currentlyPressedKeys);
 
             Console.WriteLine("----------Off----------");
             Console.WriteLine(pressedKey.ToString());
