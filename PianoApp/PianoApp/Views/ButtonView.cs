@@ -229,14 +229,12 @@ namespace PianoApp.Views
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 // Stukk resetten
-                var CurrentWindow = Application.Current.Windows[0];
-
+                sv.ScrollToTop(this, EventArgs.Empty);
+                StopBtn.IsEnabled = true;
+                mPc.Guide.paused = false;
+                _isStarted = false;
+                mPc.Guide.ResetMusicPiece();
                 metronome.stopMetronome();
-
-                MainWindow window = new MainWindow();
-                window.Show();
-
-                CurrentWindow.Close();
             }
             else if (messageBoxResult == MessageBoxResult.No)
             {
