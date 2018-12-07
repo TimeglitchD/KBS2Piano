@@ -53,9 +53,9 @@ namespace PianoApp.Controllers
         public NoteType ChosenNote = NoteType.Quarter;
 
         private float _divs;
-        private float _timing;
+        private float _bpsecond;
         private float _definedBpm = 180;
-        private int _interval;
+        private int _milsecperbeat;
 
         private Dictionary<Note, Timeout> _activeNoteAndTimeoutDict = new Dictionary<Note, Timeout>();
         private Dictionary<int, Timeout> _pressedKeyAndTimeDict = new Dictionary<int, Timeout>();
@@ -112,7 +112,9 @@ namespace PianoApp.Controllers
                             //Get the duration of the current note
                             var dur = note.Duration;
 
-                            var timeout = _timing * (dur / _divs);
+                            var timeout = _bpsecond * (dur / _divs);
+
+                            Console.WriteLine(timeout +"SECS");
 
                             if (!_toDoNoteDict.ContainsKey(note))
                                 _toDoNoteDict.Add(note, timeout);
@@ -125,17 +127,17 @@ namespace PianoApp.Controllers
         private void SetAttributes()
         {
             //set timing of music piece
-            _timing = _bpm / 60;
+            _bpsecond = _bpm / 60;
 
             if(Note == NoteType.Half)
             {
-                _timing = _timing / 2;
+                _bpsecond = _bpsecond / 2;
             }else if(Note == NoteType.Whole)
             {
-                _timing = _timing / 4;
+                _bpsecond = _bpsecond / 4;
             }
 
-            _interval = (int)(1000.0 / (_timing));
+            _milsecperbeat = (int)(1000.0 / (_bpsecond));
 
             //Set the divisions
             foreach (var scorePart in Score.Parts)
@@ -400,7 +402,7 @@ namespace PianoApp.Controllers
 
             _timerStaffOne = new System.Timers.Timer();
             _timerStaffOne.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 1);
-            _timerStaffOne.Interval = _interval;
+            _timerStaffOne.Interval = _milsecperbeat;
             NoteIntersectEvent(this, EventArgs.Empty, 1);
             _timerStaffOne.Enabled = true;
             return true;
