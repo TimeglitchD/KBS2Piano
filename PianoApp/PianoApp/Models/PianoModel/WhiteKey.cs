@@ -41,6 +41,10 @@ namespace PianoApp.Models
                 KeyRect.Fill = System.Windows.Media.Brushes.Purple;
                 SetFingerNum(Brushes.Purple);
             }
+            else if (Active)
+            {
+                KeyRect.Fill = System.Windows.Media.Brushes.Gray;
+            }
             else
             {
                 Color();

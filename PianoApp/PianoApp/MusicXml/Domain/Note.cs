@@ -185,7 +185,6 @@ namespace MusicXml.Domain
                     ColorShape(sh);
                 }
 
-
             }
         }
 

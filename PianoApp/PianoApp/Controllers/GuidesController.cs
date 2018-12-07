@@ -247,54 +247,18 @@ namespace PianoApp.Controllers
 
             switch (noteNumber)
             {
-                case (1):
-                    step = 'C';
-                    alter = 0;
-                    break;
-                case (2):
-                    step = 'C';
-                    alter = 1;
-                    break;
-                case (3):
-                    step = 'D';
-                    alter = 0;
-                    break;
-                case (4):
-                    step = 'D';
-                    alter = 1;
-                    break;
-                case (5):
-                    step = 'E';
-                    alter = 0;
-                    break;
-                case (6):
-                    step = 'F';
-                    alter = 0;
-                    break;
-                case (7):
-                    step = 'F';
-                    alter = 1;
-                    break;
-                case (8):
-                    step = 'G';
-                    alter = 0;
-                    break;
-                case (9):
-                    step = 'G';
-                    alter = 1;
-                    break;
-                case (10):
-                    step = 'A';
-                    alter = 0;
-                    break;
-                case (11):
-                    step = 'A';
-                    alter = 1;
-                    break;
-                case (12):
-                    step = 'B';
-                    alter = 0;
-                    break;
+                case (1): step = 'C'; alter = 0; break;
+                case (2): step = 'C'; alter = 1; break;
+                case (3): step = 'D'; alter = 0; break;
+                case (4): step = 'D'; alter = 1; break;
+                case (5): step = 'E'; alter = 0; break;
+                case (6): step = 'F'; alter = 0; break;
+                case (7): step = 'F'; alter = 1; break;
+                case (8): step = 'G'; alter = 0; break;
+                case (9): step = 'G'; alter = 1; break;
+                case (10): step = 'A'; alter = 0; break;
+                case (11): step = 'A'; alter = 1; break;
+                case (12): step = 'B'; alter = 0; break;
             }
 
             return new MockupNote(){Step = step, Alter = alter, Octave = octave};
