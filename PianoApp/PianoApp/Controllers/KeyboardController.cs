@@ -14,7 +14,7 @@ namespace PianoApp.Controllers
 
         public GuidesController Guide;
 
-        private int keyOffset = 48;
+        public static int keyOffset = 48;
 
         public void KeyDown(KeyEventArgs e)
         {
@@ -265,6 +265,8 @@ namespace PianoApp.Controllers
                 keyOffset += 12;
 
             MidiOutput.play(keyOffset);
+
+            Console.WriteLine("current octave: " + CurrentOctave().ToString());
         }
 
         private void octaveDown()
@@ -273,6 +275,13 @@ namespace PianoApp.Controllers
                 keyOffset -= 12;
             
             MidiOutput.play(keyOffset);
+
+            Console.WriteLine("current octave: " + CurrentOctave().ToString());
+        }
+
+        public static int CurrentOctave()
+        {
+            return (int)Math.Floor((decimal)keyOffset / 12);
         }
 
     }
