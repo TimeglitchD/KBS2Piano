@@ -282,7 +282,7 @@ namespace PianoApp.Controllers
 
         public static int CurrentOctave()
         {
-            return (int)Math.Floor((decimal)KeyOffset / 12);
+            return (int)Math.Floor((decimal)(KeyOffset / 12));
         }
 
     }

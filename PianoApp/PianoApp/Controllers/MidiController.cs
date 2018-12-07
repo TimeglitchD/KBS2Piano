@@ -114,12 +114,14 @@ namespace PianoApp.Controllers
 
         private int offsetNote(int currentNote, int offset)
         {
-            Console.WriteLine("Calculating offset for key: " + currentNote.ToString() + " offset: " + offset.ToString());
-            int octave = (int)Math.Floor((decimal)currentNote / 12);
-            int baseNote = currentNote - octave * 12;
-            Console.WriteLine(baseNote.ToString());
-            Console.WriteLine((baseNote + offset).ToString());
-            return baseNote + offset;
+            int octave = (int)Math.Floor((decimal)(currentNote / 12));
+            int offsetOctave = (int)Math.Floor((decimal)(offset / 12));
+            int actualOctave = octave - offsetOctave;
+            int actualNote = currentNote - (12 * octave);
+            actualNote = actualNote + (12 * actualOctave);
+            //int currentBaseKey = currentNote - (octave * 12);
+            Console.WriteLine("actual octave: " + actualOctave.ToString());
+            return actualNote;
         }
 
     }

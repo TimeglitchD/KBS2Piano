@@ -158,6 +158,8 @@ namespace PianoApp
             {
                 bv.TriggerStartBtnBySpaceKeyDown();
             }
+
+            bv.UpdateOctave();
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)

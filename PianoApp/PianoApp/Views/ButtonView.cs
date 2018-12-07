@@ -46,6 +46,8 @@ namespace PianoApp.Views
         private TextBlock metronomeText;
         private TextDecorationCollection strikeTrough = new TextDecorationCollection();
 
+        private TextBlock currentOctave;
+
         private bool running = false;
 
         public ButtonView(Grid myGrid, StaveView sv, NoteView nv)
@@ -61,6 +63,7 @@ namespace PianoApp.Views
 
             // Draw menu items
             DrawBpmMenu();
+            drawOctave();
 
             // Metronome enable/disable button
             metronomeText = new TextBlock();
@@ -193,6 +196,21 @@ namespace PianoApp.Views
             menuGrid.Children.Add(bpmTB);
             menuGrid.Children.Add(notesCB);
             menuGrid.Children.Add(resetButton);
+        }
+
+        private void drawOctave()
+        {
+            currentOctave = new TextBlock();
+            currentOctave.Text = "Octave: " + KeyboardController.CurrentOctave().ToString();
+            currentOctave.VerticalAlignment = VerticalAlignment.Center;
+            currentOctave.FontSize = 22;
+            Grid.SetColumn(currentOctave, 9);
+            menuGrid.Children.Add(currentOctave);
+        }
+
+        public void UpdateOctave()
+        {
+            currentOctave.Text = "Octave: " + KeyboardController.CurrentOctave().ToString();
         }
 
         private void updateBpm(object sender, BpmEventArgs e)
