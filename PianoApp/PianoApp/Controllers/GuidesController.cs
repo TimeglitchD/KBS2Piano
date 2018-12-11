@@ -175,15 +175,30 @@ namespace PianoApp.Controllers
             for (int i = 0; i < 1; i++)
             {
                 //Add note to active Dictionary
-                if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
-                    _activeNoteAndTimeoutDict.Add(tempList[i].Key, new Timeout()
-                    {
-                        NoteTimeout = tempList[i].Value,
-                        TimeAdded = StopWatch.ElapsedMilliseconds
-                    });
+                try
+                {
+                    if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
+                        _activeNoteAndTimeoutDict.Add(tempList[i].Key, new Timeout()
+                        {
+                            NoteTimeout = tempList[i].Value,
+                            TimeAdded = StopWatch.ElapsedMilliseconds
+                        });
+                }
+                catch (Exception)
+                {
+                    //
+                }
+
 
                 //Remove the note from to do 
-                RemoveFirstNoteFromToDoDict(tempList[i].Key);
+                try
+                {
+                    RemoveFirstNoteFromToDoDict(tempList[i].Key);
+                }
+                catch (Exception)
+                {
+    
+                }
 
                 checkLastNote(_activeNoteAndTimeoutDict);
 
@@ -286,8 +301,8 @@ namespace PianoApp.Controllers
                         if (activeNote.Key.Pitch.Step == activeKeynote.Step &&
                             activeNote.Key.Pitch.Alter == activeKeynote.Alter &&
                             activeNote.Key.Pitch.Octave == activeKeynote.Octave &&
-                            keyTimeAdded >= noteTimeAdded - (noteTimeAdded * .02) &&
-                            keyTimeAdded <= (noteTimeAdded + (noteTimeAdded * .02)) + (noteTime * 1000))
+                            keyTimeAdded >= noteTimeAdded - (noteTimeAdded * .05) &&
+                            keyTimeAdded <= (noteTimeAdded + (noteTimeAdded * .05)) + (noteTime * 1000))
                         {
                             //if the pressed keys time is in between note marge
                             activeNote.Key.State = NoteState.Good;
