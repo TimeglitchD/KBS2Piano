@@ -232,7 +232,8 @@ namespace PianoApp.Views
                 sv.ScrollToTop(this, EventArgs.Empty);
                 StopBtn.IsEnabled = true;
                 mPc.Guide.paused = false;
-                _isStarted = false;
+            SelectSheetMusic.IsEnabled = true;
+            _isStarted = false;
                 mPc.Guide.ResetMusicPiece();
                 metronome.stopMetronome();
             //}
@@ -359,6 +360,7 @@ namespace PianoApp.Views
             StopBtn.IsEnabled = true;
             mPc.Guide.paused = false;
             _isStarted = false;
+            SelectSheetMusic.IsEnabled = false;
             mPc.Guide.ResetMusicPiece();
             metronome.stopMetronome();
             CheckPause();
