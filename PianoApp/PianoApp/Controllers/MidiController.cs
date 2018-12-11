@@ -80,24 +80,24 @@ namespace PianoApp.Controllers
             {                
                 if (Guide == null) return;
                 
-//                int calculatedNote =  offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
+                int calculatedNote =  offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
 
-                if (currentlyPressedKeys.ContainsKey(noteEvent.NoteNumber)) return;
+                if (currentlyPressedKeys.ContainsKey(calculatedNote)) return;
 
-                currentlyPressedKeys.Add(noteEvent.NoteNumber, GuidesController.StopWatch.ElapsedMilliseconds);
+                currentlyPressedKeys.Add(calculatedNote, GuidesController.StopWatch.ElapsedMilliseconds);
                 Guide.ActiveKeys = currentlyPressedKeys;
                 Guide.UpdatePianoKeys();
                 //Thread.Sleep inside GUI is just for example
-                MidiOutput.play(noteEvent.NoteNumber);
+                MidiOutput.play(calculatedNote);
 
             } else
             {                
                 if (Guide == null) return;
-//                int calculatedNote = offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
-                currentlyPressedKeys.Remove(noteEvent.NoteNumber);
+                int calculatedNote = offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
+                currentlyPressedKeys.Remove(calculatedNote);
                 Guide.ActiveKeys = currentlyPressedKeys;
                 Guide.UpdatePianoKeys();
-                MidiOutput.stop(noteEvent.NoteNumber);
+                MidiOutput.stop(calculatedNote);
             }
         }
 
