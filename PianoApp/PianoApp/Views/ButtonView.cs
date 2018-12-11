@@ -222,6 +222,7 @@ namespace PianoApp.Views
             sv.ScrollToTop(this, EventArgs.Empty);
             StopBtn.IsEnabled = true;
             mPc.Guide.paused = false;
+            SelectSheetMusic.IsEnabled = true;
             _isStarted = false;
             mPc.Guide.ResetMusicPiece();
             metronome.stopMetronome();
