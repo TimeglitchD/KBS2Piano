@@ -175,15 +175,30 @@ namespace PianoApp.Controllers
             for (int i = 0; i < 1; i++)
             {
                 //Add note to active Dictionary
-                if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
-                    _activeNoteAndTimeoutDict.Add(tempList[i].Key, new Timeout()
-                    {
-                        NoteTimeout = tempList[i].Value,
-                        TimeAdded = StopWatch.ElapsedMilliseconds
-                    });
+                try
+                {
+                    if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
+                        _activeNoteAndTimeoutDict.Add(tempList[i].Key, new Timeout()
+                        {
+                            NoteTimeout = tempList[i].Value,
+                            TimeAdded = StopWatch.ElapsedMilliseconds
+                        });
+                }
+                catch (Exception)
+                {
+                    //
+                }
+
 
                 //Remove the note from to do 
-                RemoveFirstNoteFromToDoDict(tempList[i].Key);
+                try
+                {
+                    RemoveFirstNoteFromToDoDict(tempList[i].Key);
+                }
+                catch (Exception)
+                {
+    
+                }
 
                 checkLastNote(_activeNoteAndTimeoutDict);
 
