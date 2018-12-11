@@ -286,8 +286,8 @@ namespace PianoApp.Controllers
                         if (activeNote.Key.Pitch.Step == activeKeynote.Step &&
                             activeNote.Key.Pitch.Alter == activeKeynote.Alter &&
                             activeNote.Key.Pitch.Octave == activeKeynote.Octave &&
-                            keyTimeAdded >= noteTimeAdded - (noteTimeAdded * .02) &&
-                            keyTimeAdded <= (noteTimeAdded + (noteTimeAdded * .02)) + (noteTime * 1000))
+                            keyTimeAdded >= noteTimeAdded - (noteTimeAdded * .05) &&
+                            keyTimeAdded <= (noteTimeAdded + (noteTimeAdded * .05)) + (noteTime * 1000))
                         {
                             //if the pressed keys time is in between note marge
                             activeNote.Key.State = NoteState.Good;
