@@ -85,15 +85,16 @@ namespace PianoApp.Models
 
         public override void Color()
         {
-            if (base.KeyNumber <= KeyboardController.KeyOffset ||
-               (base.KeyNumber >= KeyboardController.KeyOffset + 33))
-            {
-                KeyRect.Fill = System.Windows.Media.Brushes.DimGray;
-            }
-            else
-            {
-                KeyRect.Fill = System.Windows.Media.Brushes.FloralWhite;
-            }
+            //            if (base.KeyNumber <= KeyboardController.KeyOffset ||
+            //               (base.KeyNumber >= KeyboardController.KeyOffset + 33))
+            //            {
+            //                KeyRect.Fill = System.Windows.Media.Brushes.DarkGray;
+            //            }
+            //            else
+            //            {
+            //                KeyRect.Fill = System.Windows.Media.Brushes.FloralWhite;
+            //            }
+            KeyRect.Fill = System.Windows.Media.Brushes.FloralWhite;
         }
     }
 }
