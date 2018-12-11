@@ -297,6 +297,7 @@ namespace PianoApp.Views
                 else
                 {
                     startBtn.IsEnabled = false;
+                    StopBtn.IsEnabled = true;
 
                     //set value in metronome and start it.
                     if (metronomeEnabled)
@@ -331,7 +332,6 @@ namespace PianoApp.Views
             bpmTB.IsReadOnly = true;
             SelectSheetMusic.IsEnabled = false;
             metronomeButton.IsEnabled = false;
-            StopBtn.IsEnabled = true;
             bpmTB.Background = Brushes.LightGray;
         }
 
@@ -413,6 +413,7 @@ namespace PianoApp.Views
             {
                 startBtn.IsEnabled = true;
                 startBtn.Content = "❚❚";
+                StopBtn.IsEnabled = true;
             }
         }
 
