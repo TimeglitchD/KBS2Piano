@@ -25,7 +25,7 @@ namespace PianoApp.Views
 
         private TextBox bpmTB = new TextBox();
         private ComboBox notesCB = new ComboBox();
-        private bool paused = false;
+        public bool paused = false;
         private Button startBtn = new Button();
         private Button StopBtn = new Button();
         private Button resetButton = new Button();
@@ -310,7 +310,7 @@ namespace PianoApp.Views
             StartMusicPiece();
         }
 
-        private void StartMusicPiece()
+        public void StartMusicPiece()
         {
             try
             {
@@ -386,21 +386,14 @@ namespace PianoApp.Views
                 MessageBox.Show(ex.Message);
                 return;
             }
-
-            // Set buttons enabled false or readonly if playing
-            resetButton.IsEnabled = true;
-            notesCB.IsEnabled = false;
-            bpmTB.IsReadOnly = true;
-            fingerSettingBtn.IsEnabled = true;
-            SelectSheetMusic.IsEnabled = false;
-            metronomeButton.IsEnabled = false;
-            bpmTB.Background = Brushes.LightGray;
+            StopBtn.IsEnabled = false;
+            resetButton.IsEnabled = false;
         }
 
         public void ResetMusicPiece()
         {
             sv.ScrollToTop(this, EventArgs.Empty);
-            StopBtn.IsEnabled = true;
+            StopBtn.IsEnabled = false;
             mPc.Guide.paused = false;
             _isStarted = false;
             SelectSheetMusic.IsEnabled = false;
@@ -416,6 +409,7 @@ namespace PianoApp.Views
             {
                 metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
             }
+            
         }
 
         private void ResetButton_Click(object sender, EventArgs e)
@@ -481,6 +475,17 @@ namespace PianoApp.Views
                 startBtn.IsEnabled = true;
                 startBtn.Content = "❚❚";
                 StopBtn.IsEnabled = true;
+
+                // Set buttons enabled false or readonly if playing
+                resetButton.IsEnabled = true;
+                notesCB.IsEnabled = false;
+                bpmTB.IsReadOnly = true;
+                fingerSettingBtn.IsEnabled = true;
+                SelectSheetMusic.IsEnabled = false;
+                metronomeButton.IsEnabled = false;
+                bpmTB.Background = Brushes.LightGray;
+
+                CheckPause();
             }
         }
 

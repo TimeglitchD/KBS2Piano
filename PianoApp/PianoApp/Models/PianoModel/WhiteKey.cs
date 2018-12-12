@@ -70,10 +70,11 @@ namespace PianoApp.Models
 
                 // create new label
                 Label fingerNumLabel = new Label();
-                fingerNumLabel.FontWeight = FontWeights.UltraBold;
+                fingerNumLabel.FontWeight = FontWeights.Bold;
 
                 fingerNumLabel.Foreground = Brushes.White;
                 fingerNumLabel.FontSize = 180;
+                fingerNumLabel.FontFamily = new FontFamily("Arial");
                 fingerNumLabel.Height = 200;
                 fingerNumLabel.Width = 200;
                 fingerNumLabel.Content = FingerNum.ToString();
