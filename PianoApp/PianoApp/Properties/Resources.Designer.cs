@@ -59,34 +59,5 @@ namespace PianoApp.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        internal static string Font {
-            get {
-                return ResourceManager.GetString("Font", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Metdemo {
-            get {
-                object obj = ResourceManager.GetObject("Metdemo", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] NoteHedz170 {
-            get {
-                object obj = ResourceManager.GetObject("NoteHedz170", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

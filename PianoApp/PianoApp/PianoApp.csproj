@@ -120,6 +120,11 @@
     <Compile Include="MusicXml\Domain\Score.cs" />
     <Compile Include="MusicXml\Domain\Time.cs" />
     <Compile Include="MusicXml\MusicXmlParser.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Views\ButtonView.cs" />
     <Compile Include="Views\IntroductionView.xaml.cs">
       <DependentUpon>IntroductionView.xaml</DependentUpon>
@@ -139,11 +144,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -151,11 +151,13 @@
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="bin\Debug\Metdemo.ttf" />
     <None Include="bin\Debug\NoteHedz170.ttf" />
+    <None Include="Fonts\Metdemo.ttf" />
+    <None Include="Fonts\NoteHedz170.ttf" />
     <None Include="MusicDatabaseDataSet.xsc">
       <DependentUpon>MusicDatabaseDataSet.xsd</DependentUpon>
     </None>
@@ -181,6 +183,9 @@
     <Folder Include="MusicXml\Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Sounds\metronomeBeat.wav" />
+    <None Include="Sounds\metronome.wav" />
+    <None Include="Sounds\empty.wav" />
     <Resource Include="Images\piano.png" />
     <Resource Include="Images\Vingerzetting.png" />
     <Content Include="MusicXml\MusicXml.csproj" />
