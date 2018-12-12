@@ -30,6 +30,10 @@ namespace PianoApp.Views
         private Button StopBtn = new Button();
         private Button resetButton = new Button();
         private Button SelectSheetMusic = new Button();
+        private Button fingerSettingBtn;
+        private Button introductionBtn = new Button();
+        private TextBlock fingerSettingTxt;
+        public bool fingerEnabled = true;
 
         public metronomeSound metronome = new metronomeSound();
         private bool metronomeEnabled = false;
@@ -55,7 +59,6 @@ namespace PianoApp.Views
             this.sv = sv;
             this.mPc = sv.MusicPieceController;
 
-            //menuGrid.ShowGridLines = true;
             // Define all columns for menuGrid
             DefineGridRowsMenuGrid();
 
@@ -71,8 +74,7 @@ namespace PianoApp.Views
             metronomeButton.Height = 40;
             metronomeButton.FontSize = 25;
             metronomeButton.Click += onMetronomeButtonClick;
-            metronomeButton.HorizontalAlignment = HorizontalAlignment.Center;
-
+            metronomeButton.HorizontalAlignment = HorizontalAlignment.Left;
 
             // Piano enable/disable button
             TextDecoration strikeTroughDecoration = new TextDecoration();
@@ -91,6 +93,34 @@ namespace PianoApp.Views
             pianoButton.HorizontalAlignment = HorizontalAlignment.Center;
             pianoButton.VerticalAlignment = VerticalAlignment.Bottom;
 
+            // Fingersetting enable/disable
+            TextDecoration strikeTroughDecorationFing = new TextDecoration();
+            strikeTroughDecorationFing.Location = TextDecorationLocation.Strikethrough;
+            strikeTroughDecorationFing.Pen = new Pen(Brushes.Red, 3);
+            strikeTrough.Add(strikeTroughDecorationFing);
+            fingerSettingTxt = new TextBlock();
+            fingerSettingTxt.Text = "☝";
+            fingerSettingTxt.TextDecorations = strikeTrough;
+            fingerSettingBtn = new Button();
+            fingerSettingBtn.Content = fingerSettingTxt;
+            fingerSettingBtn.Width = 40;
+            fingerSettingBtn.IsEnabled = false;
+            fingerSettingBtn.Height = 40;
+            fingerSettingBtn.FontSize = 25;
+            fingerSettingBtn.Click += onFingerButtonClick;
+            fingerSettingBtn.HorizontalAlignment = HorizontalAlignment.Center;
+            fingerSettingBtn.VerticalAlignment = VerticalAlignment.Bottom;
+
+
+            // Introduction button
+            introductionBtn.FontSize = 25;
+            introductionBtn.Name = "introductionBtn";
+            introductionBtn.Content = "?";
+            introductionBtn.Width = 40;
+            introductionBtn.Height = 40;
+            introductionBtn.HorizontalAlignment = HorizontalAlignment.Center;
+            introductionBtn.Click += introductionBtn_Click;
+
             // Start button
             startBtn.FontSize = 25;
             startBtn.Name = "startBtn";
@@ -99,7 +129,6 @@ namespace PianoApp.Views
             startBtn.Height = 40;
             startBtn.HorizontalAlignment = HorizontalAlignment.Center;
             startBtn.Click += StartBtn_Click;
-            Grid.SetColumn(startBtn, 5);
 
             // Stop Button
             StopBtn.FontSize = 25;
@@ -110,7 +139,6 @@ namespace PianoApp.Views
             StopBtn.HorizontalAlignment = HorizontalAlignment.Center;
             StopBtn.Click += StopBtn_Click;
             StopBtn.IsEnabled = false;
-            Grid.SetColumn(StopBtn, 6);
 
 
             // Add the button to the Grid
@@ -128,14 +156,42 @@ namespace PianoApp.Views
             Grid.SetColumn(SelectSheetMusic, 0);
             Grid.SetColumn(pianoButton, 8);
             Grid.SetColumn(metronomeButton, 7);
+            Grid.SetColumn(StopBtn, 6);
+            Grid.SetColumn(startBtn, 5);
+            Grid.SetColumn(fingerSettingBtn, 9);
+            Grid.SetColumn(introductionBtn, 10);
 
             menuGrid.Children.Add(metronomeButton);
             menuGrid.Children.Add(pianoButton);
             menuGrid.Children.Add(startBtn);
             menuGrid.Children.Add(StopBtn);
             menuGrid.Children.Add(SelectSheetMusic);
+            menuGrid.Children.Add(fingerSettingBtn);
+            menuGrid.Children.Add(introductionBtn);
 
             myGrid.Children.Add(menuGrid);
+        }
+
+        private void introductionBtn_Click(object sender, RoutedEventArgs e)
+        {
+            IntroductionView iV = new IntroductionView();
+            iV.Show();
+        }
+
+        private void onFingerButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (fingerEnabled)
+            {
+                fingerEnabled = false;
+                fingerSettingTxt.TextDecorations = null;
+                mPc.Guide.Piano.fingerSettingEnabled = fingerEnabled;
+            }
+            else
+            {
+                fingerEnabled = true;
+                fingerSettingTxt.TextDecorations = strikeTrough;
+                mPc.Guide.Piano.fingerSettingEnabled = fingerEnabled;
+            }
         }
 
         private void DrawBpmMenu()
@@ -216,14 +272,14 @@ namespace PianoApp.Views
             return paused;
         }
 
-        private void StopBtn_Click(object sender, RoutedEventArgs e)
+        public void StopBtn_Click(object sender, RoutedEventArgs e)
         {
             // Pause piece
-            if(_isStarted)
+            if (_isStarted)
             {
                 StartButtonFunc();
             }
-            
+
             MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het muziekstuk wilt stoppen?", "Muziekstuk stoppen", MessageBoxButton.YesNo);
 
             if (messageBoxResult == MessageBoxResult.Yes)
@@ -233,17 +289,18 @@ namespace PianoApp.Views
                 StopBtn.IsEnabled = true;
                 mPc.Guide.paused = false;
                 _isStarted = false;
+                fingerSettingBtn.IsEnabled = false;
                 mPc.Guide.ResetMusicPiece();
                 metronome.stopMetronome();
             }
             else if (messageBoxResult == MessageBoxResult.No)
             {
                 // If no is clicked, resume musicpiece by countdown
-                if(_isStarted)
+                if (_isStarted)
                 {
                     StartButtonFunc();
                 }
-                
+
             }
 
         }
@@ -347,6 +404,7 @@ namespace PianoApp.Views
             resetButton.IsEnabled = true;
             notesCB.IsEnabled = false;
             bpmTB.IsReadOnly = true;
+            fingerSettingBtn.IsEnabled = true;
             SelectSheetMusic.IsEnabled = false;
             metronomeButton.IsEnabled = false;
             StopBtn.IsEnabled = true;
@@ -445,6 +503,8 @@ namespace PianoApp.Views
             ColumnDefinition colDef7 = new ColumnDefinition();
             ColumnDefinition colDef8 = new ColumnDefinition();
             ColumnDefinition colDef9 = new ColumnDefinition();
+            ColumnDefinition colDef10 = new ColumnDefinition();
+            ColumnDefinition colDef11 = new ColumnDefinition();
 
             // Set Lenght of the columns
             colDef1.Width = new GridLength(100, GridUnitType.Star);
@@ -454,8 +514,11 @@ namespace PianoApp.Views
             colDef5.Width = new GridLength(80, GridUnitType.Star);
             colDef6.Width = new GridLength(50, GridUnitType.Star);
             colDef7.Width = new GridLength(50, GridUnitType.Star);
-            colDef8.Width = new GridLength(50, GridUnitType.Star);
-            colDef9.Width = new GridLength(500, GridUnitType.Star);
+            colDef8.Width = new GridLength(400, GridUnitType.Star);
+            colDef9.Width = new GridLength(50, GridUnitType.Star);
+            colDef10.Width = new GridLength(50, GridUnitType.Star);
+            colDef11.Width = new GridLength(50, GridUnitType.Star);
+
 
             // Add columns to menuGrid
             menuGrid.ColumnDefinitions.Add(colDef1);
@@ -467,6 +530,8 @@ namespace PianoApp.Views
             menuGrid.ColumnDefinitions.Add(colDef7);
             menuGrid.ColumnDefinitions.Add(colDef8);
             menuGrid.ColumnDefinitions.Add(colDef9);
+            menuGrid.ColumnDefinitions.Add(colDef10);
+            menuGrid.ColumnDefinitions.Add(colDef11);
         }
     }
 }

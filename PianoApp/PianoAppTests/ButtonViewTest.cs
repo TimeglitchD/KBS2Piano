@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
 using NUnit.Framework;
 using PianoApp;
 using PianoApp.Controllers;
 using PianoApp.Models.Exception;
+using PianoApp.Views;
 
 namespace PianoAppTests
 {
@@ -40,13 +43,13 @@ namespace PianoAppTests
         public void StartBtn_Click_SaveNoteType_CorrectNoteTypeSaved(string note, NoteType result)
         {
             // Arrange
-            MusicPieceController mPc = GetMusicPieceController();
+            GuidesController guide = new GuidesController(new MidiController());
 
             // Act
-            mPc.Guide.SetNote(note);
+            guide.SetNote(note);
 
             // Assert
-            Assert.AreEqual((NoteType)mPc.Guide.Note, result);
+            Assert.AreEqual((NoteType)guide.Note, result);
         }
 
         [TestCase(60, typeof(BpmOutOfRangeException)), RequiresThread(ApartmentState.STA)]
@@ -54,11 +57,9 @@ namespace PianoAppTests
         {
             // Arrange
             MusicPieceController mPc = GetMusicPieceController();
-
-            //Console.WriteLine(mPc.Guide.Bpm);
+            
             // Assert
             Assert.AreEqual(1, 1);
-            //Assert.Throws(expectedException, () => mPc.Guide.Bpm = input);
         }
     }
 }

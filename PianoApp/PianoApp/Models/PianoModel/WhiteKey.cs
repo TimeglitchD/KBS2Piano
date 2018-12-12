@@ -34,12 +34,18 @@ namespace PianoApp.Models
             if (StaffNumber == 1 && Active)
             {
                 KeyRect.Fill = System.Windows.Media.Brushes.Blue;
-                SetFingerNum(Brushes.Blue);
+                if (fingerSettingEnabled)
+                {
+                    SetFingerNum(Brushes.Blue);
+                }
             }
             else if (StaffNumber == 2 && Active)
             {
                 KeyRect.Fill = System.Windows.Media.Brushes.Purple;
-                SetFingerNum(Brushes.Purple);
+                if (fingerSettingEnabled)
+                {
+                    SetFingerNum(Brushes.Purple);
+                }
             }
             else
             {
@@ -59,9 +65,10 @@ namespace PianoApp.Models
 
                 // create new label
                 Label fingerNumLabel = new Label();
-                fingerNumLabel.FontWeight = FontWeights.Bold;
+                fingerNumLabel.FontWeight = FontWeights.UltraBold;
 
-                fingerNumLabel.FontSize = 120;
+                fingerNumLabel.Foreground = Brushes.White;
+                fingerNumLabel.FontSize = 180;
                 fingerNumLabel.Height = 200;
                 fingerNumLabel.Width = 200;
                 fingerNumLabel.Content = FingerNum.ToString();

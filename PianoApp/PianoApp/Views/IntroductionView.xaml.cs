@@ -11,18 +11,28 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Diagnostics;
+using System.Windows.Navigation;
 
 namespace PianoApp.Views
 {
     /// <summary>
-    /// Interaction logic for InstructionsView.xaml
+    /// Interaction logic for IntroductionView.xaml
     /// </summary>
-    public partial class InstructionsView : Window
+    public partial class IntroductionView : Window
     {
-        public InstructionsView()
+        public IntroductionView()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
+        }
+
+        private void HandleLinkClick(object sender, RoutedEventArgs e)
+        {
+            Hyperlink hl = (Hyperlink)sender;
+            string navigateUri = hl.NavigateUri.ToString();
+            Process.Start(new ProcessStartInfo(navigateUri));
+            e.Handled = true;
         }
     }
 }
