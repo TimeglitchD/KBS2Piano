@@ -11,7 +11,7 @@ namespace PianoApp.Models
     {
         private int note;
         private int elapsed;
-        private long start;
+        public long start;
         public double duration;
 
         public static float bpm;
