@@ -22,11 +22,10 @@ namespace PianoApp.Models
 
         public GreatStaffModel()
         {
-            //initialize the fonts
-            Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + @"/fonts/MetDemo.ttf");
+            Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + @"/MetDemo.ttf");
             Metdemo = new FontFamily(uri, "MetDemo");
 
-            Uri uri2 = new Uri(AppDomain.CurrentDomain.BaseDirectory + @"/fonts/NoteHedz170.ttf");
+            Uri uri2 = new Uri(AppDomain.CurrentDomain.BaseDirectory + @"/NoteHedz170.ttf");
             Notehedz = new FontFamily(uri2, "NoteHedz");
 
             StaffList.Add(new StaffModel(){Number = 1});

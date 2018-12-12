@@ -17,7 +17,7 @@ namespace PianoApp
         {
             //point connectionstring to local database
             connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename =" + System.AppDomain.CurrentDomain.BaseDirectory
-            + @"Database\MusicDatabase.mdf; Integrated Security = True";
+            + @"MusicDatabase.mdf; Integrated Security = True";
         }
 
         //get a dataset of sheet music based on type specified.
