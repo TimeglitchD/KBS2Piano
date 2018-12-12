@@ -1,4 +1,5 @@
-﻿using PianoApp.Models;
+﻿using MusicXml.Domain;
+using PianoApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +12,7 @@ namespace PianoApp.Controllers
     public class RecordController
     {
         private Dictionary<int, long> activeNotes = new Dictionary<int, long>();
-        private List<RecordedNote> recordedSheet = new List<RecordedNote>();
+        private static List<RecordedNote> recordedSheet = new List<RecordedNote>();
         private Stopwatch stopWatch = new Stopwatch();
         private GuidesController guide;
         private float bpm;
@@ -72,7 +73,26 @@ namespace PianoApp.Controllers
 
         public static SheetModel getSheet()
         {
-            return new SheetModel();
+            SheetModel sheet = new SheetModel();
+            StaffModel staffModel1 = new StaffModel();
+            StaffModel staffModel2 = new StaffModel();
+            GreatStaffModel greatStaffModel = new GreatStaffModel();
+            foreach(RecordedNote recordedNote in recordedSheet)
+            {
+                Note note = recordedNote.convertToNote();
+                if(note.Staff == 1)
+                {
+                    staffModel1.NoteList.Add(note);
+                } else
+                {
+                    staffModel2.NoteList.Add(note);
+                }
+            }
+
+            greatStaffModel.StaffList.Add(staffModel1);
+            greatStaffModel.StaffList.Add(staffModel2);
+            sheet.GreatStaffModelList.Add(greatStaffModel);
+            return sheet;
         }
     }
 }
