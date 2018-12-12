@@ -97,8 +97,8 @@
             
         </TabControl>
         
-        <Label FontSize="20" FontWeight="DemiBold" Content="Choose a piece of music" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Button FontSize="16" x:Name="select" Content="Choose piece of music" Grid.Column="1" HorizontalAlignment="Left" Margin="508,536,0,0" VerticalAlignment="Top" Width="243" Height="50" Click="OnSelectClick"/>
+        <Label FontSize="20" FontWeight="DemiBold" Content="Choose a musicpiece" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Button FontSize="16" x:Name="select" Content="Choose musicpiece" Grid.Column="1" HorizontalAlignment="Left" Margin="508,536,0,0" VerticalAlignment="Top" Width="243" Height="50" Click="OnSelectClick"/>
         <Label Content="Title" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,69,0,0" VerticalAlignment="Top" Width="242"/>
         <TextBox x:Name="titleBox" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="21" Margin="507.667,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242"/>
         <Label Content="Description" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,126,0,0" VerticalAlignment="Top" Width="242"/>
@@ -106,7 +106,7 @@
         <TextBox x:Name="SearchTerm" Grid.Column="1" HorizontalAlignment="Left" Height="19" Margin="332.2,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" TextChanged="SearchTerm_TextChanged"/>
         <Label Content="Search" Grid.Column="1" HorizontalAlignment="Left" Margin="284.2,66,0,0" VerticalAlignment="Top" Width="48" Height="25"/>
 
-        <Label Content="Top 5 attempts" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="503.2,313,0,0" VerticalAlignment="Top" Width="242"/>
+        <Label Content="Scoreboard" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="503.2,313,0,0" VerticalAlignment="Top" Width="242"/>
         <DataGrid Name="ScoreGrid" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="174" Margin="508.2,347,0,0" VerticalAlignment="Top" Width="241">
             <DataGrid.Columns>
                 <DataGridTextColumn  Width="65" Binding="{Binding Date}" IsReadOnly="True" Header="Date"/>
