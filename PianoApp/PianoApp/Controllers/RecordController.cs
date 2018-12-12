@@ -15,7 +15,7 @@ namespace PianoApp.Controllers
         private static List<RecordedNote> recordedSheet = new List<RecordedNote>();
         private Stopwatch stopWatch = new Stopwatch();
         private GuidesController guide;
-        private float bpm;
+        private static float bpm;
         private bool recording = false;
 
         public RecordController(GuidesController guide)
@@ -71,28 +71,16 @@ namespace PianoApp.Controllers
             recordedSheet.Add(new RecordedNote(note, elapsed, start));
         }
 
-        public static SheetModel getSheet()
+        public static List<Note> getNotes()
         {
-            SheetModel sheet = new SheetModel();
-            StaffModel staffModel1 = new StaffModel();
-            StaffModel staffModel2 = new StaffModel();
-            GreatStaffModel greatStaffModel = new GreatStaffModel();
-            foreach(RecordedNote recordedNote in recordedSheet)
+            List<Note> noteList = new List<Note>();
+            foreach(RecordedNote recorded in recordedSheet)
             {
-                Note note = recordedNote.convertToNote();
-                if(note.Staff == 1)
-                {
-                    staffModel1.NoteList.Add(note);
-                } else
-                {
-                    staffModel2.NoteList.Add(note);
-                }
+                Note note = recorded.convertToNote();
+                noteList.Add(note);
             }
 
-            greatStaffModel.StaffList.Add(staffModel1);
-            greatStaffModel.StaffList.Add(staffModel2);
-            sheet.GreatStaffModelList.Add(greatStaffModel);
-            return sheet;
+            return noteList;
         }
     }
 }

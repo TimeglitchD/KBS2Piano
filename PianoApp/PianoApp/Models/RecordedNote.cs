@@ -12,6 +12,7 @@ namespace PianoApp.Models
         private int note;
         private int elapsed;
         private long start;
+        public double duration;
 
         public static float bpm;
 
@@ -28,12 +29,11 @@ namespace PianoApp.Models
                 lowestNote = note;
             }
 
-            Console.WriteLine("--------recorded note--------");
-            Console.WriteLine(note);
-            Console.WriteLine(elapsed);
-            Console.WriteLine(start);
+            //Console.WriteLine("--------recorded note--------");
+            //Console.WriteLine(note);
+            //Console.WriteLine(elapsed);
+            //Console.WriteLine(start);
             //Console.WriteLine(durationToType(elapsed));
-            intToPitch(note);
         }
 
         public Note convertToNote()
@@ -73,66 +73,27 @@ namespace PianoApp.Models
 
             int baseNote = note - (octave * 12);
 
+
             switch (baseNote)
             {
-                case 0:
-                    step = 'C';
-                    alter = 0;
-                    break;
-                case 1:
-                    step = 'D';
-                    alter = -1;
-                    break;
-                case 2:
-                    step = 'D';
-                    alter = 0;
-                    break;
-                case 3:
-                    step = 'E';
-                    alter = -1;
-                    break;
-                case 4:
-                    step = 'E';
-                    alter = 0;
-                    break;
-                case 5:
-                    step = 'F';
-                    alter = 0;
-                    break;
-                case 6:
-                    step = 'G';
-                    alter = -1;
-                    break;
-                case 7:
-                    step = 'G';
-                    alter = 0;
-                    break;
-                case 8:
-                    step = 'A';
-                    alter = -1;
-                    break;
-                case 9:
-                    step = 'A';
-                    alter = 0;
-                    break;
-                case 10:
-                    step = 'B';
-                    alter = -1;
-                    break;
-                case 11:
-                    step = 'B';
-                    alter = 0;
-                    break;
+                case (0): step = 'C'; alter = 0; break;
+                case (1): step = 'C'; alter = 1; break;
+                case (2): step = 'D'; alter = 0; break;
+                case (3): step = 'D'; alter = 1; break;
+                case (4): step = 'E'; alter = 0; break;
+                case (5): step = 'F'; alter = 0; break;
+                case (6): step = 'F'; alter = 1; break;
+                case (7): step = 'G'; alter = 0; break;
+                case (8): step = 'G'; alter = 1; break;
+                case (9): step = 'A'; alter = 0; break;
+                case (10): step = 'A'; alter = 1; break;
+                case (11): step = 'B'; alter = 0; break;
             }
 
             pitch.Step = step;
             pitch.Alter = alter;
             pitch.Octave = octave;
-            //Console.WriteLine("baseNote");
-            //Console.WriteLine(baseNote);
-            //Console.WriteLine(step);
-            //Console.WriteLine(alter);
-            //Console.WriteLine(octave);
+
             return pitch;
         }
 
@@ -145,18 +106,23 @@ namespace PianoApp.Models
             {
                 case double n when ( n > 2.8):
                     type = "whole";
+                    duration = 4 * beatDuration;
                     break;
                 case double n when (n < 2.8 && n > 1.3):
                     type = "half";
+                    duration = 2 * beatDuration;
                     break;
                 case double n when (n < 1.3 && n > 0.9) :
                     type = "quarter";
+                    duration = beatDuration;
                     break;
                 case double n when (n < 0.9 && n > 0.25):
                     type = "eigth";
+                    duration = beatDuration / 2;
                     break;
                 case double n when (n < 0.25):
                     type = "16th";
+                    duration = beatDuration / 4;
                     break;
             }
 
