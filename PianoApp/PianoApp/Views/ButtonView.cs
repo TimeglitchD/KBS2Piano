@@ -272,7 +272,7 @@ namespace PianoApp.Views
             return paused;
         }
 
-        public void StopBtn_Click(object sender, RoutedEventArgs e)
+        private void StopMusicPiece()
         {
             // Stukk resetten
             sv.ScrollToTop(this, EventArgs.Empty);
@@ -284,7 +284,11 @@ namespace PianoApp.Views
             metronome.stopMetronome();
 
             CheckPause();
+        }
 
+        public void StopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            StopMusicPiece();
         }
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
@@ -298,15 +302,15 @@ namespace PianoApp.Views
 
         public void TriggerStartBtnBySpaceKeyDown()
         {
-            StartButtonFunc();
+            StartMusicPiece();
         }
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
         {
-            StartButtonFunc();
+            StartMusicPiece();
         }
 
-        private void StartButtonFunc()
+        private void StartMusicPiece()
         {
             try
             {
@@ -393,7 +397,7 @@ namespace PianoApp.Views
             bpmTB.Background = Brushes.LightGray;
         }
 
-        private void ResetButton_Click(object sender, EventArgs e)
+        public void ResetMusicPiece()
         {
             sv.ScrollToTop(this, EventArgs.Empty);
             StopBtn.IsEnabled = true;
@@ -412,6 +416,11 @@ namespace PianoApp.Views
             {
                 metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
             }
+        }
+
+        private void ResetButton_Click(object sender, EventArgs e)
+        {
+            ResetMusicPiece();
         }
 
         private void onMetronomeButtonClick(object sender, RoutedEventArgs e)
