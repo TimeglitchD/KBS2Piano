@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using PianoApp.Controllers;
 
 namespace PianoApp.Models
 {
@@ -46,6 +47,10 @@ namespace PianoApp.Models
                 {
                     SetFingerNum(Brushes.Purple);
                 }
+            }
+            else if (Active)
+            {
+                KeyRect.Fill = System.Windows.Media.Brushes.Gray;
             }
             else
             {
@@ -87,6 +92,15 @@ namespace PianoApp.Models
 
         public override void Color()
         {
+            //            if (base.KeyNumber <= KeyboardController.KeyOffset ||
+            //               (base.KeyNumber >= KeyboardController.KeyOffset + 33))
+            //            {
+            //                KeyRect.Fill = System.Windows.Media.Brushes.DarkGray;
+            //            }
+            //            else
+            //            {
+            //                KeyRect.Fill = System.Windows.Media.Brushes.FloralWhite;
+            //            }
             KeyRect.Fill = System.Windows.Media.Brushes.FloralWhite;
         }
     }

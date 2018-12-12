@@ -49,19 +49,18 @@ namespace PianoApp
         Button startBtn = new Button();
         Button resetButton = new Button();
         private MusicPieceController mPc;
-        private NonKeyboardInputController nKiC = new NonKeyboardInputController();
 
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            PianoController pC = new PianoController() { NonKeyboardInputController = nKiC };
+            PianoController pC = new PianoController() {};
 
             SheetController sC = new SheetController();
             MidiController mC = new MidiController();
 
             sC.MidiController = mC;
-
-            kC = new KeyboardController();
+            
+            kC = new KeyboardController(){PianoController = pC};
             mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC , KeyboardController = kC };
 
             //mPc.Guide.Start();
@@ -93,6 +92,7 @@ namespace PianoApp
             DefineRowMyGrid();
             //Create the staves
             pv = new PianoView(myGrid, mPc);
+           
             sv = new StaveView(myGrid, mPc);
             Content = pv.myGrid;
 

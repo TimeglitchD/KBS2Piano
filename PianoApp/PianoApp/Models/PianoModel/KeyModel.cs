@@ -21,6 +21,7 @@ namespace PianoApp.Models
         public int FingerNum { get; set; } = 0;
         public int StaffNumber;
         public bool fingerSettingEnabled = true;
+        public int KeyNumber { get; set; }
 
 
         public virtual Rectangle Draw(float width)

@@ -53,9 +53,9 @@ namespace PianoApp.Controllers
         public NoteType ChosenNote = NoteType.Quarter;
 
         private float _divs;
-        private float _timing;
+        private float _bpsecond;
         private float _definedBpm = 180;
-        private int _interval;
+        private int _milsecperbeat;
 
         private Dictionary<Note, Timeout> _activeNoteAndTimeoutDict = new Dictionary<Note, Timeout>();
         private Dictionary<int, Timeout> _pressedKeyAndTimeDict = new Dictionary<int, Timeout>();
@@ -112,7 +112,9 @@ namespace PianoApp.Controllers
                             //Get the duration of the current note
                             var dur = note.Duration;
 
-                            var timeout = _timing * (dur / _divs);
+                            var timeout = _bpsecond * (dur / _divs);
+
+                            Console.WriteLine(timeout +"SECS");
 
                             if (!_toDoNoteDict.ContainsKey(note))
                                 _toDoNoteDict.Add(note, timeout);
@@ -125,17 +127,17 @@ namespace PianoApp.Controllers
         private void SetAttributes()
         {
             //set timing of music piece
-            _timing = _bpm / 60;
+            _bpsecond = _bpm / 60;
 
             if(Note == NoteType.Half)
             {
-                _timing = _timing / 2;
+                _bpsecond = _bpsecond / 2;
             }else if(Note == NoteType.Whole)
             {
-                _timing = _timing / 4;
+                _bpsecond = _bpsecond / 4;
             }
 
-            _interval = (int)(1000.0 / (_timing));
+            _milsecperbeat = (int)(1000.0 / (_bpsecond));
 
             //Set the divisions
             foreach (var scorePart in Score.Parts)
@@ -173,15 +175,30 @@ namespace PianoApp.Controllers
             for (int i = 0; i < 1; i++)
             {
                 //Add note to active Dictionary
-                if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
-                    _activeNoteAndTimeoutDict.Add(tempList[i].Key, new Timeout()
-                    {
-                        NoteTimeout = tempList[i].Value,
-                        TimeAdded = StopWatch.ElapsedMilliseconds
-                    });
+                try
+                {
+                    if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
+                        _activeNoteAndTimeoutDict.Add(tempList[i].Key, new Timeout()
+                        {
+                            NoteTimeout = tempList[i].Value,
+                            TimeAdded = StopWatch.ElapsedMilliseconds
+                        });
+                }
+                catch (Exception)
+                {
+                    //
+                }
+
 
                 //Remove the note from to do 
-                RemoveFirstNoteFromToDoDict(tempList[i].Key);
+                try
+                {
+                    RemoveFirstNoteFromToDoDict(tempList[i].Key);
+                }
+                catch (Exception)
+                {
+    
+                }
 
                 checkLastNote(_activeNoteAndTimeoutDict);
 
@@ -234,6 +251,8 @@ namespace PianoApp.Controllers
             }
         }
 
+
+
         private MockupNote getNoteFromNoteNumber(int nn)
         {
             int octave = (int)Math.Floor((decimal)nn / 12);
@@ -245,54 +264,18 @@ namespace PianoApp.Controllers
 
             switch (noteNumber)
             {
-                case (1):
-                    step = 'C';
-                    alter = 0;
-                    break;
-                case (2):
-                    step = 'C';
-                    alter = 1;
-                    break;
-                case (3):
-                    step = 'D';
-                    alter = 0;
-                    break;
-                case (4):
-                    step = 'D';
-                    alter = 1;
-                    break;
-                case (5):
-                    step = 'E';
-                    alter = 0;
-                    break;
-                case (6):
-                    step = 'F';
-                    alter = 0;
-                    break;
-                case (7):
-                    step = 'F';
-                    alter = 1;
-                    break;
-                case (8):
-                    step = 'G';
-                    alter = 0;
-                    break;
-                case (9):
-                    step = 'G';
-                    alter = 1;
-                    break;
-                case (10):
-                    step = 'A';
-                    alter = 0;
-                    break;
-                case (11):
-                    step = 'A';
-                    alter = 1;
-                    break;
-                case (12):
-                    step = 'B';
-                    alter = 0;
-                    break;
+                case (1): step = 'C'; alter = 0; break;
+                case (2): step = 'C'; alter = 1; break;
+                case (3): step = 'D'; alter = 0; break;
+                case (4): step = 'D'; alter = 1; break;
+                case (5): step = 'E'; alter = 0; break;
+                case (6): step = 'F'; alter = 0; break;
+                case (7): step = 'F'; alter = 1; break;
+                case (8): step = 'G'; alter = 0; break;
+                case (9): step = 'G'; alter = 1; break;
+                case (10): step = 'A'; alter = 0; break;
+                case (11): step = 'A'; alter = 1; break;
+                case (12): step = 'B'; alter = 0; break;
             }
 
             return new MockupNote(){Step = step, Alter = alter, Octave = octave};
@@ -318,8 +301,8 @@ namespace PianoApp.Controllers
                         if (activeNote.Key.Pitch.Step == activeKeynote.Step &&
                             activeNote.Key.Pitch.Alter == activeKeynote.Alter &&
                             activeNote.Key.Pitch.Octave == activeKeynote.Octave &&
-                            keyTimeAdded >= noteTimeAdded - (noteTimeAdded * .02) &&
-                            keyTimeAdded <= (noteTimeAdded + (noteTimeAdded * .02)) + (noteTime * 1000))
+                            keyTimeAdded >= noteTimeAdded - (noteTimeAdded * .05) &&
+                            keyTimeAdded <= (noteTimeAdded + (noteTimeAdded * .05)) + (noteTime * 1000))
                         {
                             //if the pressed keys time is in between note marge
                             activeNote.Key.State = NoteState.Good;
@@ -400,7 +383,7 @@ namespace PianoApp.Controllers
 
             _timerStaffOne = new System.Timers.Timer();
             _timerStaffOne.Elapsed += (sender, e) => NoteIntersectEvent(sender, e, 1);
-            _timerStaffOne.Interval = _interval;
+            _timerStaffOne.Interval = _milsecperbeat;
             NoteIntersectEvent(this, EventArgs.Empty, 1);
             _timerStaffOne.Enabled = true;
             return true;

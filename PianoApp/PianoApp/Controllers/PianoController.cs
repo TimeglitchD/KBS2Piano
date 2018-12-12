@@ -17,7 +17,6 @@ namespace PianoApp.Controllers
     {
         public PianoModel PianoModel { get; set; } = new PianoModel();
         public PianoView PianoView { get; set; }
-        public NonKeyboardInputController NonKeyboardInputController { get; set; }
         public bool fingerSettingEnabled = true;
 
         public void UpdatePressedPianoKeys(Dictionary<int, float> activeKeysFromKeyboard)
@@ -32,7 +31,7 @@ namespace PianoApp.Controllers
 
             foreach (var pressedKey in activeKeysFromKeyboard)
             {
-                int octave = (int)Math.Floor((decimal)pressedKey.Key / 12);
+                int octave = (int)Math.Floor((float)pressedKey.Key / 12);
                 int keyNumber = pressedKey.Key - ((12 * octave) - 1);
 
                 foreach (var octaveModel in PianoModel.OctaveModelList.Where(o => o.Position == octave))
@@ -96,7 +95,7 @@ namespace PianoApp.Controllers
   
         }
 
-        private void Redraw()
+        public void Redraw()
         {
             foreach (var octaveModel in PianoModel.OctaveModelList)
             {

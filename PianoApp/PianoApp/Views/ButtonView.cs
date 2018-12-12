@@ -274,34 +274,16 @@ namespace PianoApp.Views
 
         public void StopBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Pause piece
-            if (_isStarted)
-            {
-                StartButtonFunc();
-            }
+            // Stukk resetten
+            sv.ScrollToTop(this, EventArgs.Empty);
+            StopBtn.IsEnabled = true;
+            mPc.Guide.paused = false;
+            SelectSheetMusic.IsEnabled = true;
+            _isStarted = false;
+            mPc.Guide.ResetMusicPiece();
+            metronome.stopMetronome();
 
-            MessageBoxResult messageBoxResult = MessageBox.Show("Weet je zeker dat je het muziekstuk wilt stoppen?", "Muziekstuk stoppen", MessageBoxButton.YesNo);
-
-            if (messageBoxResult == MessageBoxResult.Yes)
-            {
-                // Stukk resetten
-                sv.ScrollToTop(this, EventArgs.Empty);
-                StopBtn.IsEnabled = true;
-                mPc.Guide.paused = false;
-                _isStarted = false;
-                fingerSettingBtn.IsEnabled = false;
-                mPc.Guide.ResetMusicPiece();
-                metronome.stopMetronome();
-            }
-            else if (messageBoxResult == MessageBoxResult.No)
-            {
-                // If no is clicked, resume musicpiece by countdown
-                if (_isStarted)
-                {
-                    StartButtonFunc();
-                }
-
-            }
+            CheckPause();
 
         }
 
@@ -372,6 +354,7 @@ namespace PianoApp.Views
                 else
                 {
                     startBtn.IsEnabled = false;
+                    StopBtn.IsEnabled = true;
 
                     //set value in metronome and start it.
                     if (metronomeEnabled)
@@ -407,7 +390,6 @@ namespace PianoApp.Views
             fingerSettingBtn.IsEnabled = true;
             SelectSheetMusic.IsEnabled = false;
             metronomeButton.IsEnabled = false;
-            StopBtn.IsEnabled = true;
             bpmTB.Background = Brushes.LightGray;
         }
 
@@ -417,6 +399,7 @@ namespace PianoApp.Views
             StopBtn.IsEnabled = true;
             mPc.Guide.paused = false;
             _isStarted = false;
+            SelectSheetMusic.IsEnabled = false;
             mPc.Guide.ResetMusicPiece();
             metronome.stopMetronome();
             CheckPause();
@@ -488,6 +471,7 @@ namespace PianoApp.Views
             {
                 startBtn.IsEnabled = true;
                 startBtn.Content = "❚❚";
+                StopBtn.IsEnabled = true;
             }
         }
 
