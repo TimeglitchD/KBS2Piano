@@ -282,7 +282,9 @@ namespace PianoApp.Views
             _isStarted = false;
             mPc.Guide.ResetMusicPiece();
             metronome.stopMetronome();
-
+            bpmTB.IsReadOnly = false;
+            bpmTB.Background = Brushes.White;
+            notesCB.IsEnabled = false;
             CheckPause();
         }
 
@@ -321,7 +323,7 @@ namespace PianoApp.Views
                 MessageBox.Show("Je hebt geen muziekstuk ingeladen!", "Foutmelding");
                 return;
             }
-
+            CheckPause();
             try
             {
                 // Set value to int
@@ -388,6 +390,9 @@ namespace PianoApp.Views
             }
             StopBtn.IsEnabled = false;
             resetButton.IsEnabled = false;
+            bpmTB.IsReadOnly = true;
+            bpmTB.Background = Brushes.LightGray;
+            notesCB.IsEnabled = false;
         }
 
         public void ResetMusicPiece()
@@ -478,12 +483,9 @@ namespace PianoApp.Views
 
                 // Set buttons enabled false or readonly if playing
                 resetButton.IsEnabled = true;
-                notesCB.IsEnabled = false;
-                bpmTB.IsReadOnly = true;
                 fingerSettingBtn.IsEnabled = true;
                 SelectSheetMusic.IsEnabled = false;
                 metronomeButton.IsEnabled = false;
-                bpmTB.Background = Brushes.LightGray;
 
                 CheckPause();
             }
