@@ -142,6 +142,11 @@ namespace PianoApp.Views
         {
             scoreView.RowFilter = $"Id = {id}";
         }
+
+        private void SheetMusic_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
 }
