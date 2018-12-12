@@ -1,0 +1,237 @@
+﻿<Window x:Class="PianoApp.Views.IntroductionView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PianoApp.Views"
+        mc:Ignorable="d"
+        Title="Uitleg" Height="700" Width="800">
+    <ScrollViewer HorizontalScrollBarVisibility="Visible">
+
+        <Grid Height="535">
+            <TabControl Margin="0,-56,0,0">
+                <TabItem Header="Knoppen">
+                    <Grid ShowGridLines="False">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        
+                            <Button Height="40" Width="80" FontSize="13"><TextBlock>Selecteer<LineBreak/>Muziekstuk</TextBlock>  </Button>
+                        </TextBlock>
+                        <TextBlock Margin="10" Grid.Row="0" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            Je kan op deze manier een muziekstuk inladen
+                        </TextBlock>
+                        
+                        <TextBlock Grid.Row="1" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Margin="0,-5,0,0">BPM =</TextBlock> <TextBox Margin="0,0,0,0" Width="40">60</TextBox>
+                        </TextBlock>
+                        <TextBlock Margin="10" Grid.Row="1" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            Hier kun je de BPM aanpassen (standaard 60). Je aanpassing wordt ook opgeslagen bij het muziekstuk, <LineBreak/>zo kan je later dezelfde bpm gebruiken
+                        </TextBlock>
+                        
+                        <TextBlock Grid.Row="2" Grid.Column="0" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <ComboBox>
+                                <ComboBoxItem>Hele noot</ComboBoxItem>
+                                <ComboBoxItem IsSelected="True">Halve noot</ComboBoxItem>
+                                <ComboBoxItem>Kwart noot</ComboBoxItem>
+                            </ComboBox>
+                        </TextBlock>
+                        <TextBlock Margin="10" Grid.Row="2" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            BPM instellen op basis van een noot
+                        </TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Button Height="40" Width="40" FontSize="25">⟲</Button>
+                        </TextBlock>
+                        <TextBlock Margin="10" Grid.Row="3" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            Reset het muziekstuk, na aftellen begint het stuk automatisch weer opnieuw.
+                        </TextBlock>
+                        
+                        <TextBlock Grid.Row="4" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Button Height="40" Width="40" FontSize="25">🔇</Button>
+                            <Button Height="40" Width="40" FontSize="25">🔉</Button>
+                        </TextBlock>
+                        <TextBlock Margin="10" Grid.Row="4" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            Aan/uitzetten van metronoom tijdens het spelen
+                        </TextBlock>
+                        
+                        <TextBlock Grid.Row="5" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Button Height="40" Width="40" FontSize="25">☝</Button>
+                        </TextBlock>
+                        <TextBlock Margin="10" Grid.Row="5" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            Hiermee kun je aangeven of je wilt dat de vingerzetting zichtbaar is op de pianotoetsen <LineBreak/>tijdens het spelen van een muziekstuk
+                        </TextBlock>
+                        
+                        <TextBlock Grid.Row="6" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Button Height="40" Width="40" FontSize="25">🎹</Button>
+                        </TextBlock>
+                        <TextBlock Margin="10" Grid.Row="6" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            Hiermee kun je aangeven of de virtuele piano zichtbaar moet zijn <LineBreak/>tijdens het spelen van een muziekstuk
+                        </TextBlock>
+                        
+                        <TextBlock Grid.Row="7" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Button Height="40" Width="40" FontSize="25">▶</Button>
+                        </TextBlock>
+                        <TextBlock Margin="10" Grid.Row="7" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            Het starten van een muziekstuk
+                        </TextBlock>
+                        
+                        <TextBlock Grid.Row="8" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Button Height="40" Width="40" FontSize="25">❚❚</Button>
+                        </TextBlock>
+                        <TextBlock Margin="10" Grid.Row="8" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            Het pauzeren van een muziekstuk
+                        </TextBlock>
+                        
+                        <TextBlock Grid.Row="9" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Button Height="40" Width="40" FontSize="25">◼</Button>
+                        </TextBlock>
+                        <TextBlock Margin="10" Grid.Row="9" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            Het stoppen van een muziekstuk
+                        </TextBlock>
+                    </Grid>
+                </TabItem>
+                
+                <TabItem Header="Uitleg applicatie" >
+                    <Grid ShowGridLines="False">
+                        <Grid.ColumnDefinitions>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
+
+                        </Grid.RowDefinitions>
+                        <Border Margin="0,0,0,10" Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="Black">
+                            <TextBlock Margin="0,0,0,10" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                1. Uitleg over de piano
+                            </TextBlock>
+                        </Border>
+                        <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="1" FontSize="14">           
+                            1.1 Vingerzetting
+                        </TextBlock>
+                        <Border Margin="0,0,0,10" Grid.Row="2" BorderThickness="0,0,0,1" BorderBrush="Black">
+                            <TextBlock Margin="0,0,0,10" FontSize="14">           
+                            Wanneer er bij een muziekstuk vingerzetting is aangegeven, wordt dit laten zien bij een noot. In dit geval is er boven de <LineBreak/>
+                            noot een nummer zichtbaar. Dit geeft de nummerzetting weer. 
+                            <LineBreak/> Ook is hetzelfde nummer zichtbaar op de toets van de piano.
+                            <LineBreak/>
+                            <Image Height="200" Source="pack://application:,,,/Images/vingerzetting.png"
+                                />
+                            </TextBlock>
+                        </Border>
+                        <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="3" FontSize="14">           
+                            1.2 Verschillende kleur per hand
+                        </TextBlock>
+                        <Border Grid.Row="4" Margin="0,0,0,10" BorderThickness="0,0,0,1" BorderBrush="Black">
+                            <TextBlock Margin="0,0,0,10" FontSize="14">           
+                                Tijdens het spelen van een muziekstuk worden de noten en pianotoetsen een kleur gegeven.  <LineBreak/>
+                                Wanneer de pianotoets <TextBlock Foreground="Purple">paars</TextBlock> oplicht, betekent dit dat de linkerhand gebruikt moet worden.
+                                <LineBreak/>
+                                Wanneer de pianotoets <TextBlock Foreground="Blue">blauw</TextBlock> oplicht, betekent dit dat de rechterhand gebruikt moet worden.
+                            </TextBlock>
+                        </Border>
+                        <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="1" FontSize="14">           
+                            1.3 Vingerzetting
+                        </TextBlock>
+                        <Border Margin="0,0,0,10" Grid.Row="2" BorderThickness="0,0,0,1" BorderBrush="Black">
+                            <TextBlock Margin="0,0,0,10" FontSize="14">           
+                            Wanneer er bij een muziekstuk vingerzetting is aangegeven, wordt dit laten zien bij een noot. In dit geval is er boven de <LineBreak/>
+                            noot een nummer zichtbaar. Dit geeft de nummerzetting weer. 
+                            <LineBreak/> Ook is hetzelfde nummer zichtbaar op de toets van de piano.
+                            <LineBreak/>
+                            <Image Height="200" Source="pack://application:,,,/Images/vingerzetting.png"
+                                />
+                            </TextBlock>
+                        </Border>
+                        <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="3" FontSize="14">           
+                            1.2 Verschillende kleur per hand
+                        </TextBlock>
+                        <Border Grid.Row="4" Margin="0,0,0,10" BorderThickness="0,0,0,1" BorderBrush="Black">
+                            <TextBlock Margin="0,0,0,10" FontSize="14">           
+                                Tijdens het spelen van een muziekstuk worden de noten en pianotoetsen een kleur gegeven.  <LineBreak/>
+                                Wanneer de pianotoets <TextBlock Foreground="Purple">paars</TextBlock> oplicht, betekent dit dat de linkerhand gebruikt moet worden.
+                                <LineBreak/>
+                                Wanneer de pianotoets <TextBlock Foreground="Blue">blauw</TextBlock> oplicht, betekent dit dat de rechterhand gebruikt moet worden.
+                            </TextBlock>
+                        </Border>
+                        <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="5" FontSize="14">           
+                            1.3 Uitleg score
+                        </TextBlock>
+                        <Border Grid.Row="6" Margin="0,0,0,10" BorderThickness="0,0,0,1" BorderBrush="Black">
+                            <TextBlock Margin="0,0,0,10" FontSize="14">           
+                                Wanneer je klaar bent met het spelen van een stuk komt een score in beeld, <LineBreak/>
+                                deze score is een percentage van het aantal noten dat je goed hebt gespeeld. <LineBreak/>
+                                Bijvoorbeeld: wanneer je een stuk hebt van 100 noten, en je speelt er 80 goed. Dan heb je een score van 80
+                                <LineBreak/><LineBreak/>
+                                Deze score wordt opgeslagen. Wanneer je opnieuw een muziekstuk kiest is de top 5 score van een muziekstuk zichtbaar.
+                            </TextBlock>
+                        </Border>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="Inladen (eigen) muziekstuk" >
+                    <Grid ShowGridLines="False">
+                        <Grid.ColumnDefinitions>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                       
+                        <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="1" FontSize="14">           
+                            1 Muziekstuk van Musescore halen
+                        </TextBlock>
+                        <Border Margin="0,0,0,10" Grid.Row="2" BorderThickness="0,0,0,1" BorderBrush="Black">
+                            <TextBlock Margin="0,0,0,10" FontSize="14">  
+                                1. Ga naar 
+                                <Hyperlink RequestNavigate="HandleLinkClick" NavigateUri="https://musescore.com/dashboard">  
+                                    <TextBlock Text="Musescore"/>  
+                                </Hyperlink>  
+                                <LineBreak/>
+                                2. Maak een account aan en log in<LineBreak/>
+                                3. Klik vervolgens "Browse" boven in het menu<LineBreak/>
+                                4. Klik op "Piano", nu krijg je een overzicht van verschillende muziekstukken.<LineBreak/>
+                                5. Selecteer een muziekstuk die je wilt inladen<LineBreak/>
+                                6. Klik rechts op de download knop<LineBreak/>
+                                7. Nu krijg je een lijst met mogelijkheden hoe je dit bestand wilt downloaden, <LineBreak/>om het te gebruiken in ons programma selecteer je "MusicXML"
+                            </TextBlock>
+                        </Border>
+                        <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="3" FontSize="14">           
+                            1.2 Muziekstuk van Musescore inladen
+                        </TextBlock>
+                        <Border Grid.Row="4" Margin="0,0,0,10" BorderThickness="0,0,0,1" BorderBrush="Black">
+                            <TextBlock Margin="0,0,0,10" FontSize="14">           
+                                 1. Selecteer binnen de applicatie "Muziekstuk inladen", nu verschijnt een nieuw scherm<LineBreak/>
+                                2. Selecteer de knop "Eigen muziekstuk inladen"<LineBreak/>
+                                3. Vervolgens zoek je het muziekstuk op die je wilt inladen<LineBreak/>
+                                4. Klik op "OK", nu staat je eigen gekozen muziekstuk in de lijst
+                            </TextBlock>
+                        </Border>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </ScrollViewer>
+</Window>

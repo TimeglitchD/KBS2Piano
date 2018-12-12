@@ -142,7 +142,7 @@ namespace PianoApp.Views
             if (n.IsRest)
             {
                 List<object> restlist = n.GetNote();
-
+                
                 if (prevnote != n)
                 {
                     if (!prevnote.IsRest)
@@ -252,13 +252,15 @@ namespace PianoApp.Views
             else
             {
                 List<object> note = n.GetNote();
+                
                 foreach (object obj in note)
                 {
                     int row = CheckRow(pitch, staff.Number);
-
+                   
                     try
                     {
                         Label lb = (Label)obj;
+                        Label lbFinger = new Label();
 
                         Thickness margin = lb.Margin;
                         margin.Left = n.XPos * (float)scale + (float)totalwidth - (float)width - 5;
@@ -276,7 +278,7 @@ namespace PianoApp.Views
                                 //STARTINGPOINT
                                 break;
                         }
-
+                        
                         switch (n.Type)
                         {
                             default:
@@ -292,6 +294,14 @@ namespace PianoApp.Views
                             case "16th":
                                 break;
                         }
+
+                        if(n.FingerNum != 0)
+                        {
+                            lbFinger.Margin = margin;
+                            lbFinger.Content = n.FingerNum;
+                            lbFinger.Margin = new Thickness(margin.Left + 5,margin.Top, margin.Right, margin.Bottom);
+                        }
+
                         lb.Margin = margin;
                         margin.Top = 0;
 
@@ -318,10 +328,19 @@ namespace PianoApp.Views
                             Grid.SetRowSpan(lb, 20);
                             Grid.SetRow(lb, row);
 
+                            Grid.SetRowSpan(lbFinger, 20);
+                            Grid.SetRow(lbFinger, row);
+                            Grid.SetColumn(lbFinger, 1);
+
                             Grid.SetColumn(lb, 1);
                             lb.HorizontalAlignment = HorizontalAlignment.Left;
                             lb.VerticalAlignment = VerticalAlignment.Top;
+
+                            lbFinger.HorizontalAlignment = HorizontalAlignment.Left;
+                            lbFinger.VerticalAlignment = VerticalAlignment.Top;
+
                             staveGrid.Children.Add(lb);
+                            staveGrid.Children.Add(lbFinger);
                         }
                     }
                     catch (System.InvalidCastException)
