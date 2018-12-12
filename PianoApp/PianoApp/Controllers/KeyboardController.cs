@@ -17,6 +17,8 @@ namespace PianoApp.Controllers
 
         public GuidesController Guide;
 
+        public RecordController record;
+
         public static int KeyOffset = 48;
 
         public void KeyDown(KeyEventArgs e)
@@ -138,8 +140,8 @@ namespace PianoApp.Controllers
             if (Guide == null)
                 return;
 
-                Guide.Piano.UpdatePressedPianoKeys(currentlyPressedKeys);
-
+            Guide.Piano.UpdatePressedPianoKeys(currentlyPressedKeys);
+            record.StartRecordNote(pressedKey);
             Console.WriteLine("----------On----------");
             Console.WriteLine(pressedKey.ToString());
         }
@@ -257,7 +259,7 @@ namespace PianoApp.Controllers
                 return;
 
             Guide.Piano.UpdatePressedPianoKeys(currentlyPressedKeys);
-
+            record.StopRecordNote(pressedKey);
             Console.WriteLine("----------Off----------");
             Console.WriteLine(pressedKey.ToString());
         }
