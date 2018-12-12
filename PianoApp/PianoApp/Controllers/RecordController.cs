@@ -82,5 +82,10 @@ namespace PianoApp.Controllers
 
             return noteList;
         }
+
+        public void NoteIntersect()
+        {
+            
+        }
     }
 }

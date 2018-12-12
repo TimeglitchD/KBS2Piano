@@ -253,7 +253,7 @@ namespace PianoApp.Views
         {
             try
             {
-                if (mPc.Guide.Score != null) ;
+                if (mPc.Guide.Score != null);
             }
             catch (Exception)
             {

@@ -143,7 +143,7 @@ namespace PianoApp
                 return true;
 
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
                 return false;
             }
