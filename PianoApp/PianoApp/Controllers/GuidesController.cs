@@ -225,7 +225,6 @@ namespace PianoApp.Controllers
                 }               
             }
             goToNextStaff();
-            record.NoteIntersect();
 
             Dictionary<Note, Timeout> tempActiveNoteDict = new Dictionary<Note, Timeout>(_activeNoteAndTimeoutDict);
 

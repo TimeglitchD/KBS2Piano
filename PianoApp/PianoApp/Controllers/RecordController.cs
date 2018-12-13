@@ -23,6 +23,7 @@ namespace PianoApp.Controllers
             this.guide = guide;
         }
 
+        //start. use stoprecording before this method if reset is needed.
         public void startRecording()
         {
             bpm = guide.Bpm;
@@ -31,12 +32,14 @@ namespace PianoApp.Controllers
             recording = true;
         }
 
+        //pause
         public void pauseRecording()
         {
             stopWatch.Stop();
             recording = false;
         }
 
+        //stop and reset
         public void stopRecording()
         {
             stopWatch.Reset();
@@ -44,12 +47,22 @@ namespace PianoApp.Controllers
             resetAttributes();
         }
 
+        //returns a generated score based on pressed keys
+        public static Score getScore()
+        {
+            Score score = new Score();
+            score.Parts.Add(getPart());
+            return score;
+        }
+
+        //resets the recorded keys
         private void resetAttributes()
         {
             activeNotes = new Dictionary<int, long>();
             recordedSheet = new List<RecordedNote>();
         }
 
+        //record a keypress and add it to list to record time pressed
         public void StartRecordNote(int note)
         {
             if (!recording)
@@ -58,6 +71,7 @@ namespace PianoApp.Controllers
             activeNotes.Add(note, stopWatch.ElapsedMilliseconds);
         }
 
+        //stop recording time pressed and create new recordedNote
         public void StopRecordNote(int note)
         {
             if (!recording)
@@ -71,6 +85,7 @@ namespace PianoApp.Controllers
             recordedSheet.Add(new RecordedNote(note, elapsed, start));
         }
 
+        //generates a list with all recorded notes
         private static List<Note> getNotes()
         {
             List<Note> noteList = new List<Note>();
@@ -83,7 +98,8 @@ namespace PianoApp.Controllers
             return noteList;
         }
 
-        private static Dictionary<int, Measure> GetMeasures()
+        //generates a list with all recorded notes inside their corresponding measures
+        private static List<Measure> GetMeasures()
         {
             List<Note> notes = null;
             Dictionary<int, Measure> measures = new Dictionary<int, Measure>();
@@ -92,6 +108,7 @@ namespace PianoApp.Controllers
                 notes = getNotes();
             });
 
+            //temporary save notes in dictionary to keep track of created measures
             foreach (Note note in notes)
             {
                 int measureNumber = note.MeasureNumber;
@@ -110,32 +127,22 @@ namespace PianoApp.Controllers
                 
             }
 
-            return measures;
+            //convert dictionary to list
+            List<Measure> measureList = new List<Measure>();
+            foreach (Measure measure in measures.Values)
+            {
+                measureList.Add(measure);
+            }
+            return measureList;
         }
 
+        //generates a part with all measures
         private static Part getPart()
         {
             Part part = new Part();
-            foreach(Measure measure in GetMeasures().Values)
-            {
-                part.Measures.Add(measure);
-            }
+            
 
             return part;
-        }
-
-        public static Score getScore()
-        {
-            Score score = new Score();
-            score.Parts.Add(getPart());
-            return score;
-        }
-
-
-
-        public void NoteIntersect()
-        {
-            
         }
     }
 }
