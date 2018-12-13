@@ -17,7 +17,7 @@ namespace PianoApp.Models
 
         public static float bpm;
 
-        private static int lowestNote;
+        private static int lowestNote = 127;
 
         public RecordedNote(int note, int elapsed, long start)
         {
@@ -50,6 +50,7 @@ namespace PianoApp.Models
             thisNote.Stem = calculateStem();
             thisNote.Staff = calculateStaff(note);
             thisNote.MeasureNumber = calculateMeasure();
+            thisNote.XPos = xPos();
 
             return thisNote;
         }

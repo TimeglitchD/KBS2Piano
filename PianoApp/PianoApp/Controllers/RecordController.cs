@@ -83,9 +83,34 @@ namespace PianoApp.Controllers
             return noteList;
         }
 
-        public static List<Measure> GetMeasures()
+        public static Dictionary<int, Measure> GetMeasures()
         {
-            return null;
+            List<Note> notes = null;
+            Dictionary<int, Measure> measures = new Dictionary<int, Measure>();
+
+            System.Windows.Application.Current.Dispatcher.Invoke((Action)delegate {
+                notes = getNotes();
+            });
+
+            foreach (Note note in notes)
+            {
+                int measureNumber = note.MeasureNumber;
+                if (measures.ContainsKey(measureNumber)) {
+                    MeasureElement element = new MeasureElement();
+                    element.Element = note;
+                    measures[measureNumber].MeasureElements.Add(element);
+                } else
+                {
+                    Measure measure = new Measure();
+                    measures.Add(measureNumber, measure);
+                    MeasureElement element = new MeasureElement();
+                    element.Element = note;
+                    measures[measureNumber].MeasureElements.Add(element);
+                }
+                
+            }
+
+            return measures;
         }
 
         public void NoteIntersect()
