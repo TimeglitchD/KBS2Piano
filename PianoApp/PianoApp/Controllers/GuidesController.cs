@@ -347,19 +347,6 @@ namespace PianoApp.Controllers
                 if (currentStaff >= Sheet.SheetModel.GreatStaffModelList.Count)
                 {
                     this.Stop();
-                    System.Windows.Application.Current.Dispatcher.Invoke((Action)delegate {
-                        foreach (Note note in RecordController.getNotes())
-                        {
-                            Console.WriteLine("recorded note: ");
-                            Console.WriteLine("measure : " + note.MeasureNumber);
-                            Console.WriteLine("staff : " + note.Staff);
-                            Console.WriteLine("xPos : " + note.XPos);
-                            Console.WriteLine("Type : " + note.Type);
-                            Console.WriteLine("Step : " + note.Pitch.Step);
-                            Console.WriteLine("Octave : " + note.Pitch.Octave);
-                            Console.WriteLine("Alter : " + note.Pitch.Alter);
-                        }
-                    });
                     
                     return;
                 }

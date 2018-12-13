@@ -71,7 +71,7 @@ namespace PianoApp.Controllers
             recordedSheet.Add(new RecordedNote(note, elapsed, start));
         }
 
-        public static List<Note> getNotes()
+        private static List<Note> getNotes()
         {
             List<Note> noteList = new List<Note>();
             foreach(RecordedNote recorded in recordedSheet)
@@ -83,7 +83,7 @@ namespace PianoApp.Controllers
             return noteList;
         }
 
-        public static Dictionary<int, Measure> GetMeasures()
+        private static Dictionary<int, Measure> GetMeasures()
         {
             List<Note> notes = null;
             Dictionary<int, Measure> measures = new Dictionary<int, Measure>();
@@ -112,6 +112,26 @@ namespace PianoApp.Controllers
 
             return measures;
         }
+
+        private static Part getPart()
+        {
+            Part part = new Part();
+            foreach(Measure measure in GetMeasures().Values)
+            {
+                part.Measures.Add(measure);
+            }
+
+            return part;
+        }
+
+        public static Score getScore()
+        {
+            Score score = new Score();
+            score.Parts.Add(getPart());
+            return score;
+        }
+
+
 
         public void NoteIntersect()
         {
