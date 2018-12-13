@@ -75,7 +75,7 @@ namespace PianoApp.Controllers
                 Console.WriteLine("midicontroller exc");
                 return;
             }
-            
+
             if(MidiEvent.IsNoteOn(e.MidiEvent))
             {                
                 if (Guide == null) return;
