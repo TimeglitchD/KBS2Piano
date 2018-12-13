@@ -126,25 +126,41 @@ namespace PianoApp.Views
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            //Open file opener dialog
             OpenFileDialog ofd = new OpenFileDialog();
+
             //set filextension to only XML
             ofd.Filter = "XML files (*.xml)|*.xml";
 
             if (ofd.ShowDialog() == true)
             {
+                //set filename
                 string fileName = ofd.SafeFileName;
-                txtEditor.Content = "[" + fileName + "] is added to DB";
 
-                System.IO.FileInfo fInfo = new System.IO.FileInfo(ofd.FileName);
+                // open dialog to declare attributes
+                FileDescriptionDialog fdd = new FileDescriptionDialog();
+                fdd.Owner = this;
+                fdd.ShowDialog();
 
-                string strFileName = fInfo.Name;
-                string strFilePath = fInfo.DirectoryName;
-                string location = strFilePath + "\\" + strFileName;
-                string date = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
+                if (fdd.DialogResult == true)
+                {
+                    // set fileinfo
+                    FileInfo fInfo = new FileInfo(ofd.FileName);
 
-                connection.addMusic("vaderjacob", "Je vader", "Oprah", date, location);
-                
-                
+                    // set attributes for db
+                    string strFileName = fInfo.Name;
+                    string strFilePath = fInfo.DirectoryName;
+                    string location = strFilePath + "\\" + strFileName;
+                    string date = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
+                    string title = fdd.Titel;
+                    string description = fdd.Omschrijving;
+
+                    // add to db
+                    connection.addMusic(title, description, "Muziekstuk", date, location);
+
+                    txtEditor.Content = "[" + title + "] is added to DB";
+
+                }
             }
 
 
