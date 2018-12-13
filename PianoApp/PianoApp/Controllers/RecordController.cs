@@ -76,6 +76,8 @@ namespace PianoApp.Controllers
         {
             if (!recording)
                 return;
+            if (!activeNotes.ContainsKey(note))
+                return;
 
             long start = activeNotes[note];
             long stop = stopWatch.ElapsedMilliseconds;
