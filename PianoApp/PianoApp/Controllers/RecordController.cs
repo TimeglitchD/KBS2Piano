@@ -85,27 +85,7 @@ namespace PianoApp.Controllers
 
         public static List<Measure> GetMeasures()
         {
-            Measure measure = new Measure();
-            int measureLength = (int)(1000.0 / (bpm / 60.0)) * 4;
-            int currentMeasureLength = 0;
-
-            foreach (RecordedNote recorded in recordedSheet)
-            {
-                long start = recorded.start;
-                double duration = recorded.duration;
-                long end = start + (long)duration;
-                if(duration + currentMeasureLength <= measureLength)
-                {
-                    measureLength += (int)duration;
-                    MeasureElement element = new MeasureElement();
-                    element.Type = MeasureElementType.Note;
-                    element.Element = recorded.convertToNote();
-                    measure.MeasureElements.Add(recorded.convertToNote());
-                } else
-                {
-                    
-                }
-            }
+            return null;
         }
 
         public void NoteIntersect()

@@ -28,19 +28,11 @@ namespace PianoApp.Models
             {
                 lowestNote = note;
             }
-
-            //Console.WriteLine("--------recorded note--------");
-            //Console.WriteLine(note);
-            //Console.WriteLine(elapsed);
-            //Console.WriteLine(start);
-            //Console.WriteLine(durationToType(elapsed));
         }
 
+        //converts timing and note number to a musicxml note based on bpm
         public Note convertToNote()
         {
-            Pitch pitch = intToPitch(note);
-            string type = durationToType(elapsed);
-            string stem = calculateStem();
 
             Note thisNote = new Note();
 
@@ -48,10 +40,12 @@ namespace PianoApp.Models
             thisNote.Type = durationToType(elapsed);
             thisNote.Stem = calculateStem();
             thisNote.Staff = calculateStaff(note);
+            thisNote.MeasureNumber = calculateMeasure();
 
             return thisNote;
         }
-
+        
+        //generate step, octave and alter based on notenumber
         private Pitch intToPitch(int note)
         {
             Pitch pitch = new Pitch();
@@ -96,7 +90,8 @@ namespace PianoApp.Models
 
             return pitch;
         }
-
+        
+        //generate type based on note duration
         private string durationToType(int duration)
         {
             string type = "whole";
@@ -129,12 +124,14 @@ namespace PianoApp.Models
             return type;
         }
 
+        //calculate the stem of a note based on position
         private string calculateStem()
         {
             //add logic to calculate if stem should go up or down
             return "up";
         }
 
+        //calculate the note's staff relative to the lowest note played
         private int calculateStaff(int note)
         {
             if(note < lowestNote + 11)
@@ -144,6 +141,13 @@ namespace PianoApp.Models
             {
                 return 1;
             }
+        }
+
+        //calculate note's measure based on the elapsed time when it was played.
+        private int calculateMeasure()
+        {
+                int start = (int)this.start;
+                return start / (int)((1000.0 / (bpm / 60.0)) * 4);
         }
     }
 }
