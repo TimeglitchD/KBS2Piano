@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 using PianoApp.Controllers;
 using PianoApp.Events;
 
@@ -88,10 +90,9 @@ namespace PianoApp.Views
             //update textBoxes
             titleBox.Text = selected.Row["Title"].ToString();
             descBox.Text = selected.Row["Description"] as String;
-            
-            string test = selected.Row["Id"].ToString();
-            this.id = test;
-            ChangeScoreView(test);
+
+            string Id = selected.Row["Id"].ToString();
+            ChangeScoreView(Id);
         }
 
         private void SearchTerm_TextChanged(object sender, TextChangedEventArgs e)
@@ -135,14 +136,38 @@ namespace PianoApp.Views
             {
                 System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);
             }
-
         }
 
         private void ChangeScoreView(string id)
         {
             scoreView.RowFilter = $"Id = {id}";
         }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            //set filextension to only XML
+            ofd.Filter = "XML files (*.xml)|*.xml";
+
+            if (ofd.ShowDialog() == true)
+            {
+                string fileName = ofd.SafeFileName;
+                txtEditor.Content = "[" + fileName + "] is added to DB";
+
+                System.IO.FileInfo fInfo = new System.IO.FileInfo(ofd.FileName);
+
+                string strFileName = fInfo.Name;
+                string strFilePath = fInfo.DirectoryName;
+                string location = strFilePath + "\\" + strFileName;
+                string date = DateTime.Now.ToString("MM/dd/yyyy h:mm tt");
+
+                connection.addMusic("vaderjacob", "Je vader", "Oprah", date, location);
+                
+                
+            }
+        }
     }
+
 
 }
 

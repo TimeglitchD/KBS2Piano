@@ -116,9 +116,14 @@ namespace PianoApp
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand(queryString, connection);
+                    SqlCommand command = new SqlCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = queryString;
+                    command.Connection = connection;
+
                     command.Connection.Open();
                     command.ExecuteNonQuery();
+                    connection.Close();
                 } catch (Exception)
                 {
 
@@ -128,25 +133,38 @@ namespace PianoApp
 
 
         //method for adding music record to database. Unused
-        public bool addMusic(string title, string description, string date, string type, string location)
+        public bool addMusic(string title, string description, string type, string date,  string location)
         {
-            try
-            {
-                StringBuilder command = new StringBuilder("INSERT INTO music (Title, Description, Date, Type, Location) VALUES (");
-                command.Append("'" + title + "' ,");
-                command.Append("'" + description + "' ,");
-                command.Append("'" + date + "' ,");
-                command.Append("'" + type + "' ,");
-                command.Append("'" + location + "' )");
+            string query = "INSERT INTO Music (Title,Description,Date,Type,Location)" +
+                                " VALUES (@Title,@Description,@Date,@Type,@Location)";
 
-                this.ExcecuteCommandNoOutput(command.ToString());
-                return true;
-
-            }
-            catch (SqlException ex)
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
-                return false;
+                //try
+                //{
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Parameters.AddWithValue("@Title", title);
+                    command.Parameters.AddWithValue("@Description", description);
+                    command.Parameters.AddWithValue("@Date", date);
+                    command.Parameters.AddWithValue("@Type", type);
+                    command.Parameters.AddWithValue("@Location", location);
+
+                    connection.Open();
+                    int result = command.ExecuteNonQuery();
+                    connection.Close();
+
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+
+                    return true;
+                //}
+                //catch (SqlException ex)
+                //{
+                //    return false;
+                //}
             }
         }
+
     }
 }
