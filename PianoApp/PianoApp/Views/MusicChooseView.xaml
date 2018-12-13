@@ -32,7 +32,7 @@
             </TabItem>
             <TabItem Header="Lessen">
                 <TabControl Margin="0,0,0,0" Grid.Column="1">
-                    <TabItem Header="Beginner" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="63" Height="20" VerticalAlignment="Top">
+                    <TabItem Header="Beginner">
                         <DataGrid x:Name="Beginner" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
                             <DataGrid.RowStyle>
                                 <Style>
@@ -47,7 +47,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
-                    <TabItem Header="Middelmatig" Height="22" Margin="-2.4,-2,-2.4,0" VerticalAlignment="Top">
+                    <TabItem Header="Middelmatig">
                         <DataGrid x:Name="Middelmatig" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
                             <DataGrid.RowStyle>
                                 <Style>
@@ -97,16 +97,16 @@
 
         </TabControl>
 
-        <Label FontSize="20" FontWeight="DemiBold" Content="Choose a musicpiece" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Button FontSize="16" x:Name="select" Content="Choose musicpiece" Grid.Column="1" HorizontalAlignment="Left" Margin="508,536,0,0" VerticalAlignment="Top" Width="243" Height="50" Click="OnSelectClick"/>
-        <Label Content="Title" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,69,0,0" VerticalAlignment="Top" Width="242"/>
+        <Label FontSize="20" FontWeight="DemiBold" Content="Kies een muziekstuk" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Button FontSize="16" x:Name="select" Content="Kiez muziekstuk" Grid.Column="1" HorizontalAlignment="Left" Margin="508,536,0,0" VerticalAlignment="Top" Width="243" Height="50" Click="OnSelectClick"/>
+        <Label Content="Titel" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,69,0,0" VerticalAlignment="Top" Width="242"/>
         <TextBox x:Name="titleBox" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="21" Margin="507.667,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242"/>
-        <Label Content="Description" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,126,0,0" VerticalAlignment="Top" Width="242"/>
+        <Label Content="Beschrijving" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,126,0,0" VerticalAlignment="Top" Width="242"/>
         <TextBox x:Name="descBox" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="148" Margin="507.2,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242"/>
         <TextBox x:Name="SearchTerm" Grid.Column="1" HorizontalAlignment="Left" Height="19" Margin="332.2,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" TextChanged="SearchTerm_TextChanged"/>
-        <Label Content="Search" Grid.Column="1" HorizontalAlignment="Left" Margin="284.2,66,0,0" VerticalAlignment="Top" Width="48" Height="25"/>
+        <Label Content="Zoek" Grid.Column="1" HorizontalAlignment="Left" Margin="284.2,66,0,0" VerticalAlignment="Top" Width="48" Height="25"/>
 
-        <Label Content="Scoreboard" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="503.2,313,0,0" VerticalAlignment="Top" Width="242"/>
+        <Label Content="Scorebord" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="503.2,313,0,0" VerticalAlignment="Top" Width="242"/>
         <DataGrid Name="ScoreGrid" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="174" Margin="508.2,347,0,0" VerticalAlignment="Top" Width="241">
             <DataGrid.Columns>
                 <DataGridTextColumn  Width="65" Binding="{Binding Date}" IsReadOnly="True" Header="Date"/>
