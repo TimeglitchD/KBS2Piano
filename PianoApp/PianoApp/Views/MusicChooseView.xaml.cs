@@ -30,6 +30,10 @@ namespace PianoApp.Views
         private NoteView nv;
         private DataView musicView;
         private DataView scoreView;
+        private DataView beginnerView;
+        private DataView middelmatigView;
+        private DataView gevorderdView;
+        private DataView expertView;
         private ButtonView bv;
         public string id;
 
@@ -48,13 +52,23 @@ namespace PianoApp.Views
             this.sv = sv;
             this.nv = nv;
             this.bv = bv;
-            musicView = connection.getSheetMusic(1).Tables["Music"].DefaultView;
+
+            musicView = connection.getSheetMusic().Tables["Music"].DefaultView;
+            beginnerView = connection.getCourseMusic("Beginner").Tables["Beginner"].DefaultView;
+            middelmatigView = connection.getCourseMusic("Middelmatig").Tables["Middelmatig"].DefaultView;
+            gevorderdView = connection.getCourseMusic("Gevorderd").Tables["Gevorderd"].DefaultView;
+            expertView = connection.getCourseMusic("Expert").Tables["Expert"].DefaultView;
 
             scoreView = connection.getSheetScore().Tables["Score"].DefaultView;
             scoreView.RowFilter = "Id = 0";
 
             //add sheet records to tab
+
             populateTab(SheetMusic, musicView);
+            populateTab(Beginner, beginnerView);
+            populateTab(Middelmatig, middelmatigView);
+            populateTab(Gevorderd, gevorderdView);
+            populateTab(Expert, expertView);
 
             //Add Score records to tab
             populateTab(ScoreGrid, scoreView);
@@ -93,6 +107,7 @@ namespace PianoApp.Views
 
             string Id = selected.Row["Id"].ToString();
             ChangeScoreView(Id);
+
         }
 
         private void SearchTerm_TextChanged(object sender, TextChangedEventArgs e)

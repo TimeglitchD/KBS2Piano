@@ -13,7 +13,7 @@
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="257*"/>
         </Grid.ColumnDefinitions>
-        
+
         <TabControl Margin="0,69,270,10" Grid.Column="1">
             <TabItem Header="Sheet music">
                 <DataGrid x:Name="SheetMusic" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
@@ -32,7 +32,7 @@
             </TabItem>
             <TabItem Header="Lessen">
                 <TabControl Margin="0,0,0,0" Grid.Column="1">
-                    <TabItem Header="Beginner">
+                    <TabItem Header="Beginner" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="63" Height="20" VerticalAlignment="Top">
                         <DataGrid x:Name="Beginner" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
                             <DataGrid.RowStyle>
                                 <Style>
@@ -47,7 +47,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
-                    <TabItem Header="Middelmatig">
+                    <TabItem Header="Middelmatig" Height="22" Margin="-2.4,-2,-2.4,0" VerticalAlignment="Top">
                         <DataGrid x:Name="Middelmatig" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
                             <DataGrid.RowStyle>
                                 <Style>
@@ -94,9 +94,9 @@
                     </TabItem>
                 </TabControl>
             </TabItem>
-            
+
         </TabControl>
-        
+
         <Label FontSize="20" FontWeight="DemiBold" Content="Choose a musicpiece" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <Button FontSize="16" x:Name="select" Content="Choose musicpiece" Grid.Column="1" HorizontalAlignment="Left" Margin="508,536,0,0" VerticalAlignment="Top" Width="243" Height="50" Click="OnSelectClick"/>
         <Label Content="Title" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,69,0,0" VerticalAlignment="Top" Width="242"/>

@@ -21,7 +21,7 @@ namespace PianoApp
         }
 
         //get a dataset of sheet music based on type specified.
-        public DataSet getSheetMusic(int id)
+        public DataSet getSheetMusic()
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
@@ -42,6 +42,30 @@ namespace PianoApp
                 }
             }
         }
+
+        public DataSet getCourseMusic(string courseType)
+        {
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                try
+                {
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = $"SELECT * FROM Music WHERE CourseType = '{courseType}'";
+                    dataAdapter.SelectCommand = command;
+                    connection.Open();
+                    dataAdapter.Fill(dataSet, courseType);
+                    connection.Close();
+                    return dataSet;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
+
+
 
         public DataSet getSheetScore()
         {
