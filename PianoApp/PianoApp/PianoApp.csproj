@@ -121,6 +121,9 @@
     <Compile Include="MusicXml\Domain\Time.cs" />
     <Compile Include="MusicXml\MusicXmlParser.cs" />
     <Compile Include="Views\ButtonView.cs" />
+    <Compile Include="Views\FileDescriptionDialog.xaml.cs">
+      <DependentUpon>FileDescriptionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -194,6 +197,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\FileDescriptionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
