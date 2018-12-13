@@ -17,6 +17,7 @@ namespace PianoApp.Controllers
     {
         public PianoModel PianoModel { get; set; } = new PianoModel();
         public PianoView PianoView { get; set; }
+        public bool fingerSettingEnabled = true;
 
         public void UpdatePressedPianoKeys(Dictionary<int, float> activeKeysFromKeyboard)
         {
@@ -64,6 +65,14 @@ namespace PianoApp.Controllers
                 {
                     foreach (var keyModel in octaveModel.KeyModelList)
                     {
+                        if (fingerSettingEnabled)
+                        {
+                            keyModel.fingerSettingEnabled = true;
+                        }
+                        else
+                        {
+                            keyModel.fingerSettingEnabled = false;
+                        }
                         if (keyValuePair.Key.Pitch.Step.ToString() == keyModel.Step.ToString() &&
                             keyValuePair.Key.Pitch.Alter           == keyModel.Alter)
                         {
