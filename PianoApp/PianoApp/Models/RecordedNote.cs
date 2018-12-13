@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MusicXml.Domain;
+using PianoApp.Controllers;
 
 namespace PianoApp.Models
 {
-    class RecordedNote
+    public class RecordedNote
     {
         private int note;
         private int elapsed;
         public long start;
-        public double duration;
+        public double duration = 0;
 
         public static float bpm;
 
@@ -28,12 +29,20 @@ namespace PianoApp.Models
             {
                 lowestNote = note;
             }
+
+            duration = roundOffElapsed(elapsed);
+
+            if (!noteFits())
+            {
+                double newLength = splitNote();
+                this.elapsed = (int)newLength;
+            }
+
         }
 
         //converts timing and note number to a musicxml note based on bpm
         public Note convertToNote()
         {
-
             Note thisNote = new Note();
 
             thisNote.Pitch = intToPitch(note);
@@ -92,7 +101,7 @@ namespace PianoApp.Models
         }
         
         //generate type based on note duration
-        private string durationToType(int duration)
+        private string durationToType(int elapsed)
         {
             string type = "whole";
             int beatDuration = (int)(1000.0 / (bpm / 60.0));
@@ -101,27 +110,50 @@ namespace PianoApp.Models
             {
                 case double n when ( n > 2.8):
                     type = "whole";
-                    duration = 4 * beatDuration;
                     break;
                 case double n when (n < 2.8 && n > 1.3):
                     type = "half";
-                    duration = 2 * beatDuration;
                     break;
                 case double n when (n < 1.3 && n > 0.9) :
                     type = "quarter";
-                    duration = beatDuration;
                     break;
                 case double n when (n < 0.9 && n > 0.25):
                     type = "eigth";
-                    duration = beatDuration / 2;
                     break;
                 case double n when (n < 0.25):
                     type = "16th";
-                    duration = beatDuration / 4;
                     break;
             }
 
             return type;
+        }
+
+        //round off the elapsed note time to a value relative to bpm
+        private int roundOffElapsed(int elapsed)
+        {
+            int beatDuration = (int)(1000.0 / (bpm / 60.0));
+            double value = (float)elapsed / beatDuration;
+            int duration = 0;
+            switch (value)
+            {
+                case double n when (n > 2.8):
+                    duration = 4 * beatDuration;
+                    break;
+                case double n when (n < 2.8 && n > 1.3):
+                    duration = 2 * beatDuration;
+                    break;
+                case double n when (n < 1.3 && n > 0.9):
+                    duration = beatDuration;
+                    break;
+                case double n when (n < 0.9 && n > 0.25):
+                    duration = beatDuration / 2;
+                    break;
+                case double n when (n < 0.25):
+                    duration = beatDuration / 4;
+                    break;
+            }
+
+            return duration;
         }
 
         //calculate the stem of a note based on position
@@ -147,7 +179,42 @@ namespace PianoApp.Models
         private int calculateMeasure()
         {
                 int start = (int)this.start;
-                return start / (int)((1000.0 / (bpm / 60.0)) * 4);
+                return start / (int)((1000.0 / (bpm / 60.0)) * 4) + 1;
+        }
+
+        //calculate x position based on timing. Probably needs finetuning
+        private float xPos()
+        {
+            int measureLength = (int)((1000.0 / (bpm / 60.0)) * 4);
+            int thisNoteMeasureNumber = calculateMeasure();
+            int notePositionInMeasure = (int)this.start - ((thisNoteMeasureNumber - 1) * measureLength);
+            float xPos = (float)notePositionInMeasure / 10;
+            return xPos;
+        }
+
+        //check if rounded note fits in its measure
+        private bool noteFits()
+        {
+            int measureLength = (int)((1000.0 / (bpm / 60.0)) * 4);
+            int thisNoteMeasureNumber = calculateMeasure();
+            int notePositionInMeasure = (int)this.start - ((thisNoteMeasureNumber - 1) * measureLength);
+            //int leftOverLength = measureLength - notePositionInMeasure;
+            return measureLength >= notePositionInMeasure + this.duration;
+        }
+
+        //split note if it's too long to fit in its measure. Add it to the sheetlist.
+        private double splitNote()
+        {
+            int measureLength = (int)((1000.0 / (bpm / 60.0)) * 4);
+            int thisNoteMeasureNumber = calculateMeasure();
+            int notePositionInMeasure = (int)this.start - ((thisNoteMeasureNumber - 1) * measureLength);
+            int leftOverLength = (int)this.duration - (measureLength - notePositionInMeasure);
+            long usedLength = measureLength - notePositionInMeasure;
+            long newNoteStart = (long)this.start + (long)usedLength;
+
+            RecordController.recordedSheet.Add(new RecordedNote(this.note, leftOverLength, newNoteStart));
+
+            return usedLength;
         }
     }
 }

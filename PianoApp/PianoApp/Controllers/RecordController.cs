@@ -12,7 +12,7 @@ namespace PianoApp.Controllers
     public class RecordController
     {
         private Dictionary<int, long> activeNotes = new Dictionary<int, long>();
-        private static List<RecordedNote> recordedSheet = new List<RecordedNote>();
+        public static List<RecordedNote> recordedSheet = new List<RecordedNote>();
         private Stopwatch stopWatch = new Stopwatch();
         private GuidesController guide;
         private static float bpm;
