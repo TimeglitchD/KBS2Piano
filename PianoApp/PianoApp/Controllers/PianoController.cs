@@ -47,7 +47,6 @@ namespace PianoApp.Controllers
 
         public void UpdatePianoKeys(Dictionary<Note, Timeout> noteAndTimeoutDictionary)
         {
-            var tempDict = new Dictionary<Note, Timeout>(noteAndTimeoutDictionary);
 
             foreach (var octaveModel in PianoModel.OctaveModelList.ToList())
             {
@@ -56,6 +55,8 @@ namespace PianoApp.Controllers
                     keyModel.Active = false;                    
                 }
             }
+
+            var tempDict = new Dictionary<Note, Timeout>(noteAndTimeoutDictionary).ToDictionary(k => k.Key, k => k.Value);
 
             //go over all keys and compare to note when true set active true on the corresponding key...
             foreach (var keyValuePair in tempDict)
