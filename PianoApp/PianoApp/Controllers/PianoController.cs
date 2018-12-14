@@ -65,14 +65,8 @@ namespace PianoApp.Controllers
                 {
                     foreach (var keyModel in octaveModel.KeyModelList)
                     {
-                        if (fingerSettingEnabled)
-                        {
-                            keyModel.fingerSettingEnabled = true;
-                        }
-                        else
-                        {
-                            keyModel.fingerSettingEnabled = false;
-                        }
+                        keyModel.fingerSettingEnabled = fingerSettingEnabled;
+
                         if (keyValuePair.Key.Pitch.Step.ToString() == keyModel.Step.ToString() &&
                             keyValuePair.Key.Pitch.Alter           == keyModel.Alter)
                         {
