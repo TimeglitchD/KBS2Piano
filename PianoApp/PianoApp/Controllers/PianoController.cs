@@ -49,9 +49,9 @@ namespace PianoApp.Controllers
         {
             var tempDict = new Dictionary<Note, Timeout>(noteAndTimeoutDictionary);
 
-            foreach (var octaveModel in PianoModel.OctaveModelList)
+            foreach (var octaveModel in PianoModel.OctaveModelList.ToList())
             {
-                foreach (var keyModel in octaveModel.KeyModelList)
+                foreach (var keyModel in octaveModel.KeyModelList.ToList())
                 {
                     keyModel.Active = false;                    
                 }

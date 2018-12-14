@@ -52,6 +52,7 @@ namespace MusicXml.Domain
         public NoteState State { get; set; } = NoteState.Idle;
 
         public string Stem { get; internal set; }
+        public long ActiveStart { get; internal set; }
 
         public Ellipse ell = new Ellipse();
 

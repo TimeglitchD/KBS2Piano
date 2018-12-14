@@ -16,5 +16,10 @@ namespace MusicXml.Domain
 		public int Octave { get; internal set; }
 
 		public char Step { get; internal set; }
-	}
+
+        public override string ToString()
+        {
+            return Step+""+Alter+""+Octave;
+        }
+    }
 }
