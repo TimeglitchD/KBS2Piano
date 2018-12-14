@@ -48,6 +48,8 @@ namespace PianoApp.Controllers
         public PianoController Piano;
         public SheetController Sheet;
 
+        public RecordController record;
+
         public Score Score;
 
         public NoteType ChosenNote = NoteType.Quarter;
@@ -344,6 +346,7 @@ namespace PianoApp.Controllers
                 if (currentStaff >= Sheet.SheetModel.GreatStaffModelList.Count)
                 {
                     this.Stop();
+                    
                     return;
                 }
 
@@ -362,10 +365,12 @@ namespace PianoApp.Controllers
             if (paused)
             {
                 _timerStaffOne.Enabled = true;
+                record.startRecording();
             }
             else
             {
                 _timerStaffOne.Enabled = false;
+                record.pauseRecording();
             }
            
             paused = !paused;
@@ -386,6 +391,7 @@ namespace PianoApp.Controllers
             _timerStaffOne.Interval = _milsecperbeat;
             NoteIntersectEvent(this, EventArgs.Empty, 1);
             _timerStaffOne.Enabled = true;
+            record.startRecording();
             return true;
         }
 
@@ -430,8 +436,9 @@ namespace PianoApp.Controllers
             }
 
             StopWatch.Stop();
-
+            
             _timerStaffOne.Stop();
+            record.stopRecording();
             _toDoNoteDict.Clear();
             _activeNoteAndTimeoutDict.Clear();
             SetAttributes();

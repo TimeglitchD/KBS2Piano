@@ -127,7 +127,7 @@ namespace PianoApp.Views
                 }
                 this.Close();
             }
-            catch (ArgumentNullException ex)
+            catch (ArgumentNullException)
             {
                 MessageBox.Show("Je hebt geen muziekstuk geselecteerd");
             }

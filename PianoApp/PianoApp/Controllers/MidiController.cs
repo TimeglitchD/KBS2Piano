@@ -27,6 +27,8 @@ namespace PianoApp.Controllers
 
         public GuidesController Guide;
 
+        public RecordController record;
+
         public MidiController()
         {
             if(midiAvailable())
@@ -78,26 +80,32 @@ namespace PianoApp.Controllers
 
             if(MidiEvent.IsNoteOn(e.MidiEvent))
             {                
-                if (Guide == null) return;
+               
                 
-//                int calculatedNote =  offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
+                int calculatedNote =  offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
+                MidiOutput.play(calculatedNote);
+                if (currentlyPressedKeys.ContainsKey(calculatedNote)) return;
 
-                if (currentlyPressedKeys.ContainsKey(noteEvent.NoteNumber)) return;
+                if (Guide == null) return;
 
-                currentlyPressedKeys.Add(noteEvent.NoteNumber, GuidesController.StopWatch.ElapsedMilliseconds);
+                currentlyPressedKeys.Add(calculatedNote, GuidesController.StopWatch.ElapsedMilliseconds);
                 Guide.ActiveKeys = currentlyPressedKeys;
                 Guide.UpdatePianoKeys();
+                record.StartRecordNote(calculatedNote);
                 //Thread.Sleep inside GUI is just for example
-                MidiOutput.play(noteEvent.NoteNumber);
+                
 
             } else
             {                
+                
+                int calculatedNote = offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
+                MidiOutput.stop(calculatedNote);
                 if (Guide == null) return;
-//                int calculatedNote = offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
-                currentlyPressedKeys.Remove(noteEvent.NoteNumber);
+                currentlyPressedKeys.Remove(calculatedNote);
                 Guide.ActiveKeys = currentlyPressedKeys;
                 Guide.UpdatePianoKeys();
-                MidiOutput.stop(noteEvent.NoteNumber);
+                record.StopRecordNote(calculatedNote);
+                
             }
         }
 
@@ -112,14 +120,9 @@ namespace PianoApp.Controllers
             midiInputChanged?.Invoke(this, e);
         }
 
-        private int offsetNote(int currentNote, int offset)
+        private int offsetNote(int note, int offset)
         {
-            Console.WriteLine("Calculating offset for key: " + currentNote.ToString() + " offset: " + offset.ToString());
-            int octave = (int)Math.Floor((decimal)currentNote / 12);
-            int baseNote = currentNote - octave * 12;
-            Console.WriteLine(baseNote.ToString());
-            Console.WriteLine((baseNote + offset).ToString());
-            return baseNote + offset;
+            return note;
         }
 
     }

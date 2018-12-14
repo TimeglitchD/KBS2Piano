@@ -24,6 +24,8 @@ namespace PianoApp.Controllers
 
         public KeyboardController KeyboardController;
 
+        public RecordController RecordController;
+
         public SheetModel Sheet { get; set; }
 
         public event EventHandler staffEndReached;
@@ -41,6 +43,10 @@ namespace PianoApp.Controllers
 
             Guide = new GuidesController(MidiController) { Score = _score, Piano = Piano, Sheet = SheetController };
 
+            RecordController = new RecordController(Guide);
+
+            Guide.record = RecordController;
+
             Sheet = SheetController.SheetModel;
 
             //stop program from crashing when reloading musicpiece.
@@ -56,8 +62,11 @@ namespace PianoApp.Controllers
             Guide.GoToFirstStaff += GoToFirstStaff;
             Guide.HoldPosition += this.HoldPosition;
             MidiController.Guide = Guide;
+            MidiController.record = RecordController;
 
             KeyboardController.Guide = Guide;
+            KeyboardController.record = RecordController;
+            
         }
 
 
