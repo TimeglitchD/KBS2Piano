@@ -23,8 +23,8 @@ namespace PianoApp.Controllers
         public MidiController MidiController;
 
         public KeyboardController KeyboardController;
-
         public MainWindow mainWindow;
+        public RecordController RecordController;
 
         public SheetModel Sheet { get; set; }
 
@@ -45,6 +45,10 @@ namespace PianoApp.Controllers
 
             Guide = new GuidesController(MidiController) { Score = _score, Piano = Piano, Sheet = SheetController, mainWindow = mainWindow };
 
+            RecordController = new RecordController(Guide);
+
+            Guide.record = RecordController;
+
             Sheet = SheetController.SheetModel;
 
             //stop program from crashing when reloading musicpiece.
@@ -61,8 +65,11 @@ namespace PianoApp.Controllers
             Guide.GoToFirstStaff += GoToFirstStaff;
             Guide.HoldPosition += this.HoldPosition;
             MidiController.Guide = Guide;
+            MidiController.record = RecordController;
 
             KeyboardController.Guide = Guide;
+            KeyboardController.record = RecordController;
+            
         }
 
 
