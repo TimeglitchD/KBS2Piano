@@ -32,6 +32,7 @@ namespace PianoApp
         private MusicChooseView mCv;
         private PianoView pv;
         private StaveView sv;
+        private StaveView nSv;
 
         private StackPanel staves = new StackPanel();
         private StackPanel piano = new StackPanel();
@@ -50,6 +51,8 @@ namespace PianoApp
         Button resetButton = new Button();
         private MusicPieceController mPc;
 
+        private bool _endOfMusicPiece = true;
+
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -61,22 +64,36 @@ namespace PianoApp
             sC.MidiController = mC;
             
             kC = new KeyboardController(){PianoController = pC};
-            mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC , KeyboardController = kC };
-
+            mPc = new MusicPieceController() { Piano = pC , SheetController = sC , MidiController = mC , KeyboardController = kC, mainWindow = this };
+            //mPc.musicPieceEndReached += musicPieceEndReached;
             //mPc.Guide.Start();
             DrawMenu();
             InitializeComponent();
             Show();
         }
 
+        public void musicPieceEndReached()
+        {
+            //DefineRowMyGridEndOfMusicPiece();
+
+            //nSv = new StaveView(myGrid, mPc, 2);
+            //NoteView noteV = new NoteView(nSv);
+            //noteV.DrawNotes();
+
+            
+            myGrid.Dispatcher.BeginInvoke((Action) (() => myGrid.RowDefinitions[2].Height = new GridLength(225)));
+            myGrid.Dispatcher.BeginInvoke((Action)(() => myGrid.RowDefinitions[1].Height = new GridLength(230)));
+
+        }
+
         private void DrawStaves()
         {
-            sv = new StaveView(myGrid, mPc);
+            sv = new StaveView(myGrid, mPc, 1);
 
             metronomeSound sound = new metronomeSound();
             sound.startMetronome(120, 4, 1);
         }
-
+        
         private void DrawMenu()
         {
             // Create the Grid
@@ -86,14 +103,53 @@ namespace PianoApp
             };
 
             // show menuGrid lines
-            //menuGrid.ShowGridLines = true;
 
             // Define all rows for mainGrid
-            DefineRowMyGrid();
+            //if (_endOfMusicPiece)
+            //{
+            //    DefineRowMyGridEndOfMusicPiece();
+
+            //    PianoController npC = new PianoController() { };
+
+            //    SheetController nsC = new SheetController();
+            //    MidiController nmC = new MidiController();
+
+            //    nsC.MidiController = nmC;
+
+            //    KeyboardController nkC = new KeyboardController() { PianoController = npC };
+            //    MusicPieceController mpcon = new MusicPieceController() { Piano = npC, SheetController = nsC, MidiController = nmC, KeyboardController = kC };
+
+
+            //    nSv = new StaveView(myGrid, mpcon, 2);
+            //    NoteView noteV = new NoteView(nSv);
+            //    noteV.DrawNotes();
+            //}
+            //else
+            //{
+            //    DefineRowMyGrid();
+            //}
+
+            DefineRowMyGridEndOfMusicPiece();
+
+            PianoController npC = new PianoController() { };
+
+            SheetController nsC = new SheetController();
+            MidiController nmC = new MidiController();
+
+            nsC.MidiController = nmC;
+
+            KeyboardController nkC = new KeyboardController() { PianoController = npC };
+            MusicPieceController mpcon = new MusicPieceController() { Piano = npC, SheetController = nsC, MidiController = nmC, KeyboardController = kC };
+
+
+            nSv = new StaveView(myGrid, mpcon, 2);
+            NoteView noteV = new NoteView(nSv);
+            noteV.DrawNotes();
+
             //Create the staves
             pv = new PianoView(myGrid, mPc);
            
-            sv = new StaveView(myGrid, mPc);
+            sv = new StaveView(myGrid, mPc, 1);
             Content = pv.myGrid;
 
 
@@ -107,6 +163,30 @@ namespace PianoApp
             metronome = bv.metronome;
             metronome.countdownFinished += countdownFinished;
             metronome.countDownTickElapsed += CountDownTickElapsed;
+        }
+
+        private void DefineRowMyGridEndOfMusicPiece()
+        {
+            // Define new row
+            RowDefinition rowDef1 = new RowDefinition();
+            RowDefinition rowDef2 = new RowDefinition();
+            RowDefinition rowDef3 = new RowDefinition();
+            RowDefinition rowDef4 = new RowDefinition();
+
+            // Add lenght to rows
+            rowDef1.Height = new GridLength(50, GridUnitType.Star);
+            rowDef2.Height = new GridLength(500, GridUnitType.Star);
+            rowDef3.Height = new GridLength(0, GridUnitType.Star);
+            rowDef4.Height = new GridLength(200, GridUnitType.Star);
+
+            // Add row to mainGrid
+            myGrid.RowDefinitions.Add(rowDef1);
+            myGrid.RowDefinitions.Add(rowDef2);
+            myGrid.RowDefinitions.Add(rowDef3);
+            myGrid.RowDefinitions.Add(rowDef4);
+
+
+            //myGrid.RowDefinitions[2].Height = new GridLength(0);
         }
 
         private void DefineRowMyGrid()
@@ -125,8 +205,6 @@ namespace PianoApp
             myGrid.RowDefinitions.Add(rowDef1);
             myGrid.RowDefinitions.Add(rowDef2);
             myGrid.RowDefinitions.Add(rowDef3);
-
-
         }
 
         private void countdownFinished(object sender, EventArgs e)
@@ -170,6 +248,11 @@ namespace PianoApp
         private void CountDownTickElapsed(object sender, EventArgs e)
         {
             this.Dispatcher.Invoke(bv.AddCountdownText);
+        }
+
+        private void EndOfMusicPieceIsReached(object sender, EventArgs e)
+        {
+
         }
 
         private void pianoStateChanged(object sender, EventArgs e)

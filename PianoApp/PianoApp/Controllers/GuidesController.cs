@@ -47,6 +47,7 @@ namespace PianoApp.Controllers
 
         public PianoController Piano;
         public SheetController Sheet;
+        public MainWindow mainWindow;
 
         public Score Score;
 
@@ -74,6 +75,7 @@ namespace PianoApp.Controllers
         private int currentStaff = 0;
         private bool atStaffEndOne = false;
         private bool atStaffEndTwo = false;
+        public event EventHandler musicPieceEndReached;
         public event EventHandler staffEndReached;
         public event EventHandler GoToFirstStaff;
         public event EventHandler HoldPosition;
@@ -343,6 +345,11 @@ namespace PianoApp.Controllers
 
                 if (currentStaff >= Sheet.SheetModel.GreatStaffModelList.Count)
                 {
+                    //if (musicPieceEndReached != null)
+                    //{
+                    //    musicPieceEndReached(this, EventArgs.Empty);
+                    //}
+                    mainWindow.musicPieceEndReached();
                     this.Stop();
                     return;
                 }

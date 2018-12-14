@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,12 +17,16 @@ namespace PianoApp.Views
         private Grid myGrid;
         private ScrollViewer scroll;
         private double location;
+        private int row;
 
-        public StaveView(Grid myGrid, MusicPieceController mPc)
+        public StaveView(Grid myGrid, MusicPieceController mPc, int row)
         {
+            this.row = row;
             this.myGrid = myGrid;
             MusicPieceController = mPc;
             sheet = new StackPanel();
+
+
             DrawMusic();
 
             MusicPieceController.staffEndReached += scrollToNext;
@@ -42,7 +47,7 @@ namespace PianoApp.Views
             //scrollbar
             scroll = new ScrollViewer();
             scroll.Visibility = Visibility.Visible;
-            Grid.SetRow(scroll, 1);
+            Grid.SetRow(scroll, row);
 
             //zet de stackpanel in de goede plek in het grid
             Grid.SetRow(sheet, 1);
@@ -70,8 +75,8 @@ namespace PianoApp.Views
             scroll.Dispatcher.BeginInvoke((Action)(() => scroll.UpdateLayout()));
             location += 200;
 
-//            scroll.ScrollToVerticalOffset(location + 200);
-//            scroll.UpdateLayout();
+            //            scroll.ScrollToVerticalOffset(location + 200);
+            //            scroll.UpdateLayout();
         }
 
         public void ScrollToCurrent(object sender, EventArgs e)

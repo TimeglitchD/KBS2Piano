@@ -84,6 +84,8 @@ namespace PianoApp.Models
                 // add label to canvas
                 canvas.Children.Add(fingerNumLabel);
 
+                
+
                 // add canvas to bipmapcachebrush
                 BitmapCacheBrush bcb = new BitmapCacheBrush(canvas);
                 KeyRect.Fill = bcb;

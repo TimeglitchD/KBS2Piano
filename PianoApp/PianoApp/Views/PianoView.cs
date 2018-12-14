@@ -41,7 +41,7 @@ namespace PianoApp.Views
             piano = MusicPieceController.Piano.DrawPianoController();
             //piano.Orientation = Orientation.Horizontal;
             //zet stackpanel in de goede plek op het grid
-            Grid.SetRow(piano, 2);
+            Grid.SetRow(piano, 4);
 
             myGrid.Children.Add(piano);
             Console.WriteLine("Piano drawn");

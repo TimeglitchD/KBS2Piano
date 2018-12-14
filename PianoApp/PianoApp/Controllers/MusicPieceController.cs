@@ -24,6 +24,8 @@ namespace PianoApp.Controllers
 
         public KeyboardController KeyboardController;
 
+        public MainWindow mainWindow;
+
         public SheetModel Sheet { get; set; }
 
         public event EventHandler staffEndReached;
@@ -31,6 +33,8 @@ namespace PianoApp.Controllers
         public event EventHandler GoToFirstStaff;
 
         public event EventHandler HoldPosition;
+        public event EventHandler musicPieceEndReached;
+
 
         //1055 is max length of one staff
         private const double _maxStaffWidth = 1055;
@@ -39,7 +43,7 @@ namespace PianoApp.Controllers
         {
             _score = MusicXmlParser.GetScore(filename);
 
-            Guide = new GuidesController(MidiController) { Score = _score, Piano = Piano, Sheet = SheetController };
+            Guide = new GuidesController(MidiController) { Score = _score, Piano = Piano, Sheet = SheetController, mainWindow = mainWindow };
 
             Sheet = SheetController.SheetModel;
 
@@ -52,6 +56,7 @@ namespace PianoApp.Controllers
 
             AddNotesToMeasures();
 
+            Guide.musicPieceEndReached += musicPieceEndReached;
             Guide.staffEndReached += staffEndReached;
             Guide.GoToFirstStaff += GoToFirstStaff;
             Guide.HoldPosition += this.HoldPosition;
