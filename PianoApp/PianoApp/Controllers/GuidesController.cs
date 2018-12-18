@@ -190,13 +190,14 @@ namespace PianoApp.Controllers
                 if (_toDoNoteDict1.Count > 0) _toDoNoteDict1.Remove(_toDoNoteDict1.Keys.First(t => t.Equals(note)));
 
             }
-            else
+            else if (note.Staff == 2)
             {
                 if (_toDoNoteDict2.Count > 0) _toDoNoteDict2.Remove(_toDoNoteDict2.Keys.First(t => t.Equals(note)));
 
             }
         }
 
+        //delete and add to activedictionary
         private void NoteIntersectEvent(EventArgs e, int staffNumber)
         {
             if (staffdivs[staffNumber] > 0)
@@ -266,10 +267,7 @@ namespace PianoApp.Controllers
 
                     for (int j = i + 1; j < tempList.Count; j++)
                     {
-                        if (tempList[i].Key != tempList[j].Key &&
-                            tempList[j].Key.XPos > tempList[i].Key.XPos - 1 &&
-                            tempList[j].Key.XPos < tempList[i].Key.XPos + 1 &&
-                            tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
+                        while (tempList[j].Key.IsChordTone)
                         {
                             //Add note with same pos to active Dictionary
                             if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[j].Key))
