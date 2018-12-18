@@ -14,7 +14,7 @@
             <ColumnDefinition Width="257*"/>
         </Grid.ColumnDefinitions>
 
-        <TabControl Name="TabControl" Margin="0,69,270,10" Grid.Column="1">
+        <TabControl Margin="0,69,270,10" Grid.Column="1">
             <TabItem Header="Sheet music">
                 <DataGrid x:Name="SheetMusic" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
                     <DataGrid.RowStyle>
