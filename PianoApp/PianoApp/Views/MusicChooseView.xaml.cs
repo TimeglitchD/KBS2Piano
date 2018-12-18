@@ -101,11 +101,25 @@ namespace PianoApp.Views
                 return;
             selectedPiece = selected.Row["Location"] as String;
 
+            if(selected != null)
+            {
+                //make delete button visible
+                DeleteBtn.Visibility = Visibility.Visible;
+            } else
+            {
+                DeleteBtn.Visibility = Visibility.Hidden;
+            }
+            
+
             //update textBoxes
             titleBox.Text = selected.Row["Title"].ToString();
             descBox.Text = selected.Row["Description"] as String;
 
             string Id = selected.Row["Id"].ToString();
+            id = "";
+            id = Id;
+
+            //change the score to selected item score
             ChangeScoreView(Id);
 
         }
@@ -193,11 +207,30 @@ namespace PianoApp.Views
                     connection.addMusic(title, description, date, location);
                     txtEditor.Content = "[" + title + "] is added to DB";
 
-                    SheetMusic.ItemsSource = null;
-                    SheetMusic.ItemsSource = connection.getSheetMusic().Tables["Music"].DefaultView;
+                    RefreshView(SheetMusic);
                     
                 }
             }
+        }
+
+        private void RefreshView(DataGrid dg)
+        {
+            dg.ItemsSource = null;
+            dg.ItemsSource = connection.getSheetMusic().Tables["Music"].DefaultView;
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this piece?",
+                                          "Confirmation",
+                                          MessageBoxButton.YesNo,
+                                          MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                connection.DeleteFromDb(id);
+                RefreshView(SheetMusic);
+            }
+
         }
     }
 

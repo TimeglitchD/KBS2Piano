@@ -65,9 +65,6 @@ namespace PianoApp
                 }
             }
         }
-
-
-
         public DataSet getSheetScore()
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
@@ -89,29 +86,7 @@ namespace PianoApp
                 }
             }
         }
-        
-        public DataSet get5SheetScore(int id)
-        {
-            using (SqlConnection connection = new SqlConnection(this.connectionString))
-            {
-                try
-                {
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
-                    SqlCommand command = connection.CreateCommand();
-                    command.CommandText = $"SELECT TOP(5) Id, Date, Time, Scored FROM Score WHERE Id = {id} ORDER BY Scored DESC";
-                    dataAdapter.SelectCommand = command;
-                    connection.Open();
-                    dataAdapter.Fill(dataSet, "Score");
-                    connection.Close();
-                    return dataSet;
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
-            }
-        }
-        
+
         public DataSet GetDataFromDB(string query, string table)
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
@@ -149,7 +124,8 @@ namespace PianoApp
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                     connection.Close();
-                } catch (Exception)
+                }
+                catch (Exception)
                 {
 
                 }
@@ -158,15 +134,15 @@ namespace PianoApp
 
 
         //method for adding music record to database. Unused
-        public bool addMusic(string title, string description, string date,  string location)
+        public bool addMusic(string title, string description, string date, string location)
         {
             string query = "INSERT INTO Music (Title,Description,Date,Location)" +
                                 " VALUES (@Title,@Description,@Date,@Location)";
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
-                //try
-                //{
+                try
+                {
                     SqlCommand command = new SqlCommand(query, connection);
 
                     command.Parameters.AddWithValue("@Title", title);
@@ -182,13 +158,41 @@ namespace PianoApp
                         Console.WriteLine("Error inserting data into Database!");
 
                     return true;
-                //}
-                //catch (SqlException ex)
-                //{
-                //    return false;
-                //}
+                }
+                catch (SqlException ex)
+                {
+                    return false;
+                }
             }
         }
 
+        public bool DeleteFromDb(string id)
+        {
+            string query = "DELETE FROM Music " +
+                           "WHERE Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Parameters.AddWithValue("@Id", id);
+
+                    connection.Open();
+                    int result = command.ExecuteNonQuery();
+                    connection.Close();
+
+                    if (result < 0)
+                        Console.WriteLine("Error deleting data from Database!");
+
+                    return true;
+                }
+                catch (SqlException ex)
+                {
+                    return false;
+                }
+            }
+        }
     }
 }
