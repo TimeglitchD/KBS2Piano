@@ -185,16 +185,17 @@ namespace PianoApp.Controllers
         {
             if (note.Staff == 1)
             {
-                if (_toDoNoteDict1.Count > 0) _toDoNoteDict1.Remove(_toDoNoteDict1.Keys.First(t => t.Equals(note)));
+                if (_toDoNoteDict1.ContainsKey(note)) _toDoNoteDict1.Remove(_toDoNoteDict1.Keys.First(t => t.Equals(note)));
 
             }
-            else
+            else if (note.Staff == 2)
             {
-                if (_toDoNoteDict2.Count > 0) _toDoNoteDict2.Remove(_toDoNoteDict2.Keys.First(t => t.Equals(note)));
+                if (_toDoNoteDict2.ContainsKey(note)) _toDoNoteDict2.Remove(_toDoNoteDict2.Keys.First(t => t.Equals(note)));
 
             }
         }
 
+        //delete and add to activedictionary
         private void NoteIntersectEvent(EventArgs e, int staffNumber)
         {
             if (staffdivs[staffNumber] > 0)
@@ -319,8 +320,10 @@ namespace PianoApp.Controllers
 
         private void CheckPressedKeysToActiveNotes()
         {
-            foreach (var activeNote in _activeNoteAndTimeoutDict.Where(n => n.Key.State == NoteState.Active))
+            var _active = new Dictionary<Note, Timeout>(_activeNoteAndTimeoutDict).ToDictionary(k => k.Key, k => k.Value);
+            foreach (var noteact in _active.Where(n => n.Key.State == NoteState.Active))
             {
+                var activeNote = noteact;
                 if (ActiveKeys.Count > 0)
                 {
                     foreach (var activeKey in ActiveKeys)
@@ -349,6 +352,7 @@ namespace PianoApp.Controllers
                     activeNote.Key.State = NoteState.Wrong;
                 }
             }
+            _activeNoteAndTimeoutDict = new Dictionary<Note, Timeout>(_active).ToDictionary(k => k.Key, k => k.Value);
         }
 
         private void checkLastNote(Dictionary<Note, Timeout> noteDict)
@@ -398,6 +402,7 @@ namespace PianoApp.Controllers
             {
                 _timerStaffOne.Enabled = true;
                 _timerStaffTwo.Enabled = true;
+
             }
             else
             {
