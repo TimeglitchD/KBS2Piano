@@ -187,17 +187,16 @@ namespace PianoApp.Controllers
         {
             if (note.Staff == 1)
             {
-                if (_toDoNoteDict1.ContainsKey(note)) _toDoNoteDict1.Remove(_toDoNoteDict1.Keys.First(t => t.Equals(note)));
+                if (_toDoNoteDict1.Count > 0) _toDoNoteDict1.Remove(_toDoNoteDict1.Keys.First(t => t.Equals(note)));
 
             }
-            else if (note.Staff == 2)
+            else
             {
-                if (_toDoNoteDict2.ContainsKey(note)) _toDoNoteDict2.Remove(_toDoNoteDict2.Keys.First(t => t.Equals(note)));
+                if (_toDoNoteDict2.Count > 0) _toDoNoteDict2.Remove(_toDoNoteDict2.Keys.First(t => t.Equals(note)));
 
             }
         }
 
-        //delete and add to activedictionary
         private void NoteIntersectEvent(EventArgs e, int staffNumber)
         {
             if (staffdivs[staffNumber] > 0)
@@ -205,24 +204,23 @@ namespace PianoApp.Controllers
                 staffdivs[staffNumber]--;
             }
 
+
             if (staffdivs[staffNumber] == 0)
             {
-                if (prevnote[staffNumber] != null)
+
+                //remove keys that are done
+
+                var _activ = new Dictionary<Note, Timeout>(_activeNoteAndTimeoutDict).ToDictionary(k => k.Key, k => k.Value);
+                foreach (Note note in _activ.Keys)
                 {
-                    newlistprevnote = prevnote[staffNumber].ToList();
-                    //remove keys that are done
-
-                    foreach (Note note in newlistprevnote)
+                    if (note.State != NoteState.Good)
                     {
-                        _activeNoteAndTimeoutDict.Remove(note);
-                        if (note.State != NoteState.Good)
-                        {
-                            note.State = NoteState.Wrong;
-                        }
-                        prevnote[staffNumber].Remove(note);
+                        note.State = NoteState.Wrong;
                     }
-
+                    Console.WriteLine(note.Pitch + " is klaar");
+                    _activeNoteAndTimeoutDict.Remove(note);
                 }
+
 
                 var tempList = _toDoNoteDict1.ToList();
                 if (staffNumber == 1)
@@ -230,9 +228,11 @@ namespace PianoApp.Controllers
                     tempList = _toDoNoteDict2.ToList();
                 }
 
+
                 for (int i = 0; i < 1; i++)
                 {
                     //Add note to active Dictionary
+
 
                     if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
                     {
@@ -247,13 +247,20 @@ namespace PianoApp.Controllers
 
                     }
 
+
+
                     //Remove the note from to do 
 
                     RemoveFirstNoteFromToDoDict(tempList[i].Key);
 
+
+
                     for (int j = i + 1; j < tempList.Count; j++)
                     {
-                        while (tempList[j].Key.IsChordTone)
+                        if (tempList[i].Key != tempList[j].Key &&
+                            tempList[j].Key.XPos > tempList[i].Key.XPos - 1 &&
+                            tempList[j].Key.XPos < tempList[i].Key.XPos + 1 &&
+                            tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
                         {
                             //Add note with same pos to active Dictionary
                             if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[j].Key))
@@ -279,7 +286,15 @@ namespace PianoApp.Controllers
 
                 HoldPosition?.Invoke(this, EventArgs.Empty);
             }
+
+
+
+
+
+
         }
+
+
 
         private MockupNote getNoteFromNoteNumber(int nn)
         {
@@ -312,10 +327,8 @@ namespace PianoApp.Controllers
 
         private void CheckPressedKeysToActiveNotes()
         {
-            var _active = new Dictionary<Note, Timeout>(_activeNoteAndTimeoutDict).ToDictionary(k => k.Key, k => k.Value);
-            foreach (var noteact in _active.Where(n => n.Key.State == NoteState.Active))
+            foreach (var activeNote in _activeNoteAndTimeoutDict.Where(n => n.Key.State == NoteState.Active))
             {
-                var activeNote = noteact;
                 if (ActiveKeys.Count > 0)
                 {
                     foreach (var activeKey in ActiveKeys)
@@ -344,7 +357,6 @@ namespace PianoApp.Controllers
                     activeNote.Key.State = NoteState.Wrong;
                 }
             }
-            _activeNoteAndTimeoutDict = new Dictionary<Note, Timeout>(_active).ToDictionary(k => k.Key, k => k.Value);
         }
 
         private void checkLastNote(Dictionary<Note, Timeout> noteDict)
@@ -394,7 +406,6 @@ namespace PianoApp.Controllers
             {
                 _timerStaffOne.Enabled = true;
                 _timerStaffTwo.Enabled = true;
-
             }
             else
             {
