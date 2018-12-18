@@ -92,8 +92,6 @@ namespace PianoApp.Controllers
             //            midi.midiInputChanged += inputChanged;
         }
 
-
-
         private void FillToDoList()
         {
             foreach (var scorePart in Score.Parts)
@@ -236,61 +234,59 @@ namespace PianoApp.Controllers
 
                     if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
                     {
-                        _activeNoteAndTimeoutDict.Add(tempList[i].Key, new Timeout()
+                        //Add note to active Dictionary
+
+                        if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
                         {
-                            NoteTimeout = tempList[i].Value,
-                            TimeAdded = StopWatch.ElapsedMilliseconds
-                        });
+                            _activeNoteAndTimeoutDict.Add(tempList[i].Key, new Timeout()
+                            {
+                                NoteTimeout = tempList[i].Value,
+                                TimeAdded = StopWatch.ElapsedMilliseconds
+                            });
 
-                        staffdivs[staffNumber] = tempList[i].Key.Duration;
-                        prevnote[staffNumber].Add(tempList[i].Key);
+                            staffdivs[staffNumber] = tempList[i].Key.Duration;
+                            prevnote[staffNumber].Add(tempList[i].Key);
 
-                    }
+                        }
 
+                        RemoveFirstNoteFromToDoDict(tempList[i].Key);
 
-
-                    //Remove the note from to do 
-
-                    RemoveFirstNoteFromToDoDict(tempList[i].Key);
-
-
-
-                    for (int j = i + 1; j < tempList.Count; j++)
-                    {
-                        if (tempList[i].Key != tempList[j].Key &&
-                            tempList[j].Key.XPos > tempList[i].Key.XPos - 1 &&
-                            tempList[j].Key.XPos < tempList[i].Key.XPos + 1 &&
-                            tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
+                        for (int j = i + 1; j < tempList.Count; j++)
                         {
-                            //Add note with same pos to active Dictionary
-                            if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[j].Key))
-                                _activeNoteAndTimeoutDict.Add(tempList[j].Key, new Timeout()
-                                {
-                                    NoteTimeout = tempList[j].Value,
-                                    TimeAdded = StopWatch.ElapsedMilliseconds
-                                });
-                            //Remove the note with same pos from to do 
-                            RemoveFirstNoteFromToDoDict(tempList[j].Key);
+                            if (tempList[i].Key != tempList[j].Key &&
+                                tempList[j].Key.XPos > tempList[i].Key.XPos - 1 &&
+                                tempList[j].Key.XPos < tempList[i].Key.XPos + 1 &&
+                                tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
+                            {
+                                //Add note with same pos to active Dictionary
+                                if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[j].Key))
+                                    _activeNoteAndTimeoutDict.Add(tempList[j].Key, new Timeout()
+                                    {
+                                        NoteTimeout = tempList[j].Value,
+                                        TimeAdded = StopWatch.ElapsedMilliseconds
+                                    });
+                                //Remove the note with same pos from to do 
+                                RemoveFirstNoteFromToDoDict(tempList[j].Key);
+                            }
                         }
                     }
+
+                    checkLastNote(_activeNoteAndTimeoutDict);
+                    goToNextStaff();
+
+                    //Check key press is correct or not
+                    CheckPressedKeysToActiveNotes();
+
+                    Piano.UpdatePianoKeys(_activeNoteAndTimeoutDict);
+                    Sheet.UpdateNotes(_activeNoteAndTimeoutDict);
+
+                    HoldPosition?.Invoke(this, EventArgs.Empty);
                 }
 
-                checkLastNote(_activeNoteAndTimeoutDict);
-                goToNextStaff();
 
-                //Check key press is correct or not
-                CheckPressedKeysToActiveNotes();
 
-                Piano.UpdatePianoKeys(_activeNoteAndTimeoutDict);
-                Sheet.UpdateNotes(_activeNoteAndTimeoutDict);
 
-                HoldPosition?.Invoke(this, EventArgs.Empty);
             }
-
-
-
-
-
 
         }
 
