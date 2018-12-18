@@ -21,6 +21,7 @@ namespace PianoApp.Views
         private StaveView sv;
         private NoteView nv;
         private MusicPieceController mPc;
+        private MainWindow mw;
         private string _musicPieceId;
 
         private TextBox bpmTB = new TextBox();
@@ -52,8 +53,9 @@ namespace PianoApp.Views
 
         private bool running = false;
 
-        public ButtonView(Grid myGrid, StaveView sv, NoteView nv)
+        public ButtonView(Grid myGrid, StaveView sv, NoteView nv, MainWindow mw)
         {
+            this.mw = mw;
             this.myGrid = myGrid;
             this.nv = nv;
             this.sv = sv;
@@ -285,6 +287,7 @@ namespace PianoApp.Views
             bpmTB.IsReadOnly = false;
             bpmTB.Background = Brushes.White;
             notesCB.IsEnabled = false;
+            mw.resetGreatStaffs();
             CheckPause();
         }
 

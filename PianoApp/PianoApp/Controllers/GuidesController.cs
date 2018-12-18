@@ -351,6 +351,10 @@ namespace PianoApp.Controllers
                     //{
                     //    musicPieceEndReached(this, EventArgs.Empty);
                     //}
+                    if (GoToFirstStaff != null)
+                    {
+                        GoToFirstStaff(this, EventArgs.Empty);
+                    }
                     mainWindow.musicPieceEndReached();
                     this.Stop();
                     

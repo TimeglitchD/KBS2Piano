@@ -32,7 +32,8 @@ namespace PianoApp
         private MusicChooseView mCv;
         private PianoView pv;
         private StaveView sv;
-        private StaveView nSv;
+        private StaveView recordSv;
+        private NoteView noteV;
 
         private StackPanel staves = new StackPanel();
         private StackPanel piano = new StackPanel();
@@ -79,10 +80,22 @@ namespace PianoApp
             //nSv = new StaveView(myGrid, mPc, 2);
             //NoteView noteV = new NoteView(nSv);
             //noteV.DrawNotes();
-
-            
             myGrid.Dispatcher.BeginInvoke((Action) (() => myGrid.RowDefinitions[2].Height = new GridLength(225)));
             myGrid.Dispatcher.BeginInvoke((Action)(() => myGrid.RowDefinitions[1].Height = new GridLength(230)));
+            
+            //recordSv.MusicPieceController.createRecordMusicPiece(mPc._score);
+
+            Console.WriteLine("Piece loaded.");
+            //succesfull at opening xml file.
+            //recordSv.DrawMusic();
+            //nv.DrawNotes();
+
+        }
+
+        public void resetGreatStaffs()
+        {
+            myGrid.Dispatcher.BeginInvoke((Action)(() => myGrid.RowDefinitions[2].Height = new GridLength(0)));
+            myGrid.Dispatcher.BeginInvoke((Action)(() => myGrid.RowDefinitions[1].Height = new GridLength(500)));
 
         }
 
@@ -102,48 +115,21 @@ namespace PianoApp
                 ShowGridLines = true
             };
 
-            // show menuGrid lines
-
-            // Define all rows for mainGrid
-            //if (_endOfMusicPiece)
-            //{
-            //    DefineRowMyGridEndOfMusicPiece();
-
-            //    PianoController npC = new PianoController() { };
-
-            //    SheetController nsC = new SheetController();
-            //    MidiController nmC = new MidiController();
-
-            //    nsC.MidiController = nmC;
-
-            //    KeyboardController nkC = new KeyboardController() { PianoController = npC };
-            //    MusicPieceController mpcon = new MusicPieceController() { Piano = npC, SheetController = nsC, MidiController = nmC, KeyboardController = kC };
-
-
-            //    nSv = new StaveView(myGrid, mpcon, 2);
-            //    NoteView noteV = new NoteView(nSv);
-            //    noteV.DrawNotes();
-            //}
-            //else
-            //{
-            //    DefineRowMyGrid();
-            //}
-
             DefineRowMyGridEndOfMusicPiece();
 
-            PianoController npC = new PianoController() { };
+            PianoController recordPc = new PianoController() { };
 
-            SheetController nsC = new SheetController();
-            MidiController nmC = new MidiController();
+            SheetController recordSc = new SheetController();
+            MidiController recordMc = new MidiController();
 
-            nsC.MidiController = nmC;
+            recordSc.MidiController = recordMc;
 
-            KeyboardController nkC = new KeyboardController() { PianoController = npC };
-            MusicPieceController mpcon = new MusicPieceController() { Piano = npC, SheetController = nsC, MidiController = nmC, KeyboardController = kC };
+            KeyboardController recordKc = new KeyboardController() { PianoController = recordPc };
+            MusicPieceController recordMpc = new MusicPieceController() { Piano = recordPc, SheetController = recordSc, MidiController = recordMc, KeyboardController = recordKc };
 
 
-            nSv = new StaveView(myGrid, mpcon, 2);
-            NoteView noteV = new NoteView(nSv);
+            recordSv = new StaveView(myGrid, recordMpc, 2);
+            noteV = new NoteView(recordSv);
             noteV.DrawNotes();
 
             //Create the staves
@@ -157,7 +143,7 @@ namespace PianoApp
             nv = new NoteView(sv);
             nv.DrawNotes();
 
-            bv = new ButtonView(myGrid, sv, nv);
+            bv = new ButtonView(myGrid, sv, nv, this);
             bv.pianoStateChanged += pianoStateChanged;
 
             metronome = bv.metronome;
@@ -184,27 +170,7 @@ namespace PianoApp
             myGrid.RowDefinitions.Add(rowDef2);
             myGrid.RowDefinitions.Add(rowDef3);
             myGrid.RowDefinitions.Add(rowDef4);
-
-
-            //myGrid.RowDefinitions[2].Height = new GridLength(0);
-        }
-
-        private void DefineRowMyGrid()
-        {
-            // Define new row
-            RowDefinition rowDef1 = new RowDefinition();
-            RowDefinition rowDef2 = new RowDefinition();
-            RowDefinition rowDef3 = new RowDefinition();
-
-            // Add lenght to rows
-            rowDef1.Height = new GridLength(50, GridUnitType.Star);
-            rowDef2.Height = new GridLength(500, GridUnitType.Star);
-            rowDef3.Height = new GridLength(200, GridUnitType.Star);
-
-            // Add row to mainGrid
-            myGrid.RowDefinitions.Add(rowDef1);
-            myGrid.RowDefinitions.Add(rowDef2);
-            myGrid.RowDefinitions.Add(rowDef3);
+            
         }
 
         private void countdownFinished(object sender, EventArgs e)

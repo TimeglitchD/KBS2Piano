@@ -13,7 +13,7 @@ namespace PianoApp.Controllers
 {
     public class MusicPieceController
     {
-        private Score _score;
+        public Score _score;
         public PianoController Piano;
 
         public SheetController SheetController;
@@ -70,6 +70,16 @@ namespace PianoApp.Controllers
             KeyboardController.Guide = Guide;
             KeyboardController.record = RecordController;
             
+        }
+
+        public void createRecordMusicPiece(Score score)
+        {
+            _score = score;
+            AddGreatStaffsToSheet();
+
+            AddMeasuresToGreatStaffs();
+
+            AddNotesToMeasures();
         }
 
 
