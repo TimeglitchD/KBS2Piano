@@ -204,15 +204,12 @@ namespace PianoApp.Controllers
                 staffdivs[staffNumber]--;
             }
 
-
             if (staffdivs[staffNumber] == 0)
             {
-
                 if (prevnote[staffNumber] != null)
                 {
                     newlistprevnote = prevnote[staffNumber].ToList();
                     //remove keys that are done
-
 
                     foreach (Note note in newlistprevnote)
                     {
@@ -221,15 +218,10 @@ namespace PianoApp.Controllers
                         {
                             note.State = NoteState.Wrong;
                         }
-                        Console.WriteLine(note.Pitch + " is klaar");
                         prevnote[staffNumber].Remove(note);
                     }
 
                 }
-
-
-
-
 
                 var tempList = _toDoNoteDict1.ToList();
                 if (staffNumber == 1)
@@ -237,11 +229,9 @@ namespace PianoApp.Controllers
                     tempList = _toDoNoteDict2.ToList();
                 }
 
-
                 for (int i = 0; i < 1; i++)
                 {
                     //Add note to active Dictionary
-
 
                     if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
                     {
@@ -256,13 +246,9 @@ namespace PianoApp.Controllers
 
                     }
 
-
-
                     //Remove the note from to do 
 
                     RemoveFirstNoteFromToDoDict(tempList[i].Key);
-
-
 
                     for (int j = i + 1; j < tempList.Count; j++)
                     {
@@ -295,15 +281,7 @@ namespace PianoApp.Controllers
 
                 HoldPosition?.Invoke(this, EventArgs.Empty);
             }
-
-
-
-
-
-
         }
-
-
 
         private MockupNote getNoteFromNoteNumber(int nn)
         {
