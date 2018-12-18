@@ -190,10 +190,12 @@ namespace PianoApp.Views
                     string description = fdd.Omschrijving;
 
                     // add to db
-                    connection.addMusic(title, description, "Muziekstuk", date, location);
-
+                    connection.addMusic(title, description, date, location);
                     txtEditor.Content = "[" + title + "] is added to DB";
 
+                    SheetMusic.ItemsSource = null;
+                    SheetMusic.ItemsSource = connection.getSheetMusic().Tables["Music"].DefaultView;
+                    
                 }
             }
         }

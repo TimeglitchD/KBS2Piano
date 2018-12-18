@@ -27,6 +27,7 @@ namespace PianoApp
             {
                 try
                 {
+                    dataSet.Clear();
                     SqlDataAdapter dataAdapter = new SqlDataAdapter();
                     SqlCommand command = connection.CreateCommand();
                     command.CommandText = $"SELECT * FROM Music";
@@ -157,10 +158,10 @@ namespace PianoApp
 
 
         //method for adding music record to database. Unused
-        public bool addMusic(string title, string description, string type, string date,  string location)
+        public bool addMusic(string title, string description, string date,  string location)
         {
-            string query = "INSERT INTO Music (Title,Description,Date,Type,Location)" +
-                                " VALUES (@Title,@Description,@Date,@Type,@Location)";
+            string query = "INSERT INTO Music (Title,Description,Date,Location)" +
+                                " VALUES (@Title,@Description,@Date,@Location)";
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
@@ -171,7 +172,6 @@ namespace PianoApp
                     command.Parameters.AddWithValue("@Title", title);
                     command.Parameters.AddWithValue("@Description", description);
                     command.Parameters.AddWithValue("@Date", date);
-                    command.Parameters.AddWithValue("@Type", type);
                     command.Parameters.AddWithValue("@Location", location);
 
                     connection.Open();
