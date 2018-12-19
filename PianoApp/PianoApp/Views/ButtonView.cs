@@ -70,7 +70,7 @@ namespace PianoApp.Views
             metronomeText.Text = "🔇";
             metronomeButton = new Button();
             metronomeButton.Content = metronomeText;
-            metronomeButton.Width = 50;
+            metronomeButton.Width = 60;
             metronomeButton.Height = 50;
             metronomeButton.FontSize = 20;
             metronomeButton.Click += onMetronomeButtonClick;
@@ -86,7 +86,7 @@ namespace PianoApp.Views
             pianoText.TextDecorations = strikeTrough;
             pianoButton = new Button();
             pianoButton.Content = pianoText;
-            pianoButton.Width = 50;
+            pianoButton.Width = 60;
             pianoButton.Height = 50;
             pianoButton.FontSize = 20;
             pianoButton.Click += onPianoButtonClick;
@@ -103,7 +103,7 @@ namespace PianoApp.Views
             fingerSettingTxt.TextDecorations = strikeTrough;
             fingerSettingBtn = new Button();
             fingerSettingBtn.Content = fingerSettingTxt;
-            fingerSettingBtn.Width = 50;
+            fingerSettingBtn.Width = 60;
             fingerSettingBtn.IsEnabled = false;
             fingerSettingBtn.Height = 50;
             fingerSettingBtn.FontSize = 20;
@@ -116,7 +116,7 @@ namespace PianoApp.Views
             introductionBtn.FontSize = 25;
             introductionBtn.Name = "introductionBtn";
             introductionBtn.Content = "?";
-            introductionBtn.Width = 50;
+            introductionBtn.Width = 60;
             introductionBtn.Height = 50;
             introductionBtn.HorizontalAlignment = HorizontalAlignment.Center;
             introductionBtn.Click += introductionBtn_Click;
@@ -125,7 +125,7 @@ namespace PianoApp.Views
             startBtn.FontSize = 20;
             startBtn.Name = "startBtn";
             startBtn.Content = "▶";
-            startBtn.Width = 50;
+            startBtn.Width = 60;
             startBtn.Height = 50;
             startBtn.HorizontalAlignment = HorizontalAlignment.Center;
             startBtn.Click += StartBtn_Click;
@@ -134,7 +134,7 @@ namespace PianoApp.Views
             StopBtn.FontSize = 20;
             StopBtn.Name = "stopBtn";
             StopBtn.Content = "◼";
-            StopBtn.Width = 50;
+            StopBtn.Width = 60;
             StopBtn.Height = 50;
             StopBtn.HorizontalAlignment = HorizontalAlignment.Center;
             StopBtn.Click += StopBtn_Click;
@@ -223,7 +223,7 @@ namespace PianoApp.Views
             bpmTB.FontSize = 30;
             bpmTB.Name = "bpmTB";
             bpmTB.Text = "60";
-            bpmTB.Height = 40;
+            bpmTB.Height = 45;
 
 
             // Combobox 
@@ -272,12 +272,12 @@ namespace PianoApp.Views
             if (paused)
             {
                 paused = false;
-                startBtn.Content = "▶";
+                startBtn.Content = "❚❚";
             }
             else
             {
                 paused = true;
-                startBtn.Content = "❚❚";
+                startBtn.Content = "▶";
             }
             return paused;
         }
@@ -295,6 +295,7 @@ namespace PianoApp.Views
             bpmTB.IsReadOnly = false;
             bpmTB.Background = Brushes.White;
             notesCB.IsEnabled = false;
+            notesCB.IsEnabled = true;
             CheckPause();
         }
 
@@ -334,7 +335,7 @@ namespace PianoApp.Views
                 MessageBox.Show("Je hebt geen muziekstuk ingeladen!", "Foutmelding");
                 return;
             }
-            CheckPause();
+
             try
             {
                 // Set value to int
@@ -388,8 +389,6 @@ namespace PianoApp.Views
                     dbCon.ExcecuteCommandNoOutput($"UPDATE Music SET Bpm = ({Convert.ToInt32(bpmValue)}) WHERE Id = {_musicPieceId}");
                 }
 
-                // Set value startbutton
-                CheckPause();
             }
             catch (FormatException)
             {
@@ -405,7 +404,7 @@ namespace PianoApp.Views
             resetButton.IsEnabled = false;
             bpmTB.IsReadOnly = true;
             bpmTB.Background = Brushes.LightGray;
-            notesCB.IsEnabled = false;
+            notesCB.IsEnabled = false; CheckPause();
         }
 
 

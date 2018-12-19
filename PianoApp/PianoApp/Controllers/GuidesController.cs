@@ -252,18 +252,21 @@ namespace PianoApp.Controllers
                     //Add note to active Dictionary
                     if (tempList.Count > 0)
                     {
-                        //Add note to active Dictionary
-
                         if (!tempDict.ContainsKey(tempList[i].Key))
                         {
-                            tempDict.Add(tempList[i].Key, new Timeout()
-                            {
-                                NoteTimeout = tempList[i].Value,
-                                TimeAdded = StopWatch.ElapsedMilliseconds
-                            });
+                            //Add note to active Dictionary
 
-                            staffdivs[staffNumber] = tempList[i].Key.Duration;
-                            prevnote[staffNumber].Add(tempList[i].Key);
+                            if (!tempDict.ContainsKey(tempList[i].Key))
+                            {
+                                tempDict.Add(tempList[i].Key, new Timeout()
+                                {
+                                    NoteTimeout = tempList[i].Value,
+                                    TimeAdded = StopWatch.ElapsedMilliseconds
+                                });
+
+                                staffdivs[staffNumber] = tempList[i].Key.Duration;
+                                prevnote[staffNumber].Add(tempList[i].Key);
+                            }
 
 
                             RemoveFirstNoteFromToDoDict(tempList[i].Key);
@@ -288,6 +291,7 @@ namespace PianoApp.Controllers
                             }
                         }
                     }
+                    
 
                     Piano.UpdatePianoKeys(tempDict);
                     Sheet.UpdateNotes(tempDict);
@@ -296,7 +300,7 @@ namespace PianoApp.Controllers
                 }
             }
 
-            if (_endReached == _amountOfGreatStaffs)
+            if (_endReached >= _amountOfGreatStaffs)
             {
                 System.Windows.MessageBox.Show($"Je score: {CalcScore()}");
             }
@@ -443,6 +447,8 @@ namespace PianoApp.Controllers
 
         public bool Start()
         {
+            _endReached = 0;
+            _amountOfGreatStaffs = 0;
             _goodNotes = 0;
             ////Set the attributes from the current music piece
             SetAttributes();
