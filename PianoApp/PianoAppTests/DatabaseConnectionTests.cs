@@ -16,7 +16,7 @@ namespace PianoAppTests
             DatabaseConnection connection = new DatabaseConnection();
 
             //act
-            bool test = connection.addMusic("test", "test", "12-12-12", "MusicFiles/c4.xml", "test");
+            bool test = connection.addMusic("test", "test", "12-12-12", "121212", "test");
 
             //assert
             Assert.IsTrue(test);
