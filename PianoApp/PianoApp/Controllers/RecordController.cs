@@ -130,12 +130,36 @@ namespace PianoApp.Controllers
             }
 
             //convert dictionary to list
-            List<Measure> measureList = new List<Measure>();
-            foreach (Measure measure in measures.Values)
-            {
-                measureList.Add(measure);
-            }
+            List<Measure> measureList = addRests(measures);
             return measureList;
+        }
+
+        private static List<Measure> addRests(Dictionary<int, Measure> measures)
+        {
+            List<Measure> newMeasures = new List<Measure>();
+            foreach(Measure measure in measures.Values)
+            {
+                newMeasures.Add(measure);
+            }
+
+            for(int i = 1; i <= measures.Keys.Max(); i++)
+            {
+                if(!measures.ContainsKey(i))
+                {
+                    int measureLength = (int)((1000.0 / (bpm / 60.0)) * 4);
+                    Measure measure = new Measure();
+                    MeasureElement element = new MeasureElement();
+                    Note note = new Note();
+                    note.IsRest = true;
+                    note.Duration = measureLength;
+                    note.Type = "whole";
+                    element.Element = note;
+                    measure.MeasureElements.Add(element);
+                    newMeasures.Add(measure);
+                }
+            }
+
+            return newMeasures;
         }
 
         //generates a part with all measures
