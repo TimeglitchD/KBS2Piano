@@ -48,7 +48,7 @@ namespace PianoApp.Controllers
         }
 
         //returns a generated score based on pressed keys
-        public static Score getScore()
+        public Score getScore()
         {
             Score score = new Score();
             score.Parts.Add(getPart());

@@ -20,6 +20,7 @@ using PianoApp.Views;
 using PianoApp.Models;
 using PianoApp.Models.Exception;
 using System.Threading;
+using MusicXml.Domain;
 
 namespace PianoApp
 {
@@ -35,6 +36,7 @@ namespace PianoApp
         private StaveView recordSv;
         private NoteView noteV;
         private NoteView recordNv;
+        private RecordView rv = new RecordView();
 
         private StackPanel staves = new StackPanel();
         private StackPanel piano = new StackPanel();
@@ -42,7 +44,6 @@ namespace PianoApp
         private NoteView nv;
         public ButtonView bv;
         public bool show = true;
-
         private Grid myGrid = new Grid();
 
         private metronomeSound metronome;
@@ -77,18 +78,22 @@ namespace PianoApp
 
         public void musicPieceEndReached()
         {
+
+            //rv.Dispatcher.BeginInvoke((Action)(() => rv.SetModels(recordSv, noteV, sv, nv, mPc)));
+            //rv.Dispatcher.BeginInvoke((Action)(() => rv.Show()));
             //DefineRowMyGridEndOfMusicPiece();
             myGrid.Dispatcher.BeginInvoke((Action)(() => recordSv = new StaveView(myGrid, recordMpc, 2)));
             myGrid.Dispatcher.BeginInvoke((Action)(() => noteV = new NoteView(recordSv)));
-           
-            
+
+
             //nSv = new StaveView(myGrid, mPc, 2);
             //NoteView noteV = new NoteView(nSv);
             //noteV.DrawNotes();
-            myGrid.Dispatcher.BeginInvoke((Action) (() => myGrid.RowDefinitions[2].Height = new GridLength(225)));
+            myGrid.Dispatcher.BeginInvoke((Action)(() => myGrid.RowDefinitions[2].Height = new GridLength(225)));
             myGrid.Dispatcher.BeginInvoke((Action)(() => myGrid.RowDefinitions[1].Height = new GridLength(230)));
-            myGrid.Dispatcher.BeginInvoke((Action)(() => recordSv.MusicPieceController.createRecordMusicPiece(mPc._score)));
-            
+
+            myGrid.Dispatcher.BeginInvoke((Action)(() => recordSv.MusicPieceController.createRecordMusicPiece(mPc.RecordController.getScore())));
+           
             //RecordController.getScore();
             Console.WriteLine("Piece loaded.");
 

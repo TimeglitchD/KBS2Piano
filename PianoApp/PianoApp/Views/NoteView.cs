@@ -234,17 +234,17 @@ namespace PianoApp.Views
                     }
                     catch
                     {
-                        Console.WriteLine("noteview exc");
-                        Shape rest = (Shape)item;
-                        Thickness margin = rest.Margin;
-                        //draw the dot in the correct position
-                        margin.Left = pos + (float)totalwidth - (float)width + 30;
-                        rest.Margin = margin;
-                        Grid.SetRow(rest, 6);
-                        Grid.SetColumn(rest, 1);
-                        rest.HorizontalAlignment = HorizontalAlignment.Left;
-                        rest.VerticalAlignment = VerticalAlignment.Center;
-                        staveGrid.Children.Add(rest);
+                        //Console.WriteLine("noteview exc");
+                        //Shape rest = (Shape)item;
+                        //Thickness margin = rest.Margin;
+                        ////draw the dot in the correct position
+                        //margin.Left = pos + (float)totalwidth - (float)width + 30;
+                        //rest.Margin = margin;
+                        //Grid.SetRow(rest, 6);
+                        //Grid.SetColumn(rest, 1);
+                        //rest.HorizontalAlignment = HorizontalAlignment.Left;
+                        //rest.VerticalAlignment = VerticalAlignment.Center;
+                        //staveGrid.Children.Add(rest);
                     }
 
                 }
@@ -259,7 +259,9 @@ namespace PianoApp.Views
                    
                     try
                     {
-                        Label lb = (Label)obj;
+                        Label lb = new Label() {Content = (Label)obj };
+                        //lb = (Label)obj;
+
                         Label lbFinger = new Label();
 
                         Thickness margin = lb.Margin;
@@ -757,6 +759,8 @@ namespace PianoApp.Views
             line.Stroke = Brushes.Black;
             return line;
         }
+
+
 
 
     }

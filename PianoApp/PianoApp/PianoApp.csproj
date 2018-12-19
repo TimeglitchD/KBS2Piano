@@ -135,6 +135,9 @@
     </Compile>
     <Compile Include="Views\NoteView.cs" />
     <Compile Include="Views\PianoView.cs" />
+    <Compile Include="Views\RecordView.xaml.cs">
+      <DependentUpon>RecordView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StaveView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +212,10 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Views\MusicChooseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecordView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

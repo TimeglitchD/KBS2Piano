@@ -15,11 +15,11 @@ namespace PianoApp.Models
     {
         public List<StaffModel> StaffList { get; set; } = new List<StaffModel>();
         public List<Measure> MeasureList { get; set; } = new List<Measure>();
-        private StackPanel GreatStaff = new StackPanel();
+        private StackPanel GreatStaff;
         public Grid GreatStaffGrid { get; } = new Grid();
         public static FontFamily Metdemo { get; set; }
         public static FontFamily Notehedz { get; set; }
-        
+
         public GreatStaffModel()
         {
             Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + @"/MetDemo.ttf");
@@ -28,12 +28,13 @@ namespace PianoApp.Models
             Uri uri2 = new Uri(AppDomain.CurrentDomain.BaseDirectory + @"/NoteHedz170.ttf");
             Notehedz = new FontFamily(uri2, "NoteHedz");
 
-            StaffList.Add(new StaffModel(){Number = 1});
-            StaffList.Add(new StaffModel(){Number = 2});
+            StaffList.Add(new StaffModel() { Number = 1 });
+            StaffList.Add(new StaffModel() { Number = 2 });
         }
-        
+
         public Grid DrawGreatStaff()
         {
+            GreatStaff = new StackPanel();
             ColumnDefinition col1 = new ColumnDefinition();
             ColumnDefinition col2 = new ColumnDefinition();
             GreatStaffGrid.ColumnDefinitions.Add(col1);
@@ -83,6 +84,7 @@ namespace PianoApp.Models
             GreatStaff.HorizontalAlignment = HorizontalAlignment.Left;
 
             GreatStaffGrid.Children.Add(GreatStaff);
+           
             GreatStaffGrid.Children.Add(accolade);
 
             return GreatStaffGrid;
