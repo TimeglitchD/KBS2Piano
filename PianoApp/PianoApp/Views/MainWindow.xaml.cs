@@ -212,7 +212,7 @@ namespace PianoApp
             kC.KeyDown(e);
 
             // ... Test for F5 key.
-            if (e.Key == Key.Space)
+            if (e.Key == System.Windows.Input.Key.Space)
             {
                 bv.TriggerStartBtnBySpaceKeyDown();
             }

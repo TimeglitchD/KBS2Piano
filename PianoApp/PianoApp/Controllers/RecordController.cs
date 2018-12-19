@@ -142,8 +142,7 @@ namespace PianoApp.Controllers
         private static Part getPart()
         {
             Part part = new Part();
-            
-
+            part.Measures = GetMeasures();
             return part;
         }
     }
