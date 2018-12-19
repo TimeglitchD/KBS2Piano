@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Timers;
+using System.Windows;
 using static MusicXml.Domain.Note;
 
 
@@ -89,6 +90,12 @@ namespace PianoApp.Controllers
         private List<Note>[] prevnote;
         private List<Note> newlistprevnote;
 
+        private int _scoreVal = 0;
+        private int _amountOfNotes = 0;
+        private int _goodNotes = 0;
+        private int _endReached = 0;
+        private int _amountOfGreatStaffs = 0;
+
         public GuidesController(MidiController midi)
         {
             this.midi = midi;
@@ -97,6 +104,7 @@ namespace PianoApp.Controllers
 
         private void FillToDoList()
         {
+            _amountOfNotes = 0;
             foreach (var scorePart in Score.Parts)
             {
                 //Access all measures inside the music piece
@@ -108,6 +116,7 @@ namespace PianoApp.Controllers
                         //Access the element if it is a note
                         if (measureElement.Type.Equals(MeasureElementType.Note))
                         {
+                            _amountOfNotes++;
                             var note = (Note)measureElement.Element;
 
                             if (note.Pitch == null) continue;
@@ -136,6 +145,8 @@ namespace PianoApp.Controllers
 
         private void SetAttributes()
         {
+            _amountOfGreatStaffs = Sheet.SheetModel.GreatStaffModelList.Count;
+
             //set timing of music piece
             _bpsecond = _bpm / 60;
 
@@ -239,7 +250,7 @@ namespace PianoApp.Controllers
                 for (int i = 0; i < 1; i++)
                 {
                     //Add note to active Dictionary
-                    if (!tempDict.ContainsKey(tempList[i].Key))
+                    if (tempList.Count > 0)
                     {
                         //Add note to active Dictionary
 
@@ -254,26 +265,26 @@ namespace PianoApp.Controllers
                             staffdivs[staffNumber] = tempList[i].Key.Duration;
                             prevnote[staffNumber].Add(tempList[i].Key);
 
-                        }
 
-                        RemoveFirstNoteFromToDoDict(tempList[i].Key);
+                            RemoveFirstNoteFromToDoDict(tempList[i].Key);
 
-                        for (int j = i + 1; j < tempList.Count; j++)
-                        {
-                            if (tempList[i].Key != tempList[j].Key &&
-                                tempList[j].Key.XPos > tempList[i].Key.XPos - 1 &&
-                                tempList[j].Key.XPos < tempList[i].Key.XPos + 1 &&
-                                tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
+                            for (int j = i + 1; j < tempList.Count; j++)
                             {
-                                //Add note with same pos to active Dictionary
-                                if (!tempDict.ContainsKey(tempList[j].Key))
-                                    tempDict.Add(tempList[j].Key, new Timeout()
-                                    {
-                                        NoteTimeout = tempList[j].Value,
-                                        TimeAdded = StopWatch.ElapsedMilliseconds
-                                    });
-                                //Remove the note with same pos from to do 
-                                RemoveFirstNoteFromToDoDict(tempList[j].Key);
+                                if (tempList[i].Key != tempList[j].Key &&
+                                    tempList[j].Key.XPos > tempList[i].Key.XPos - 1 &&
+                                    tempList[j].Key.XPos < tempList[i].Key.XPos + 1 &&
+                                    tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
+                                {
+                                    //Add note with same pos to active Dictionary
+                                    if (!tempDict.ContainsKey(tempList[j].Key))
+                                        tempDict.Add(tempList[j].Key, new Timeout()
+                                        {
+                                            NoteTimeout = tempList[j].Value,
+                                            TimeAdded = StopWatch.ElapsedMilliseconds
+                                        });
+                                    //Remove the note with same pos from to do 
+                                    RemoveFirstNoteFromToDoDict(tempList[j].Key);
+                                }
                             }
                         }
                     }
@@ -284,9 +295,17 @@ namespace PianoApp.Controllers
                     HoldPosition?.Invoke(this, EventArgs.Empty);
                 }
             }
+
+            if (_endReached == _amountOfGreatStaffs)
+            {
+                System.Windows.MessageBox.Show($"Je score: {CalcScore()}");
+            }
         }
 
-
+        private int CalcScore()
+        {
+            return (100 * _goodNotes) / _amountOfNotes;
+        }
 
         private MockupNote getNoteFromNoteNumber(int nn)
         {
@@ -346,6 +365,7 @@ namespace PianoApp.Controllers
                         {
                             //if the pressed keys time is in between note marge
                             activeNote.Key.State = NoteState.Good;
+                            _goodNotes++;
                         }
                     }
                 }
@@ -364,11 +384,13 @@ namespace PianoApp.Controllers
             if (noteDict.TryGetValue(lastNoteStaffOne, out temp))
             {
                 atStaffEndOne = true;
+                _endReached++;
             }
 
             if (noteDict.TryGetValue(lastNoteStaffTwo, out temp))
             {
                 atStaffEndTwo = true;
+               
             }
         }
 
@@ -389,7 +411,10 @@ namespace PianoApp.Controllers
                 }
 
 
-                stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
+                if (currentStaff < Sheet.SheetModel.GreatStaffModelList.Count)
+                {
+                    stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
+                }
 
                 if (StaffEndReached != null)
                 {
@@ -418,6 +443,7 @@ namespace PianoApp.Controllers
 
         public bool Start()
         {
+            _goodNotes = 0;
             ////Set the attributes from the current music piece
             SetAttributes();
 
