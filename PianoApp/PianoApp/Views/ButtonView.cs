@@ -272,12 +272,12 @@ namespace PianoApp.Views
             if (paused)
             {
                 paused = false;
-                startBtn.Content = "▶";
+                startBtn.Content = "❚❚";
             }
             else
             {
                 paused = true;
-                startBtn.Content = "❚❚";
+                startBtn.Content = "▶";
             }
             return paused;
         }
