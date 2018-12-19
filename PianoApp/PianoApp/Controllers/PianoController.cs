@@ -64,7 +64,7 @@ namespace PianoApp.Controllers
                 //.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave))
                 foreach (var octaveModel in PianoModel.OctaveModelList.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave)))
                 {
-                    foreach (var keyModel in octaveModel.KeyModelList)
+                    foreach (var keyModel in octaveModel.KeyModelList.Where(n => !n.Active))
                     {
                         keyModel.fingerSettingEnabled = fingerSettingEnabled;
 
@@ -74,20 +74,32 @@ namespace PianoApp.Controllers
                             keyModel.Active = true;
                             keyModel.FingerNum = keyValuePair.Key.FingerNum;
                             keyModel.StaffNumber = keyValuePair.Key.Staff;
-                        }
-                        else
-                        {
-                            keyModel.Active = false;
-                            keyModel.FingerNum = 0;
-                        }
-                       
+                        }          
                     }
                 }
             }
 
+            //go over all keys and compare to note when true set active true on the corresponding key...
+            foreach (var keyValuePair in tempDict)
+            {
+                //.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave))
+                foreach (var octaveModel in PianoModel.OctaveModelList.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave)))
+                {
+                    foreach (var keyModel in octaveModel.KeyModelList.Where(n => n.Active))
+                    {
+                        keyModel.fingerSettingEnabled = fingerSettingEnabled;
 
-            Redraw();
-  
+                        if (keyValuePair.Key.Pitch.Step.ToString() != keyModel.Step.ToString() &&
+                            keyValuePair.Key.Pitch.Alter != keyModel.Alter)
+                        {
+                            keyModel.Active = false;
+                            keyModel.FingerNum = 0;
+                        }
+                    }
+                }
+            }
+
+            Redraw();  
         }
 
         public void Redraw()
@@ -114,6 +126,5 @@ namespace PianoApp.Controllers
                 return PianoModel.DrawPianoModel();
             }
         }
-
     }
 }

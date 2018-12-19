@@ -200,16 +200,11 @@ namespace PianoApp.Controllers
         private void NoteIntersectEvent(EventArgs e, int staffNumber)
         {
             if (staffdivs[staffNumber] > 0)
-            {
                 staffdivs[staffNumber]--;
-            }
-
 
             if (staffdivs[staffNumber] == 0)
             {
-
                 //remove keys that are done
-
                 var _activ = new Dictionary<Note, Timeout>(_activeNoteAndTimeoutDict).ToDictionary(k => k.Key, k => k.Value);
                 foreach (Note note in _activ.Keys)
                 {
@@ -221,19 +216,15 @@ namespace PianoApp.Controllers
                     _activeNoteAndTimeoutDict.Remove(note);
                 }
 
-
                 var tempList = _toDoNoteDict1.ToList();
                 if (staffNumber == 1)
                 {
                     tempList = _toDoNoteDict2.ToList();
                 }
 
-
                 for (int i = 0; i < 1; i++)
                 {
                     //Add note to active Dictionary
-
-
                     if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
                     {
                         //Add note to active Dictionary
@@ -284,12 +275,7 @@ namespace PianoApp.Controllers
 
                     HoldPosition?.Invoke(this, EventArgs.Empty);
                 }
-
-
-
-
             }
-
         }
 
 
@@ -299,9 +285,7 @@ namespace PianoApp.Controllers
             int octave = (int)Math.Floor((decimal)nn / 12);
             int noteNumber = (int)Math.Floor((decimal)nn - ((12 * octave) - 1));
             char step = '*';
-            int alter = 0;
-
-            //            Console.WriteLine(noteNumber);
+            int alter = 0;           
 
             switch (noteNumber)
             {
