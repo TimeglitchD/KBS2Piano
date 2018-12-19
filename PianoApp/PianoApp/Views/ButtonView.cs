@@ -274,7 +274,7 @@ namespace PianoApp.Views
 
         private void StopMusicPiece()
         {
-            // Stukk resetten
+            // Stuk stoppen
             sv.ScrollToTop(this, EventArgs.Empty);
             StopBtn.IsEnabled = true;
             mPc.Guide.paused = false;
@@ -291,6 +291,7 @@ namespace PianoApp.Views
         public void StopBtn_Click(object sender, RoutedEventArgs e)
         {
             StopMusicPiece();
+            metronomeButton.IsEnabled = true;
         }
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
@@ -344,17 +345,19 @@ namespace PianoApp.Views
                         // If paused continu piece by metronome
                         if (metronomeEnabled)
                         {
-                            metronome.startMetronome(bpmValue, 4, 1);
+                            metronome.startMetronome(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
                         }
                         else
                         {
-                            metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+                            metronome.startMetronomeCountDownOnly(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
                         }
                     }
                     // If piece is not paused, pause piece
                     else
                     {
                         mPc.Guide.Pause();
+                        metronome.stopMetronome();
+                        metronomeButton.IsEnabled = true;
                     }
                 }
                 else
@@ -365,11 +368,11 @@ namespace PianoApp.Views
                     //set value in metronome and start it.
                     if (metronomeEnabled)
                     {
-                        metronome.startMetronome(bpmValue, 4, 1);
+                        metronome.startMetronome(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
                     }
                     else
                     {
-                        metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+                        metronome.startMetronomeCountDownOnly(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
                     }
                     DatabaseConnection dbCon = new DatabaseConnection();
                     dbCon.ExcecuteCommandNoOutput($"UPDATE Music SET Bpm = ({Convert.ToInt32(bpmValue)}) WHERE Id = {_musicPieceId}");
@@ -408,11 +411,11 @@ namespace PianoApp.Views
 
             if (metronomeEnabled)
             {
-                metronome.startMetronome(bpmValue, 4, 1);
+                metronome.startMetronome(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
             }
             else
             {
-                metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+                metronome.startMetronomeCountDownOnly(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
             }
             
         }
@@ -472,10 +475,10 @@ namespace PianoApp.Views
         {
             startBtn.IsEnabled = false;
             TextBlock number = new TextBlock();
-            number.Text = (4 - metronome.elapsedBeats).ToString();
+            number.Text = (mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats - metronome.elapsedBeats).ToString();
             Console.WriteLine(number.Text);
             startBtn.Content = number;
-            if (4 - metronome.elapsedBeats == 4)
+            if (mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats - metronome.elapsedBeats == mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats)
             {
                 startBtn.IsEnabled = true;
                 startBtn.Content = "❚❚";
@@ -489,6 +492,7 @@ namespace PianoApp.Views
 
                 CheckPause();
             }
+            startBtn.IsEnabled = true;
         }
 
         private void DefineGridRowsMenuGrid()
