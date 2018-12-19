@@ -115,6 +115,42 @@ namespace PianoApp.Controllers
                 e.Timestamp, e.RawMessage, e.MidiEvent));
         }
 
+        public void PlayNotes(Dictionary<Note, Timeout> notes)
+        {
+            foreach (var keyValuePair in notes)
+            {
+                var noteNumber = 0;
+                if (keyValuePair.Key.Pitch.Alter == 0)
+                {
+                    switch (keyValuePair.Key.Pitch.Step)
+                    {
+                        case 'C': noteNumber = 0; break;
+                        case 'D': noteNumber = 2; break;
+                        case 'E': noteNumber = 4; break;
+                        case 'F': noteNumber = 5; break;
+                        case 'G': noteNumber = 7; break;
+                        case 'A': noteNumber = 9; break;
+                        case 'B': noteNumber = 11; break;
+                    }
+                }
+                else 
+                {
+                    switch (keyValuePair.Key.Pitch.Step)
+                    {
+                        case 'C': noteNumber = 1; break;
+                        case 'D': case 'E': noteNumber = 3; break;
+                        case 'F': noteNumber = 6; break;
+                        case 'G': noteNumber = 8; break;
+                        case 'A': case 'B': noteNumber = 10; break;
+                    }
+                }
+
+                noteNumber = noteNumber * (keyValuePair.Key.Pitch.Octave + 1);
+
+                MidiOutput.play(noteNumber);
+            }   
+        }
+
         protected virtual void OnMidiInputChanged(MidiControllerEventArgs e)
         {
             midiInputChanged?.Invoke(this, e);

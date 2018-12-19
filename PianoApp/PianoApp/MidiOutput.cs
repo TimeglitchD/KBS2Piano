@@ -11,17 +11,17 @@ namespace PianoApp
 {
     public class MidiOutput
     {
-        private static MidiOut midiOut = new MidiOut(0);
+        public static MidiOut MidiOut = new MidiOut(0);
         
         public static void play(int note)
         {
             Console.WriteLine(note.ToString());
-            midiOut?.Send(MidiMessage.StartNote(note, 127, 1).RawData);
+            MidiOut?.Send(MidiMessage.StartNote(note, 127, 1).RawData);
         }
 
         public static void stop(int note)
         {
-            midiOut.Send(MidiMessage.StopNote(note, 127, 1).RawData);
+            MidiOut.Send(MidiMessage.StopNote(note, 127, 1).RawData);
         }
 
         public static void PlayNotes(Dictionary<Note, Timeout> notes)
@@ -29,7 +29,7 @@ namespace PianoApp
             foreach (var keyValuePair in notes)
             {
                 var noteNumber = (int)keyValuePair.Key.Pitch.Step;
-                midiOut?.Send(MidiMessage.StartNote(noteNumber, 127, 1).RawData);
+                MidiOut?.Send(MidiMessage.StartNote(noteNumber, 127, 1).RawData);
             }
         }
     }

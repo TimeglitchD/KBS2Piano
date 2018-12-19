@@ -58,6 +58,27 @@ namespace PianoApp.Controllers
 
             var tempDict = new Dictionary<Note, Timeout>(noteAndTimeoutDictionary).ToDictionary(k => k.Key, k => k.Value);
 
+
+            //go over all keys and compare to note when true set active true on the corresponding key...
+            foreach (var keyValuePair in tempDict)
+            {
+                //.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave))
+                foreach (var octaveModel in PianoModel.OctaveModelList.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave)))
+                {
+                    foreach (var keyModel in octaveModel.KeyModelList.Where(n => n.Active))
+                    {
+                        keyModel.fingerSettingEnabled = fingerSettingEnabled;
+
+                        if (keyValuePair.Key.Pitch.Step.ToString() != keyModel.Step.ToString() &&
+                            keyValuePair.Key.Pitch.Alter != keyModel.Alter)
+                        {
+                            keyModel.Active = false;
+                            keyModel.FingerNum = 0;
+                        }
+                    }
+                }
+            }
+
             //go over all keys and compare to note when true set active true on the corresponding key...
             foreach (var keyValuePair in tempDict)
             {
@@ -79,25 +100,7 @@ namespace PianoApp.Controllers
                 }
             }
 
-            //go over all keys and compare to note when true set active true on the corresponding key...
-            foreach (var keyValuePair in tempDict)
-            {
-                //.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave))
-                foreach (var octaveModel in PianoModel.OctaveModelList.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave)))
-                {
-                    foreach (var keyModel in octaveModel.KeyModelList.Where(n => n.Active))
-                    {
-                        keyModel.fingerSettingEnabled = fingerSettingEnabled;
 
-                        if (keyValuePair.Key.Pitch.Step.ToString() != keyModel.Step.ToString() &&
-                            keyValuePair.Key.Pitch.Alter != keyModel.Alter)
-                        {
-                            keyModel.Active = false;
-                            keyModel.FingerNum = 0;
-                        }
-                    }
-                }
-            }
 
             Redraw();  
         }

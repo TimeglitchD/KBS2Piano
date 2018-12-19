@@ -58,7 +58,8 @@ namespace PianoApp.Controllers
         private float _bpsecond;
         private int _milsecperbeat;
 
-        private Dictionary<Note, Timeout> _activeNoteAndTimeoutDict = new Dictionary<Note, Timeout>();
+        private Dictionary<Note, Timeout> _activeNoteAndTimeoutDict1 = new Dictionary<Note, Timeout>();
+        private Dictionary<Note, Timeout> _activeNoteAndTimeoutDict2 = new Dictionary<Note, Timeout>();
         private Dictionary<int, Timeout> _pressedKeyAndTimeDict = new Dictionary<int, Timeout>();
         private Dictionary<Note, float> _toDoNoteDict1 = new Dictionary<Note, float>();
         private Dictionary<Note, float> _toDoNoteDict2 = new Dictionary<Note, float>();
@@ -204,20 +205,29 @@ namespace PianoApp.Controllers
 
             if (staffdivs[staffNumber] == 0)
             {
+                //Check key press is correct or not
+                CheckPressedKeysToActiveNotes(staffNumber);
+
+                var tempDict = _activeNoteAndTimeoutDict1;
+
+                if (staffNumber == 2)
+                {
+                    tempDict = _activeNoteAndTimeoutDict2;
+                }
                 //remove keys that are done
-                var _activ = new Dictionary<Note, Timeout>(_activeNoteAndTimeoutDict).ToDictionary(k => k.Key, k => k.Value);
+                var _activ = new Dictionary<Note, Timeout>(tempDict).ToDictionary(k => k.Key, k => k.Value);
                 foreach (Note note in _activ.Keys)
                 {
+                    tempDict.Remove(note);
                     if (note.State != NoteState.Good)
                     {
                         note.State = NoteState.Wrong;
                     }
-                    Console.WriteLine(note.Pitch + " is klaar");
-                    _activeNoteAndTimeoutDict.Remove(note);
+
                 }
 
                 var tempList = _toDoNoteDict1.ToList();
-                if (staffNumber == 1)
+                if (staffNumber == 2)
                 {
                     tempList = _toDoNoteDict2.ToList();
                 }
@@ -225,13 +235,13 @@ namespace PianoApp.Controllers
                 for (int i = 0; i < 1; i++)
                 {
                     //Add note to active Dictionary
-                    if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
+                    if (!tempDict.ContainsKey(tempList[i].Key))
                     {
                         //Add note to active Dictionary
 
-                        if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[i].Key))
+                        if (!tempDict.ContainsKey(tempList[i].Key))
                         {
-                            _activeNoteAndTimeoutDict.Add(tempList[i].Key, new Timeout()
+                            tempDict.Add(tempList[i].Key, new Timeout()
                             {
                                 NoteTimeout = tempList[i].Value,
                                 TimeAdded = StopWatch.ElapsedMilliseconds
@@ -252,8 +262,8 @@ namespace PianoApp.Controllers
                                 tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
                             {
                                 //Add note with same pos to active Dictionary
-                                if (!_activeNoteAndTimeoutDict.ContainsKey(tempList[j].Key))
-                                    _activeNoteAndTimeoutDict.Add(tempList[j].Key, new Timeout()
+                                if (!tempDict.ContainsKey(tempList[j].Key))
+                                    tempDict.Add(tempList[j].Key, new Timeout()
                                     {
                                         NoteTimeout = tempList[j].Value,
                                         TimeAdded = StopWatch.ElapsedMilliseconds
@@ -264,14 +274,11 @@ namespace PianoApp.Controllers
                         }
                     }
 
-                    checkLastNote(_activeNoteAndTimeoutDict);
+                    checkLastNote(tempDict);
                     goToNextStaff();
 
-                    //Check key press is correct or not
-                    CheckPressedKeysToActiveNotes();
-
-                    Piano.UpdatePianoKeys(_activeNoteAndTimeoutDict);
-                    Sheet.UpdateNotes(_activeNoteAndTimeoutDict);
+                    Piano.UpdatePianoKeys(tempDict);
+                    Sheet.UpdateNotes(tempDict);
 
                     HoldPosition?.Invoke(this, EventArgs.Empty);
                 }
@@ -307,9 +314,16 @@ namespace PianoApp.Controllers
         }
 
 
-        private void CheckPressedKeysToActiveNotes()
+        private void CheckPressedKeysToActiveNotes(int staffNumber)
         {
-            foreach (var activeNote in _activeNoteAndTimeoutDict.Where(n => n.Key.State == NoteState.Active))
+            var tempDict = _activeNoteAndTimeoutDict1;
+
+            if (staffNumber == 2)
+            {
+                tempDict = _activeNoteAndTimeoutDict2;
+            }
+
+            foreach (var activeNote in tempDict.Where(n => n.Key.State == NoteState.Active))
             {
                 if (ActiveKeys.Count > 0)
                 {
@@ -321,13 +335,13 @@ namespace PianoApp.Controllers
 
                         var activeKeynote = getNoteFromNoteNumber(activeKey.Key);
 
-                        Console.WriteLine($"note: {activeNote.Key.Pitch.Step} key: {activeKeynote.Step}");
+//                        Console.WriteLine($"note: {activeNote.Key.Pitch.Step} key: {activeKeynote.Step}");
 
                         if (activeNote.Key.Pitch.Step == activeKeynote.Step &&
                             activeNote.Key.Pitch.Alter == activeKeynote.Alter &&
                             activeNote.Key.Pitch.Octave == activeKeynote.Octave &&
-                            keyTimeAdded >= noteTimeAdded - (noteTimeAdded * .05) &&
-                            keyTimeAdded <= (noteTimeAdded + (noteTimeAdded * .05)) + (noteTime * 1000))
+                            keyTimeAdded >= noteTimeAdded - (noteTimeAdded * .10) &&
+                            keyTimeAdded <= (noteTimeAdded + (noteTimeAdded * .10)) + (noteTime * 1000))
                         {
                             //if the pressed keys time is in between note marge
                             activeNote.Key.State = NoteState.Good;
@@ -476,7 +490,8 @@ namespace PianoApp.Controllers
             _timerStaffTwo.Stop();
             _toDoNoteDict1.Clear();
             _toDoNoteDict2.Clear();
-            _activeNoteAndTimeoutDict.Clear();
+            _activeNoteAndTimeoutDict1.Clear();
+            _activeNoteAndTimeoutDict2.Clear();
             SetAttributes();
         }
 
