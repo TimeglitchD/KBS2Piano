@@ -33,7 +33,7 @@ namespace PianoApp.Controllers
                         {
                             if (note.Pitch != null)
                             {
-                                if (keyValuePair.Key.XPos == note.XPos && keyValuePair.Key.MeasureNumber == note.MeasureNumber)
+                                if (keyValuePair.Key == note)
                                 {
                                     note.State = NoteState.Active;
 //                                    MidiController.PlayNotes(noteAndTimeoutDictionary);

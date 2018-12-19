@@ -58,7 +58,7 @@ namespace PianoApp.Controllers
 
             AddNotesToMeasures();
 
-            Guide.staffEndReached += staffEndReached;
+            Guide.StaffEndReached += staffEndReached;
             Guide.GoToFirstStaff += GoToFirstStaff;
             Guide.HoldPosition += this.HoldPosition;
             MidiController.Guide = Guide;
