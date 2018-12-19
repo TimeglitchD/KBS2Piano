@@ -132,12 +132,44 @@ namespace PianoApp
             }
         }
 
+        public bool UpdateRecord(string courseType, string id)
+        {
+            string query = "UPDATE Music " +
+                            "SET CourseType = @CourseType " +
+                            "WHERE Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Parameters.AddWithValue("@CourseType", courseType);
+                    command.Parameters.AddWithValue("@Id", id);
+
+                    connection.Open();
+                    int result = command.ExecuteNonQuery();
+                    connection.Close();
+
+                    if (result < 0)
+                        Console.WriteLine("Error updating data in Database!");
+
+                    return true;
+                }
+                catch (SqlException ex)
+                {
+                    return false;
+                }
+            }
+
+        }
+
 
         //method for adding music record to database. Unused
-        public bool addMusic(string title, string description, string date, string location)
+        public bool addMusic(string title, string description, string date, string location, string courseType)
         {
-            string query = "INSERT INTO Music (Title,Description,Date,Location)" +
-                                " VALUES (@Title,@Description,@Date,@Location)";
+            string query = "INSERT INTO Music (Title,Description,Date,Location, CourseType)" +
+                                " VALUES (@Title,@Description,@Date,@Location, @CourseType)";
 
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
@@ -149,6 +181,7 @@ namespace PianoApp
                     command.Parameters.AddWithValue("@Description", description);
                     command.Parameters.AddWithValue("@Date", date);
                     command.Parameters.AddWithValue("@Location", location);
+                    command.Parameters.AddWithValue("@CourseType", courseType);
 
                     connection.Open();
                     int result = command.ExecuteNonQuery();

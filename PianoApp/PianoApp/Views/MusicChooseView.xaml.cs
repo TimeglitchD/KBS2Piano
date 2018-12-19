@@ -36,6 +36,7 @@ namespace PianoApp.Views
         private DataView expertView;
         private ButtonView bv;
         public string id;
+        public string selectedTab;
 
         public int Bpm;
 
@@ -52,6 +53,8 @@ namespace PianoApp.Views
             this.sv = sv;
             this.nv = nv;
             this.bv = bv;
+
+            this.selectedTab = "";
 
             musicView = connection.getSheetMusic().Tables["Music"].DefaultView;
             beginnerView = connection.getCourseMusic("Beginner").Tables["Beginner"].DefaultView;
@@ -101,15 +104,16 @@ namespace PianoApp.Views
                 return;
             selectedPiece = selected.Row["Location"] as String;
 
-            if(selected != null)
+            if (selected != null)
             {
                 //make delete button visible
                 DeleteBtn.Visibility = Visibility.Visible;
-            } else
+            }
+            else
             {
                 DeleteBtn.Visibility = Visibility.Hidden;
             }
-            
+
 
             //update textBoxes
             titleBox.Text = selected.Row["Title"].ToString();
@@ -127,6 +131,10 @@ namespace PianoApp.Views
         private void SearchTerm_TextChanged(object sender, TextChangedEventArgs e)
         {
             musicView.RowFilter = $"Description LIKE '%{SearchTerm.Text}%' OR Title Like '%{SearchTerm.Text}%'";
+            beginnerView.RowFilter = $"Description LIKE '%{SearchTerm.Text}%' OR Title Like '%{SearchTerm.Text}%'";
+            middelmatigView.RowFilter = $"Description LIKE '%{SearchTerm.Text}%' OR Title Like '%{SearchTerm.Text}%'";
+            gevorderdView.RowFilter = $"Description LIKE '%{SearchTerm.Text}%' OR Title Like '%{SearchTerm.Text}%'";
+            expertView.RowFilter = $"Description LIKE '%{SearchTerm.Text}%' OR Title Like '%{SearchTerm.Text}%'";
         }
 
         private void SheetMusic_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -204,19 +212,34 @@ namespace PianoApp.Views
                     string description = fdd.Omschrijving;
 
                     // add to db
-                    connection.addMusic(title, description, date, location);
+                    connection.addMusic(title, description, date, location, selectedTab);
                     txtEditor.Content = "[" + title + "] is added to DB";
 
-                    RefreshView(SheetMusic);
-                    
+                    RefreshAll();
                 }
             }
         }
 
-        private void RefreshView(DataGrid dg)
+        private void RefreshMusicView()
         {
+            SheetMusic.ItemsSource = null;
+            SheetMusic.ItemsSource = connection.getSheetMusic().Tables["Music"].DefaultView;
+        }
+
+        private void RefreshCourseView(DataGrid dg)
+        {
+            string header = dg.Name.ToString();
             dg.ItemsSource = null;
-            dg.ItemsSource = connection.getSheetMusic().Tables["Music"].DefaultView;
+            dg.ItemsSource = connection.getCourseMusic(header).Tables[header].DefaultView;
+        }
+
+        private void RefreshAll()
+        {
+            RefreshMusicView();
+            RefreshCourseView(Beginner);
+            RefreshCourseView(Middelmatig);
+            RefreshCourseView(Gevorderd);
+            RefreshCourseView(Expert);
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
@@ -228,9 +251,31 @@ namespace PianoApp.Views
             if (result == MessageBoxResult.Yes)
             {
                 connection.DeleteFromDb(id);
-                RefreshView(SheetMusic);
+                RefreshAll();
             }
+        }
 
+        void LesTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // ... Get TabControl reference.
+            var item = sender as TabControl;
+
+            // ... Get selected header name
+            var selected = item.SelectedItem as TabItem;
+            string text = selected.Header.ToString();
+
+            if (e.Source is TabControl)
+            {
+                this.selectedTab = text;
+            } 
+        }
+
+        void SheetTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(e.Source == TabControl)
+            {
+                this.selectedTab = "";
+            } 
         }
     }
 

@@ -14,8 +14,8 @@
             <ColumnDefinition Width="257*"/>
         </Grid.ColumnDefinitions>
 
-        <TabControl Name="TabControl" Margin="0,69,270,10" Grid.Column="1">
-            <TabItem Header="Sheet music">
+        <TabControl Name="TabControl" Margin="0,69,270,10" Grid.Column="1" SelectionChanged="SheetTab_SelectionChanged">
+            <TabItem Header="Sheet music" Name="SheetMusicTab">
                 <DataGrid x:Name="SheetMusic" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
                     <DataGrid.RowStyle>
                         <Style>
@@ -30,8 +30,8 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Lessen">
-                <TabControl Margin="0,0,0,0" Grid.Column="1">
+            <TabItem Header="Lessen" Name="LessenTab">
+                <TabControl Margin="0,0,0,0" Grid.Column="1" SelectionChanged="LesTab_SelectionChanged">
                     <TabItem Header="Beginner" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="63" Height="20" VerticalAlignment="Top">
                         <DataGrid x:Name="Beginner" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
                             <DataGrid.RowStyle>
@@ -40,14 +40,14 @@
                                 </Style>
                             </DataGrid.RowStyle>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="400" Header="Title" Binding="{Binding Title}"/>
-                                <DataGridTextColumn Width="80" Header="Adding Date"  Binding="{Binding Date}"/>
+                                <DataGridTextColumn Width="350" Header="Title" Binding="{Binding Title}"/>
+                                <DataGridTextColumn Width="150" Header="Adding Date"  Binding="{Binding Date}"/>
                                 <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
                                 <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
-                    <TabItem Header="Middelmatig" Height="22" Margin="-2.4,-2,-2.4,0" VerticalAlignment="Top">
+                    <TabItem Header="Middelmatig" Height="20" Margin="-2.4,-2,-2.4,0" VerticalAlignment="Top">
                         <DataGrid x:Name="Middelmatig" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
                             <DataGrid.RowStyle>
                                 <Style>
@@ -55,14 +55,14 @@
                                 </Style>
                             </DataGrid.RowStyle>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="400" Header="Title" Binding="{Binding Title}"/>
-                                <DataGridTextColumn Width="80" Header="Adding Date"  Binding="{Binding Date}"/>
+                                <DataGridTextColumn Width="350" Header="Title" Binding="{Binding Title}"/>
+                                <DataGridTextColumn Width="150" Header="Adding Date"  Binding="{Binding Date}"/>
                                 <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
                                 <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
-                    <TabItem Header="Gevorderd">
+                    <TabItem Header="Gevorderd" Margin="-2.4,-2,-1.6,2">
                         <DataGrid x:Name="Gevorderd" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
                             <DataGrid.RowStyle>
                                 <Style>
@@ -70,23 +70,23 @@
                                 </Style>
                             </DataGrid.RowStyle>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="400" Header="Title" Binding="{Binding Title}"/>
-                                <DataGridTextColumn Width="80" Header="Adding Date"  Binding="{Binding Date}"/>
+                                <DataGridTextColumn Width="350" Header="Title" Binding="{Binding Title}"/>
+                                <DataGridTextColumn Width="150" Header="Adding Date"  Binding="{Binding Date}"/>
                                 <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
                                 <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </TabItem>
-                    <TabItem Header="Expert">
-                        <DataGrid x:Name="Expert" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
+                    <TabItem Header="Expert" Margin="-1.6,-2,-1.6,0" Height="20" VerticalAlignment="Top">
+                        <DataGrid x:Name="Expert" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged" Margin="0,0,0.4,-0.4">
                             <DataGrid.RowStyle>
                                 <Style>
                                     <EventSetter Event="DataGridRow.MouseDoubleClick" Handler="SheetMusic_MouseDoubleClick"/>
                                 </Style>
                             </DataGrid.RowStyle>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="400" Header="Title" Binding="{Binding Title}"/>
-                                <DataGridTextColumn Width="80" Header="Adding Date"  Binding="{Binding Date}"/>
+                                <DataGridTextColumn Width="350" Header="Title" Binding="{Binding Title}"/>
+                                <DataGridTextColumn Width="150" Header="Adding Date"  Binding="{Binding Date}"/>
                                 <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
                                 <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
                             </DataGrid.Columns>
