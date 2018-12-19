@@ -123,8 +123,13 @@
     <Compile Include="MusicXml\Domain\Time.cs" />
     <Compile Include="MusicXml\MusicXmlParser.cs" />
     <Compile Include="Views\ButtonView.cs" />
+
     <Compile Include="Views\IntroductionView.xaml.cs">
       <DependentUpon>IntroductionView.xaml</DependentUpon>
+	</Compile>
+    <Compile Include="Views\FileDescriptionDialog.xaml.cs">
+      <DependentUpon>FileDescriptionDialog.xaml</DependentUpon>
+
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -200,7 +205,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+
     <Page Include="Views\IntroductionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FileDescriptionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -13,7 +13,8 @@
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="257*"/>
         </Grid.ColumnDefinitions>
-        <TabControl Margin="0,69,270,10" Grid.Column="1">
+
+        <TabControl Name="TabControl" Margin="0,69,270,10" Grid.Column="1">
             <TabItem Header="Sheet music">
                 <DataGrid x:Name="SheetMusic" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
                     <DataGrid.RowStyle>
@@ -22,16 +23,82 @@
                         </Style>
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="400" Header="Title" Binding="{Binding Title}"/>
-                        <DataGridTextColumn Width="80" Header="Adding Date"  Binding="{Binding Date}"/>
+                        <DataGridTextColumn Width="350" Header="Title" Binding="{Binding Title}"/>
+                        <DataGridTextColumn Width="150" Header="Adding Date"  Binding="{Binding Date}"/>
                         <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
                         <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
+            <TabItem Header="Lessen">
+                <TabControl Margin="0,0,0,0" Grid.Column="1">
+                    <TabItem Header="Beginner" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="63" Height="20" VerticalAlignment="Top">
+                        <DataGrid x:Name="Beginner" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
+                            <DataGrid.RowStyle>
+                                <Style>
+                                    <EventSetter Event="DataGridRow.MouseDoubleClick" Handler="SheetMusic_MouseDoubleClick"/>
+                                </Style>
+                            </DataGrid.RowStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="400" Header="Title" Binding="{Binding Title}"/>
+                                <DataGridTextColumn Width="80" Header="Adding Date"  Binding="{Binding Date}"/>
+                                <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
+                                <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                    <TabItem Header="Middelmatig" Height="22" Margin="-2.4,-2,-2.4,0" VerticalAlignment="Top">
+                        <DataGrid x:Name="Middelmatig" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
+                            <DataGrid.RowStyle>
+                                <Style>
+                                    <EventSetter Event="DataGridRow.MouseDoubleClick" Handler="SheetMusic_MouseDoubleClick"/>
+                                </Style>
+                            </DataGrid.RowStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="400" Header="Title" Binding="{Binding Title}"/>
+                                <DataGridTextColumn Width="80" Header="Adding Date"  Binding="{Binding Date}"/>
+                                <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
+                                <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                    <TabItem Header="Gevorderd">
+                        <DataGrid x:Name="Gevorderd" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
+                            <DataGrid.RowStyle>
+                                <Style>
+                                    <EventSetter Event="DataGridRow.MouseDoubleClick" Handler="SheetMusic_MouseDoubleClick"/>
+                                </Style>
+                            </DataGrid.RowStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="400" Header="Title" Binding="{Binding Title}"/>
+                                <DataGridTextColumn Width="80" Header="Adding Date"  Binding="{Binding Date}"/>
+                                <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
+                                <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                    <TabItem Header="Expert">
+                        <DataGrid x:Name="Expert" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
+                            <DataGrid.RowStyle>
+                                <Style>
+                                    <EventSetter Event="DataGridRow.MouseDoubleClick" Handler="SheetMusic_MouseDoubleClick"/>
+                                </Style>
+                            </DataGrid.RowStyle>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="400" Header="Title" Binding="{Binding Title}"/>
+                                <DataGridTextColumn Width="80" Header="Adding Date"  Binding="{Binding Date}"/>
+                                <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
+                                <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+
         </TabControl>
-        <Label FontSize="20" FontWeight="DemiBold" Content="Choose a piece of music" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Button FontSize="16" x:Name="select" Content="Choose piece of music" Grid.Column="1" HorizontalAlignment="Left" Margin="508,536,0,0" VerticalAlignment="Top" Width="243" Height="50" Click="OnSelectClick"/>
+
+        <Label FontSize="20" FontWeight="DemiBold" Content="Choose a musicpiece" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Button FontSize="16" x:Name="select" Content="Choose musicpiece" Grid.Column="1" HorizontalAlignment="Left" Margin="508,536,0,0" VerticalAlignment="Top" Width="243" Height="50" Click="OnSelectClick"/>
         <Label Content="Title" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,69,0,0" VerticalAlignment="Top" Width="242"/>
         <TextBox x:Name="titleBox" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="21" Margin="507.667,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242"/>
         <Label Content="Description" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,126,0,0" VerticalAlignment="Top" Width="242"/>
@@ -39,7 +106,7 @@
         <TextBox x:Name="SearchTerm" Grid.Column="1" HorizontalAlignment="Left" Height="19" Margin="332.2,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" TextChanged="SearchTerm_TextChanged"/>
         <Label Content="Search" Grid.Column="1" HorizontalAlignment="Left" Margin="284.2,66,0,0" VerticalAlignment="Top" Width="48" Height="25"/>
 
-        <Label Content="Top 5 attempts" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="503.2,313,0,0" VerticalAlignment="Top" Width="242"/>
+        <Label Content="Scoreboard" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="503.2,313,0,0" VerticalAlignment="Top" Width="242"/>
         <DataGrid Name="ScoreGrid" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="174" Margin="508.2,347,0,0" VerticalAlignment="Top" Width="241">
             <DataGrid.Columns>
                 <DataGridTextColumn  Width="65" Binding="{Binding Date}" IsReadOnly="True" Header="Date"/>
@@ -47,5 +114,8 @@
                 <DataGridTextColumn Width="88" Binding="{Binding Scored}" IsReadOnly="True" Header="Score"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Name ="OpenFileBtn" Content="Open File" Grid.Column="1" HorizontalAlignment="Left" Margin="674.2,32,0,0" VerticalAlignment="Top" Width="75" Click="AddButton_Click"/>
+        <Label Grid.Column="1" Name="txtEditor" HorizontalAlignment="Left" Height="36" Margin="332.2,28,0,0" Content="" VerticalAlignment="Top" Width="336"/>
+        <Button Content="Delete" Visibility="Hidden" Name="DeleteBtn" Grid.Column="1" HorizontalAlignment="Left" Margin="508.2,72,0,0" VerticalAlignment="Top" Width="75" Click="DeleteBtn_Click"/>
     </Grid>
 </Window>
