@@ -34,6 +34,7 @@ namespace PianoApp
         private StaveView sv;
         private StaveView recordSv;
         private NoteView noteV;
+        private NoteView recordNv;
 
         private StackPanel staves = new StackPanel();
         private StackPanel piano = new StackPanel();
@@ -51,6 +52,7 @@ namespace PianoApp
         Button startBtn = new Button();
         Button resetButton = new Button();
         private MusicPieceController mPc;
+        private MusicPieceController recordMpc;
 
         private bool _endOfMusicPiece = true;
 
@@ -76,19 +78,26 @@ namespace PianoApp
         public void musicPieceEndReached()
         {
             //DefineRowMyGridEndOfMusicPiece();
-
+            myGrid.Dispatcher.BeginInvoke((Action)(() => recordSv = new StaveView(myGrid, recordMpc, 2)));
+            myGrid.Dispatcher.BeginInvoke((Action)(() => noteV = new NoteView(recordSv)));
+           
+            
             //nSv = new StaveView(myGrid, mPc, 2);
             //NoteView noteV = new NoteView(nSv);
             //noteV.DrawNotes();
             myGrid.Dispatcher.BeginInvoke((Action) (() => myGrid.RowDefinitions[2].Height = new GridLength(225)));
             myGrid.Dispatcher.BeginInvoke((Action)(() => myGrid.RowDefinitions[1].Height = new GridLength(230)));
+            myGrid.Dispatcher.BeginInvoke((Action)(() => recordSv.MusicPieceController.createRecordMusicPiece(mPc._score)));
             
-            //recordSv.MusicPieceController.createRecordMusicPiece(mPc._score);
-
+            //RecordController.getScore();
             Console.WriteLine("Piece loaded.");
+
+            myGrid.Dispatcher.BeginInvoke((Action)(() => recordSv.DrawMusic()));
+
+            myGrid.Dispatcher.BeginInvoke((Action)(() => noteV.DrawNotes()));
             //succesfull at opening xml file.
-            //recordSv.DrawMusic();
-            //nv.DrawNotes();
+
+
 
         }
 
@@ -125,12 +134,11 @@ namespace PianoApp
             recordSc.MidiController = recordMc;
 
             KeyboardController recordKc = new KeyboardController() { PianoController = recordPc };
-            MusicPieceController recordMpc = new MusicPieceController() { Piano = recordPc, SheetController = recordSc, MidiController = recordMc, KeyboardController = recordKc };
+            recordMpc = new MusicPieceController() { Piano = recordPc, SheetController = recordSc, MidiController = recordMc, KeyboardController = recordKc };
 
 
-            recordSv = new StaveView(myGrid, recordMpc, 2);
-            noteV = new NoteView(recordSv);
-            noteV.DrawNotes();
+           
+            //noteV.DrawNotes();
 
             //Create the staves
             pv = new PianoView(myGrid, mPc);

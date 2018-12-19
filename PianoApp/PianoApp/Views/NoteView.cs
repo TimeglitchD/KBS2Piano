@@ -748,7 +748,7 @@ namespace PianoApp.Views
         }
 
         //every drawn symbol
-
+        [STAThread]
         private Line GetSymbolMeasureline()
         {
             Line line = new Line();

@@ -15,11 +15,11 @@ namespace PianoApp.Models
         public List<GreatStaffModel> GreatStaffModelList { get; set; } = new List<GreatStaffModel>();
         private StackPanel Sheet = new StackPanel();
 
-
         public StackPanel DrawSheet()
         {
             foreach (var item in GreatStaffModelList)
             {
+                //Sheet.Dispatcher.BeginInvoke((Action)(() => Sheet.Children.Add(item.DrawGreatStaff())));
                 Sheet.Children.Add(item.DrawGreatStaff());
                 Console.WriteLine("Great stave added");
             }

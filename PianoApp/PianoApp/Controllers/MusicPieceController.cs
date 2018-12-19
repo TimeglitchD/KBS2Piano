@@ -72,6 +72,7 @@ namespace PianoApp.Controllers
             
         }
 
+        [STAThread]
         public void createRecordMusicPiece(Score score)
         {
             _score = score;
@@ -108,6 +109,8 @@ namespace PianoApp.Controllers
         }
 
         //Create Great staffs based on amount of measures in the piece
+
+        [STAThread]
         private void AddGreatStaffsToSheet()
         {
 

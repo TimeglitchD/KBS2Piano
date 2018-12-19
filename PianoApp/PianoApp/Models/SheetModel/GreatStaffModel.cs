@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,8 +19,7 @@ namespace PianoApp.Models
         public Grid GreatStaffGrid { get; } = new Grid();
         public static FontFamily Metdemo { get; set; }
         public static FontFamily Notehedz { get; set; }
-
-
+        
         public GreatStaffModel()
         {
             Uri uri = new Uri(AppDomain.CurrentDomain.BaseDirectory + @"/MetDemo.ttf");
@@ -31,7 +31,7 @@ namespace PianoApp.Models
             StaffList.Add(new StaffModel(){Number = 1});
             StaffList.Add(new StaffModel(){Number = 2});
         }
-
+        
         public Grid DrawGreatStaff()
         {
             ColumnDefinition col1 = new ColumnDefinition();
@@ -40,8 +40,6 @@ namespace PianoApp.Models
             GreatStaffGrid.ColumnDefinitions.Add(col2);
             col1.Width = new GridLength(100);
             col2.Width = new GridLength(20, GridUnitType.Star);
-
-            
 
             foreach (var item in StaffList)
             {
