@@ -151,6 +151,7 @@ namespace PianoApp
             if (countdownFinished != null)
             {
                 countdownFinished(this, e);
+                
             }
         }
 
