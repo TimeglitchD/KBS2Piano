@@ -15,7 +15,7 @@ namespace PianoApp.Views
 {
     public class NoteView
     {
-        
+
         private MusicPieceController mPc;
         private decimal scale;
         private GreatStaffModel stave;
@@ -35,7 +35,7 @@ namespace PianoApp.Views
             {
                 stave = greatStaff;
                 totalwidth = 0;
-                if(greatStaff.MeasureList.Count() == 0)
+                if (greatStaff.MeasureList.Count() == 0)
                 {
                     DrawEnd(mPc.Sheet.GreatStaffModelList[idx]);
                 }
@@ -142,7 +142,7 @@ namespace PianoApp.Views
             if (n.IsRest)
             {
                 List<object> restlist = n.GetNote();
-                
+
                 if (prevnote != n)
                 {
                     if (!prevnote.IsRest)
@@ -159,11 +159,11 @@ namespace PianoApp.Views
                         pos += 10;
                     }
                 }
-                else if(meas.NewSystem && meas.Number == 1)
+                else if (meas.NewSystem && meas.Number == 1)
                 {
                     pos = 100;
                 }
-                else if(meas.NewSystem)
+                else if (meas.NewSystem)
                 {
                     pos = 80;
                 }
@@ -252,11 +252,11 @@ namespace PianoApp.Views
             else
             {
                 List<object> note = n.GetNote();
-                
+
                 foreach (object obj in note)
                 {
                     int row = CheckRow(pitch, staff.Number);
-                   
+
                     try
                     {
                         Label lb = (Label)obj;
@@ -278,7 +278,7 @@ namespace PianoApp.Views
                                 //STARTINGPOINT
                                 break;
                         }
-                        
+
                         switch (n.Type)
                         {
                             default:
@@ -295,16 +295,15 @@ namespace PianoApp.Views
                                 break;
                         }
 
-                        if(n.FingerNum != 0)
+                        if (n.FingerNum != 0)
                         {
                             lbFinger.Margin = margin;
                             lbFinger.Content = n.FingerNum;
-                            lbFinger.Margin = new Thickness(margin.Left + 5,margin.Top, margin.Right, margin.Bottom);
+                            lbFinger.Margin = new Thickness(margin.Left + 5, margin.Top, margin.Right, margin.Bottom);
                         }
 
                         lb.Margin = margin;
                         margin.Top = 0;
-
 
                         if (row != 0)
                         {
@@ -413,7 +412,8 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 1;
-                        }else
+                        }
+                        else
                         if (pitch.Octave == 4)
                         {
                             row = 8;
@@ -436,7 +436,8 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 2;
-                        }else
+                        }
+                        else
                         if (pitch.Octave == 4)
                         {
                             row = 9;
@@ -459,7 +460,8 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 3;
-                        }else
+                        }
+                        else
                         if (pitch.Octave == 4)
                         {
                             row = 10;
@@ -482,7 +484,8 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 4;
-                        }else
+                        }
+                        else
                         if (pitch.Octave == 4)
                         {
                             row = 11;
@@ -505,7 +508,8 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 5;
-                        }else
+                        }
+                        else
                         if (pitch.Octave == 4)
                         {
                             row = 12;
@@ -528,7 +532,8 @@ namespace PianoApp.Views
                         if (pitch.Octave == 5)
                         {
                             row = 6;
-                        }else
+                        }
+                        else
                         if (pitch.Octave == 4)
                         {
                             row = 13;
@@ -563,7 +568,8 @@ namespace PianoApp.Views
                         if (pitch.Octave == 4)
                         {
                             row = 1;
-                        }else
+                        }
+                        else
                         if (pitch.Octave == 3)
                         {
                             row = 8;
@@ -634,7 +640,8 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 4;
-                        }else
+                        }
+                        else
                         if (pitch.Octave == 2)
                         {
                             row = 11;
@@ -657,7 +664,8 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 5;
-                        }else
+                        }
+                        else
                         if (pitch.Octave == 2)
                         {
                             row = 12;
@@ -680,7 +688,8 @@ namespace PianoApp.Views
                         if (pitch.Octave == 3)
                         {
                             row = 6;
-                        }else
+                        }
+                        else
                         if (pitch.Octave == 2)
                         {
                             row = 13;

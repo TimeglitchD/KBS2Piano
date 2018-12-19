@@ -49,6 +49,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>piano.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
@@ -192,6 +195,7 @@
     <Folder Include="MusicXml\Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="piano.ico" />
     <Resource Include="Images\piano.png" />
     <Resource Include="Images\Vingerzetting.png" />
     <Content Include="MusicXml\MusicXml.csproj" />
