@@ -206,6 +206,7 @@ namespace PianoApp.Controllers
             {
                 //remove keys that are done
                 var _activ = new Dictionary<Note, Timeout>(_activeNoteAndTimeoutDict).ToDictionary(k => k.Key, k => k.Value);
+                checkLastNote(_activ);
                 foreach (Note note in _activ.Keys)
                 {
                     if (note.State != NoteState.Good)
@@ -215,6 +216,7 @@ namespace PianoApp.Controllers
                     Console.WriteLine(note.Pitch + " is klaar");
                     _activeNoteAndTimeoutDict.Remove(note);
                 }
+                goToNextStaff();
 
                 var tempList = _toDoNoteDict1.ToList();
                 if (staffNumber == 1)
@@ -264,8 +266,7 @@ namespace PianoApp.Controllers
                         }
                     }
 
-                    checkLastNote(_activeNoteAndTimeoutDict);
-                    goToNextStaff();
+                    
 
                     //Check key press is correct or not
                     CheckPressedKeysToActiveNotes();

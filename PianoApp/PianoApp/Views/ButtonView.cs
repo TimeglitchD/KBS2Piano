@@ -172,6 +172,16 @@ namespace PianoApp.Views
             myGrid.Children.Add(menuGrid);
         }
 
+        internal void EnableStopBtn()
+        {
+            StopBtn.IsEnabled = true;
+        }
+
+        internal void EnableResetBtn()
+        {
+            resetButton.IsEnabled = true;
+        }
+
         private void introductionBtn_Click(object sender, RoutedEventArgs e)
         {
             IntroductionView iV = new IntroductionView();
@@ -257,7 +267,7 @@ namespace PianoApp.Views
             _musicPieceId = e.Id;
         }
 
-        private bool CheckPause()
+        public bool CheckPause()
         {
             if (paused)
             {
@@ -317,7 +327,7 @@ namespace PianoApp.Views
         {
             try
             {
-                if (mPc.Guide.Score != null);
+                if (mPc.Guide.Score != null) ;
             }
             catch (Exception)
             {
@@ -398,6 +408,7 @@ namespace PianoApp.Views
             notesCB.IsEnabled = false;
         }
 
+
         public void ResetMusicPiece()
         {
             sv.ScrollToTop(this, EventArgs.Empty);
@@ -417,7 +428,7 @@ namespace PianoApp.Views
             {
                 metronome.startMetronomeCountDownOnly(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
             }
-            
+
         }
 
         private void ResetButton_Click(object sender, EventArgs e)
@@ -466,6 +477,12 @@ namespace PianoApp.Views
             startBtn.IsEnabled = false;
         }
 
+        public void EnableStartBtn()
+        {
+            startBtn.IsEnabled = true;
+
+        }
+
         public void DisableStopBtn()
         {
             StopBtn.IsEnabled = false;
@@ -492,7 +509,6 @@ namespace PianoApp.Views
 
                 CheckPause();
             }
-            startBtn.IsEnabled = true;
         }
 
         private void DefineGridRowsMenuGrid()
