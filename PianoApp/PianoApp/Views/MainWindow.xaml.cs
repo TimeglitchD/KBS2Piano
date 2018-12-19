@@ -82,7 +82,7 @@ namespace PianoApp
             // Create the Grid
             myGrid = new Grid
             {
-                ShowGridLines = true
+                ShowGridLines = false
             };
 
             // show menuGrid lines

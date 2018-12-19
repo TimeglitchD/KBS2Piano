@@ -239,44 +239,48 @@ namespace PianoApp.Controllers
                 for (int i = 0; i < 1; i++)
                 {
                     //Add note to active Dictionary
-                    if (!tempDict.ContainsKey(tempList[i].Key))
+                    if (tempList.Count > 0)
                     {
-                        //Add note to active Dictionary
-
                         if (!tempDict.ContainsKey(tempList[i].Key))
                         {
-                            tempDict.Add(tempList[i].Key, new Timeout()
+                            //Add note to active Dictionary
+
+                            if (!tempDict.ContainsKey(tempList[i].Key))
                             {
-                                NoteTimeout = tempList[i].Value,
-                                TimeAdded = StopWatch.ElapsedMilliseconds
-                            });
+                                tempDict.Add(tempList[i].Key, new Timeout()
+                                {
+                                    NoteTimeout = tempList[i].Value,
+                                    TimeAdded = StopWatch.ElapsedMilliseconds
+                                });
 
-                            staffdivs[staffNumber] = tempList[i].Key.Duration;
-                            prevnote[staffNumber].Add(tempList[i].Key);
+                                staffdivs[staffNumber] = tempList[i].Key.Duration;
+                                prevnote[staffNumber].Add(tempList[i].Key);
 
-                        }
+                            }
 
-                        RemoveFirstNoteFromToDoDict(tempList[i].Key);
+                            RemoveFirstNoteFromToDoDict(tempList[i].Key);
 
-                        for (int j = i + 1; j < tempList.Count; j++)
-                        {
-                            if (tempList[i].Key != tempList[j].Key &&
-                                tempList[j].Key.XPos > tempList[i].Key.XPos - 1 &&
-                                tempList[j].Key.XPos < tempList[i].Key.XPos + 1 &&
-                                tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
+                            for (int j = i + 1; j < tempList.Count; j++)
                             {
-                                //Add note with same pos to active Dictionary
-                                if (!tempDict.ContainsKey(tempList[j].Key))
-                                    tempDict.Add(tempList[j].Key, new Timeout()
-                                    {
-                                        NoteTimeout = tempList[j].Value,
-                                        TimeAdded = StopWatch.ElapsedMilliseconds
-                                    });
-                                //Remove the note with same pos from to do 
-                                RemoveFirstNoteFromToDoDict(tempList[j].Key);
+                                if (tempList[i].Key != tempList[j].Key &&
+                                    tempList[j].Key.XPos > tempList[i].Key.XPos - 1 &&
+                                    tempList[j].Key.XPos < tempList[i].Key.XPos + 1 &&
+                                    tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
+                                {
+                                    //Add note with same pos to active Dictionary
+                                    if (!tempDict.ContainsKey(tempList[j].Key))
+                                        tempDict.Add(tempList[j].Key, new Timeout()
+                                        {
+                                            NoteTimeout = tempList[j].Value,
+                                            TimeAdded = StopWatch.ElapsedMilliseconds
+                                        });
+                                    //Remove the note with same pos from to do 
+                                    RemoveFirstNoteFromToDoDict(tempList[j].Key);
+                                }
                             }
                         }
                     }
+                    
 
                     Piano.UpdatePianoKeys(tempDict);
                     Sheet.UpdateNotes(tempDict);
@@ -387,7 +391,6 @@ namespace PianoApp.Controllers
                     
                     return;
                 }
-
 
                 stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
 
