@@ -31,17 +31,18 @@
                         
                         <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
                         
-                            <Button Height="40" Width="80" FontSize="13"><TextBlock>Selecteer<LineBreak/>Muziekstuk</TextBlock>  </Button>
+                            <Button Height="40" Width="80" FontSize="13"><TextBlock>Select<LineBreak/>Muziekpiece</TextBlock>  </Button>
                         </TextBlock>
                         <TextBlock Margin="10" Grid.Row="0" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            Je kan op deze manier een muziekstuk inladen
+                            Een muziekstuk inladen uit het geheugen.
                         </TextBlock>
                         
                         <TextBlock Grid.Row="1" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Margin="0,-5,0,0">BPM =</TextBlock> <TextBox Margin="0,0,0,0" Width="40">60</TextBox>
                         </TextBlock>
                         <TextBlock Margin="10" Grid.Row="1" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            Hier kun je de BPM aanpassen (standaard 60). Je aanpassing wordt ook opgeslagen bij het muziekstuk, <LineBreak/>zo kan je later dezelfde bpm gebruiken
+                            BPM aanpassen (standaard 60). De aanpassing wordt opgeslagen bij het muziekstuk. 
+                            <LineBreak/> De volgende keer dat dit stuk wordt gekozen, wordt het opgeslagen BPM geladen.
                         </TextBlock>
                         
                         <TextBlock Grid.Row="2" Grid.Column="0" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -52,56 +53,56 @@
                             </ComboBox>
                         </TextBlock>
                         <TextBlock Margin="10" Grid.Row="2" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            BPM instellen op basis van een noot
+                            BPM instellen op basis van een noot.
                         </TextBlock>
                         <TextBlock Grid.Row="3" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Button Height="40" Width="40" FontSize="25">⟲</Button>
+                            <Button Height="40" Width="53" FontSize="25">⟲</Button>
                         </TextBlock>
                         <TextBlock Margin="10" Grid.Row="3" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            Reset het muziekstuk, na aftellen begint het stuk automatisch weer opnieuw.
+                            Reset het muziekstuk, na het aftellen begint het stuk automatisch opnieuw.
                         </TextBlock>
                         
                         <TextBlock Grid.Row="4" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Button Height="40" Width="40" FontSize="25">🔇</Button>
-                            <Button Height="40" Width="40" FontSize="25">🔉</Button>
+                            <Button Height="40" Width="60" FontSize="25">🔇</Button>
+                            <Button Height="40" Width="60" FontSize="25">🔉</Button>
                         </TextBlock>
                         <TextBlock Margin="10" Grid.Row="4" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            Aan/uitzetten van metronoom tijdens het spelen
+                            Aan/uitzetten van metronoom. Dit dient te worden aangegeven voor dat het stuk is gestart.
                         </TextBlock>
                         
                         <TextBlock Grid.Row="5" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Button Height="40" Width="40" FontSize="25">☝</Button>
+                            <Button Height="40" Width="54" FontSize="25">☝</Button>
                         </TextBlock>
                         <TextBlock Margin="10" Grid.Row="5" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            Hiermee kun je aangeven of je wilt dat de vingerzetting zichtbaar is op de pianotoetsen <LineBreak/>tijdens het spelen van een muziekstuk
+                            Aan/uitzetten van de vingersetting. Dit dient te worden aangegeven voor dat het stuk is gestart.
                         </TextBlock>
                         
                         <TextBlock Grid.Row="6" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Button Height="40" Width="40" FontSize="25">🎹</Button>
+                            <Button Height="40" Width="63" FontSize="25">🎹</Button>
                         </TextBlock>
                         <TextBlock Margin="10" Grid.Row="6" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            Hiermee kun je aangeven of de virtuele piano zichtbaar moet zijn <LineBreak/>tijdens het spelen van een muziekstuk
+                            Virtuele piano aan/uitzetten.
                         </TextBlock>
                         
                         <TextBlock Grid.Row="7" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Button Height="40" Width="40" FontSize="25">▶</Button>
+                            <Button Height="40" Width="53" FontSize="25">▶</Button>
                         </TextBlock>
                         <TextBlock Margin="10" Grid.Row="7" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            Het starten van een muziekstuk
+                            Muziekstuk starten.
                         </TextBlock>
                         
                         <TextBlock Grid.Row="8" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Button Height="40" Width="40" FontSize="25">❚❚</Button>
+                            <Button Height="40" Width="52" FontSize="25">❚❚</Button>
                         </TextBlock>
                         <TextBlock Margin="10" Grid.Row="8" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            Het pauzeren van een muziekstuk
+                            Muziekstuk pauzeren.
                         </TextBlock>
                         
                         <TextBlock Grid.Row="9" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Button Height="40" Width="40" FontSize="25">◼</Button>
+                            <Button Height="40" Width="51" FontSize="25">◼</Button>
                         </TextBlock>
                         <TextBlock Margin="10" Grid.Row="9" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            Het stoppen van een muziekstuk
+                            Muziekstuk stoppen.
                         </TextBlock>
                     </Grid>
                 </TabItem>
@@ -188,7 +189,7 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="Inladen (eigen) muziekstuk" >
+                <TabItem Header="Muziekstukken beheren" >
                     <Grid ShowGridLines="False">
                         <Grid.ColumnDefinitions>
                         </Grid.ColumnDefinitions>
@@ -198,12 +199,21 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition  Height="Auto"></RowDefinition>
                             <RowDefinition  Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
+                            <RowDefinition  Height="Auto"></RowDefinition>
                         </Grid.RowDefinitions>
-                       
-                        <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="1" FontSize="14">           
-                            1 Muziekstuk van Musescore halen
+                        <Border Margin="0,0,0,10" Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="Black">
+                            <TextBlock Margin="0,0,0,10" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                2. Muziekstukken beheren
+                            </TextBlock>
+                        </Border>
+                        <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="2" FontSize="14">           
+                            2.1 Muziekstuk van Musescore halen
                         </TextBlock>
-                        <Border Margin="0,0,0,10" Grid.Row="2" BorderThickness="0,0,0,1" BorderBrush="Black">
+                        <Border Margin="0,0,0,10" Grid.Row="3" BorderThickness="0,0,0,1" BorderBrush="Black">
                             <TextBlock Margin="0,0,0,10" FontSize="14">  
                                 1. Ga naar 
                                 <Hyperlink RequestNavigate="HandleLinkClick" NavigateUri="https://musescore.com/dashboard">  
@@ -218,15 +228,36 @@
                                 7. Nu krijg je een lijst met mogelijkheden hoe je dit bestand wilt downloaden, <LineBreak/>om het te gebruiken in ons programma selecteer je "MusicXML"
                             </TextBlock>
                         </Border>
-                        <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="3" FontSize="14">           
-                            1.2 Muziekstuk van Musescore inladen
+                        <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="4" FontSize="14">           
+                            2.2 Muziekstuk van Musescore inladen
                         </TextBlock>
-                        <Border Grid.Row="4" Margin="0,0,0,10" BorderThickness="0,0,0,1" BorderBrush="Black">
+                        <Border Grid.Row="5" Margin="0,0,0,10" BorderThickness="0,0,0,1" BorderBrush="Black">
                             <TextBlock Margin="0,0,0,10" FontSize="14">           
-                                 1. Selecteer binnen de applicatie "Muziekstuk inladen", nu verschijnt een nieuw scherm<LineBreak/>
-                                2. Selecteer de knop "Eigen muziekstuk inladen"<LineBreak/>
-                                3. Vervolgens zoek je het muziekstuk op die je wilt inladen<LineBreak/>
-                                4. Klik op "OK", nu staat je eigen gekozen muziekstuk in de lijst
+                                1. Klik binnen de musicChooser op "Browse", nu verschijnt een nieuw scherm<LineBreak/>
+                                2. Selecteer het gewenste bestand (alleen xml)<LineBreak/>
+                                3. Vul de gewenste gegevens aan<LineBreak/>
+                                4. Klik op "Add", nu staat je eigen gekozen muziekstuk in de lijst
+                            </TextBlock>
+                        </Border>
+                        <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="6" FontSize="14">           
+                            2.3 Muziekstuk verwijderen
+                        </TextBlock>
+                        <Border Grid.Row="7" Margin="0,0,0,10" BorderThickness="0,0,0,1" BorderBrush="Black">
+                            <TextBlock Margin="0,0,0,10" FontSize="14">           
+                                1. Selecteer binnen de musicChooser het te verwijderen muziekstuk<LineBreak/>
+                                2. Klik op "Delete"<LineBreak/>
+                                3. Bevestig je keuze<LineBreak/>
+                                4. Het muziekstuk is nu verwijderd
+                            </TextBlock>
+                        </Border>
+                        <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="8" FontSize="14">           
+                            2.4 Lesprogramma volgen
+                        </TextBlock>
+                        <Border Grid.Row="9" Margin="0,0,0,10" BorderThickness="0,0,0,1" BorderBrush="Black">
+                            <TextBlock Margin="0,0,0,10" FontSize="14">           
+                                1. Klik binnen de musicChooser op de tab "Lessen"<LineBreak/>
+                                2. Selecteer het gewenste Niveau<LineBreak/>
+                                3. Alle lessen van het geselecteerde niveau worden nu getoond
                             </TextBlock>
                         </Border>
                     </Grid>
