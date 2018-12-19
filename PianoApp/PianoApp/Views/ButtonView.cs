@@ -70,9 +70,9 @@ namespace PianoApp.Views
             metronomeText.Text = "🔇";
             metronomeButton = new Button();
             metronomeButton.Content = metronomeText;
-            metronomeButton.Width = 40;
-            metronomeButton.Height = 40;
-            metronomeButton.FontSize = 25;
+            metronomeButton.Width = 50;
+            metronomeButton.Height = 50;
+            metronomeButton.FontSize = 20;
             metronomeButton.Click += onMetronomeButtonClick;
             metronomeButton.HorizontalAlignment = HorizontalAlignment.Left;
 
@@ -86,8 +86,8 @@ namespace PianoApp.Views
             pianoText.TextDecorations = strikeTrough;
             pianoButton = new Button();
             pianoButton.Content = pianoText;
-            pianoButton.Width = 40;
-            pianoButton.Height = 40;
+            pianoButton.Width = 50;
+            pianoButton.Height = 50;
             pianoButton.FontSize = 20;
             pianoButton.Click += onPianoButtonClick;
             pianoButton.HorizontalAlignment = HorizontalAlignment.Center;
@@ -103,10 +103,10 @@ namespace PianoApp.Views
             fingerSettingTxt.TextDecorations = strikeTrough;
             fingerSettingBtn = new Button();
             fingerSettingBtn.Content = fingerSettingTxt;
-            fingerSettingBtn.Width = 40;
+            fingerSettingBtn.Width = 50;
             fingerSettingBtn.IsEnabled = false;
-            fingerSettingBtn.Height = 40;
-            fingerSettingBtn.FontSize = 25;
+            fingerSettingBtn.Height = 50;
+            fingerSettingBtn.FontSize = 20;
             fingerSettingBtn.Click += onFingerButtonClick;
             fingerSettingBtn.HorizontalAlignment = HorizontalAlignment.Center;
             fingerSettingBtn.VerticalAlignment = VerticalAlignment.Bottom;
@@ -116,26 +116,26 @@ namespace PianoApp.Views
             introductionBtn.FontSize = 25;
             introductionBtn.Name = "introductionBtn";
             introductionBtn.Content = "?";
-            introductionBtn.Width = 40;
-            introductionBtn.Height = 40;
+            introductionBtn.Width = 50;
+            introductionBtn.Height = 50;
             introductionBtn.HorizontalAlignment = HorizontalAlignment.Center;
             introductionBtn.Click += introductionBtn_Click;
 
             // Start button
-            startBtn.FontSize = 25;
+            startBtn.FontSize = 20;
             startBtn.Name = "startBtn";
             startBtn.Content = "▶";
-            startBtn.Width = 40;
-            startBtn.Height = 40;
+            startBtn.Width = 50;
+            startBtn.Height = 50;
             startBtn.HorizontalAlignment = HorizontalAlignment.Center;
             startBtn.Click += StartBtn_Click;
 
             // Stop Button
-            StopBtn.FontSize = 25;
+            StopBtn.FontSize = 20;
             StopBtn.Name = "stopBtn";
             StopBtn.Content = "◼";
-            StopBtn.Width = 40;
-            StopBtn.Height = 40;
+            StopBtn.Width = 50;
+            StopBtn.Height = 50;
             StopBtn.HorizontalAlignment = HorizontalAlignment.Center;
             StopBtn.Click += StopBtn_Click;
             StopBtn.IsEnabled = false;
@@ -144,9 +144,9 @@ namespace PianoApp.Views
             // Add the button to the Grid
             SelectSheetMusic = new Button();
             SelectSheetMusic.Name = "SelectSheetMusic";
-            SelectSheetMusic.Content = "Selecteer \n muziekstuk";
-            SelectSheetMusic.Width = menuGrid.ColumnDefinitions[0].Width.Value - 15;
-            SelectSheetMusic.Height = 40;
+            SelectSheetMusic.Content = "Select piece";
+            SelectSheetMusic.Width = menuGrid.ColumnDefinitions[0].Width.Value + 10;
+            SelectSheetMusic.Height = 50;
             SelectSheetMusic.HorizontalAlignment = HorizontalAlignment.Left;
             SelectSheetMusic.VerticalAlignment = VerticalAlignment.Bottom;
             SelectSheetMusic.Click += SelectSheetMusic_Click;
@@ -240,11 +240,11 @@ namespace PianoApp.Views
 
             // Reset button
             resetButton = new Button();
-            resetButton.FontSize = 25;
+            resetButton.FontSize = 20;
             resetButton.Name = "resetBtn";
             resetButton.Content = "⟲";
-            resetButton.Width = 40;
-            resetButton.Height = 40;
+            resetButton.Width = 50;
+            resetButton.Height = 50;
             resetButton.HorizontalAlignment = HorizontalAlignment.Right;
             resetButton.Click += ResetButton_Click;
             resetButton.IsEnabled = false;
