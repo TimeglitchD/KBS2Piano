@@ -118,52 +118,55 @@ namespace PianoApp.Controllers
         {
             foreach (var keyValuePair in notes)
             {
-                var noteNumber = 0;
-                var oct = keyValuePair.Key.Pitch.Octave;
-                if (keyValuePair.Key.Pitch.Alter == 0)
-                {
-                    switch (keyValuePair.Key.Pitch.Step)
+                if (!keyValuePair.Key.IsRest)
+                {                                       
+                    var noteNumber = 0;
+                    var oct = keyValuePair.Key.Pitch.Octave;
+                    if (keyValuePair.Key.Pitch.Alter == 0)
                     {
-                        case 'C': noteNumber = 0; break;
-                        case 'D': noteNumber = 2; break;
-                        case 'E': noteNumber = 4; break;
-                        case 'F': noteNumber = 5; break;
-                        case 'G': noteNumber = 7; break;
-                        case 'A': noteNumber = 9; break;
-                        case 'B': noteNumber = 11; break;
+                        switch (keyValuePair.Key.Pitch.Step)
+                        {
+                            case 'C': noteNumber = 0; break;
+                            case 'D': noteNumber = 2; break;
+                            case 'E': noteNumber = 4; break;
+                            case 'F': noteNumber = 5; break;
+                            case 'G': noteNumber = 7; break;
+                            case 'A': noteNumber = 9; break;
+                            case 'B': noteNumber = 11; break;
+                        }
                     }
-                }
-                else if (keyValuePair.Key.Pitch.Alter == 1)
-                {
-                    switch (keyValuePair.Key.Pitch.Step)
+                    else if (keyValuePair.Key.Pitch.Alter == 1)
                     {
-                        case 'C': noteNumber = 1; break;
-                        case 'D': noteNumber = 3; break;
-                        case 'E': noteNumber = 5; break;
-                        case 'F': noteNumber = 6; break;
-                        case 'G': noteNumber = 8; break;
-                        case 'A': noteNumber = 10; break;
-                        case 'B':
-                            noteNumber = 0; oct++; break;
+                        switch (keyValuePair.Key.Pitch.Step)
+                        {
+                            case 'C': noteNumber = 1; break;
+                            case 'D': noteNumber = 3; break;
+                            case 'E': noteNumber = 5; break;
+                            case 'F': noteNumber = 6; break;
+                            case 'G': noteNumber = 8; break;
+                            case 'A': noteNumber = 10; break;
+                            case 'B':
+                                noteNumber = 0; oct++; break;
+                        }
                     }
-                }
-                else if (keyValuePair.Key.Pitch.Alter == -1)
-                {
-                    switch (keyValuePair.Key.Pitch.Step)
+                    else if (keyValuePair.Key.Pitch.Alter == -1)
                     {
-                        case 'C': noteNumber = 11;
-                            oct--; break;
-                        case 'D': noteNumber = 1; break;
-                        case 'E': noteNumber = 3; break;
-                        case 'F': noteNumber = 4; break;
-                        case 'G': noteNumber = 6; break;
-                        case 'A': noteNumber = 8; break;
-                        case 'B': noteNumber = 10; break;
+                        switch (keyValuePair.Key.Pitch.Step)
+                        {
+                            case 'C': noteNumber = 11;
+                                oct--; break;
+                            case 'D': noteNumber = 1; break;
+                            case 'E': noteNumber = 3; break;
+                            case 'F': noteNumber = 4; break;
+                            case 'G': noteNumber = 6; break;
+                            case 'A': noteNumber = 8; break;
+                            case 'B': noteNumber = 10; break;
+                        }
                     }
-                }
 
-                noteNumber = ((noteNumber) + (oct * 12));
-                MidiOutput.play(noteNumber);
+                    noteNumber = ((noteNumber) + (oct * 12));
+                    MidiOutput.play(noteNumber);
+                }
             }   
         }
 
