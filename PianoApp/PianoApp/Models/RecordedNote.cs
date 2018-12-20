@@ -181,10 +181,10 @@ namespace PianoApp.Models
         {
             if(note < HighestNote - 11)
             {
-                return 1;
+                return 2;
             } else
             {
-                return 2;
+                return 1;
             }
         }
 

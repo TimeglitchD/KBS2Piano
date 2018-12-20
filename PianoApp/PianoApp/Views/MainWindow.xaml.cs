@@ -247,12 +247,12 @@ namespace PianoApp
         {
             if (bv.pianoEnabled)
             {
-                myGrid.RowDefinitions[2].Height = new GridLength(200, GridUnitType.Star);
+                myGrid.RowDefinitions[3].Height = new GridLength(200, GridUnitType.Star);
                 myGrid.RowDefinitions[1].Height = new GridLength(500, GridUnitType.Star);
             }
             else
             {
-                myGrid.RowDefinitions[2].Height = new GridLength(0);
+                myGrid.RowDefinitions[3].Height = new GridLength(0);
                 myGrid.RowDefinitions[1].Height = new GridLength(700, GridUnitType.Star);
             }
         }
