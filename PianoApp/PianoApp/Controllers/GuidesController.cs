@@ -405,9 +405,9 @@ namespace PianoApp.Controllers
 
                 stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
 
-                if (StaffEndReached != null)
+                if (staffEndReached != null)
                 {
-                    StaffEndReached(this, EventArgs.Empty);
+                    staffEndReached(this, EventArgs.Empty);
                 }
             }
         }
