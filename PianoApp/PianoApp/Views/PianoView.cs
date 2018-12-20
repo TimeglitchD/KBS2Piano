@@ -63,7 +63,6 @@ namespace PianoApp.Views
             myGrid.Children.Add(piano);
             
 
-            Console.WriteLine("Piano drawn");
         }
 
         public void hidePianoView()

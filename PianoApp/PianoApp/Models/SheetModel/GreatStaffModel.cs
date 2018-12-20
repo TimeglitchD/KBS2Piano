@@ -46,7 +46,6 @@ namespace PianoApp.Models
             foreach (var item in StaffList)
             {
                 GreatStaff.Children.Add(item.DrawStaff());
-                Console.WriteLine("Stave added");
             }
 
             Grid.SetColumn(GreatStaff, 1);

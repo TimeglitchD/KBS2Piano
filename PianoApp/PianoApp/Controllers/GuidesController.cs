@@ -125,7 +125,6 @@ namespace PianoApp.Controllers
 
                             var timeout = _bpsecond * (dur / _divs);
 
-                            Console.WriteLine(timeout + "SECS");
                             if (note.Staff == 1)
                             {
                                 if (!_toDoNoteDict1.ContainsKey(note))
@@ -359,7 +358,6 @@ namespace PianoApp.Controllers
 
                         var activeKeynote = getNoteFromNoteNumber(activeKey.Key);
 
-//                        Console.WriteLine($"note: {activeNote.Key.Pitch.Step} key: {activeKeynote.Step}");
 
                         if (activeNote.Key.Pitch.Step == activeKeynote.Step &&
                             activeNote.Key.Pitch.Alter == activeKeynote.Alter &&

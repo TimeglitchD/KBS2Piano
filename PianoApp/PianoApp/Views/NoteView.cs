@@ -108,12 +108,9 @@ namespace PianoApp.Views
                             AddMeasureLine(greatStaff, 1050);
                         }
                     }
-                    Console.WriteLine("Measure finished");
                 }
 
-                Console.WriteLine("Great stave finished");
             }
-            Console.WriteLine("Notes finished.");
         }
 
 
@@ -222,7 +219,6 @@ namespace PianoApp.Views
                                 break;
                         }
                         n.XPos = pos;
-                        Console.WriteLine("POSITION: " + n.XPos);
                         margin.Top -= 15;
                         rest.Margin = margin;
 
@@ -234,7 +230,6 @@ namespace PianoApp.Views
                     }
                     catch
                     {
-                        Console.WriteLine("noteview exc");
                         Shape rest = (Shape)item;
                         Thickness margin = rest.Margin;
                         //draw the dot in the correct position
@@ -367,7 +362,6 @@ namespace PianoApp.Views
                     }
                     catch (System.InvalidCastException)
                     {
-                        Console.WriteLine("noteview 2 exc");
                         Shape sh = (Shape)obj;
 
                         Thickness margin = sh.Margin;

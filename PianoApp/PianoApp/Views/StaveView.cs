@@ -33,11 +33,9 @@ namespace PianoApp.Views
         {
             //clear the view
             sheet.Children.Clear();
-            Console.WriteLine("Sheet cleared.");
 
             //draw in the new sheet
             sheet = MusicPieceController.DrawMusicPiece();
-            Console.WriteLine("Sheet drawn.");
 
             //scrollbar
             scroll = new ScrollViewer();

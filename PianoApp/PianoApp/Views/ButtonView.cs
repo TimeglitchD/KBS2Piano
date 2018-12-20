@@ -505,7 +505,6 @@ namespace PianoApp.Views
             startBtn.IsEnabled = false;
             TextBlock number = new TextBlock();
             number.Text = (mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats - metronome.elapsedBeats).ToString();
-            Console.WriteLine(number.Text);
             startBtn.Content = number;
             if (mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats - metronome.elapsedBeats == mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats)
             {

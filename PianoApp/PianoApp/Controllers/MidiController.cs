@@ -74,7 +74,6 @@ namespace PianoApp.Controllers
                 noteEvent = (NoteEvent)e.MidiEvent;
             } catch (Exception)
             {
-                Console.WriteLine("midicontroller exc");
                 return;
             }
 
@@ -145,8 +144,11 @@ namespace PianoApp.Controllers
                     }
                 }
 
-                noteNumber = noteNumber * (keyValuePair.Key.Pitch.Octave + 1);
+                Console.WriteLine($"{keyValuePair.Key.Pitch.Step} {noteNumber} * {keyValuePair.Key.Pitch.Octave} = {((noteNumber + 1) * (keyValuePair.Key.Pitch.Octave)) - 1}");
 
+                noteNumber = ((noteNumber) + (keyValuePair.Key.Pitch.Octave * 12));
+
+                //noteNumber + (octave * 12)
                 MidiOutput.play(noteNumber);
             }   
         }

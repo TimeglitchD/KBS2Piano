@@ -146,11 +146,9 @@ namespace PianoApp
             //start guide here
             if (mPc.Guide.Score == null)
             {
-                Console.WriteLine("Error");
                 return;
 
             }
-            Console.WriteLine("Metronoom klaar");
             if (bv._isStarted)
             {
                 sv.MusicPieceController.Guide.Pause();
