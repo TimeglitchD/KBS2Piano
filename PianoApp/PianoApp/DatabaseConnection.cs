@@ -21,12 +21,13 @@ namespace PianoApp
         }
 
         //get a dataset of sheet music based on type specified.
-        public DataSet getSheetMusic(int id)
+        public DataSet getSheetMusic()
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
                 try
                 {
+                    dataSet.Clear();
                     SqlDataAdapter dataAdapter = new SqlDataAdapter();
                     SqlCommand command = connection.CreateCommand();
                     command.CommandText = $"SELECT * FROM Music";
@@ -43,6 +44,27 @@ namespace PianoApp
             }
         }
 
+        public DataSet getCourseMusic(string courseType)
+        {
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                try
+                {
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandText = $"SELECT * FROM Music WHERE CourseType = '{courseType}'";
+                    dataAdapter.SelectCommand = command;
+                    connection.Open();
+                    dataAdapter.Fill(dataSet, courseType);
+                    connection.Close();
+                    return dataSet;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+        }
         public DataSet getSheetScore()
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
@@ -64,29 +86,7 @@ namespace PianoApp
                 }
             }
         }
-        
-        public DataSet get5SheetScore(int id)
-        {
-            using (SqlConnection connection = new SqlConnection(this.connectionString))
-            {
-                try
-                {
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter();
-                    SqlCommand command = connection.CreateCommand();
-                    command.CommandText = $"SELECT TOP(5) Id, Date, Time, Scored FROM Score WHERE Id = {id} ORDER BY Scored DESC";
-                    dataAdapter.SelectCommand = command;
-                    connection.Open();
-                    dataAdapter.Fill(dataSet, "Score");
-                    connection.Close();
-                    return dataSet;
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
-            }
-        }
-        
+
         public DataSet GetDataFromDB(string query, string table)
         {
             using (SqlConnection connection = new SqlConnection(this.connectionString))
@@ -116,36 +116,115 @@ namespace PianoApp
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand(queryString, connection);
+                    SqlCommand command = new SqlCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = queryString;
+                    command.Connection = connection;
+
                     command.Connection.Open();
                     command.ExecuteNonQuery();
-                } catch (Exception)
+                    connection.Close();
+                }
+                catch (Exception)
                 {
 
                 }
             }
         }
 
+        public bool UpdateRecord(string courseType, string id)
+        {
+            string query = "UPDATE Music " +
+                            "SET CourseType = @CourseType " +
+                            "WHERE Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Parameters.AddWithValue("@CourseType", courseType);
+                    command.Parameters.AddWithValue("@Id", id);
+
+                    connection.Open();
+                    int result = command.ExecuteNonQuery();
+                    connection.Close();
+
+                    if (result < 0)
+                        Console.WriteLine("Error updating data in Database!");
+
+                    return true;
+                }
+                catch (SqlException ex)
+                {
+                    return false;
+                }
+            }
+
+        }
+
 
         //method for adding music record to database. Unused
-        public bool addMusic(string title, string description, string date, string type, string location)
+        public bool addMusic(string title, string description, string date, string location, string courseType)
         {
-            try
+            string query = "INSERT INTO Music (Title,Description,Date,Location, CourseType)" +
+                                " VALUES (@Title,@Description,@Date,@Location, @CourseType)";
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
-                StringBuilder command = new StringBuilder("INSERT INTO music (Title, Description, Date, Type, Location) VALUES (");
-                command.Append("'" + title + "' ,");
-                command.Append("'" + description + "' ,");
-                command.Append("'" + date + "' ,");
-                command.Append("'" + type + "' ,");
-                command.Append("'" + location + "' )");
+                try
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
 
-                this.ExcecuteCommandNoOutput(command.ToString());
-                return true;
+                    command.Parameters.AddWithValue("@Title", title);
+                    command.Parameters.AddWithValue("@Description", description);
+                    command.Parameters.AddWithValue("@Date", date);
+                    command.Parameters.AddWithValue("@Location", location);
+                    command.Parameters.AddWithValue("@CourseType", courseType);
 
+                    connection.Open();
+                    int result = command.ExecuteNonQuery();
+                    connection.Close();
+
+                    if (result < 0)
+                        Console.WriteLine("Error inserting data into Database!");
+
+                    return true;
+                }
+                catch (SqlException ex)
+                {
+                    return false;
+                }
             }
-            catch (SqlException)
+        }
+
+        public bool DeleteFromDb(string id)
+        {
+            string query = "DELETE FROM Music " +
+                           "WHERE Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
             {
-                return false;
+                try
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    command.Parameters.AddWithValue("@Id", id);
+
+                    connection.Open();
+                    int result = command.ExecuteNonQuery();
+                    connection.Close();
+
+                    if (result < 0)
+                        Console.WriteLine("Error deleting data from Database!");
+
+                    return true;
+                }
+                catch (SqlException ex)
+                {
+                    return false;
+                }
             }
         }
     }

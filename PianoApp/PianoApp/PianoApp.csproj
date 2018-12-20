@@ -49,7 +49,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>piano.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.5.0.1205\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="NAudio, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.8.5\lib\net35\NAudio.dll</HintPath>
     </Reference>
@@ -126,6 +135,9 @@
     <Compile Include="Views\IntroductionView.xaml.cs">
       <DependentUpon>IntroductionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FileDescriptionDialog.xaml.cs">
+      <DependentUpon>FileDescriptionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -186,6 +198,7 @@
     <Folder Include="MusicXml\Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="piano.ico" />
     <Resource Include="Images\piano.png" />
     <Resource Include="Images\Vingerzetting.png" />
     <Content Include="MusicXml\MusicXml.csproj" />
@@ -204,6 +217,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\IntroductionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FileDescriptionDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

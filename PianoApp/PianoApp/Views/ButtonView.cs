@@ -40,6 +40,7 @@ namespace PianoApp.Views
         private bool metronomeEnabled = false;
         private Button metronomeButton;
         public bool _isStarted = false;
+        private TextBlock txt1 = new TextBlock();
 
         private Button pianoButton;
         public bool pianoEnabled = true;
@@ -66,102 +67,30 @@ namespace PianoApp.Views
 
             // Draw menu items
             DrawBpmMenu();
-
-            // Metronome enable/disable button
-            metronomeText = new TextBlock();
-            metronomeText.Text = "🔇";
-            metronomeButton = new Button();
-            metronomeButton.Content = metronomeText;
-            metronomeButton.Width = 40;
-            metronomeButton.Height = 40;
-            metronomeButton.FontSize = 25;
-            metronomeButton.Click += onMetronomeButtonClick;
-            metronomeButton.HorizontalAlignment = HorizontalAlignment.Left;
-
-            // Piano enable/disable button
-            TextDecoration strikeTroughDecoration = new TextDecoration();
-            strikeTroughDecoration.Location = TextDecorationLocation.Strikethrough;
-            strikeTroughDecoration.Pen = new Pen(Brushes.Red, 3);
-            strikeTrough.Add(strikeTroughDecoration);
-            pianoText = new TextBlock();
-            pianoText.Text = "🎹";
-            pianoText.TextDecorations = strikeTrough;
-            pianoButton = new Button();
-            pianoButton.Content = pianoText;
-            pianoButton.Width = 40;
-            pianoButton.Height = 40;
-            pianoButton.FontSize = 20;
-            pianoButton.Click += onPianoButtonClick;
-            pianoButton.HorizontalAlignment = HorizontalAlignment.Center;
-            pianoButton.VerticalAlignment = VerticalAlignment.Bottom;
-
-            // Fingersetting enable/disable
-            TextDecoration strikeTroughDecorationFing = new TextDecoration();
-            strikeTroughDecorationFing.Location = TextDecorationLocation.Strikethrough;
-            strikeTroughDecorationFing.Pen = new Pen(Brushes.Red, 3);
-            strikeTrough.Add(strikeTroughDecorationFing);
-            fingerSettingTxt = new TextBlock();
-            fingerSettingTxt.Text = "☝";
-            fingerSettingTxt.TextDecorations = strikeTrough;
-            fingerSettingBtn = new Button();
-            fingerSettingBtn.Content = fingerSettingTxt;
-            fingerSettingBtn.Width = 40;
-            fingerSettingBtn.IsEnabled = false;
-            fingerSettingBtn.Height = 40;
-            fingerSettingBtn.FontSize = 25;
-            fingerSettingBtn.Click += onFingerButtonClick;
-            fingerSettingBtn.HorizontalAlignment = HorizontalAlignment.Center;
-            fingerSettingBtn.VerticalAlignment = VerticalAlignment.Bottom;
-
-
-            // Introduction button
-            introductionBtn.FontSize = 25;
-            introductionBtn.Name = "introductionBtn";
-            introductionBtn.Content = "?";
-            introductionBtn.Width = 40;
-            introductionBtn.Height = 40;
-            introductionBtn.HorizontalAlignment = HorizontalAlignment.Center;
-            introductionBtn.Click += introductionBtn_Click;
-
-            // Start button
-            startBtn.FontSize = 25;
-            startBtn.Name = "startBtn";
-            startBtn.Content = "▶";
-            startBtn.Width = 40;
-            startBtn.Height = 40;
-            startBtn.HorizontalAlignment = HorizontalAlignment.Center;
-            startBtn.Click += StartBtn_Click;
-
-            // Stop Button
-            StopBtn.FontSize = 25;
-            StopBtn.Name = "stopBtn";
-            StopBtn.Content = "◼";
-            StopBtn.Width = 40;
-            StopBtn.Height = 40;
-            StopBtn.HorizontalAlignment = HorizontalAlignment.Center;
-            StopBtn.Click += StopBtn_Click;
-            StopBtn.IsEnabled = false;
-
-
-            // Add the button to the Grid
-            SelectSheetMusic = new Button();
-            SelectSheetMusic.Name = "SelectSheetMusic";
-            SelectSheetMusic.Content = "Selecteer \n muziekstuk";
-            SelectSheetMusic.Width = menuGrid.ColumnDefinitions[0].Width.Value - 15;
-            SelectSheetMusic.Height = 40;
-            SelectSheetMusic.HorizontalAlignment = HorizontalAlignment.Left;
-            SelectSheetMusic.VerticalAlignment = VerticalAlignment.Bottom;
-            SelectSheetMusic.Click += SelectSheetMusic_Click;
+            DrawRightMenu();
+            DrawLeftMenu();
 
             Grid.SetRow(menuGrid, 0);
 
             Grid.SetColumn(SelectSheetMusic, 0);
+            Grid.SetColumn(txt1, 1);
+            Grid.SetColumn(bpmTB, 2);
+            Grid.SetColumn(resetButton, 3);
+            Grid.SetColumn(startBtn, 4);
+            Grid.SetColumn(StopBtn, 5);
+            Grid.SetColumn(metronomeButton, 6);
             Grid.SetColumn(pianoButton, 8);
-            Grid.SetColumn(metronomeButton, 7);
-            Grid.SetColumn(StopBtn, 6);
-            Grid.SetColumn(startBtn, 5);
             Grid.SetColumn(fingerSettingBtn, 9);
             Grid.SetColumn(introductionBtn, 10);
+
+            Grid.SetColumn(notesCB, 3);
+            //Grid.SetColumn(resetButton, 4);
+
+            // Add items to grid
+            menuGrid.Children.Add(txt1);
+            menuGrid.Children.Add(bpmTB);
+            menuGrid.Children.Add(notesCB);
+            menuGrid.Children.Add(resetButton);
 
             menuGrid.Children.Add(metronomeButton);
             menuGrid.Children.Add(pianoButton);
@@ -174,10 +103,112 @@ namespace PianoApp.Views
             myGrid.Children.Add(menuGrid);
         }
 
+        internal void EnableStopBtn()
+        {
+            StopBtn.IsEnabled = true;
+        }
+
+        internal void EnableResetBtn()
+        {
+            resetButton.IsEnabled = true;
+        }
+
         private void introductionBtn_Click(object sender, RoutedEventArgs e)
         {
             IntroductionView iV = new IntroductionView();
             iV.Show();
+        }
+
+        private void DrawLeftMenu()
+        {
+            // Metronome enable/disable button
+            metronomeText = new TextBlock();
+            metronomeText.Text = "🔇";
+            metronomeButton = new Button();
+            metronomeButton.Content = metronomeText;
+            metronomeButton.Width = 60;
+            metronomeButton.Height = 40;
+            metronomeButton.FontSize = 20;
+            metronomeButton.Click += onMetronomeButtonClick;
+            //metronomeButton.HorizontalAlignment = HorizontalAlignment.Left;
+
+            // Start button
+            startBtn.FontSize = 20;
+            startBtn.Name = "startBtn";
+            startBtn.Content = "▶";
+            startBtn.Width = 60;
+            startBtn.Height = 40;
+            //startBtn.HorizontalAlignment = HorizontalAlignment.Center;
+            startBtn.Click += StartBtn_Click;
+
+            // Stop Button
+            StopBtn.FontSize = 20;
+            StopBtn.Name = "stopBtn";
+            StopBtn.Content = "◼";
+            StopBtn.Width = 60;
+            StopBtn.Height = 40;
+            //StopBtn.HorizontalAlignment = HorizontalAlignment.Center;
+            StopBtn.Click += StopBtn_Click;
+            StopBtn.IsEnabled = false;
+
+
+            // Add the button to the Grid
+            SelectSheetMusic = new Button();
+            SelectSheetMusic.Name = "SelectSheetMusic";
+            SelectSheetMusic.Content = "Inladen";
+            SelectSheetMusic.Width = menuGrid.ColumnDefinitions[0].Width.Value;
+            SelectSheetMusic.Height = 40;
+            //SelectSheetMusic.HorizontalAlignment = HorizontalAlignment.Left;
+            //SelectSheetMusic.VerticalAlignment = VerticalAlignment.Bottom;
+            SelectSheetMusic.Click += SelectSheetMusic_Click;
+        }
+
+        private void DrawRightMenu()
+        {
+            // Piano enable/disable button
+            TextDecoration strikeTroughDecoration = new TextDecoration();
+            strikeTroughDecoration.Location = TextDecorationLocation.Strikethrough;
+            strikeTroughDecoration.Pen = new Pen(Brushes.Red, 3);
+            strikeTrough.Add(strikeTroughDecoration);
+            pianoText = new TextBlock();
+            pianoText.Text = "🎹";
+            pianoText.TextDecorations = strikeTrough;
+            pianoButton = new Button();
+            pianoButton.Content = pianoText;
+            pianoButton.Width = 60;
+            pianoButton.Height = 40;
+            pianoButton.FontSize = 20;
+            pianoButton.Click += onPianoButtonClick;
+            //pianoButton.HorizontalAlignment = HorizontalAlignment.Center;
+            //pianoButton.VerticalAlignment = VerticalAlignment.Bottom;
+
+            // Fingersetting enable/disable
+            TextDecoration strikeTroughDecorationFing = new TextDecoration();
+            strikeTroughDecorationFing.Location = TextDecorationLocation.Strikethrough;
+            strikeTroughDecorationFing.Pen = new Pen(Brushes.Red, 3);
+            strikeTrough.Add(strikeTroughDecorationFing);
+            fingerSettingTxt = new TextBlock();
+            fingerSettingTxt.Text = "☝";
+            fingerSettingTxt.TextDecorations = strikeTrough;
+            fingerSettingBtn = new Button();
+            fingerSettingBtn.Content = fingerSettingTxt;
+            fingerSettingBtn.Width = 60;
+            fingerSettingBtn.IsEnabled = false;
+            fingerSettingBtn.Height = 40;
+            fingerSettingBtn.FontSize = 20;
+            fingerSettingBtn.Click += onFingerButtonClick;
+            //fingerSettingBtn.HorizontalAlignment = HorizontalAlignment.Center;
+            //fingerSettingBtn.VerticalAlignment = VerticalAlignment.Bottom;
+
+
+            // Introduction button
+            introductionBtn.FontSize = 20;
+            introductionBtn.Name = "introductionBtn";
+            introductionBtn.Content = "?";
+            introductionBtn.Width = 60;
+            introductionBtn.Height = 40;
+            //introductionBtn.HorizontalAlignment = HorizontalAlignment.Center;
+            introductionBtn.Click += introductionBtn_Click;
         }
 
         private void onFingerButtonClick(object sender, RoutedEventArgs e)
@@ -199,7 +230,7 @@ namespace PianoApp.Views
         private void DrawBpmMenu()
         {
             // Add the first text cell to the Grid
-            TextBlock txt1 = new TextBlock();
+
             txt1.Text = "BPM =";
             txt1.FontSize = 30;
             txt1.HorizontalAlignment = HorizontalAlignment.Right;
@@ -215,7 +246,7 @@ namespace PianoApp.Views
             bpmTB.FontSize = 30;
             bpmTB.Name = "bpmTB";
             bpmTB.Text = "60";
-            bpmTB.Height = 40;
+            bpmTB.Height = 45;
 
 
             // Combobox 
@@ -232,25 +263,16 @@ namespace PianoApp.Views
 
             // Reset button
             resetButton = new Button();
-            resetButton.FontSize = 25;
+            resetButton.FontSize = 20;
             resetButton.Name = "resetBtn";
             resetButton.Content = "⟲";
-            resetButton.Width = 40;
+            resetButton.Width = 60;
             resetButton.Height = 40;
             resetButton.HorizontalAlignment = HorizontalAlignment.Right;
             resetButton.Click += ResetButton_Click;
             resetButton.IsEnabled = false;
 
-            Grid.SetColumn(txt1, 1);
-            Grid.SetColumn(bpmTB, 2);
-            Grid.SetColumn(notesCB, 3);
-            Grid.SetColumn(resetButton, 4);
-
-            // Add items to grid
-            menuGrid.Children.Add(txt1);
-            menuGrid.Children.Add(bpmTB);
-            menuGrid.Children.Add(notesCB);
-            menuGrid.Children.Add(resetButton);
+            
         }
 
         private void updateBpm(object sender, BpmEventArgs e)
@@ -259,7 +281,7 @@ namespace PianoApp.Views
             _musicPieceId = e.Id;
         }
 
-        private bool CheckPause()
+        public bool CheckPause()
         {
             if (paused)
             {
@@ -276,7 +298,7 @@ namespace PianoApp.Views
 
         private void StopMusicPiece()
         {
-            // Stukk resetten
+            // Stuk stoppen
             sv.ScrollToTop(this, EventArgs.Empty);
             StopBtn.IsEnabled = true;
             mPc.Guide.paused = false;
@@ -288,12 +310,14 @@ namespace PianoApp.Views
             bpmTB.Background = Brushes.White;
             notesCB.IsEnabled = false;
             mw.resetGreatStaffs();
+            notesCB.IsEnabled = true;
             CheckPause();
         }
 
         public void StopBtn_Click(object sender, RoutedEventArgs e)
         {
             StopMusicPiece();
+            metronomeButton.IsEnabled = true;
         }
 
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
@@ -319,14 +343,14 @@ namespace PianoApp.Views
         {
             try
             {
-                if (mPc.Guide.Score != null);
+                if (mPc.Guide.Score != null) ;
             }
             catch (Exception)
             {
                 MessageBox.Show("Je hebt geen muziekstuk ingeladen!", "Foutmelding");
                 return;
             }
-            CheckPause();
+
             try
             {
                 // Set value to int
@@ -347,17 +371,19 @@ namespace PianoApp.Views
                         // If paused continu piece by metronome
                         if (metronomeEnabled)
                         {
-                            metronome.startMetronome(bpmValue, 4, 1);
+                            metronome.startMetronome(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
                         }
                         else
                         {
-                            metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+                            metronome.startMetronomeCountDownOnly(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
                         }
                     }
                     // If piece is not paused, pause piece
                     else
                     {
                         mPc.Guide.Pause();
+                        metronome.stopMetronome();
+                        metronomeButton.IsEnabled = true;
                     }
                 }
                 else
@@ -368,18 +394,16 @@ namespace PianoApp.Views
                     //set value in metronome and start it.
                     if (metronomeEnabled)
                     {
-                        metronome.startMetronome(bpmValue, 4, 1);
+                        metronome.startMetronome(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
                     }
                     else
                     {
-                        metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+                        metronome.startMetronomeCountDownOnly(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
                     }
                     DatabaseConnection dbCon = new DatabaseConnection();
                     dbCon.ExcecuteCommandNoOutput($"UPDATE Music SET Bpm = ({Convert.ToInt32(bpmValue)}) WHERE Id = {_musicPieceId}");
                 }
 
-                // Set value startbutton
-                CheckPause();
             }
             catch (FormatException)
             {
@@ -395,8 +419,9 @@ namespace PianoApp.Views
             resetButton.IsEnabled = false;
             bpmTB.IsReadOnly = true;
             bpmTB.Background = Brushes.LightGray;
-            notesCB.IsEnabled = false;
+            notesCB.IsEnabled = false; CheckPause();
         }
+
 
         public void ResetMusicPiece()
         {
@@ -407,17 +432,18 @@ namespace PianoApp.Views
             SelectSheetMusic.IsEnabled = false;
             mPc.Guide.ResetMusicPiece();
             metronome.stopMetronome();
+            paused = false;
             CheckPause();
 
             if (metronomeEnabled)
             {
-                metronome.startMetronome(bpmValue, 4, 1);
+                metronome.startMetronome(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
             }
             else
             {
-                metronome.startMetronomeCountDownOnly(bpmValue, 4, 1);
+                metronome.startMetronomeCountDownOnly(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
             }
-            
+
         }
 
         private void ResetButton_Click(object sender, EventArgs e)
@@ -466,6 +492,12 @@ namespace PianoApp.Views
             startBtn.IsEnabled = false;
         }
 
+        public void EnableStartBtn()
+        {
+            startBtn.IsEnabled = true;
+
+        }
+
         public void DisableStopBtn()
         {
             StopBtn.IsEnabled = false;
@@ -475,10 +507,10 @@ namespace PianoApp.Views
         {
             startBtn.IsEnabled = false;
             TextBlock number = new TextBlock();
-            number.Text = (4 - metronome.elapsedBeats).ToString();
+            number.Text = (mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats - metronome.elapsedBeats).ToString();
             Console.WriteLine(number.Text);
             startBtn.Content = number;
-            if (4 - metronome.elapsedBeats == 4)
+            if (mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats - metronome.elapsedBeats == mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats)
             {
                 startBtn.IsEnabled = true;
                 startBtn.Content = "❚❚";
@@ -508,19 +540,21 @@ namespace PianoApp.Views
             ColumnDefinition colDef9 = new ColumnDefinition();
             ColumnDefinition colDef10 = new ColumnDefinition();
             ColumnDefinition colDef11 = new ColumnDefinition();
+            ColumnDefinition colDef12 = new ColumnDefinition();
 
             // Set Lenght of the columns
-            colDef1.Width = new GridLength(100, GridUnitType.Star);
-            colDef2.Width = new GridLength(110, GridUnitType.Star);
+            colDef1.Width = new GridLength(80, GridUnitType.Star);
+            colDef2.Width = new GridLength(60, GridUnitType.Star);
             colDef3.Width = new GridLength(100, GridUnitType.Star);
-            colDef4.Width = new GridLength(160, GridUnitType.Star);
-            colDef5.Width = new GridLength(80, GridUnitType.Star);
-            colDef6.Width = new GridLength(50, GridUnitType.Star);
-            colDef7.Width = new GridLength(50, GridUnitType.Star);
-            colDef8.Width = new GridLength(400, GridUnitType.Star);
-            colDef9.Width = new GridLength(50, GridUnitType.Star);
-            colDef10.Width = new GridLength(50, GridUnitType.Star);
-            colDef11.Width = new GridLength(50, GridUnitType.Star);
+            colDef4.Width = new GridLength(140, GridUnitType.Star);
+            colDef5.Width = new GridLength(37, GridUnitType.Star);
+            colDef6.Width = new GridLength(37, GridUnitType.Star);
+            colDef7.Width = new GridLength(37, GridUnitType.Star);
+            colDef8.Width = new GridLength(100, GridUnitType.Star);
+            colDef9.Width = new GridLength(37, GridUnitType.Star);
+            colDef10.Width = new GridLength(37, GridUnitType.Star);
+            colDef11.Width = new GridLength(37, GridUnitType.Star);
+            colDef12.Width = new GridLength(37, GridUnitType.Star);
 
 
             // Add columns to menuGrid

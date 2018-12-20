@@ -60,7 +60,7 @@ namespace PianoApp
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            PianoController pC = new PianoController() {};
+            PianoController pC = new PianoController() { };
 
             SheetController sC = new SheetController();
             MidiController mC = new MidiController();
@@ -126,7 +126,7 @@ namespace PianoApp
             // Create the Grid
             myGrid = new Grid
             {
-                ShowGridLines = true
+                ShowGridLines = false
             };
 
             DefineRowMyGridEndOfMusicPiece();
@@ -189,6 +189,14 @@ namespace PianoApp
         private void countdownFinished(object sender, EventArgs e)
         {
             mPc.Guide.guideStopped += guideStopped;
+            this.Dispatcher.Invoke(() =>
+            {
+                bv.EnableStartBtn();
+                bv.CheckPause();
+                bv.EnableStopBtn();
+                bv.EnableResetBtn();
+            });
+
             //start guide here
             if (mPc.Guide.Score == null)
             {
@@ -200,7 +208,8 @@ namespace PianoApp
             if (bv._isStarted)
             {
                 sv.MusicPieceController.Guide.Pause();
-            } else if (!bv._isStarted)
+            }
+            else if (!bv._isStarted)
             {
                 sv.MusicPieceController.Guide.Start();
                 bv._isStarted = true;
