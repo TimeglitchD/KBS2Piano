@@ -300,7 +300,8 @@ namespace PianoApp.Views
         {
             // Stuk stoppen
             sv.ScrollToTop(this, EventArgs.Empty);
-            StopBtn.IsEnabled = true;
+            StopBtn.IsEnabled = false;
+            resetButton.IsEnabled = false;
             mPc.Guide.paused = false;
             SelectSheetMusic.IsEnabled = true;
             _isStarted = false;
