@@ -323,10 +323,8 @@ namespace PianoApp.Views
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
             mCv = new MusicChooseView(sv, nv, this);
-            mCv.ShowDialog();
-
-
             mCv.updateBpm += updateBpm;
+            mCv.ShowDialog();
         }
 
         public void TriggerStartBtnBySpaceKeyDown()
@@ -396,7 +394,10 @@ namespace PianoApp.Views
                 {
                     startBtn.IsEnabled = false;
                     StopBtn.IsEnabled = true;
-
+                    Console.WriteLine("---------------------------");
+                    Console.WriteLine(_musicPieceId);
+                    DatabaseConnection dbCon = new DatabaseConnection();
+                    dbCon.ExcecuteCommandNoOutput($"UPDATE Music SET Bpm = ({Convert.ToInt32(bpmValue)}) WHERE Id = {_musicPieceId}");
                     //set value in metronome and start it.
                     if (metronomeEnabled)
                     {
@@ -406,8 +407,7 @@ namespace PianoApp.Views
                     {
                         metronome.startMetronomeCountDownOnly(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
                     }
-                    DatabaseConnection dbCon = new DatabaseConnection();
-                    dbCon.ExcecuteCommandNoOutput($"UPDATE Music SET Bpm = ({Convert.ToInt32(bpmValue)}) WHERE Id = {_musicPieceId}");
+                   
                 }
 
             }
