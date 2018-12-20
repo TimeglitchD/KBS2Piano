@@ -11,7 +11,7 @@ namespace PianoApp.Models
     public class PianoModel
     {
         public List<OctaveModel> OctaveModelList { get; set; } = new List<OctaveModel>();
-        public int Amount { get; set; } = 10;
+        public int Amount { get; set; } = 5;
         public int Center { get; set; } = 0;
 
         private DockPanel piano = new DockPanel();
