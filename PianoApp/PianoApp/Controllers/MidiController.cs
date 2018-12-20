@@ -163,8 +163,6 @@ namespace PianoApp.Controllers
                 }
 
                 noteNumber = ((noteNumber) + (oct * 12));
-
-                //noteNumber + (octave * 12)
                 MidiOutput.play(noteNumber);
             }   
         }
