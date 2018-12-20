@@ -51,7 +51,7 @@ namespace PianoApp.Views
         private TextBlock metronomeText;
         private TextDecorationCollection strikeTrough = new TextDecorationCollection();
 
-        private bool running = false;
+        private bool spaceButtonEnabled = true;
 
         public ButtonView(Grid myGrid, StaveView sv, NoteView nv)
         {
@@ -330,7 +330,12 @@ namespace PianoApp.Views
 
         public void TriggerStartBtnBySpaceKeyDown()
         {
-            StartMusicPiece();
+            if(spaceButtonEnabled)
+            {
+                spaceButtonEnabled = false;
+                StartMusicPiece();
+            }
+                
         }
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
@@ -383,6 +388,7 @@ namespace PianoApp.Views
                         mPc.Guide.Pause();
                         metronome.stopMetronome();
                         metronomeButton.IsEnabled = true;
+                        spaceButtonEnabled = true;
                     }
                 }
                 else
@@ -520,6 +526,7 @@ namespace PianoApp.Views
                 fingerSettingBtn.IsEnabled = true;
                 SelectSheetMusic.IsEnabled = false;
                 metronomeButton.IsEnabled = false;
+                spaceButtonEnabled = true;
 
                 CheckPause();
             }
