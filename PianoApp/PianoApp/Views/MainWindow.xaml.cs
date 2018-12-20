@@ -115,16 +115,19 @@ namespace PianoApp
             RowDefinition rowDef1 = new RowDefinition();
             RowDefinition rowDef2 = new RowDefinition();
             RowDefinition rowDef3 = new RowDefinition();
+            RowDefinition rowDef4 = new RowDefinition();
 
             // Add lenght to rows
             rowDef1.Height = new GridLength(50, GridUnitType.Star);
             rowDef2.Height = new GridLength(500, GridUnitType.Star);
-            rowDef3.Height = new GridLength(200, GridUnitType.Star);
+            rowDef3.Height = new GridLength(20, GridUnitType.Star);
+            rowDef4.Height = new GridLength(200, GridUnitType.Star);
 
             // Add row to mainGrid
             myGrid.RowDefinitions.Add(rowDef1);
             myGrid.RowDefinitions.Add(rowDef2);
             myGrid.RowDefinitions.Add(rowDef3);
+            myGrid.RowDefinitions.Add(rowDef4);
 
 
         }
@@ -185,12 +188,12 @@ namespace PianoApp
         {
             if (bv.pianoEnabled)
             {
-                myGrid.RowDefinitions[2].Height = new GridLength(200, GridUnitType.Star);
+                myGrid.RowDefinitions[3].Height = new GridLength(200, GridUnitType.Star);
                 myGrid.RowDefinitions[1].Height = new GridLength(500, GridUnitType.Star);
             }
             else
             {
-                myGrid.RowDefinitions[2].Height = new GridLength(0);
+                myGrid.RowDefinitions[3].Height = new GridLength(0);
                 myGrid.RowDefinitions[1].Height = new GridLength(700, GridUnitType.Star);
             }
         }

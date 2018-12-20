@@ -305,6 +305,27 @@ namespace PianoApp.Views
                         lb.Margin = margin;
                         margin.Top = 0;
 
+                        //if flat or sharp
+                        if (n.Pitch.Alter != 0)
+                        {
+                            Label alter = new Label();
+                            alter.Content = "H";
+                            alter.FontSize = 25;
+                            alter.FontFamily = GreatStaffModel.Metdemo;
+                            Grid.SetRowSpan(alter, 10);
+                            alter.Margin = new Thickness(n.XPos * (float)scale + (float)totalwidth - (float)width - 15, -29, 0, 0);
+                            Grid.SetRow(alter, row);
+                            Grid.SetColumn(alter, 1);
+                            alter.HorizontalAlignment = HorizontalAlignment.Left;
+                            alter.VerticalAlignment = VerticalAlignment.Top;
+                            if (n.Pitch.Alter == 1)
+                            {
+                                alter.Content = "G";
+                                alter.Margin = new Thickness(n.XPos * (float)scale + (float)totalwidth - (float)width - 15, -25, 0, 0);
+                            }
+                            staveGrid.Children.Add(alter);
+
+                        }
                         if (row != 0)
                         {
 
@@ -341,6 +362,8 @@ namespace PianoApp.Views
                             staveGrid.Children.Add(lb);
                             staveGrid.Children.Add(lbFinger);
                         }
+
+                        
                     }
                     catch (System.InvalidCastException)
                     {
@@ -400,11 +423,13 @@ namespace PianoApp.Views
                             {
                                 row = 7;
                                 //Draw 8va
+                                pitch.Octave = 4;
                             }
                             else
                             {
                                 row = 7;
                                 //Draw 8vb
+                                pitch.Octave = 4;
                             }
                         }
                         break;
@@ -424,11 +449,13 @@ namespace PianoApp.Views
                             {
                                 row = 1;
                                 //Draw 8va
+                                pitch.Octave = 5;
                             }
                             else
                             {
                                 row = 8;
                                 //Draw 8vb
+                                pitch.Octave = 4;
                             }
                         }
                         break;
@@ -448,11 +475,13 @@ namespace PianoApp.Views
                             {
                                 row = 2;
                                 //Draw 8va
+                                pitch.Octave = 5;
                             }
                             else
                             {
                                 row = 9;
                                 //Draw 8vb
+                                pitch.Octave = 4;
                             }
                         }
                         break;
@@ -472,11 +501,13 @@ namespace PianoApp.Views
                             {
                                 row = 3;
                                 //Draw 8va
+                                pitch.Octave = 5;
                             }
                             else
                             {
                                 row = 10;
                                 //Draw 8vb
+                                pitch.Octave = 4;
                             }
                         }
                         break;
@@ -496,11 +527,13 @@ namespace PianoApp.Views
                             {
                                 row = 4;
                                 //Draw 8va
+                                pitch.Octave = 5;
                             }
                             else
                             {
                                 row = 11;
                                 //Draw 8vb
+                                pitch.Octave = 4;
                             }
                         }
                         break;
@@ -520,11 +553,13 @@ namespace PianoApp.Views
                             {
                                 row = 5;
                                 //Draw 8va
+                                pitch.Octave = 5;
                             }
                             else
                             {
                                 row = 12;
                                 //Draw 8vb
+                                pitch.Octave = 4;
                             }
                         }
                         break;
@@ -544,11 +579,13 @@ namespace PianoApp.Views
                             {
                                 row = 6;
                                 //Draw 8va
+                                pitch.Octave = 5;
                             }
                             else
                             {
                                 row = 13;
                                 //Draw 8vb
+                                pitch.Octave = 4;
                             }
                         }
                         break;
@@ -580,11 +617,13 @@ namespace PianoApp.Views
                             {
                                 row = 1;
                                 //Draw 8va
+                                pitch.Octave = 4;
                             }
                             else
                             {
                                 row = 8;
                                 //Draw 8vb
+                                pitch.Octave = 3;
                             }
                         }
                         break;
@@ -604,11 +643,13 @@ namespace PianoApp.Views
                             {
                                 row = 2;
                                 //Draw 8va
+                                pitch.Octave = 3;
                             }
                             else
                             {
                                 row = 9;
                                 //Draw 8vb
+                                pitch.Octave = 2;
                             }
                         }
                         break;
@@ -628,11 +669,13 @@ namespace PianoApp.Views
                             {
                                 row = 3;
                                 //Draw 8va
+                                pitch.Octave = 3;
                             }
                             else
                             {
                                 row = 10;
                                 //Draw 8vb
+                                pitch.Octave = 2;
                             }
                         }
                         break;
@@ -652,11 +695,13 @@ namespace PianoApp.Views
                             {
                                 row = 4;
                                 //Draw 8va
+                                pitch.Octave = 3;
                             }
                             else
                             {
                                 row = 11;
                                 //Draw 8vb
+                                pitch.Octave = 2;
                             }
                         }
                         break;
@@ -676,11 +721,13 @@ namespace PianoApp.Views
                             {
                                 row = 5;
                                 //Draw 8va
+                                pitch.Octave = 3;
                             }
                             else
                             {
                                 row = 12;
                                 //Draw 8vb
+                                pitch.Octave = 2;
                             }
                         }
                         break;
@@ -700,11 +747,13 @@ namespace PianoApp.Views
                             {
                                 row = 6;
                                 //Draw 8va
+                                pitch.Octave = 3;
                             }
                             else
                             {
                                 row = 13;
                                 //Draw 8vb
+                                pitch.Octave = 2;
                             }
                         }
                         break;
@@ -719,11 +768,13 @@ namespace PianoApp.Views
                             {
                                 row = 7;
                                 //Draw 8va
+                                pitch.Octave = 3;
                             }
                             else
                             {
                                 row = 7;
                                 //Draw 8vb
+                                pitch.Octave = 3;
                             }
                         }
                         break;

@@ -247,13 +247,13 @@ namespace MusicXml.Domain
             }
             else if (State.Equals(NoteState.Wrong))
             {
-                shp.Fill = Brushes.Red;
-                shp.Stroke = Brushes.Red;
+                shp.Fill = Brushes.IndianRed;
+                shp.Stroke = Brushes.IndianRed;
             }
             else if (State.Equals(NoteState.Good))
             {
-                shp.Fill = Brushes.Green;
-                shp.Stroke = Brushes.Green;
+                shp.Fill = Brushes.DarkOliveGreen;
+                shp.Stroke = Brushes.DarkOliveGreen;
             }
             else
             {
@@ -280,11 +280,11 @@ namespace MusicXml.Domain
             }
             else if (State.Equals(NoteState.Wrong))
             {
-                shp.Foreground = Brushes.Red;
+                shp.Foreground = Brushes.IndianRed;
             }
             else if (State.Equals(NoteState.Good))
             {
-                shp.Foreground = Brushes.Green;
+                shp.Foreground = Brushes.DarkOliveGreen;
             }
             else
             {
