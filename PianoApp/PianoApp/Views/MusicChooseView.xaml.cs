@@ -167,11 +167,11 @@ namespace PianoApp.Views
             }
             catch (ArgumentNullException)
             {
-                MessageBox.Show("U heeft geen muziekstuk geselecteerd");
+                MessageBox.Show("Je hebt geen muziekstuk geselecteerd");
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Error tijdens laden: " + ex.Message);
+                System.Windows.MessageBox.Show("Error while opening music piece: " + ex.Message);
             }
         }
 
@@ -213,7 +213,7 @@ namespace PianoApp.Views
 
                     // add to db
                     connection.addMusic(title, description, date, location, selectedTab);
-                    txtEditor.Content = "[" + title + "] is toegevoegd aan DB";
+                    txtEditor.Content = "[" + title + "] is added to DB";
 
                     RefreshAll();
                 }
@@ -244,8 +244,8 @@ namespace PianoApp.Views
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Wilt u dit stuk verwijderen?",
-                                          "Verwijderen",
+            MessageBoxResult result = MessageBox.Show("Do you want to delete this piece?",
+                                          "Confirmation",
                                           MessageBoxButton.YesNo,
                                           MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)

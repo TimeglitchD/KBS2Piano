@@ -207,57 +207,6 @@ namespace PianoApp.Views
             introductionBtn.Height = 40;
             //introductionBtn.HorizontalAlignment = HorizontalAlignment.Center;
             introductionBtn.Click += introductionBtn_Click;
-
-            // Start button
-            startBtn.FontSize = 20;
-            startBtn.Name = "startBtn";
-            startBtn.Content = "▶";
-            startBtn.Width = 60;
-            startBtn.Height = 50;
-            startBtn.HorizontalAlignment = HorizontalAlignment.Center;
-            startBtn.Click += StartBtn_Click;
-
-            // Stop Button
-            StopBtn.FontSize = 20;
-            StopBtn.Name = "stopBtn";
-            StopBtn.Content = "◼";
-            StopBtn.Width = 60;
-            StopBtn.Height = 50;
-            StopBtn.HorizontalAlignment = HorizontalAlignment.Center;
-            StopBtn.Click += StopBtn_Click;
-            StopBtn.IsEnabled = false;
-
-
-            // Add the button to the Grid
-            SelectSheetMusic = new Button();
-            SelectSheetMusic.Name = "SelectSheetMusic";
-            SelectSheetMusic.HorizontalContentAlignment = HorizontalAlignment.Center;
-            SelectSheetMusic.Content = "Selecteer\nmuziekstuk";
-            SelectSheetMusic.Width = menuGrid.ColumnDefinitions[0].Width.Value + 10;
-            SelectSheetMusic.Height = 50;
-            SelectSheetMusic.HorizontalAlignment = HorizontalAlignment.Left;
-            SelectSheetMusic.VerticalAlignment = VerticalAlignment.Bottom;
-            SelectSheetMusic.Click += SelectSheetMusic_Click;
-
-            Grid.SetRow(menuGrid, 0);
-
-            Grid.SetColumn(SelectSheetMusic, 0);
-            Grid.SetColumn(pianoButton, 8);
-            Grid.SetColumn(metronomeButton, 7);
-            Grid.SetColumn(StopBtn, 6);
-            Grid.SetColumn(startBtn, 5);
-            Grid.SetColumn(fingerSettingBtn, 9);
-            Grid.SetColumn(introductionBtn, 10);
-
-            menuGrid.Children.Add(metronomeButton);
-            menuGrid.Children.Add(pianoButton);
-            menuGrid.Children.Add(startBtn);
-            menuGrid.Children.Add(StopBtn);
-            menuGrid.Children.Add(SelectSheetMusic);
-            menuGrid.Children.Add(fingerSettingBtn);
-            menuGrid.Children.Add(introductionBtn);
-
-            myGrid.Children.Add(menuGrid);
         }
 
         private void onFingerButtonClick(object sender, RoutedEventArgs e)
