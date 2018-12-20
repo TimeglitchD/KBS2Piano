@@ -144,7 +144,8 @@ namespace PianoApp.Views
             // Add the button to the Grid
             SelectSheetMusic = new Button();
             SelectSheetMusic.Name = "SelectSheetMusic";
-            SelectSheetMusic.Content = "Select piece";
+            SelectSheetMusic.HorizontalContentAlignment = HorizontalAlignment.Center;
+            SelectSheetMusic.Content = "Selecteer\nmuziekstuk";
             SelectSheetMusic.Width = menuGrid.ColumnDefinitions[0].Width.Value + 10;
             SelectSheetMusic.Height = 50;
             SelectSheetMusic.HorizontalAlignment = HorizontalAlignment.Left;
