@@ -115,15 +115,19 @@ namespace PianoApp.Models
                     break;
                 case double n when (n < 2.8 && n > 1.3):
                     type = "half";
+                    Console.WriteLine("HALF");
                     break;
                 case double n when (n < 1.3 && n > 0.9) :
                     type = "quarter";
+                    Console.WriteLine("QUARTER");
                     break;
                 case double n when (n < 0.9 && n > 0.25):
                     type = "eighth";
+                    Console.WriteLine("EIGHTH");
                     break;
                 case double n when (n < 0.25):
                     type = "16th";
+                    Console.WriteLine("16TH");
                     break;
             }
 
@@ -161,8 +165,15 @@ namespace PianoApp.Models
         //calculate the stem of a note based on position
         private string calculateStem()
         {
-            //add logic to calculate if stem should go up or down
-            return "up";
+            int octave = (int)Math.Floor(note / 12f);
+            int baseNote = note - (octave * 12);
+            if(baseNote >= 7)
+            {
+                return "down";
+            } else
+            {
+                return "up";
+            }
         }
 
         //calculate the note's staff relative to the lowest note played
