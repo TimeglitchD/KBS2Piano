@@ -129,11 +129,14 @@ namespace MusicXml
 
                                 if (node.Name == "note")
                                 {
+                                    if (node.SelectSingleNode("grace") != null) break;
+
                                     var newNote = GetNote(node);
                                     measureElement = new MeasureElement { Type = MeasureElementType.Note, Element = newNote };
 
                                     var note = (Note)measureElement.Element;
                                     note.MeasureNumber = measure.Number;
+
                                 }
                                 else if (node.Name == "backup")
                                 {
