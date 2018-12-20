@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -41,9 +42,27 @@ namespace PianoApp.Views
             piano = MusicPieceController.Piano.DrawPianoController();
             //piano.Orientation = Orientation.Horizontal;
             //zet stackpanel in de goede plek op het grid
-            Grid.SetRow(piano, 2);
-
+            Grid.SetRow(piano, 3);
+            
+            Border pianoShadow = new Border();
+            pianoShadow.Background = Brushes.White;
+            pianoShadow.BorderBrush = Brushes.White;
+            pianoShadow.BorderThickness = new Thickness(7);
+            pianoShadow.Effect = new DropShadowEffect()
+            {
+                Color = Colors.White,
+                Direction = -250,
+                BlurRadius = 10,
+                ShadowDepth = 10
+            };
+            pianoShadow.VerticalAlignment = VerticalAlignment.Bottom;
+            
+            Grid.SetRow(pianoShadow, 2);
+            Grid.SetZIndex(pianoShadow, 99999);
+            myGrid.Children.Add(pianoShadow);
             myGrid.Children.Add(piano);
+            
+
             Console.WriteLine("Piano drawn");
         }
 
