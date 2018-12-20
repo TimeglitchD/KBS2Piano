@@ -247,8 +247,8 @@ namespace MusicXml.Domain
             }
             else if (State.Equals(NoteState.Wrong))
             {
-                shp.Fill = Brushes.Red;
-                shp.Stroke = Brushes.Red;
+                shp.Fill = Brushes.IndianRed;
+                shp.Stroke = Brushes.IndianRed;
             }
             else if (State.Equals(NoteState.Good))
             {
@@ -280,7 +280,7 @@ namespace MusicXml.Domain
             }
             else if (State.Equals(NoteState.Wrong))
             {
-                shp.Foreground = Brushes.Red;
+                shp.Foreground = Brushes.IndianRed;
             }
             else if (State.Equals(NoteState.Good))
             {
