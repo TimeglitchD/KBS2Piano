@@ -518,7 +518,7 @@ namespace PianoApp.Controllers
 
             StopWatch.Stop();
             
-            _timerStaffOne.Stop();
+             _timerStaffOne.Stop();
             record.stopRecording();
             _timerStaffTwo.Stop();
             _toDoNoteDict1.Clear();
