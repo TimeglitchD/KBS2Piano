@@ -17,7 +17,7 @@ namespace PianoApp.Models
 
         public static float bpm;
 
-        private static int lowestNote = 127;
+        private static int HighestNote = 0;
 
         public RecordedNote(int note, int elapsed, long start)
         {
@@ -25,9 +25,9 @@ namespace PianoApp.Models
             this.elapsed = elapsed;
             this.start = start;
 
-            if(lowestNote > note)
+            if(HighestNote < note)
             {
-                lowestNote = note;
+                HighestNote = note;
             }
 
             duration = roundOffElapsed(elapsed);
@@ -111,6 +111,7 @@ namespace PianoApp.Models
             {
                 case double n when ( n > 2.8):
                     type = "whole";
+                    Console.WriteLine("WHOLE");
                     break;
                 case double n when (n < 2.8 && n > 1.3):
                     type = "half";
@@ -119,7 +120,7 @@ namespace PianoApp.Models
                     type = "quarter";
                     break;
                 case double n when (n < 0.9 && n > 0.25):
-                    type = "eigth";
+                    type = "eighth";
                     break;
                 case double n when (n < 0.25):
                     type = "16th";
@@ -167,12 +168,12 @@ namespace PianoApp.Models
         //calculate the note's staff relative to the lowest note played
         private int calculateStaff(int note)
         {
-            if(note < lowestNote + 11)
-            {
-                return 2;
-            } else
+            if(note < HighestNote - 11)
             {
                 return 1;
+            } else
+            {
+                return 2;
             }
         }
 
@@ -189,8 +190,8 @@ namespace PianoApp.Models
             int measureLength = (int)((1000.0 / (bpm / 60.0)) * 4);
             int thisNoteMeasureNumber = calculateMeasure();
             int notePositionInMeasure = (int)this.start - ((thisNoteMeasureNumber - 1) * measureLength);
-            float xPos = (float)notePositionInMeasure / 10;
-            return xPos;
+            float xPos = (float)(notePositionInMeasure - 20) / 10;
+            return xPos + 10; ;
         }
 
         //check if rounded note fits in its measure

@@ -19,6 +19,11 @@ namespace PianoApp.Controllers
         private bool recording = false;
         private static int systems = 0;
 
+        //values to adjust recorded sheet's final look
+        private static int measureWidthOffset = 10;
+        private static int measuresPerGrandStave = 4;
+        private static int newSystemNoteOffset = 30;
+
         public RecordController(GuidesController guide)
         {
             this.guide = guide;
@@ -139,7 +144,28 @@ namespace PianoApp.Controllers
 
             //convert dictionary to list
             List<Measure> measureList = addRests(measures);
+            measureList = adjustMeasureSize(measureList);
             return measureList;
+        }
+
+        private static List<Measure> adjustMeasureSize(List<Measure> measures)
+        {
+            foreach(Measure measure in measures)
+            {
+                float maxX = 0;
+                foreach(MeasureElement element in measure.MeasureElements)
+                {
+                    Note note = element.Element as Note;
+                    if(note.XPos > maxX)
+                    {
+                        maxX = note.XPos;
+                    }
+                }
+
+                measure.Width = (decimal)maxX + measureWidthOffset;
+            }
+
+            return measures;
         }
 
         private static List<Measure> addRests(Dictionary<int, Measure> measures)
@@ -168,16 +194,31 @@ namespace PianoApp.Controllers
                 }
             }
 
+            newMeasures = addNewSystem(newMeasures);
+
+            return newMeasures;
+        }
+
+        private static List<Measure> addNewSystem(List<Measure> newMeasures)
+        {
             int i = 0;
 
             foreach (Measure measure in newMeasures)
             {
-                if(i > 4)
+                if (i > measuresPerGrandStave)
                 {
                     Console.WriteLine("new system");
                     measure.NewSystem = true;
-                    i = 0;
+                    i = -1;
                     systems++;
+
+                    //add offset to elements in first measure so they don't overlap with other elements.
+                    foreach (MeasureElement element in measure.MeasureElements)
+                    {
+                        Note note = element.Element as Note;
+                        note.XPos += newSystemNoteOffset;
+                        Console.WriteLine("offset new system element");
+                    }
                 }
                 i++;
             }
