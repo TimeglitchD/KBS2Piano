@@ -58,49 +58,58 @@ namespace PianoApp.Controllers
 
             var tempDict = new Dictionary<Note, Timeout>(noteAndTimeoutDictionary).ToDictionary(k => k.Key, k => k.Value);
 
-
             //go over all keys and compare to note when true set active true on the corresponding key...
             foreach (var keyValuePair in tempDict)
             {
                 //.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave))
                 foreach (var octaveModel in PianoModel.OctaveModelList.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave)))
                 {
-                    foreach (var keyModel in octaveModel.KeyModelList.Where(n => n.Active))
+                     //Select active keys only
+                    var keyModelList = octaveModel.KeyModelList.Where(n => n.Alter != -1).ToList();
+
+                    for (var i = 1; i < keyModelList.Count - 1; i++)
                     {
-                        keyModel.fingerSettingEnabled = fingerSettingEnabled;
+                        keyModelList[i].fingerSettingEnabled = fingerSettingEnabled;
 
-                        if (keyValuePair.Key.Pitch.Step.ToString() != keyModel.Step.ToString() &&
-                            keyValuePair.Key.Pitch.Alter != keyModel.Alter)
+                        if (keyValuePair.Key.Pitch.Step.ToString() != keyModelList[i].Step.ToString() && keyModelList[i].Alter == 0)
                         {
-                            keyModel.Active = false;
-                            keyModel.FingerNum = 0;
-                        }
-                    }
-                }
-            }
+                            var j = i;
+                            if (keyValuePair.Key.Pitch.Alter == -1) j--;                            
+                            else if (keyValuePair.Key.Pitch.Alter == 1) j++;
 
-            //go over all keys and compare to note when true set active true on the corresponding key...
-            foreach (var keyValuePair in tempDict)
-            {
-                //.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave))
-                foreach (var octaveModel in PianoModel.OctaveModelList.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave)))
-                {
-                    foreach (var keyModel in octaveModel.KeyModelList.Where(n => !n.Active))
-                    {
-                        keyModel.fingerSettingEnabled = fingerSettingEnabled;
-
-                        if (keyValuePair.Key.Pitch.Step.ToString() == keyModel.Step.ToString() &&
-                            keyValuePair.Key.Pitch.Alter           == keyModel.Alter)
-                        {
-                            keyModel.Active = true;
-                            keyModel.FingerNum = keyValuePair.Key.FingerNum;
-                            keyModel.StaffNumber = keyValuePair.Key.Staff;
+                            keyModelList[j].Active = false;
+                            keyModelList[j].FingerNum = 0;
                         }          
                     }
                 }
             }
 
+            //go over all keys and compare to note when true set active true on the corresponding key...
+            foreach (var keyValuePair in tempDict)
+            {
+                //.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave))
+                foreach (var octaveModel in PianoModel.OctaveModelList.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave)))
+                {
+                    //Select not active keys only
+                    var keyModelList = octaveModel.KeyModelList.Where(n => n.Alter != -1).ToList();
 
+                    for (var i = 1; i < keyModelList.Count -1; i++)
+                    {
+                        keyModelList[i].fingerSettingEnabled = fingerSettingEnabled;
+
+                        if (keyValuePair.Key.Pitch.Step.ToString() == keyModelList[i].Step.ToString() && keyModelList[i].Alter == 0)
+                        {
+                            var j = i;
+                            if (keyValuePair.Key.Pitch.Alter == -1) j--;                            
+                            else if (keyValuePair.Key.Pitch.Alter == 1) j++;
+                            
+                            keyModelList[j].Active = true;
+                            keyModelList[j].FingerNum = keyValuePair.Key.FingerNum;
+                            keyModelList[j].StaffNumber = keyValuePair.Key.Staff;
+                        }          
+                    }
+                }
+            }
 
             Redraw();  
         }

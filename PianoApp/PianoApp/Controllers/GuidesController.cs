@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Timers;
+using System.Windows;
 using static MusicXml.Domain.Note;
 
 
@@ -89,6 +90,12 @@ namespace PianoApp.Controllers
         private List<Note>[] prevnote;
         private List<Note> newlistprevnote;
 
+        private int _scoreVal = 0;
+        private int _amountOfNotes = 0;
+        private int _goodNotes = 0;
+        private int _endReached = 0;
+        private int _amountOfGreatStaffs = 0;
+
         public GuidesController(MidiController midi)
         {
             this.midi = midi;
@@ -97,6 +104,7 @@ namespace PianoApp.Controllers
 
         private void FillToDoList()
         {
+            _amountOfNotes = 0;
             foreach (var scorePart in Score.Parts)
             {
                 //Access all measures inside the music piece
@@ -108,6 +116,7 @@ namespace PianoApp.Controllers
                         //Access the element if it is a note
                         if (measureElement.Type.Equals(MeasureElementType.Note))
                         {
+                            _amountOfNotes++;
                             var note = (Note)measureElement.Element;
 
                             if (note.Pitch == null) continue;
@@ -136,6 +145,8 @@ namespace PianoApp.Controllers
 
         private void SetAttributes()
         {
+            _amountOfGreatStaffs = Sheet.SheetModel.GreatStaffModelList.Count;
+
             //set timing of music piece
             _bpsecond = _bpm / 60;
 
@@ -255,8 +266,8 @@ namespace PianoApp.Controllers
 
                                 staffdivs[staffNumber] = tempList[i].Key.Duration;
                                 prevnote[staffNumber].Add(tempList[i].Key);
-
                             }
+
 
                             RemoveFirstNoteFromToDoDict(tempList[i].Key);
 
@@ -288,9 +299,17 @@ namespace PianoApp.Controllers
                     HoldPosition?.Invoke(this, EventArgs.Empty);
                 }
             }
+
+            if (_endReached >= _amountOfGreatStaffs)
+            {
+                System.Windows.MessageBox.Show($"Je score: {CalcScore()} van de 100");
+            }
         }
 
-
+        private int CalcScore()
+        {
+            return (100 * _goodNotes) / _amountOfNotes;
+        }
 
         private MockupNote getNoteFromNoteNumber(int nn)
         {
@@ -350,6 +369,7 @@ namespace PianoApp.Controllers
                         {
                             //if the pressed keys time is in between note marge
                             activeNote.Key.State = NoteState.Good;
+                            _goodNotes++;
                         }
                     }
                 }
@@ -368,11 +388,13 @@ namespace PianoApp.Controllers
             if (noteDict.TryGetValue(lastNoteStaffOne, out temp))
             {
                 atStaffEndOne = true;
+                _endReached++;
             }
 
             if (noteDict.TryGetValue(lastNoteStaffTwo, out temp))
             {
                 atStaffEndTwo = true;
+               
             }
         }
 
@@ -392,7 +414,11 @@ namespace PianoApp.Controllers
                     return;
                 }
 
-                stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
+
+                if (currentStaff < Sheet.SheetModel.GreatStaffModelList.Count)
+                {
+                    stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
+                }
 
                 if (StaffEndReached != null)
                 {
@@ -421,6 +447,9 @@ namespace PianoApp.Controllers
 
         public bool Start()
         {
+            _endReached = 0;
+            _amountOfGreatStaffs = 0;
+            _goodNotes = 0;
             ////Set the attributes from the current music piece
             SetAttributes();
 
