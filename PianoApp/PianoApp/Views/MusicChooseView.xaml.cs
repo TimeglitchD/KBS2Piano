@@ -145,12 +145,10 @@ namespace PianoApp.Views
 
         private void SelectPiece()
         {
-            Console.WriteLine(selectedPiece);
             try
             {
                 sv.MusicPieceController.CreateMusicPiece(selectedPiece);
 
-                Console.WriteLine("Piece loaded.");
                 //succesfull at opening xml file.
                 sv.DrawMusic();
                 nv.DrawNotes();

@@ -21,9 +21,7 @@ namespace PianoApp.Models
             foreach (var item in GreatStaffModelList)
             {
                 Sheet.Children.Add(item.DrawGreatStaff());
-                Console.WriteLine("Great stave added");
             }
-            Console.WriteLine("Sheet finished.");
             return Sheet;
 
         }

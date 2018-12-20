@@ -51,7 +51,7 @@ namespace PianoApp.Views
         private TextBlock metronomeText;
         private TextDecorationCollection strikeTrough = new TextDecorationCollection();
 
-        private bool running = false;
+        private bool spaceButtonEnabled = true;
 
         public ButtonView(Grid myGrid, StaveView sv, NoteView nv)
         {
@@ -148,6 +148,17 @@ namespace PianoApp.Views
             //StopBtn.HorizontalAlignment = HorizontalAlignment.Center;
             StopBtn.Click += StopBtn_Click;
             StopBtn.IsEnabled = false;
+
+            // Reset button
+            resetButton = new Button();
+            resetButton.FontSize = 20;
+            resetButton.Name = "resetBtn";
+            resetButton.Content = "⟲";
+            resetButton.Width = 60;
+            resetButton.Height = 40;
+            resetButton.HorizontalAlignment = HorizontalAlignment.Right;
+            resetButton.Click += ResetButton_Click;
+            resetButton.IsEnabled = false;
 
 
             // Add the button to the Grid
@@ -259,16 +270,7 @@ namespace PianoApp.Views
             notesCB.Items.Add("Kwart noot");
             notesCB.SelectedIndex = 2;
 
-            // Reset button
-            resetButton = new Button();
-            resetButton.FontSize = 20;
-            resetButton.Name = "resetBtn";
-            resetButton.Content = "⟲";
-            resetButton.Width = 60;
-            resetButton.Height = 40;
-            resetButton.HorizontalAlignment = HorizontalAlignment.Right;
-            resetButton.Click += ResetButton_Click;
-            resetButton.IsEnabled = false;
+            
 
             
         }
@@ -298,7 +300,8 @@ namespace PianoApp.Views
         {
             // Stuk stoppen
             sv.ScrollToTop(this, EventArgs.Empty);
-            StopBtn.IsEnabled = true;
+            StopBtn.IsEnabled = false;
+            resetButton.IsEnabled = false;
             mPc.Guide.paused = false;
             SelectSheetMusic.IsEnabled = true;
             _isStarted = false;
@@ -320,15 +323,18 @@ namespace PianoApp.Views
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
             mCv = new MusicChooseView(sv, nv, this);
-            mCv.Show();
-
-
             mCv.updateBpm += updateBpm;
+            mCv.ShowDialog();
         }
 
         public void TriggerStartBtnBySpaceKeyDown()
         {
-            StartMusicPiece();
+            if(spaceButtonEnabled)
+            {
+                spaceButtonEnabled = false;
+                StartMusicPiece();
+            }
+                
         }
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
@@ -381,13 +387,17 @@ namespace PianoApp.Views
                         mPc.Guide.Pause();
                         metronome.stopMetronome();
                         metronomeButton.IsEnabled = true;
+                        spaceButtonEnabled = true;
                     }
                 }
                 else
                 {
                     startBtn.IsEnabled = false;
                     StopBtn.IsEnabled = true;
-
+                    Console.WriteLine("---------------------------");
+                    Console.WriteLine(_musicPieceId);
+                    DatabaseConnection dbCon = new DatabaseConnection();
+                    dbCon.ExcecuteCommandNoOutput($"UPDATE Music SET Bpm = ({Convert.ToInt32(bpmValue)}) WHERE Id = {_musicPieceId}");
                     //set value in metronome and start it.
                     if (metronomeEnabled)
                     {
@@ -397,8 +407,7 @@ namespace PianoApp.Views
                     {
                         metronome.startMetronomeCountDownOnly(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
                     }
-                    DatabaseConnection dbCon = new DatabaseConnection();
-                    dbCon.ExcecuteCommandNoOutput($"UPDATE Music SET Bpm = ({Convert.ToInt32(bpmValue)}) WHERE Id = {_musicPieceId}");
+                   
                 }
 
             }
@@ -505,7 +514,6 @@ namespace PianoApp.Views
             startBtn.IsEnabled = false;
             TextBlock number = new TextBlock();
             number.Text = (mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats - metronome.elapsedBeats).ToString();
-            Console.WriteLine(number.Text);
             startBtn.Content = number;
             if (mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats - metronome.elapsedBeats == mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats)
             {
@@ -518,6 +526,7 @@ namespace PianoApp.Views
                 fingerSettingBtn.IsEnabled = true;
                 SelectSheetMusic.IsEnabled = false;
                 metronomeButton.IsEnabled = false;
+                spaceButtonEnabled = true;
 
                 CheckPause();
             }
@@ -542,7 +551,7 @@ namespace PianoApp.Views
             // Set Lenght of the columns
             colDef1.Width = new GridLength(80, GridUnitType.Star);
             colDef2.Width = new GridLength(60, GridUnitType.Star);
-            colDef3.Width = new GridLength(100, GridUnitType.Star);
+            colDef3.Width = new GridLength(90, GridUnitType.Star);
             colDef4.Width = new GridLength(140, GridUnitType.Star);
             colDef5.Width = new GridLength(37, GridUnitType.Star);
             colDef6.Width = new GridLength(37, GridUnitType.Star);

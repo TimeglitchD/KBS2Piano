@@ -74,13 +74,11 @@ namespace PianoApp.Controllers
         {
             if (Sheet == null)
             {
-                Console.WriteLine("No piece found.");
                 return StandardSheet();
 
             }
             else
             {
-                Console.WriteLine("Piece found!");
                 return Sheet.DrawSheet();
             }
 
@@ -104,8 +102,6 @@ namespace PianoApp.Controllers
             }
 
 
-            Console.WriteLine($"Amount of Great Staffs added: {Sheet.GreatStaffModelList.Count}");
-            Console.WriteLine("================================");
         }
 
         //Fill staffs width measures based on amount of measures in the piece
@@ -127,7 +123,6 @@ namespace PianoApp.Controllers
                 }
 
             }
-            Console.WriteLine("================================");
         }
 
         //Fill staffs with notes
@@ -154,12 +149,7 @@ namespace PianoApp.Controllers
                     }
                 }
 
-                foreach (var staffModel in greatStaffModel.StaffList)
-                {
-                    Console.WriteLine($"Amount of notes added: {staffModel.NoteList.Count}");
-                }
             }
-            Console.WriteLine("================================");
         }
     }
 }

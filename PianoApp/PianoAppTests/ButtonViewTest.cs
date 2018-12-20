@@ -71,7 +71,6 @@ namespace PianoAppTests
             MusicPieceController mPc = GetMusicPieceController();
 
             //mPc.Guide.Score = MusicXmlParser.GetScore(filename: TestContext.CurrentContext.TestDirectory + "\\TestData\\MusicXML.xml");
-            //Console.WriteLine("Guide: " + mPc.Guide);
 
             mPc.SheetController = new SheetController();
             Grid myGrid = new Grid();
@@ -96,7 +95,6 @@ namespace PianoAppTests
             MusicPieceController mPc = GetMusicPieceController();
 
             //mPc.Guide.Score = MusicXmlParser.GetScore(filename: TestContext.CurrentContext.TestDirectory + "\\TestData\\MusicXML.xml");
-            //Console.WriteLine("Guide: " + mPc.Guide);
 
             mPc.SheetController = new SheetController();
             Grid myGrid = new Grid();

@@ -97,7 +97,6 @@ namespace PianoApp
                 return true;
             } catch(Exception)
             {
-                Console.WriteLine("metronome exc");
                 return false;
             }
         }

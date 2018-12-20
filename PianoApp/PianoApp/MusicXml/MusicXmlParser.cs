@@ -29,16 +29,12 @@ namespace MusicXml
             var layoutNode = document.SelectSingleNode("score-partwise/defaults/page-layout");
             var marginNode = layoutNode.SelectSingleNode("page-margins");
             double width = Convert.ToDouble(layoutNode.SelectSingleNode("page-width").InnerText);
-            Console.WriteLine(width);
             var marginlistLeft = marginNode.SelectNodes("left-margin");
             var marginlistRight = marginNode.SelectNodes("right-margin");
             double marginLeft = Convert.ToDouble(marginlistLeft.Item(0).InnerText);
-            Console.WriteLine(marginLeft);
             double marginRight = Convert.ToDouble(marginlistLeft.Item(0).InnerText);
-            Console.WriteLine(marginRight);
 
             score.Scale = (width - marginLeft - marginRight) / 1055;
-            Console.WriteLine("Scale is: " + score.Scale);
 
             if (partNodes != null)
             {
@@ -92,7 +88,6 @@ namespace MusicXml
                             {
                                 score.Systems++;
                                 measure.NewSystem = true;
-                                Console.WriteLine("NEW SYSTEM: MEASURE "+measure.Number);
                             }
 
 

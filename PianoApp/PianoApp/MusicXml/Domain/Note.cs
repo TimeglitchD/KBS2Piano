@@ -252,8 +252,8 @@ namespace MusicXml.Domain
             }
             else if (State.Equals(NoteState.Good))
             {
-                shp.Fill = Brushes.Green;
-                shp.Stroke = Brushes.Green;
+                shp.Fill = Brushes.DarkOliveGreen;
+                shp.Stroke = Brushes.DarkOliveGreen;
             }
             else
             {
@@ -284,7 +284,7 @@ namespace MusicXml.Domain
             }
             else if (State.Equals(NoteState.Good))
             {
-                shp.Foreground = Brushes.Green;
+                shp.Foreground = Brushes.DarkOliveGreen;
             }
             else
             {

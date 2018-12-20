@@ -43,7 +43,6 @@ namespace PianoApp.Models
             foreach(OctaveModel octaveModel in OctaveModelList)
             {
                 piano.Children.Add(octaveModel.DrawOctave(width));
-                Console.WriteLine("Octave added");
             }
 
             return piano;

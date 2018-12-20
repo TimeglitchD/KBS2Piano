@@ -129,12 +129,10 @@ namespace PianoApp.Controllers
         {
             if (PianoModel == null)
             {
-                Console.WriteLine("No piano found");
                 return null;
             }
             else
             {
-                Console.WriteLine("Piano found");
                 return PianoModel.DrawPianoModel();
             }
         }

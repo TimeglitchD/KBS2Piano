@@ -142,8 +142,6 @@ namespace PianoApp.Controllers
 
             Guide.Piano.UpdatePressedPianoKeys(currentlyPressedKeys);
             record.StartRecordNote(pressedKey);
-            Console.WriteLine("----------On----------");
-            Console.WriteLine(pressedKey.ToString());
         }
 
         public void KeyUp(KeyEventArgs e)
@@ -260,8 +258,6 @@ namespace PianoApp.Controllers
 
             Guide.Piano.UpdatePressedPianoKeys(currentlyPressedKeys);
             record.StopRecordNote(pressedKey);
-            Console.WriteLine("----------Off----------");
-            Console.WriteLine(pressedKey.ToString());
         }
 
         private void octaveUp()
@@ -273,7 +269,6 @@ namespace PianoApp.Controllers
 
             MidiOutput.play(KeyOffset);
 
-            Console.WriteLine("current octave: " + CurrentOctave().ToString());
 
         }
 
@@ -287,7 +282,6 @@ namespace PianoApp.Controllers
 
             MidiOutput.play(KeyOffset);
 
-            Console.WriteLine("current octave: " + CurrentOctave().ToString());
         }
 
         public static int CurrentOctave()

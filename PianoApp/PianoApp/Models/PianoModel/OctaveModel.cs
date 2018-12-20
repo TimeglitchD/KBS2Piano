@@ -34,7 +34,6 @@ namespace PianoApp.Models
                 sb.Append(" ");
             }
 
-            Console.WriteLine(sb);
         }
 
         private void CreateKeys()
@@ -77,7 +76,6 @@ namespace PianoApp.Models
                         break;
                 }
             }
-            Console.WriteLine($"Octave: {Position} Keys: {KeyModelList.Count}");            
         }
 
         public DockPanel DrawOctave(float width)
@@ -102,7 +100,6 @@ namespace PianoApp.Models
                     newKey.VerticalAlignment = System.Windows.VerticalAlignment.Top;
                     
                     octave.Children.Add(newKey);
-                    Console.WriteLine("Key drawn");
                     previous = key;
                     index++;
                 }
