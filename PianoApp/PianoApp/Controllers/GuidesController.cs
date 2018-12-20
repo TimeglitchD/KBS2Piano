@@ -302,7 +302,7 @@ namespace PianoApp.Controllers
 
             if (_endReached >= _amountOfGreatStaffs)
             {
-                System.Windows.MessageBox.Show($"Je score: {CalcScore()}");
+                System.Windows.MessageBox.Show($"Je score: {CalcScore()} van de 100");
             }
         }
 

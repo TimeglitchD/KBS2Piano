@@ -100,8 +100,6 @@ namespace PianoApp.Controllers
                 }
             }
 
-
-
             Redraw();  
         }
 
