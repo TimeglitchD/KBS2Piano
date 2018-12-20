@@ -31,16 +31,16 @@
                         
                         <TextBlock Grid.Row="0" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
                         
-                            <Button Height="40" Width="80" FontSize="13"><TextBlock>Select<LineBreak/>Muziekpiece</TextBlock>  </Button>
+                            <Button Height="40" Width="80" FontSize="13"><TextBlock>Inladen</TextBlock>  </Button>
                         </TextBlock>
-                        <TextBlock Margin="10" Grid.Row="0" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock Margin="44,16,0,18" Grid.Row="0" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
                             Een muziekstuk inladen uit het geheugen.
                         </TextBlock>
                         
                         <TextBlock Grid.Row="1" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Margin="0,-5,0,0">BPM =</TextBlock> <TextBox Margin="0,0,0,0" Width="40">60</TextBox>
                         </TextBlock>
-                        <TextBlock Margin="10" Grid.Row="1" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock Margin="44,10,0,3" Grid.Row="1" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
                             BPM aanpassen (standaard 60). De aanpassing wordt opgeslagen bij het muziekstuk. 
                             <LineBreak/> De volgende keer dat dit stuk wordt gekozen, wordt het opgeslagen BPM geladen.
                         </TextBlock>
@@ -52,56 +52,55 @@
                                 <ComboBoxItem>Kwart noot</ComboBoxItem>
                             </ComboBox>
                         </TextBlock>
-                        <TextBlock Margin="10" Grid.Row="2" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock Margin="44,17,0,17" Grid.Row="2" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
                             BPM instellen op basis van een noot.
                         </TextBlock>
                         <TextBlock Grid.Row="3" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Button Height="40" Width="53" FontSize="25">⟲</Button>
                         </TextBlock>
-                        <TextBlock Margin="10" Grid.Row="3" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock Margin="44,10,0,25" Grid.Row="3" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
                             Reset het muziekstuk, na het aftellen begint het stuk automatisch opnieuw.
                         </TextBlock>
-                        
-                        <TextBlock Grid.Row="4" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Button Height="40" Width="60" FontSize="25">🔇</Button>
-                            <Button Height="40" Width="60" FontSize="25">🔉</Button>
-                        </TextBlock>
-                        <TextBlock Margin="10" Grid.Row="4" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            Aan/uitzetten van metronoom. Dit dient te worden aangegeven voor dat het stuk is gestart.
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"><Run Text=" "/><InlineUIContainer>
+                                <Button Height="40" Width="63" FontSize="25" Content="🔉"/>
+                            </InlineUIContainer></TextBlock>
+                        <TextBlock Margin="44,10,0,24" Grid.Row="4" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            Aan/uitzetten van metronoom. 
                         </TextBlock>
                         
                         <TextBlock Grid.Row="5" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Button Height="40" Width="54" FontSize="25">☝</Button>
                         </TextBlock>
-                        <TextBlock Margin="10" Grid.Row="5" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
-                            Aan/uitzetten van de vingersetting. Dit dient te worden aangegeven voor dat het stuk is gestart.
+                        <TextBlock Margin="44,10,-24,24.8" Grid.Row="5" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                            Aan/uitzetten van de vingersetting.
                         </TextBlock>
                         
                         <TextBlock Grid.Row="6" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Button Height="40" Width="63" FontSize="25">🎹</Button>
                         </TextBlock>
-                        <TextBlock Margin="10" Grid.Row="6" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock Margin="44,9.2,0,24.8" Grid.Row="6" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
                             Virtuele piano aan/uitzetten.
                         </TextBlock>
                         
                         <TextBlock Grid.Row="7" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Button Height="40" Width="53" FontSize="25">▶</Button>
                         </TextBlock>
-                        <TextBlock Margin="10" Grid.Row="7" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock Margin="44,22.2,0,13.6" Grid.Row="7" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
                             Muziekstuk starten.
                         </TextBlock>
                         
                         <TextBlock Grid.Row="8" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Button Height="40" Width="52" FontSize="25">❚❚</Button>
                         </TextBlock>
-                        <TextBlock Margin="10" Grid.Row="8" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock Margin="44,10.4,0,24.6" Grid.Row="8" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
                             Muziekstuk pauzeren.
                         </TextBlock>
                         
                         <TextBlock Grid.Row="9" Grid.Column="0" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Button Height="40" Width="51" FontSize="25">◼</Button>
                         </TextBlock>
-                        <TextBlock Margin="10" Grid.Row="9" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <TextBlock Margin="44,10.4,0,24.4" Grid.Row="9" Grid.Column="1" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left">
                             Muziekstuk stoppen.
                         </TextBlock>
                     </Grid>

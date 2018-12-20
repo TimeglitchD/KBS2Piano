@@ -16,7 +16,7 @@ namespace PianoAppTests
             DatabaseConnection connection = new DatabaseConnection();
 
             //act
-            bool test = connection.addMusic("test", "test", "12-12-12", "121212", "test");
+            bool test = connection.addMusic("test", "test", "121212", "test");
 
             //assert
             Assert.IsTrue(test);
@@ -30,7 +30,7 @@ namespace PianoAppTests
             DatabaseConnection connection = new DatabaseConnection();
 
             //act
-            bool test = connection.addMusic("test", "test", "121212", "121212", "test");
+            bool test = connection.addMusic("test", "test", "121212", "test");
 
             //assert
             Assert.IsFalse(test);

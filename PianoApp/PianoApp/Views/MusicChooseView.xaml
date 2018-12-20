@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PianoApp"
         mc:Ignorable="d"
-        Title="Keyboard Hero - Choose a musicpiece" Height="640" Width="800"
+        Title="Keyboard Hero - Kies een muziekstuk" Height="640" Width="800"
         ResizeMode="NoResize"
         >
     <Grid>
@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
 
         <TabControl Name="TabControl" Margin="0,69,270,10" Grid.Column="1" SelectionChanged="SheetTab_SelectionChanged">
-            <TabItem Header="Sheet music" Name="SheetMusicTab">
+            <TabItem Header="Alle muziek" Name="SheetMusicTab">
                 <DataGrid x:Name="SheetMusic" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="SheetMusic_SelectionChanged">
                     <DataGrid.RowStyle>
                         <Style>
@@ -23,8 +23,8 @@
                         </Style>
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="320" Header="Title" Binding="{Binding Title}"/>
-                        <DataGridTextColumn Width="150" Header="Adding Date"  Binding="{Binding Date}"/>
+                        <DataGridTextColumn Width="320" Header="Titel" Binding="{Binding Title}"/>
+                        <DataGridTextColumn Width="150" Header="Toegevoegd op"  Binding="{Binding Date}"/>
                         <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
                         <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
                     </DataGrid.Columns>
@@ -40,8 +40,8 @@
                                 </Style>
                             </DataGrid.RowStyle>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="330" Header="Title" Binding="{Binding Title}"/>
-                                <DataGridTextColumn Width="150" Header="Adding Date"  Binding="{Binding Date}"/>
+                                <DataGridTextColumn Width="330" Header="Titel" Binding="{Binding Title}"/>
+                                <DataGridTextColumn Width="150" Header="Toegevoegd op"  Binding="{Binding Date}"/>
                                 <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
                                 <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
                             </DataGrid.Columns>
@@ -55,8 +55,8 @@
                                 </Style>
                             </DataGrid.RowStyle>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="330" Header="Title" Binding="{Binding Title}"/>
-                                <DataGridTextColumn Width="150" Header="Adding Date"  Binding="{Binding Date}"/>
+                                <DataGridTextColumn Width="330" Header="Titel" Binding="{Binding Title}"/>
+                                <DataGridTextColumn Width="150" Header="Toegevoegd op"  Binding="{Binding Date}"/>
                                 <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
                                 <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
                             </DataGrid.Columns>
@@ -70,8 +70,8 @@
                                 </Style>
                             </DataGrid.RowStyle>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="330" Header="Title" Binding="{Binding Title}"/>
-                                <DataGridTextColumn Width="150" Header="Adding Date"  Binding="{Binding Date}"/>
+                                <DataGridTextColumn Width="330" Header="Titel" Binding="{Binding Title}"/>
+                                <DataGridTextColumn Width="150" Header="Toegevoegd op"  Binding="{Binding Date}"/>
                                 <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
                                 <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
                             </DataGrid.Columns>
@@ -85,8 +85,8 @@
                                 </Style>
                             </DataGrid.RowStyle>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="330" Header="Title" Binding="{Binding Title}"/>
-                                <DataGridTextColumn Width="150" Header="Adding Date"  Binding="{Binding Date}"/>
+                                <DataGridTextColumn Width="330" Header="Titel" Binding="{Binding Title}"/>
+                                <DataGridTextColumn Width="150" Header="Toegevoegd op"  Binding="{Binding Date}"/>
                                 <DataGridTextColumn Header="Location" Visibility="Hidden" Binding="{Binding Location}"/>
                                 <DataGridTextColumn Header="Id" Visibility="Hidden" Binding="{Binding Id}"/>
                             </DataGrid.Columns>
@@ -97,25 +97,25 @@
 
         </TabControl>
 
-        <Label FontSize="20" FontWeight="DemiBold" Content="Choose a musicpiece" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-        <Button FontSize="16" x:Name="select" Content="Choose musicpiece" Grid.Column="1" HorizontalAlignment="Left" Margin="508,536,0,0" VerticalAlignment="Top" Width="243" Height="50" Click="OnSelectClick"/>
-        <Label Content="Title" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,69,0,0" VerticalAlignment="Top" Width="242"/>
+        <Label FontSize="20" FontWeight="DemiBold" Content="Kies een muziekstuk" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <Button FontSize="16" IsEnabled="False" x:Name="select" Content="Selecteren" Grid.Column="1" HorizontalAlignment="Left" Margin="508,536,0,0" VerticalAlignment="Top" Width="243" Height="50" Click="OnSelectClick"/>
+        <Label Content="Titel" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,69,0,0" VerticalAlignment="Top" Width="242"/>
         <TextBox x:Name="titleBox" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="26" Margin="507.2,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242"/>
-        <Label Content="Description" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,126,0,0" VerticalAlignment="Top" Width="242"/>
+        <Label Content="Omschrijving" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="507.667,126,0,0" VerticalAlignment="Top" Width="242"/>
         <TextBox x:Name="descBox" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="148" Margin="507.2,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242"/>
         <TextBox x:Name="SearchTerm" Grid.Column="1" HorizontalAlignment="Left" Height="37" Margin="332.2,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="169" TextChanged="SearchTerm_TextChanged"/>
-        <Label Content="Search" Grid.Column="1" HorizontalAlignment="Left" Margin="284.2,66,0,0" VerticalAlignment="Top" Width="48" Height="25"/>
+        <Label Content="Zoeken" Grid.Column="1" HorizontalAlignment="Left" Margin="284.2,66,0,0" VerticalAlignment="Top" Width="48" Height="25"/>
 
         <Label Content="Scoreboard" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="503.2,313,0,0" VerticalAlignment="Top" Width="242"/>
         <DataGrid Name="ScoreGrid" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="174" Margin="508.2,347,0,0" VerticalAlignment="Top" Width="241">
             <DataGrid.Columns>
-                <DataGridTextColumn  Width="65" Binding="{Binding Date}" IsReadOnly="True" Header="Date"/>
-                <DataGridTextColumn Width="80" Binding="{Binding Time}" IsReadOnly="True" Header="Time"/>
+                <DataGridTextColumn  Width="65" Binding="{Binding Date}" IsReadOnly="True" Header="Datum"/>
+                <DataGridTextColumn Width="80" Binding="{Binding Time}" IsReadOnly="True" Header="Tijd"/>
                 <DataGridTextColumn Width="88" Binding="{Binding Scored}" IsReadOnly="True" Header="Score"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Name ="OpenFileBtn" Content="Browse" Grid.Column="1" HorizontalAlignment="Left" Margin="668.2,32,0,0" VerticalAlignment="Top" Width="81" Click="AddButton_Click"/>
-        <Label Grid.Column="1" Name="txtEditor" HorizontalAlignment="Left" Height="36" Margin="332.2,28,0,0" Content="" VerticalAlignment="Top" Width="336"/>
-        <Button Content="Delete" Visibility="Hidden" Name="DeleteBtn" Grid.Column="1" HorizontalAlignment="Left" Margin="571.2,32,0,0" VerticalAlignment="Top" Width="75" Click="DeleteBtn_Click"/>
+        <Button Name ="OpenFileBtn" Content="Browse" Grid.Column="1" HorizontalAlignment="Left" Margin="622.2,32,0,0" VerticalAlignment="Top" Width="95" Click="AddButton_Click"/>
+        <Label Grid.Column="1" Name="txtEditor" HorizontalAlignment="Left" Height="36" Margin="167.2,32,0,0" Content="" VerticalAlignment="Top" Width="336"/>
+        <Button Content="Verwijder" Visibility="Hidden" Name="DeleteBtn" Grid.Column="1" HorizontalAlignment="Left" Margin="522.2,32,0,0" VerticalAlignment="Top" Width="95" Click="DeleteBtn_Click"/>
     </Grid>
 </Window>

@@ -98,6 +98,7 @@ namespace PianoApp.Views
         //event updates file path based on selection
         private void SheetMusic_SelectionChanged(object sender, RoutedEventArgs e)
         {
+            select.IsEnabled = true;
             DataGrid dg = sender as DataGrid;
             DataRowView selected = dg.CurrentItem as DataRowView;
             if (selected == null)
@@ -244,8 +245,8 @@ namespace PianoApp.Views
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Do you want to delete this piece?",
-                                          "Confirmation",
+            MessageBoxResult result = MessageBox.Show("Weet je het zeker?",
+                                          "Bevestiging",
                                           MessageBoxButton.YesNo,
                                           MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
