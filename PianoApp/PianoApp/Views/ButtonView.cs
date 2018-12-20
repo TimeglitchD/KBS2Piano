@@ -149,6 +149,17 @@ namespace PianoApp.Views
             StopBtn.Click += StopBtn_Click;
             StopBtn.IsEnabled = false;
 
+            // Reset button
+            resetButton = new Button();
+            resetButton.FontSize = 20;
+            resetButton.Name = "resetBtn";
+            resetButton.Content = "⟲";
+            resetButton.Width = 60;
+            resetButton.Height = 40;
+            resetButton.HorizontalAlignment = HorizontalAlignment.Right;
+            resetButton.Click += ResetButton_Click;
+            resetButton.IsEnabled = false;
+
 
             // Add the button to the Grid
             SelectSheetMusic = new Button();
@@ -259,16 +270,7 @@ namespace PianoApp.Views
             notesCB.Items.Add("Kwart noot");
             notesCB.SelectedIndex = 2;
 
-            // Reset button
-            resetButton = new Button();
-            resetButton.FontSize = 20;
-            resetButton.Name = "resetBtn";
-            resetButton.Content = "⟲";
-            resetButton.Width = 60;
-            resetButton.Height = 40;
-            resetButton.HorizontalAlignment = HorizontalAlignment.Right;
-            resetButton.Click += ResetButton_Click;
-            resetButton.IsEnabled = false;
+            
 
             
         }
@@ -320,7 +322,7 @@ namespace PianoApp.Views
         private void SelectSheetMusic_Click(object sender, RoutedEventArgs e)
         {
             mCv = new MusicChooseView(sv, nv, this);
-            mCv.Show();
+            mCv.ShowDialog();
 
 
             mCv.updateBpm += updateBpm;
@@ -542,7 +544,7 @@ namespace PianoApp.Views
             // Set Lenght of the columns
             colDef1.Width = new GridLength(80, GridUnitType.Star);
             colDef2.Width = new GridLength(60, GridUnitType.Star);
-            colDef3.Width = new GridLength(100, GridUnitType.Star);
+            colDef3.Width = new GridLength(90, GridUnitType.Star);
             colDef4.Width = new GridLength(140, GridUnitType.Star);
             colDef5.Width = new GridLength(37, GridUnitType.Star);
             colDef6.Width = new GridLength(37, GridUnitType.Star);
