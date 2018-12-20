@@ -17,6 +17,7 @@ namespace PianoApp.Controllers
         private GuidesController guide;
         private static float bpm;
         private bool recording = false;
+        private static int systems = 0;
 
         public RecordController(GuidesController guide)
         {
@@ -52,6 +53,7 @@ namespace PianoApp.Controllers
         {
             Score score = new Score();
             score.Parts.Add(getPart());
+            score.Systems = systems;
             return score;
         }
 
@@ -60,12 +62,16 @@ namespace PianoApp.Controllers
         {
             activeNotes = new Dictionary<int, long>();
             recordedSheet = new List<RecordedNote>();
+            systems = 0;
         }
 
         //record a keypress and add it to list to record time pressed
         public void StartRecordNote(int note)
         {
             if (!recording)
+                return;
+
+            if (activeNotes.ContainsKey(note))
                 return;
 
             activeNotes.Add(note, stopWatch.ElapsedMilliseconds);
@@ -121,10 +127,12 @@ namespace PianoApp.Controllers
                 } else
                 {
                     Measure measure = new Measure();
+                    measure.Width = 60;
                     measures.Add(measureNumber, measure);
                     MeasureElement element = new MeasureElement();
                     element.Element = note;
                     measures[measureNumber].MeasureElements.Add(element);
+                    
                 }
                 
             }
@@ -142,9 +150,9 @@ namespace PianoApp.Controllers
                 newMeasures.Add(measure);
             }
 
-            for(int i = 1; i <= measures.Keys.Max(); i++)
+            for(int ii = 1; ii <= measures.Keys.Max(); ii++)
             {
-                if(!measures.ContainsKey(i))
+                if(!measures.ContainsKey(ii))
                 {
                     int measureLength = (int)((1000.0 / (bpm / 60.0)) * 4);
                     Measure measure = new Measure();
@@ -155,8 +163,23 @@ namespace PianoApp.Controllers
                     note.Type = "whole";
                     element.Element = note;
                     measure.MeasureElements.Add(element);
+                    measure.Width = 60;
                     newMeasures.Add(measure);
                 }
+            }
+
+            int i = 0;
+
+            foreach (Measure measure in newMeasures)
+            {
+                if(i > 4)
+                {
+                    Console.WriteLine("new system");
+                    measure.NewSystem = true;
+                    i = 0;
+                    systems++;
+                }
+                i++;
             }
 
             return newMeasures;
