@@ -272,10 +272,7 @@ namespace PianoApp.Controllers
 
                             for (int j = i + 1; j < tempList.Count; j++)
                             {
-                                if (tempList[i].Key != tempList[j].Key &&
-                                    tempList[j].Key.XPos > tempList[i].Key.XPos - 1 &&
-                                    tempList[j].Key.XPos < tempList[i].Key.XPos + 1 &&
-                                    tempList[i].Key.MeasureNumber == tempList[j].Key.MeasureNumber)
+                                if (tempList[j].Key.IsChordTone)
                                 {
                                     //Add note with same pos to active Dictionary
                                     if (!tempDict.ContainsKey(tempList[j].Key))
@@ -286,6 +283,10 @@ namespace PianoApp.Controllers
                                         });
                                     //Remove the note with same pos from to do 
                                     RemoveFirstNoteFromToDoDict(tempList[j].Key);
+                                }
+                                else
+                                {
+                                    break;
                                 }
                             }
                         }
