@@ -239,6 +239,8 @@ namespace PianoApp.Controllers
 
                 }
                 goToNextStaff();
+                HoldPosition?.Invoke(this, EventArgs.Empty);
+
 
                 var tempList = _toDoNoteDict1.ToList();
                 if (staffNumber == 2)
@@ -296,7 +298,6 @@ namespace PianoApp.Controllers
                     Piano.UpdatePianoKeys(tempDict);
                     Sheet.UpdateNotes(tempDict);
 
-                    HoldPosition?.Invoke(this, EventArgs.Empty);
                 }
             }
 
