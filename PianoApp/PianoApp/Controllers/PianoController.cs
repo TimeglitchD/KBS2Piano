@@ -58,34 +58,6 @@ namespace PianoApp.Controllers
 
             var tempDict = new Dictionary<Note, Timeout>(noteAndTimeoutDictionary).ToDictionary(k => k.Key, k => k.Value);
             
-//            //go over all keys and compare to note when true set active true on the corresponding key...
-//            foreach (var keyValuePair in tempDict)
-//            {
-//                //.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave))
-//                foreach (var octaveModel in PianoModel.OctaveModelList.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave)))
-//                {
-//                     //Select active keys only
-//                    var keyModelList = octaveModel.KeyModelList.Where(n => n.Alter != -1).ToList();
-//
-//                    for (var i = 1; i < keyModelList.Count - 1; i++)
-//                    {
-//                        keyModelList[i].fingerSettingEnabled = fingerSettingEnabled;
-//
-//                        if (keyValuePair.Key.Pitch.Step.ToString() != keyModelList[i].Step.ToString() && keyModelList[i].Alter == 0)
-//                        {
-//                            var j = i;
-//                            if (keyValuePair.Key.Pitch.Alter == -1) j--;                            
-//                            else if (keyValuePair.Key.Pitch.Alter == 1) j++;
-//
-//                            keyModelList[j].Active = false;
-//                            keyModelList[j].FingerNum = 0;
-//                        }          
-//                    }
-//                }
-//            }
-
-
-
             //go over all keys and compare to note when true set active true on the corresponding key...
             foreach (var keyValuePair in tempDict)
             {
