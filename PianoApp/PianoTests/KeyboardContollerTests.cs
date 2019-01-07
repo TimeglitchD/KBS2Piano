@@ -12,19 +12,24 @@ namespace ControllerTests
     [TestFixture]
     public class KeyboardContollerTests
     {
+        KeyboardController kc;
         public KeyboardContollerTests()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            kc = new KeyboardController();
         }
 
         [Test]
-        public void TestMethod1()
+        public void CurrentOctave_When48_ShouldReturn4()
         {
-            //
-            // TODO: Add test logic here
-            //
+            KeyboardController.KeyOffset = 48;
+            Assert.AreEqual(4, kc.CurrentOctave());
+        }
+
+        [Test]
+        public void OctaveUp_When60_ShouldReturn5()
+        {
+            KeyboardController.KeyOffset = 60;
+            Assert.AreEqual(5, kc.CurrentOctave());
         }
     }
 }
