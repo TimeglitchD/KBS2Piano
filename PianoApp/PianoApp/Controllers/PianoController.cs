@@ -84,9 +84,29 @@ namespace PianoApp.Controllers
 //                }
 //            }
 
+
+
             //go over all keys and compare to note when true set active true on the corresponding key...
             foreach (var keyValuePair in tempDict)
             {
+                var octave = keyValuePair.Key.Pitch.Octave;
+                if (keyValuePair.Key.Pitch.Step == 'C' && keyValuePair.Key.Pitch.Alter == -1)
+                {
+                    if (octave > 0)
+                    {
+                        keyValuePair.Key.Pitch.Step = 'B';
+                        keyValuePair.Key.Pitch.Octave = octave -1;
+                        keyValuePair.Key.Pitch.Alter = 0;
+                    }
+                }
+
+                if (keyValuePair.Key.Pitch.Step == 'B' && keyValuePair.Key.Pitch.Alter == 1)
+                {
+                    keyValuePair.Key.Pitch.Step = 'C';
+                    keyValuePair.Key.Pitch.Octave = octave + 1;
+                    keyValuePair.Key.Pitch.Alter = 0;
+                }
+
                 //.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave))
                 foreach (var octaveModel in PianoModel.OctaveModelList.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave)))
                 {
@@ -116,7 +136,7 @@ namespace PianoApp.Controllers
                             keyModelList[j].Active = true;
                             keyModelList[j].FingerNum = keyValuePair.Key.FingerNum;
                             keyModelList[j].StaffNumber = keyValuePair.Key.Staff;
-                        }    
+                        }
                     }
                 }
             }
