@@ -32,7 +32,7 @@ namespace PianoApp.Models
         {
             if (StaffNumber == 1 && Active)
             {
-                KeyRect.Fill = System.Windows.Media.Brushes.Aquamarine;
+                KeyRect.Fill = System.Windows.Media.Brushes.MediumBlue;
             }
             else if (StaffNumber == 2 && Active)
             {
