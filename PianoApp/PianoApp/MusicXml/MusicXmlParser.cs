@@ -123,13 +123,47 @@ namespace MusicXml
 
                             var childNodes = measureNode.ChildNodes;
 
+                            int voice1 = 0;
+                            int voice2 = 0;
+
                             foreach (XmlNode node in childNodes)
                             {
                                 MeasureElement measureElement = null;
+                                
 
                                 if (node.Name == "note")
                                 {
-                                    if (node.SelectSingleNode("grace") == null)
+
+                                    var voiceNode = node.SelectSingleNode("voice");
+                                    if (voiceNode != null)
+                                    {
+                                        var voice = voiceNode.InnerText;
+
+                                        var staffNode = node.SelectSingleNode("staff");
+                                        if (staffNode != null)
+                                        {
+                                            int staff = Convert.ToInt32(staffNode.InnerText);
+
+                                            if (staff == 1)
+                                            {
+                                                if (voice1 == 0)
+                                                {
+                                                    voice1 = Convert.ToInt32(voice);
+                                                }
+                                            }else if (staff == 2)
+                                            {
+                                                if (voice2 == 0)
+                                                {
+                                                    voice2 = Convert.ToInt32(voice);
+                                                }
+                                            }
+                                        }
+                                    }
+
+
+                                    int currentvoice = Convert.ToInt32(node.SelectSingleNode("voice").InnerText);
+
+                                    if (node.SelectSingleNode("grace") == null && (currentvoice.Equals(voice1) || currentvoice.Equals(voice2)))
                                     {
                                         var newNote = GetNote(node);
                                         measureElement = new MeasureElement { Type = MeasureElementType.Note, Element = newNote };
