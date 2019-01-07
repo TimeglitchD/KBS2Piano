@@ -96,6 +96,8 @@ namespace PianoApp.Controllers
         private int _endReached = 0;
         private int _amountOfGreatStaffs = 0;
 
+        public bool _finished { get; set; }
+
         public GuidesController(MidiController midi)
         {
             this.midi = midi;
@@ -306,8 +308,9 @@ namespace PianoApp.Controllers
                 }
             }
 
-            if (_endReached.Equals(_amountOfGreatStaffs))
+            if (_endReached.Equals(_amountOfGreatStaffs) && !_finished)
             {
+                _finished = true;
                 Console.WriteLine("öneeeeee");
                 System.Windows.MessageBox.Show($"Je score: {CalcScore()} van de 100");
             }
@@ -343,7 +346,6 @@ namespace PianoApp.Controllers
 
             return new MockupNote() { Step = step, Alter = alter, Octave = octave };
         }
-
 
         private void CheckPressedKeysToActiveNotes(int staffNumber)
         {
@@ -454,6 +456,7 @@ namespace PianoApp.Controllers
 
         public bool Start()
         {
+            _finished = false;
             _endReached = 0;
             _amountOfGreatStaffs = 0;
             _goodNotes = 0;
