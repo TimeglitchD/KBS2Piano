@@ -85,7 +85,6 @@
     <Compile Include="Controllers\KeyboardController.cs" />
     <Compile Include="Controllers\MidiController.cs" />
     <Compile Include="Controllers\MidiControllerEventArgs.cs" />
-    <Compile Include="Controllers\PianoToneController.cs" />
     <Compile Include="Controllers\RecordController.cs" />
     <Compile Include="Controllers\SheetController.cs" />
     <Compile Include="Controllers\GuidesController.cs" />
@@ -104,7 +103,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\InputController.cs" />
     <Compile Include="Controllers\MusicPieceController.cs" />
     <Compile Include="Controllers\PianoController.cs" />
     <Compile Include="Models\PianoModel\BlackKey.cs" />
