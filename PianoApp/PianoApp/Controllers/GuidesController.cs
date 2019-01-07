@@ -237,6 +237,11 @@ namespace PianoApp.Controllers
                         note.State = NoteState.Wrong;
                     }
 
+                    if (note.IsRest)
+                    {
+                        note.State = NoteState.Idle;
+                    }
+
                 }
                 goToNextStaff();
                 HoldPosition?.Invoke(this, EventArgs.Empty);
@@ -301,8 +306,9 @@ namespace PianoApp.Controllers
                 }
             }
 
-            if (_endReached >= _amountOfGreatStaffs)
+            if (_endReached.Equals(_amountOfGreatStaffs))
             {
+                Console.WriteLine("öneeeeee");
                 System.Windows.MessageBox.Show($"Je score: {CalcScore()} van de 100");
             }
         }
@@ -378,6 +384,7 @@ namespace PianoApp.Controllers
                     activeNote.Key.State = NoteState.Wrong;
                 }
             }
+
         }
 
         private void checkLastNote(Dictionary<Note, Timeout> noteDict)
