@@ -95,6 +95,7 @@
     <Compile Include="Models\Exception\BpmOutOfRangeException.cs" />
     <Compile Include="metronomeSound.cs" />
     <Compile Include="Models\RecordedNote.cs" />
+    <Compile Include="Models\ScoreLabel.cs" />
     <Compile Include="MusicDatabaseDataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

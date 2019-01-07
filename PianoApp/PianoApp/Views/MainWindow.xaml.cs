@@ -40,7 +40,7 @@ namespace PianoApp
         public ButtonView bv;
         public bool show = true;
 
-        private Grid myGrid = new Grid();
+        public Grid myGrid = new Grid();
 
         private metronomeSound metronome;
 
@@ -61,7 +61,7 @@ namespace PianoApp
             sC.MidiController = mC;
 
             kC = new KeyboardController() { PianoController = pC };
-            mPc = new MusicPieceController() { Piano = pC, SheetController = sC, MidiController = mC, KeyboardController = kC };
+            mPc = new MusicPieceController() { Piano = pC, SheetController = sC, MidiController = mC, KeyboardController = kC , Grid = myGrid};
 
             //mPc.Guide.Start();
             DrawMenu();
@@ -75,6 +75,8 @@ namespace PianoApp
 
             metronomeSound sound = new metronomeSound();
             sound.startMetronome(120, 4, 1);
+
+
         }
 
         private void DrawMenu()
@@ -99,9 +101,9 @@ namespace PianoApp
 
             //Draw the notes
             nv = new NoteView(sv);
-            nv.DrawNotes();
+            nv.DrawNotes();            
 
-            bv = new ButtonView(myGrid, sv, nv);
+            bv = new ButtonView(myGrid, sv, nv){ grid = myGrid };
             bv.pianoStateChanged += pianoStateChanged;
 
             metronome = bv.metronome;
@@ -129,7 +131,11 @@ namespace PianoApp
             myGrid.RowDefinitions.Add(rowDef3);
             myGrid.RowDefinitions.Add(rowDef4);
 
+            var sl = ScoreLabel.DrawScore();
 
+            Grid.SetRow(sl, 1);
+            Grid.SetZIndex(sl, 99999);
+            myGrid.Children.Add(sl);
         }
 
         private void countdownFinished(object sender, EventArgs e)

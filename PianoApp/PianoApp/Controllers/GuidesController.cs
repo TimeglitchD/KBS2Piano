@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Timers;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using PianoApp.Models;
 using static MusicXml.Domain.Note;
 
 
@@ -95,6 +98,7 @@ namespace PianoApp.Controllers
         private int _goodNotes = 0;
         private int _endReached = 0;
         private int _amountOfGreatStaffs = 0;
+        public Grid grid;
 
         public bool _finished { get; set; }
 
@@ -311,10 +315,14 @@ namespace PianoApp.Controllers
             if (_endReached.Equals(_amountOfGreatStaffs) && !_finished)
             {
                 _finished = true;
-                Console.WriteLine("öneeeeee");
-                System.Windows.MessageBox.Show($"Je score: {CalcScore()} van de 100");
+
+                ScoreLabel.Score = CalcScore();              
+
+                grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.UpdateScore()));
             }
         }
+
+
 
         private int CalcScore()
         {

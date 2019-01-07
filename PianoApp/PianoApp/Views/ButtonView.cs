@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using PianoApp.Models;
 
 namespace PianoApp.Views
 {
@@ -50,7 +51,7 @@ namespace PianoApp.Views
         private TextBlock pianoText;
         private TextBlock metronomeText;
         private TextDecorationCollection strikeTrough = new TextDecorationCollection();
-
+        public Grid grid { get; set; }
         private bool spaceButtonEnabled = true;
 
         public ButtonView(Grid myGrid, StaveView sv, NoteView nv)
@@ -99,6 +100,10 @@ namespace PianoApp.Views
             menuGrid.Children.Add(introductionBtn);
 
             myGrid.Children.Add(menuGrid);
+        }
+
+        private void HideScore () {
+            grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.HideScore()));
         }
 
         internal void EnableStopBtn()
@@ -312,6 +317,7 @@ namespace PianoApp.Views
             notesCB.IsEnabled = false;
             notesCB.IsEnabled = true;
             CheckPause();
+            HideScore();
         }
 
         public void StopBtn_Click(object sender, RoutedEventArgs e)
@@ -344,6 +350,7 @@ namespace PianoApp.Views
 
         public void StartMusicPiece()
         {
+            HideScore();
             try
             {
                 if (mPc.Guide.Score != null) ;

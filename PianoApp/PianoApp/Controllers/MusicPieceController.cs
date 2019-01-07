@@ -27,6 +27,7 @@ namespace PianoApp.Controllers
         public RecordController RecordController;
 
         public SheetModel Sheet { get; set; }
+        public Grid Grid { get; set; }
 
         public event EventHandler staffEndReached;
 
@@ -41,7 +42,7 @@ namespace PianoApp.Controllers
         {
             _score = MusicXmlParser.GetScore(filename);
 
-            Guide = new GuidesController(MidiController) { Score = _score, Piano = Piano, Sheet = SheetController };
+            Guide = new GuidesController(MidiController) { Score = _score, Piano = Piano, Sheet = SheetController, grid = Grid};
 
             RecordController = new RecordController(Guide);
 
