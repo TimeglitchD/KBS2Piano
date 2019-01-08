@@ -12,19 +12,23 @@ namespace ControllerTests
     [TestFixture]
     public class SheetControllerTests
     {
+        private PianoController pC;
+        private Dictionary<int, float> activeKeys;
         public SheetControllerTests()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            pC = new PianoController();
+            activeKeys.Add(0, 0);
         }
-        
-        [Test]
-        public void TestMethod1()
-        {
-            //
-            // TODO: Add test logic here
-            //
-        }
+
+        //Test case for testing the note enum.
+        //Test case: string, enum note type.
+//        [Test]
+//        [TestCase("Hele noot", NoteType.Whole)]
+//        public void UpdatePressedPianoKeys_ShouldReturnShouldSetCorrespondingPianoKeyToActive(string noteString, NoteType noteType)
+//        {
+//            guidesController.SetNote(noteString);
+//            Assert.AreEqual(noteType, guidesController.Note);
+//        }
+
     }
 }

@@ -57,8 +57,6 @@ namespace PianoApp.Controllers
 
         public Score Score;
 
-        public NoteType ChosenNote = NoteType.Quarter;
-
         private float _divs;
         private float _bpsecond;
         private int _milsecperbeat;
@@ -89,7 +87,6 @@ namespace PianoApp.Controllers
 
         public Dictionary<int, float> ActiveKeys = new Dictionary<int, float>();
 
-        public bool AtEnd = false;
         private int[] staffdivs;
         private List<Note>[] prevnote;
         private List<Note> newlistprevnote;
@@ -183,22 +180,6 @@ namespace PianoApp.Controllers
             }
 
             stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
-        }
-
-        public int ReturnFirstNoteTimeout(int staffNumber)
-        {
-            int timeout = 0;
-            if (staffNumber == 1)
-            {
-                timeout = (int)(_toDoNoteDict1.First(n => n.Key.Staff == staffNumber && !n.Key.Duplicate).Value * 1000);
-
-            }
-            else
-            {
-                timeout = (int)(_toDoNoteDict2.First(n => n.Key.Staff == staffNumber && !n.Key.Duplicate).Value * 1000);
-
-            }
-            return timeout;
         }
 
         private void RemoveFirstNoteFromToDoDict(Note note)
@@ -331,8 +312,6 @@ namespace PianoApp.Controllers
                 grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.HideScore()));
             }
         }
-
-
 
         public int CalcScore()
         {
@@ -561,12 +540,6 @@ namespace PianoApp.Controllers
             _timerStaffOne.Enabled = false;
             _timerStaffTwo.Enabled = false;
             return true;
-        }
-
-        public void onGuideStopped()
-        {
-            if (guideStopped != null)
-                guideStopped(this, EventArgs.Empty);
         }
 
         public void SetNote(string note)
