@@ -236,10 +236,23 @@ namespace PianoApp.Controllers
                 var _activ = new Dictionary<Note, Timeout>(tempDict).ToDictionary(k => k.Key, k => k.Value);
                 checkLastNote(_activ);
 
+                foreach (Note note in _activ.Keys)
+                {
+                    tempDict.Remove(note);
+                    if (note.State != NoteState.Good)
+                    {
+                        note.State = NoteState.Wrong;
+                    }
+
+                    if (note.IsRest)
+                    {
+                        note.State = NoteState.Idle;
+                    }
+
+                }
 
                 goToNextStaff();
                 HoldPosition?.Invoke(this, EventArgs.Empty);
-
 
                 var tempList = _toDoNoteDict1.ToList();
                 if (staffNumber == 2)
@@ -298,20 +311,7 @@ namespace PianoApp.Controllers
                     Sheet.UpdateNotes(tempDict);
 
                 }
-                foreach (Note note in _activ.Keys)
-                {
-                    tempDict.Remove(note);
-                    if (note.State != NoteState.Good)
-                    {
-                        note.State = NoteState.Wrong;
-                    }
 
-                    if (note.IsRest)
-                    {
-                        note.State = NoteState.Idle;
-                    }
-
-                }
             }
 
 

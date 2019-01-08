@@ -50,12 +50,14 @@ namespace PianoApp
         Button resetButton = new Button();
         private MusicPieceController mPc;
 
+        private SheetController sC;
+
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             PianoController pC = new PianoController() { };
 
-            SheetController sC = new SheetController();
+             sC = new SheetController();
             MidiController mC = new MidiController();
 
             sC.MidiController = mC;
@@ -103,7 +105,7 @@ namespace PianoApp
             nv = new NoteView(sv);
             nv.DrawNotes();            
 
-            bv = new ButtonView(myGrid, sv, nv){ grid = myGrid };
+            bv = new ButtonView(myGrid, sv, nv){ grid = myGrid};
             bv.pianoStateChanged += pianoStateChanged;
 
             metronome = bv.metronome;

@@ -102,7 +102,8 @@ namespace PianoApp.Views
             myGrid.Children.Add(menuGrid);
         }
 
-        private void HideScore () {
+        private void HideScore()
+        {
             grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.HideScore()));
         }
 
@@ -275,9 +276,9 @@ namespace PianoApp.Views
             notesCB.Items.Add("Kwart noot");
             notesCB.SelectedIndex = 2;
 
-            
 
-            
+
+
         }
 
         private void updateBpm(object sender, BpmEventArgs e)
@@ -335,12 +336,12 @@ namespace PianoApp.Views
 
         public void TriggerStartBtnBySpaceKeyDown()
         {
-            if(spaceButtonEnabled)
+            if (spaceButtonEnabled)
             {
                 spaceButtonEnabled = false;
                 StartMusicPiece();
             }
-                
+
         }
 
         private void StartBtn_Click(object sender, RoutedEventArgs e)
@@ -414,7 +415,7 @@ namespace PianoApp.Views
                     {
                         metronome.startMetronomeCountDownOnly(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
                     }
-                   
+
                 }
 
             }
