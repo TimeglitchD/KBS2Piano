@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using NUnit.Framework;
 using PianoApp.Controllers;
 
@@ -10,21 +12,23 @@ namespace ControllerTests
     /// Summary description for PianoControllerTests
     /// </summary>
     [TestFixture]
+    [Apartment(ApartmentState.STA)]
     public class PianoControllerTests
     {
+        private PianoController pC;
         public PianoControllerTests()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            pC = new PianoController();
         }
-       
+
+        //Test case for testing the pressed keys.
+        //Test case: the note to test, the octave the note is in. 
         [Test]
-        public void TestMethod1()
+        [TestCase(2)]
+        public void UpdatePressedPianoKeys_ShouldSetCorrespondingPianoKeyToActive(int nn)
         {
-            //
-            // TODO: Add test logic here
-            //
+            pC.UpdatePressedPianoKeys(new Dictionary<int, float>(){ { nn, 1000 } });
+            Assert.AreEqual(true, pC.PianoModel.OctaveModelList[0].KeyModelList.Where(k => k.Alter != -1).ToList()[nn].Active);
         }
     }
 }
