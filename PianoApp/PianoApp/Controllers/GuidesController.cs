@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -235,20 +236,7 @@ namespace PianoApp.Controllers
                 var _activ = new Dictionary<Note, Timeout>(tempDict).ToDictionary(k => k.Key, k => k.Value);
                 checkLastNote(_activ);
 
-                foreach (Note note in _activ.Keys)
-                {
-                    tempDict.Remove(note);
-                    if (note.State != NoteState.Good)
-                    {
-                        note.State = NoteState.Wrong;
-                    }
 
-                    if (note.IsRest)
-                    {
-                        note.State = NoteState.Idle;
-                    }
-
-                }
                 goToNextStaff();
                 HoldPosition?.Invoke(this, EventArgs.Empty);
 
@@ -310,7 +298,24 @@ namespace PianoApp.Controllers
                     Sheet.UpdateNotes(tempDict);
 
                 }
+                foreach (Note note in _activ.Keys)
+                {
+                    tempDict.Remove(note);
+                    if (note.State != NoteState.Good)
+                    {
+                        note.State = NoteState.Wrong;
+                    }
+
+                    if (note.IsRest)
+                    {
+                        note.State = NoteState.Idle;
+                    }
+
+                }
             }
+
+
+
 
             if (_endReached.Equals(_amountOfGreatStaffs) && !_finished)
             {
@@ -319,6 +324,8 @@ namespace PianoApp.Controllers
                 ScoreLabel.Score = CalcScore();              
 
                 grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.UpdateScore()));
+                Thread.Sleep(3000);
+                grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.HideScore()));
             }
         }
 
