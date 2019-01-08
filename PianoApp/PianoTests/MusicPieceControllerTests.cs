@@ -5,6 +5,7 @@ using NUnit.Framework;
 using PianoApp.Controllers;
 using PianoApp.Models;
 using System.Windows.Controls;
+using System.Threading;
 
 namespace ControllerTests
 {
@@ -22,7 +23,7 @@ namespace ControllerTests
         }
 
         [Test]
-        [Apartment(System.Threading.ApartmentState.STA)]
+        [Apartment(ApartmentState.STA)]
         public void StandardSheet_ReturnStackPanel()
         {
             GreatStaffModel greatStaffModel = new GreatStaffModel();

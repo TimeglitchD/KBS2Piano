@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MusicXml.Domain;
 using NUnit.Framework;
 using PianoApp.Controllers;
+using PianoApp.Models.Exception;
 
 namespace ControllerTests
 {
@@ -68,11 +69,11 @@ namespace ControllerTests
             Assert.AreEqual(octave, guidesController.getNoteFromNoteNumber(nn).Octave);
         }
 
-        [TestCase(12, 'A')]
-        [TestCase(14, 'A')]
-        [TestCase(32, 'A')]
-        [TestCase(64, 'A')]
-        [TestCase(88, 'A')]
+        [TestCase(12, 'C')]
+        [TestCase(14, 'D')]
+        [TestCase(32, 'G')]
+        [TestCase(64, 'E')]
+        [TestCase(88, 'E')]
         public void getNoteFromNoteNumber_ShouldReturnStepBasedOnNoteNumber(int nn, Char step)
         {
             Assert.AreEqual(step, guidesController.getNoteFromNoteNumber(nn).Step);
@@ -99,6 +100,16 @@ namespace ControllerTests
         {
             guidesController.SetNote(noteString);
             Assert.AreEqual(noteType, guidesController.Note);
+        }
+
+        [TestCase(301, typeof(BpmOutOfRangeException))]
+        [TestCase(1001, typeof(BpmOutOfRangeException))]
+        [TestCase(-101, typeof(BpmOutOfRangeException))]
+        [TestCase(-1, typeof(BpmOutOfRangeException))]
+        public void SetBpm_BpmOutsideRange_ReturnException(int bpm, Type expectedException)
+        {
+            Assert.Throws(expectedException, () => guidesController.Bpm = bpm);
+
         }
     }
 }
