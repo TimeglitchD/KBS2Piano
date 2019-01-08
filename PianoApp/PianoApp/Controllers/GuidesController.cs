@@ -12,7 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using PianoApp.Models;
 using static MusicXml.Domain.Note;
-
+using PianoApp.Views;
 
 namespace PianoApp.Controllers
 {
@@ -321,7 +321,10 @@ namespace PianoApp.Controllers
             {
                 _finished = true;
 
-                ScoreLabel.Score = CalcScore();              
+                ScoreLabel.Score = CalcScore();
+
+                DatabaseConnection connection = new DatabaseConnection();
+                connection.updateScore(MusicChooseView.PieceID, CalcScore());
 
                 grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.UpdateScore()));
                 Thread.Sleep(3000);

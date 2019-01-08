@@ -42,6 +42,8 @@ namespace PianoApp.Views
 
         public event EventHandler<BpmEventArgs> updateBpm;
 
+        public static int PieceID;
+
         //selected piece's file location
         private string selectedPiece;
 
@@ -123,6 +125,7 @@ namespace PianoApp.Views
             string Id = selected.Row["Id"].ToString();
             id = "";
             id = Id;
+            PieceID = int.Parse(Id);
 
             //change the score to selected item score
             ChangeScoreView(Id);
