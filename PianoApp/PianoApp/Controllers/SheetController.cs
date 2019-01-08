@@ -36,7 +36,7 @@ namespace PianoApp.Controllers
                                 if (keyValuePair.Key == note)
                                 {
                                     note.State = NoteState.Active;
-                                    MidiController.PlayNotes(noteAndTimeoutDictionary);
+//                                    MidiController.PlayNotes(noteAndTimeoutDictionary);
                                 }
                                 note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
                             }
