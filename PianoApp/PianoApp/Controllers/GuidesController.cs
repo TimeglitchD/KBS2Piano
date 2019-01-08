@@ -95,8 +95,8 @@ namespace PianoApp.Controllers
         private List<Note> newlistprevnote;
 
         private int _scoreVal = 0;
-        private int _amountOfNotes = 0;
-        private int _goodNotes = 0;
+        public int _amountOfNotes = 0;
+        public int _goodNotes = 0;
         private int _endReached = 0;
         private int _amountOfGreatStaffs = 0;
         public Grid grid;
@@ -185,7 +185,7 @@ namespace PianoApp.Controllers
             stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
         }
 
-        private int ReturnFirstNoteTimeout(int staffNumber)
+        public int ReturnFirstNoteTimeout(int staffNumber)
         {
             int timeout = 0;
             if (staffNumber == 1)
@@ -331,12 +331,12 @@ namespace PianoApp.Controllers
 
 
 
-        private int CalcScore()
+        public int CalcScore()
         {
             return (100 * _goodNotes) / _amountOfNotes;
         }
 
-        private MockupNote getNoteFromNoteNumber(int nn)
+        public MockupNote getNoteFromNoteNumber(int nn)
         {
             int octave = (int)Math.Floor((decimal)nn / 12);
             int noteNumber = (int)Math.Floor((decimal)nn - ((12 * octave) - 1));

@@ -17,7 +17,6 @@ namespace ControllerTests
         public MusicPieceControllerTests()
         {
             musicPieceController = new MusicPieceController();
-            musicPieceController.CreateMusicPiece("");
         }
 
         [Test]

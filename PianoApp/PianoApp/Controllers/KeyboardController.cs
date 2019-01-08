@@ -260,7 +260,7 @@ namespace PianoApp.Controllers
             record.StopRecordNote(pressedKey);
         }
 
-        private void octaveUp()
+        public void octaveUp()
         {
             if(KeyOffset < 95)
                 KeyOffset += 12;
@@ -272,7 +272,7 @@ namespace PianoApp.Controllers
 
         }
 
-        private void octaveDown()
+        public void octaveDown()
         {
             if(KeyOffset > 0)
                 KeyOffset -= 12;
@@ -284,7 +284,7 @@ namespace PianoApp.Controllers
 
         }
 
-        public static int CurrentOctave()
+        public int CurrentOctave()
         {
             return (int)Math.Floor((decimal)KeyOffset / 12);
         }

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using MusicXml.Domain;
+using NUnit.Framework;
 using PianoApp.Controllers;
 
 namespace ControllerTests
@@ -40,11 +41,21 @@ namespace ControllerTests
         #endregion
 
         [Test]
-        public void TestMethod1()
+        public void getNoteFromNoteNumber_WhenCalled_ShouldReturnMockupNote()
         {
-            //
-            // TODO: Add test logic here
-            //
+            Assert.IsNotNull(guidesController.getNoteFromNoteNumber(1));
         }
+
+        [TestCase (10, 100, 10)]
+        [TestCase (10, 20, 50)]
+        public void CalcScore_ShouldReturnPercentage(int gn, int an, int sc)
+        {
+            guidesController._goodNotes = gn;
+            guidesController._amountOfNotes = an;
+
+            Assert.AreEqual(sc, guidesController.CalcScore());
+        }
+
+
     }
 }

@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PianoApp", "PianoApp\PianoApp.csproj", "{1B61D4F2-B467-45B3-86E4-C648E0607EA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PianoAppTests", "PianoAppTests\PianoAppTests.csproj", "{D63F30A2-7394-4813-9E4D-1E4A274B71DA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControllerTests", "PianoTests\ControllerTests.csproj", "{D4938F42-1A86-413A-B90C-6314BE3A01EE}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{1B61D4F2-B467-45B3-86E4-C648E0607EA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B61D4F2-B467-45B3-86E4-C648E0607EA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B61D4F2-B467-45B3-86E4-C648E0607EA8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D63F30A2-7394-4813-9E4D-1E4A274B71DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D63F30A2-7394-4813-9E4D-1E4A274B71DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D63F30A2-7394-4813-9E4D-1E4A274B71DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D63F30A2-7394-4813-9E4D-1E4A274B71DA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D4938F42-1A86-413A-B90C-6314BE3A01EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D4938F42-1A86-413A-B90C-6314BE3A01EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4938F42-1A86-413A-B90C-6314BE3A01EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
