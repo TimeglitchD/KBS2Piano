@@ -16,6 +16,7 @@ namespace PianoApp.Controllers
         public SheetModel SheetModel { get; set; } = new SheetModel();
         public NoteView NoteView { get; set; }
         public MidiController MidiController { get; set; }
+        public static bool SoundOn { get; set; } = true;
 
         public void UpdateNotes(Dictionary<Note, Timeout> noteAndTimeoutDictionary)
         {
@@ -36,7 +37,10 @@ namespace PianoApp.Controllers
                                 if (keyValuePair.Key == note)
                                 {
                                     note.State = NoteState.Active;
-                                    MidiController.PlayNotes(noteAndTimeoutDictionary);
+
+                                    if (SoundOn)
+                                        MidiController.PlayNotes(noteAndTimeoutDictionary);
+
                                 }
                                 note.ell.Dispatcher.BeginInvoke((Action)(() => note.Color()));
                             }
