@@ -85,7 +85,6 @@
     <Compile Include="Controllers\KeyboardController.cs" />
     <Compile Include="Controllers\MidiController.cs" />
     <Compile Include="Controllers\MidiControllerEventArgs.cs" />
-    <Compile Include="Controllers\RecordController.cs" />
     <Compile Include="Controllers\SheetController.cs" />
     <Compile Include="Controllers\GuidesController.cs" />
     <Compile Include="DatabaseConnection.cs" />
@@ -93,7 +92,6 @@
     <Compile Include="MidiOutput.cs" />
     <Compile Include="Models\Exception\BpmOutOfRangeException.cs" />
     <Compile Include="metronomeSound.cs" />
-    <Compile Include="Models\RecordedNote.cs" />
     <Compile Include="Models\ScoreLabel.cs" />
     <Compile Include="MusicDatabaseDataSet1.Designer.cs">
       <AutoGen>True</AutoGen>

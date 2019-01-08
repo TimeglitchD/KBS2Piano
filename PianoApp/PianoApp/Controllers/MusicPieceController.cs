@@ -24,8 +24,6 @@ namespace PianoApp.Controllers
 
         public KeyboardController KeyboardController;
 
-        public RecordController RecordController;
-
         public SheetModel Sheet { get; set; }
         public Grid Grid { get; set; }
 
@@ -44,9 +42,6 @@ namespace PianoApp.Controllers
 
             Guide = new GuidesController(MidiController) { Score = _score, Piano = Piano, Sheet = SheetController, grid = Grid};
 
-            RecordController = new RecordController(Guide);
-
-            Guide.record = RecordController;
 
             Sheet = SheetController.SheetModel;
 
@@ -63,10 +58,8 @@ namespace PianoApp.Controllers
             Guide.GoToFirstStaff += GoToFirstStaff;
             Guide.HoldPosition += this.HoldPosition;
             MidiController.Guide = Guide;
-            MidiController.record = RecordController;
 
             KeyboardController.Guide = Guide;
-            KeyboardController.record = RecordController;
             
         }
 

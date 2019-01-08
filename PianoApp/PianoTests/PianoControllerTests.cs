@@ -3,6 +3,8 @@ using System.Text;
 using System.Collections.Generic;
 using NUnit.Framework;
 using PianoApp.Controllers;
+using PianoApp.Models;
+using MusicXml.Domain;
 
 namespace ControllerTests
 {
@@ -12,19 +14,10 @@ namespace ControllerTests
     [TestFixture]
     public class PianoControllerTests
     {
+        PianoController pianoController;
         public PianoControllerTests()
         {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-       
-        [Test]
-        public void TestMethod1()
-        {
-            //
-            // TODO: Add test logic here
-            //
+            pianoController = new PianoController();
         }
     }
 }

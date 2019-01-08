@@ -3,6 +3,8 @@ using System.Text;
 using System.Collections.Generic;
 using NUnit.Framework;
 using PianoApp.Controllers;
+using PianoApp.Models;
+using System.Windows.Controls;
 
 namespace ControllerTests
 {
@@ -20,11 +22,14 @@ namespace ControllerTests
         }
 
         [Test]
-        public void TestMethod1()
+        [Apartment(System.Threading.ApartmentState.STA)]
+        public void StandardSheet_ReturnStackPanel()
         {
-            //
-            // TODO: Add test logic here
-            //
+            GreatStaffModel greatStaffModel = new GreatStaffModel();
+            SheetModel Sheet = new SheetModel();
+            Sheet.GreatStaffModelList.Add(greatStaffModel);
+
+            Assert.That(Sheet.DrawSheet(), Is.TypeOf(typeof(StackPanel)));
         }
     }
 }

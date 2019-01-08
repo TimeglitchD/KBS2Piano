@@ -16,8 +16,7 @@ namespace PianoApp.Controllers
         public PianoController PianoController;
 
         public GuidesController Guide;
-
-        public RecordController record;
+        public bool guideIsNull = false;
 
         public static int KeyOffset = 48;
 
@@ -138,10 +137,12 @@ namespace PianoApp.Controllers
             currentlyPressedKeys.Add(pressedKey, GuidesController.StopWatch.ElapsedMilliseconds);
 
             if (Guide == null)
+            {
+                guideIsNull = true;
                 return;
+            }
 
             Guide.Piano.UpdatePressedPianoKeys(currentlyPressedKeys);
-            record.StartRecordNote(pressedKey);
         }
 
         public void KeyUp(KeyEventArgs e)
@@ -254,10 +255,12 @@ namespace PianoApp.Controllers
             MidiOutput.stop(pressedKey);
 
             if (Guide == null)
+            {
+                guideIsNull = true;
                 return;
+            }
 
             Guide.Piano.UpdatePressedPianoKeys(currentlyPressedKeys);
-            record.StopRecordNote(pressedKey);
         }
 
         public void octaveUp()
