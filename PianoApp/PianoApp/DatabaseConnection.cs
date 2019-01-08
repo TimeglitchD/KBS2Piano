@@ -226,6 +226,34 @@ namespace PianoApp
                     return false;
                 }
             }
+
         }
+
+        public void updateScore(int id, int score)
+        {
+            using (SqlConnection connection = new SqlConnection(this.connectionString))
+            {
+                try
+                {
+                    SqlCommand command = new SqlCommand();
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = "INSERT INTO Score VALUES (@id, @date, @time, @scored)";
+                    command.Parameters.AddWithValue("@id", id);
+                    command.Parameters.AddWithValue("@date", DateTime.Now);
+                    command.Parameters.AddWithValue("@time", DateTime.Now.ToLocalTime());
+                    command.Parameters.AddWithValue("@scored", score);
+                    command.Connection = connection;
+
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+        }
+
     }
 }
