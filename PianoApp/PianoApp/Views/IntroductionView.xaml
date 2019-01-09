@@ -219,12 +219,12 @@
                                     <TextBlock Text="Musescore"/>  
                                 </Hyperlink>  
                                 <LineBreak/>
-                                2. Maak een account aan en log in<LineBreak/>
-                                3. Klik vervolgens "Browse" boven in het menu<LineBreak/>
+                                2. Maak een account aan en log in.<LineBreak/>
+                                3. Klik vervolgens "Browse" boven in het menu.<LineBreak/>
                                 4. Klik op "Piano", nu krijg je een overzicht van verschillende muziekstukken.<LineBreak/>
-                                5. Selecteer een muziekstuk die je wilt inladen<LineBreak/>
-                                6. Klik rechts op de download knop<LineBreak/>
-                                7. Nu krijg je een lijst met mogelijkheden hoe je dit bestand wilt downloaden, <LineBreak/>om het te gebruiken in ons programma selecteer je "MusicXML"
+                                5. Selecteer een muziekstuk dat je wilt inladen.<LineBreak/>
+                                6. Klik rechts op de download knop.<LineBreak/>
+                                7. Nu krijg je een lijst met mogelijkheden hoe je dit bestand wilt downloaden, <LineBreak/>om het te gebruiken in ons programma selecteer je "MusicXML".
                             </TextBlock>
                         </Border>
                         <TextBlock Margin="0,0,0,5" FontWeight="Bold" Grid.Row="4" FontSize="14">           

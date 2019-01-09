@@ -7,8 +7,17 @@
         mc:Ignorable="d"
         Title="Muziekstuk toevoegen" Height="267.6" Width="426.8">
     <Grid>
-        <Button Content="Add" IsDefault="True" HorizontalAlignment="Left" Margin="257,192,0,0" VerticalAlignment="Top" Width="75" Click="OkButton_Click"/>
-        <Button Content="Cancel" IsCancel="True" HorizontalAlignment="Left" Margin="104,192,0,0" VerticalAlignment="Top" Width="75" />
+        <Button Content="Voeg toe" IsDefault="True" HorizontalAlignment="Left" Margin="257,192,0,0" VerticalAlignment="Top" Width="95" Click="OkButton_Click" RenderTransformOrigin="0.5,0.5">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.42"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Button Content="Annuleer" IsCancel="True" HorizontalAlignment="Left" Margin="104,192,0,0" VerticalAlignment="Top" Width="91" />
         <TextBox Name="Title" HorizontalAlignment="Left" Height="23" Margin="197,39,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="196"/>
         <TextBox Name="Description" HorizontalAlignment="Left" Height="89" Margin="197,73,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="196"/>
         <Label Content="Titel" HorizontalAlignment="Left" Margin="78,39,0,0" VerticalAlignment="Top" Width="101"/>

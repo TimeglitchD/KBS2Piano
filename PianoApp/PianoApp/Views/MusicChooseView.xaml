@@ -109,12 +109,12 @@
         <Label Content="Scoreboard" FontSize="14" FontWeight="DemiBold" HorizontalContentAlignment="Center" Grid.Column="1" HorizontalAlignment="Left" Margin="503.2,313,0,0" VerticalAlignment="Top" Width="242"/>
         <DataGrid Name="ScoreGrid" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" AutoGenerateColumns="False" IsReadOnly="True" Grid.Column="1" HorizontalAlignment="Left" Height="174" Margin="508.2,347,0,0" VerticalAlignment="Top" Width="241">
             <DataGrid.Columns>
-                <DataGridTextColumn  Width="65" Binding="{Binding Date}" IsReadOnly="True" Header="Datum"/>
-                <DataGridTextColumn Width="80" Binding="{Binding Time}" IsReadOnly="True" Header="Tijd"/>
+                <DataGridTextColumn  Width="70" Binding="{Binding Date}" IsReadOnly="True" Header="Datum"/>
+                <DataGridTextColumn Width="78" Binding="{Binding Time}" IsReadOnly="True" Header="Tijd"/>
                 <DataGridTextColumn Width="88" Binding="{Binding Scored}" IsReadOnly="True" Header="Score"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Name ="OpenFileBtn" Content="Browse" Grid.Column="1" HorizontalAlignment="Left" Margin="622.2,32,0,0" VerticalAlignment="Top" Width="95" Click="AddButton_Click"/>
+        <Button Name ="OpenFileBtn" Content="Bladeren" Grid.Column="1" HorizontalAlignment="Left" Margin="622.2,32,0,0" VerticalAlignment="Top" Width="95" Click="AddButton_Click"/>
         <Label Grid.Column="1" Name="txtEditor" HorizontalAlignment="Left" Height="36" Margin="167.2,32,0,0" Content="" VerticalAlignment="Top" Width="336"/>
         <Button Content="Verwijder" Visibility="Hidden" Name="DeleteBtn" Grid.Column="1" HorizontalAlignment="Left" Margin="522.2,32,0,0" VerticalAlignment="Top" Width="95" Click="DeleteBtn_Click"/>
     </Grid>
