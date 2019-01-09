@@ -7,6 +7,7 @@ using MusicXml;
 using MusicXml.Domain;
 using NUnit.Framework;
 using PianoApp.Controllers;
+using PianoApp.Models;
 
 namespace ControllerTests
 {
@@ -22,7 +23,10 @@ namespace ControllerTests
         public SheetControllerTests()
         {
             sC = new SheetController();
-            _score = MusicXmlParser.GetScore("TestData/TestMusicPiece.xml");
+            _score = new Score();
+            _score.Parts.Add(new Part());
+            _score.Parts.First().Measures.Add(new Measure());
+            
         }
 
         //Test case for testing the pressed keys.
@@ -43,36 +47,22 @@ namespace ControllerTests
         [TestCase('F', -1, 1)]
         [TestCase('G', 1, 1)]
         public void UpdateNotes_ShouldSetCorrespondingNoteToActive(char step, int alter, int staff)
-        {           
-            var note = new Note() { Pitch = new Pitch() { Alter = alter, Octave = 0, Step = step }, Staff = staff };
-            var noteDict = new Dictionary<Note, PianoApp.Controllers.Timeout>() { { note, new PianoApp.Controllers.Timeout() } };
+        {            
+            var dummyNote = new Note() {Pitch = new Pitch() {Alter = alter, Octave = 0, Step = step}, Staff = staff};
+            //Add note to dummy music piece.
+            var dummyMeasureElement = new MeasureElement() {Element = dummyNote, Type = MeasureElementType.Note};
+            _score.Parts.First().Measures.First().MeasureElements.Add(dummyMeasureElement);            
+            //Add note to active note list.
+            var noteDict = new Dictionary<Note, PianoApp.Controllers.Timeout>() { { dummyNote, new PianoApp.Controllers.Timeout() } };
+            //Fill dummy sheet model with the note.
+            sC.SheetModel.GreatStaffModelList.Add(new GreatStaffModel());
+            sC.SheetModel.GreatStaffModelList.First().StaffList.Find(s => s.Number.Equals(staff)).NoteList.Add(dummyNote);
+            //Update the dummyNote state.
             sC.UpdateNotes(noteDict);
-            var found = false;
 
-            foreach (var scorePart in _score.Parts)
-            {
-                //Access all measures inside the music piece
-                foreach (var scorePartMeasure in scorePart.Measures)
-                {
-                    //Access te elements inside a measure
-                    foreach (var measureElement in scorePartMeasure.MeasureElements)
-                    {
-                        //Access the element if it is a note
-                        if (measureElement.Type.Equals(MeasureElementType.Note))
-                        {
-                            var measureElementNote = (Note)measureElement.Element;
-
-                            if (measureElementNote.Active &&
-                                measureElementNote.Pitch.Step.Equals(step) &&
-                                measureElementNote.Pitch.Alter.Equals(alter) &&
-                                measureElementNote.Staff.Equals(staff))
-                                found = true;
-                        }
-                    }
-                }
-            }         
-
-            Assert.AreEqual(true, found);
+            Assert.AreEqual(Note.NoteState.Active, dummyNote.State);            
+            //Remove the dummy note from the piece.
+            _score.Parts.First().Measures.First().MeasureElements.Clear();
         }
     }
 }
