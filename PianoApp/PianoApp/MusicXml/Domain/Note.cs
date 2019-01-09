@@ -1,11 +1,12 @@
 using System;
 using PianoApp.Models;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Xml;
-
+[assembly: InternalsVisibleTo("ControllerTests")]
 namespace MusicXml.Domain
 {
     public class Note

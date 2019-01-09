@@ -22,7 +22,10 @@ namespace PianoApp.Models
         public int StaffNumber;
         public bool fingerSettingEnabled = true;
         public int KeyNumber { get; set; }
-
+        public SolidColorBrush IdleColor { get; set; }
+        public SolidColorBrush ActiveStaffOneColor { get; set; }
+        public SolidColorBrush ActiveStaffTwoColor { get; set; }
+        public SolidColorBrush ActiveColor { get; set; }
 
         public virtual Rectangle Draw(float width)
         {

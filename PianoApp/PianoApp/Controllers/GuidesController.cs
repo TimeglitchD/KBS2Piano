@@ -53,8 +53,6 @@ namespace PianoApp.Controllers
         public PianoController Piano;
         public SheetController Sheet;
 
-        public RecordController record;
-
         public Score Score;
 
         private float _divs;
@@ -438,13 +436,11 @@ namespace PianoApp.Controllers
             if (paused)
             {
                 _timerStaffOne.Enabled = true;
-                record.startRecording();
                 _timerStaffTwo.Enabled = true;
             }
             else
             {
                 _timerStaffOne.Enabled = false;
-                record.pauseRecording();
                 _timerStaffTwo.Enabled = false;
             }
 
@@ -473,7 +469,6 @@ namespace PianoApp.Controllers
             _timerStaffOne.Interval = _milsecperbeat / _divs;
             NoteIntersectEvent(EventArgs.Empty, 1);
             _timerStaffOne.Enabled = true;
-            record.startRecording();
 
             _timerStaffTwo = new System.Timers.Timer();
             _timerStaffTwo.Elapsed += (sender, e) => NoteIntersectEvent(e, 2);
@@ -526,7 +521,6 @@ namespace PianoApp.Controllers
             StopWatch.Stop();
             
              _timerStaffOne.Stop();
-            record.stopRecording();
             _timerStaffTwo.Stop();
             _toDoNoteDict1.Clear();
             _toDoNoteDict2.Clear();

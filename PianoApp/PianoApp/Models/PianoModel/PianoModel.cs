@@ -19,6 +19,7 @@ namespace PianoApp.Models
 
         public PianoModel()
         {
+            
             if (Amount % 2 == 0)
             {
                 Center = Amount / 2;

@@ -27,8 +27,6 @@ namespace PianoApp.Controllers
 
         public GuidesController Guide;
 
-        public RecordController record;
-
         public MidiController()
         {
             if(midiAvailable())
@@ -90,7 +88,6 @@ namespace PianoApp.Controllers
                 currentlyPressedKeys.Add(calculatedNote, GuidesController.StopWatch.ElapsedMilliseconds);
                 Guide.ActiveKeys = currentlyPressedKeys;
                 Guide.UpdatePianoKeys();
-                record.StartRecordNote(calculatedNote);
                 //Thread.Sleep inside GUI is just for example
                 
 
@@ -103,7 +100,6 @@ namespace PianoApp.Controllers
                 currentlyPressedKeys.Remove(calculatedNote);
                 Guide.ActiveKeys = currentlyPressedKeys;
                 Guide.UpdatePianoKeys();
-                record.StopRecordNote(calculatedNote);
                 
             }
         }

@@ -19,6 +19,12 @@ namespace PianoApp.Models
         public WhiteKey()
         {
             base.type = Type;
+
+            IdleColor = Brushes.FloralWhite;
+            ActiveStaffOneColor = Brushes.Blue;
+            ActiveStaffTwoColor = Brushes.Purple;
+            ActiveColor = Brushes.Gray;
+
         }
 
         public override Rectangle Draw(float width)
@@ -31,26 +37,26 @@ namespace PianoApp.Models
         }
 
         public override void ColorUpdate()
-        {
+        {            
             if (StaffNumber == 1 && Active)
             {
-                KeyRect.Fill = System.Windows.Media.Brushes.Blue;
+                KeyRect.Fill = ActiveStaffOneColor;
                 if (fingerSettingEnabled)
                 {
-                    SetFingerNum(Brushes.Blue);
+                    SetFingerNum(ActiveStaffOneColor);
                 }
             }
             else if (StaffNumber == 2 && Active)
             {
-                KeyRect.Fill = System.Windows.Media.Brushes.Purple;
+                KeyRect.Fill = ActiveStaffTwoColor;
                 if (fingerSettingEnabled)
                 {
-                    SetFingerNum(Brushes.Purple);
+                    SetFingerNum(ActiveStaffTwoColor);
                 }
             }
             else if (Active)
             {
-                KeyRect.Fill = System.Windows.Media.Brushes.Gray;
+                KeyRect.Fill = ActiveColor;
             }
             else
             {
@@ -102,7 +108,7 @@ namespace PianoApp.Models
             //            {
             //                KeyRect.Fill = System.Windows.Media.Brushes.FloralWhite;
             //            }
-            KeyRect.Fill = System.Windows.Media.Brushes.FloralWhite;
+            KeyRect.Fill = IdleColor;
         }
     }
 }
