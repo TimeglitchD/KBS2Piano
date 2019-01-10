@@ -29,12 +29,14 @@ namespace PianoApp.Controllers
 
         public MidiController()
         {
+            //check if midi keyboard is plugged in before initialization
             if(midiAvailable())
             {
                 initializeMidi();
             }
         }
 
+        //function to create midiIn and add handlers, and start listening in new thread
         public void initializeMidi()
         {
             MidiIn = new MidiIn(0); 
@@ -43,8 +45,7 @@ namespace PianoApp.Controllers
             MidiIn.MessageReceived += midiInReceived;
             MidiIn.ErrorReceived += midiIn_ErrorReceived;            
 
-
-
+            //listen for midi messages in new thread
             MidiThread = new Thread(() => {
                 MidiIn.Start();
             });
@@ -54,17 +55,20 @@ namespace PianoApp.Controllers
 
         public bool midiAvailable()
         {
+            //if midiin detects more than zero devices return true
             return MidiIn.NumberOfDevices > 0;
         }
 
-
+        //function executes when midi message is received
         private void midiInReceived(object sender, MidiInMessageEventArgs e)
         {
+            //check if message is empty
             if (e.MidiEvent == null)
             {
                 return;
             }
 
+            //create new noteevent and cast midi message
             NoteEvent noteEvent;
 
             try
@@ -75,102 +79,57 @@ namespace PianoApp.Controllers
                 return;
             }
 
+            //check if midi message was key down press
             if(MidiEvent.IsNoteOn(e.MidiEvent))
             {                
-               
-                
+                //unimplemented offset for octave set on midi keyboard
                 int calculatedNote =  offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
-                MidiOutput.play(calculatedNote);
-                if (CurrentlyPressedKeys.ContainsKey(calculatedNote)) return;
 
+                //play sound
+                MidiOutput.play(calculatedNote);
+
+                //check if pressed key was already pressed to prevent errors
+                if (CurrentlyPressedKeys.ContainsKey(calculatedNote)) return;
+                //check if musicpiece was selected before adding note to dict to prevent errors
                 if (Guide == null) return;
 
+                //add pressed note with elapsed time to dictionary
                 CurrentlyPressedKeys.Add(calculatedNote, GuidesController.StopWatch.ElapsedMilliseconds);
                 Guide.ActiveKeys = CurrentlyPressedKeys;
+                //color keys
                 Guide.UpdatePianoKeys();
-                //Thread.Sleep inside GUI is just for example
-                
-
-            } else
+            }
+            //midi message was key up
+            else
             {                
-                
                 int calculatedNote = offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
                 MidiOutput.stop(calculatedNote);
+
                 if (Guide == null) return;
+
+                //remove key from list
                 CurrentlyPressedKeys.Remove(calculatedNote);
                 Guide.ActiveKeys = CurrentlyPressedKeys;
+                //color keys
                 Guide.UpdatePianoKeys();
                 
             }
         }
 
+        //write midi error to console
         void midiIn_ErrorReceived(object sender, MidiInMessageEventArgs e)
         {
             Console.WriteLine(String.Format("Time {0} Message 0x{1:X8} Event {2}",
                 e.Timestamp, e.RawMessage, e.MidiEvent));
         }
 
-        public void PlayNotes(Dictionary<Note, Timeout> notes)
-        {
-            foreach (var keyValuePair in notes)
-            {
-                if (!keyValuePair.Key.IsRest)
-                {                                       
-                    var noteNumber = 0;
-                    var oct = keyValuePair.Key.Pitch.Octave;
-                    if (keyValuePair.Key.Pitch.Alter == 0)
-                    {
-                        switch (keyValuePair.Key.Pitch.Step)
-                        {
-                            case 'C': noteNumber = 0; break;
-                            case 'D': noteNumber = 2; break;
-                            case 'E': noteNumber = 4; break;
-                            case 'F': noteNumber = 5; break;
-                            case 'G': noteNumber = 7; break;
-                            case 'A': noteNumber = 9; break;
-                            case 'B': noteNumber = 11; break;
-                        }
-                    }
-                    else if (keyValuePair.Key.Pitch.Alter == 1)
-                    {
-                        switch (keyValuePair.Key.Pitch.Step)
-                        {
-                            case 'C': noteNumber = 1; break;
-                            case 'D': noteNumber = 3; break;
-                            case 'E': noteNumber = 5; break;
-                            case 'F': noteNumber = 6; break;
-                            case 'G': noteNumber = 8; break;
-                            case 'A': noteNumber = 10; break;
-                            case 'B':
-                                noteNumber = 0; oct++; break;
-                        }
-                    }
-                    else if (keyValuePair.Key.Pitch.Alter == -1)
-                    {
-                        switch (keyValuePair.Key.Pitch.Step)
-                        {
-                            case 'C': noteNumber = 11;
-                                oct--; break;
-                            case 'D': noteNumber = 1; break;
-                            case 'E': noteNumber = 3; break;
-                            case 'F': noteNumber = 4; break;
-                            case 'G': noteNumber = 6; break;
-                            case 'A': noteNumber = 8; break;
-                            case 'B': noteNumber = 10; break;
-                        }
-                    }
-
-                    noteNumber = ((noteNumber) + (oct * 12));
-                    MidiOutput.play(noteNumber);
-                }
-            }   
-        }
-
+        //route event
         protected virtual void OnMidiInputChanged(MidiControllerEventArgs e)
         {
             MidiInputChanged?.Invoke(this, e);
         }
 
+        //unimplemented calculation for offsetting note
         private int offsetNote(int note, int offset)
         {
             return note;
