@@ -447,7 +447,7 @@ namespace PianoApp.Controllers
         //Pause the guider.
         public void Pause()
         {
-            if (paused)
+            if (Paused)
             {
                 _timerStaffOne.Enabled = true;
                 _timerStaffTwo.Enabled = true;
@@ -458,7 +458,7 @@ namespace PianoApp.Controllers
                 _timerStaffTwo.Enabled = false;
             }
 
-            paused = !paused;
+            Paused = !Paused;
         }
 
         //Start the guider.
