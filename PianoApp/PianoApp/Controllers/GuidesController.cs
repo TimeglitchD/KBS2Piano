@@ -32,7 +32,7 @@ namespace PianoApp.Controllers
 
     public class GuidesController
     {
-        public float _bpm;
+        private float _bpm;
 
         public float Bpm
         {
@@ -69,39 +69,39 @@ namespace PianoApp.Controllers
         private System.Timers.Timer _timerStaffOne;
         private System.Timers.Timer _timerStaffTwo;
 
-        public bool paused = false;
+        public bool Paused = false;
 
 
-        private List<PianoApp.Models.StaffModel> stafflist;
-        private int currentStaff = 0;
-        private bool atStaffEndOne = false;
-        private bool atStaffEndTwo = false;
+        private List<PianoApp.Models.StaffModel> _stafflist;
+        private int _currentStaff = 0;
+        private bool _atStaffEndOne = false;
+        private bool _atStaffEndTwo = false;
         public event EventHandler StaffEndReached;
         public event EventHandler GoToFirstStaff;
         public event EventHandler HoldPosition;
-        public event EventHandler guideStopped;
+        public event EventHandler GuideStopped;
 
-        public MidiController midi;
+        public MidiController Midi;
 
         public Dictionary<int, float> ActiveKeys = new Dictionary<int, float>();
 
-        private int[] staffdivs;
-        private List<Note>[] prevnote;
-        private List<Note> newlistprevnote;
+        private int[] _staffdivs;
+        private List<Note>[] _prevnote;
+        private List<Note> _newlistprevnote;
 
         private int _scoreVal = 0;
         public int _amountOfNotes = 0;
         public int _goodNotes = 0;
         private int _endReached = 0;
         private int _amountOfGreatStaffs = 0;
-        public Grid grid;
+        public Grid Grid;
 
         public bool _finished { get; set; }
 
         public GuidesController(MidiController midi)
         {
-            this.midi = midi;
-            //            midi.midiInputChanged += inputChanged;
+            this.Midi = midi;
+            //            Midi.midiInputChanged += inputChanged;
         }
 
         private void FillToDoList()
@@ -177,7 +177,7 @@ namespace PianoApp.Controllers
                 }
             }
 
-            stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
+            _stafflist = Sheet.SheetModel.GreatStaffModelList[_currentStaff].StaffList;
         }
 
         private void RemoveFirstNoteFromToDoDict(Note note)
@@ -196,10 +196,10 @@ namespace PianoApp.Controllers
 
         private void NoteIntersectEvent(EventArgs e, int staffNumber)
         {
-            if (staffdivs[staffNumber] > 0)
-                staffdivs[staffNumber]--;
+            if (_staffdivs[staffNumber] > 0)
+                _staffdivs[staffNumber]--;
 
-            if (staffdivs[staffNumber] == 0)
+            if (_staffdivs[staffNumber] == 0)
             {
                 //Check key press is correct or not
                 CheckPressedKeysToActiveNotes(staffNumber);
@@ -256,8 +256,8 @@ namespace PianoApp.Controllers
                                     TimeAdded = StopWatch.ElapsedMilliseconds
                                 });
 
-                                staffdivs[staffNumber] = tempList[i].Key.Duration;
-                                prevnote[staffNumber].Add(tempList[i].Key);
+                                _staffdivs[staffNumber] = tempList[i].Key.Duration;
+                                _prevnote[staffNumber].Add(tempList[i].Key);
                             }
 
 
@@ -305,9 +305,9 @@ namespace PianoApp.Controllers
                 DatabaseConnection connection = new DatabaseConnection();
                 connection.updateScore(MusicChooseView.PieceID, CalcScore());
 
-                grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.UpdateScore()));
+                Grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.UpdateScore()));
                 Thread.Sleep(3000);
-                grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.HideScore()));
+                Grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.HideScore()));
             }
         }
 
@@ -386,32 +386,32 @@ namespace PianoApp.Controllers
 
         private void checkLastNote(Dictionary<Note, Timeout> noteDict)
         {
-            Note lastNoteStaffOne = stafflist[0].NoteList.Last();
-            Note lastNoteStaffTwo = stafflist[1].NoteList.Last();
+            Note lastNoteStaffOne = _stafflist[0].NoteList.Last();
+            Note lastNoteStaffTwo = _stafflist[1].NoteList.Last();
             Timeout temp = new Timeout();
             if (noteDict.TryGetValue(lastNoteStaffOne, out temp))
             {
-                atStaffEndOne = true;
+                _atStaffEndOne = true;
                 _endReached++;
             }
 
             if (noteDict.TryGetValue(lastNoteStaffTwo, out temp))
             {
-                atStaffEndTwo = true;
+                _atStaffEndTwo = true;
                
             }
         }
 
         private void goToNextStaff()
         {
-            if (atStaffEndOne && atStaffEndTwo)
+            if (_atStaffEndOne && _atStaffEndTwo)
             {
-                atStaffEndOne = false;
-                atStaffEndTwo = false;
+                _atStaffEndOne = false;
+                _atStaffEndTwo = false;
 
-                currentStaff++;
+                _currentStaff++;
 
-                if (currentStaff >= Sheet.SheetModel.GreatStaffModelList.Count)
+                if (_currentStaff >= Sheet.SheetModel.GreatStaffModelList.Count)
                 {
                     this.Stop();
                     
@@ -419,9 +419,9 @@ namespace PianoApp.Controllers
                 }
 
 
-                if (currentStaff < Sheet.SheetModel.GreatStaffModelList.Count)
+                if (_currentStaff < Sheet.SheetModel.GreatStaffModelList.Count)
                 {
-                    stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
+                    _stafflist = Sheet.SheetModel.GreatStaffModelList[_currentStaff].StaffList;
                 }
 
                 if (StaffEndReached != null)
@@ -433,7 +433,7 @@ namespace PianoApp.Controllers
 
         public void Pause()
         {
-            if (paused)
+            if (Paused)
             {
                 _timerStaffOne.Enabled = true;
                 _timerStaffTwo.Enabled = true;
@@ -444,7 +444,7 @@ namespace PianoApp.Controllers
                 _timerStaffTwo.Enabled = false;
             }
 
-            paused = !paused;
+            Paused = !Paused;
         }
 
         public bool Start()
@@ -460,8 +460,8 @@ namespace PianoApp.Controllers
             FillToDoList();
 
             StopWatch = Stopwatch.StartNew();
-            staffdivs = new int[3] { 0, 0, 0 };
-            prevnote = new List<Note>[3] { new List<Note>(), new List<Note>(), new List<Note>(), };
+            _staffdivs = new int[3] { 0, 0, 0 };
+            _prevnote = new List<Note>[3] { new List<Note>(), new List<Note>(), new List<Note>(), };
 
 
             _timerStaffOne = new System.Timers.Timer();
@@ -480,7 +480,7 @@ namespace PianoApp.Controllers
 
         public void ResetMusicPiece()
         {
-            currentStaff = 0;
+            _currentStaff = 0;
 
             foreach (var scorePart in Score.Parts)
             {

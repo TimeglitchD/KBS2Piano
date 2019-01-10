@@ -85,7 +85,7 @@ namespace PianoApp.Views
             Grid.SetColumn(notesCB, 3);
             //Grid.SetColumn(resetButton, 4);
 
-            // Add items to grid
+            // Add items to Grid
             menuGrid.Children.Add(txt1);
             menuGrid.Children.Add(bpmTB);
             menuGrid.Children.Add(notesCB);
@@ -308,7 +308,7 @@ namespace PianoApp.Views
             sv.ScrollToTop(this, EventArgs.Empty);
             StopBtn.IsEnabled = false;
             resetButton.IsEnabled = false;
-            mPc.Guide.paused = false;
+            mPc.Guide.Paused = false;
             SelectSheetMusic.IsEnabled = true;
             _isStarted = false;
             mPc.Guide.ResetMusicPiece();
@@ -374,12 +374,12 @@ namespace PianoApp.Views
                 // Check if piece is starten
                 if (_isStarted)
                 {
-                    // If piece is paused, check if piece is paused
-                    if (mPc.Guide.paused)
+                    // If piece is Paused, check if piece is Paused
+                    if (mPc.Guide.Paused)
                     {
                         startBtn.IsEnabled = false;
 
-                        // If paused continu piece by metronome
+                        // If Paused continu piece by metronome
                         if (metronomeEnabled)
                         {
                             metronome.startMetronome(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
@@ -389,7 +389,7 @@ namespace PianoApp.Views
                             metronome.startMetronomeCountDownOnly(bpmValue, mPc.Sheet.GreatStaffModelList.First().MeasureList.First().Attributes.Time.Beats, 1);
                         }
                     }
-                    // If piece is not paused, pause piece
+                    // If piece is not Paused, pause piece
                     else
                     {
                         mPc.Guide.Pause();
@@ -441,7 +441,7 @@ namespace PianoApp.Views
         {
             sv.ScrollToTop(this, EventArgs.Empty);
             StopBtn.IsEnabled = false;
-            mPc.Guide.paused = false;
+            mPc.Guide.Paused = false;
             _isStarted = false;
             SelectSheetMusic.IsEnabled = false;
             mPc.Guide.ResetMusicPiece();

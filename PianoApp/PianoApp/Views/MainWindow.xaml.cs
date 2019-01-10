@@ -142,7 +142,7 @@ namespace PianoApp
 
         private void countdownFinished(object sender, EventArgs e)
         {
-            mPc.Guide.guideStopped += guideStopped;
+            mPc.Guide.GuideStopped += guideStopped;
             this.Dispatcher.Invoke(() =>
             {
                 bv.EnableStartBtn();

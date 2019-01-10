@@ -40,7 +40,7 @@ namespace PianoApp.Controllers
         {
             Score = MusicXmlParser.GetScore(filename);
 
-            Guide = new GuidesController(MidiController) { Score = Score, Piano = Piano, Sheet = SheetController, grid = Grid};
+            Guide = new GuidesController(MidiController) { Score = Score, Piano = Piano, Sheet = SheetController, Grid = Grid};
 
 
             Sheet = SheetController.SheetModel;

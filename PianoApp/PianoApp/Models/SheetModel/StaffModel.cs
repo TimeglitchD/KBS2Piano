@@ -20,7 +20,7 @@ namespace PianoApp.Models
 
         public Grid DrawStaff()
         {
-            //create the grid
+            //create the Grid
             stave = new Grid();
             stave.Height = 100;
             stave.Width = 1055;
@@ -70,7 +70,7 @@ namespace PianoApp.Models
             stave.RowDefinitions.Add(rowDef13);
             stave.RowDefinitions.Add(rowDef14);
 
-            //add lines to the grid on the correct places
+            //add lines to the Grid on the correct places
             for (int i = 0; i < 13; i++)
             {
                 if (i >=3 && i <= 11 && i % 2 == 1)
