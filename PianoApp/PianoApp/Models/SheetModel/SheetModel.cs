@@ -13,16 +13,17 @@ namespace PianoApp.Models
     public class SheetModel
     {
         public List<GreatStaffModel> GreatStaffModelList { get; set; } = new List<GreatStaffModel>();
-        private StackPanel Sheet = new StackPanel();
+        private StackPanel _sheet = new StackPanel();
 
-
+        // Draw sheet
         public StackPanel DrawSheet()
         {
             foreach (var item in GreatStaffModelList)
             {
-                Sheet.Children.Add(item.DrawGreatStaff());
+                // Draw all greatStaffs based on sheet
+                _sheet.Children.Add(item.DrawGreatStaff());
             }
-            return Sheet;
+            return _sheet;
 
         }
 
@@ -30,7 +31,7 @@ namespace PianoApp.Models
         public void Reset()
         {
             GreatStaffModelList = new List<GreatStaffModel>();
-            Sheet = new StackPanel();
+            _sheet = new StackPanel();
         }
     }
 

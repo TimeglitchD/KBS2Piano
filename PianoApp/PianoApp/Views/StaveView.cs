@@ -24,7 +24,7 @@ namespace PianoApp.Views
             sheet = new StackPanel();
             DrawMusic();
 
-            MusicPieceController.staffEndReached += scrollToNext;
+            MusicPieceController.StaffEndReached += scrollToNext;
             MusicPieceController.GoToFirstStaff += ScrollToTop;
             MusicPieceController.HoldPosition += ScrollToCurrent;
         }
@@ -42,7 +42,7 @@ namespace PianoApp.Views
             scroll.Visibility = Visibility.Visible;
             Grid.SetRow(scroll, 1);
 
-            //zet de stackpanel in de goede plek in het grid
+            //zet de stackpanel in de goede plek in het Grid
             Grid.SetRow(sheet, 1);
 
             //koppel de scrollbar aan het stackpanel

@@ -12,17 +12,18 @@ namespace PianoApp.Models
     {
         public int Position { get; set; }
         public List<KeyModel> KeyModelList { get; set; } = new List<KeyModel>();
-        private DockPanel octave = new DockPanel();
+        private DockPanel _octave = new DockPanel();
 
         public OctaveModel(int pos)
         {
             Position = pos;
-            octave.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            //octave.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+            _octave.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            //_octave.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             CreateKeys();
-            DrawPianoInConsole();
+            //DrawPianoInConsole();
         }
 
+        //For testing purposes.
         private void DrawPianoInConsole()
         {
             StringBuilder sb = new StringBuilder();
@@ -36,6 +37,7 @@ namespace PianoApp.Models
 
         }
 
+        //Create the key objects inside a octave.
         private void CreateKeys()
         {
             int val = Position * 12;
@@ -78,6 +80,7 @@ namespace PianoApp.Models
             }
         }
 
+        //Draws the keys.
         public DockPanel DrawOctave(float width)
         {
             var previous = new KeyModel();
@@ -99,13 +102,13 @@ namespace PianoApp.Models
                     
                     newKey.VerticalAlignment = System.Windows.VerticalAlignment.Top;
                     
-                    octave.Children.Add(newKey);
+                    _octave.Children.Add(newKey);
                     previous = key;
                     index++;
                 }
             }
 
-            return octave;
+            return _octave;
         }
     }
 }

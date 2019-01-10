@@ -27,7 +27,7 @@ namespace PianoApp.Controllers
         public SheetModel Sheet { get; set; }
         public Grid Grid { get; set; }
 
-        public event EventHandler staffEndReached;
+        public event EventHandler StaffEndReached;
 
         public event EventHandler GoToFirstStaff;
 
@@ -40,8 +40,7 @@ namespace PianoApp.Controllers
         {
             Score = MusicXmlParser.GetScore(filename);
 
-            Guide = new GuidesController(MidiController) { Score = Score, Piano = Piano, Sheet = SheetController, grid = Grid};
-
+            Guide = new GuidesController(MidiController) { Score = Score, Piano = Piano, Sheet = SheetController, Grid = Grid };
 
             Sheet = SheetController.SheetModel;
 
@@ -49,28 +48,29 @@ namespace PianoApp.Controllers
             Sheet.Reset();
 
             AddGreatStaffsToSheet();
-
             AddMeasuresToGreatStaffs();
-
             AddNotesToMeasures();
 
-            Guide.StaffEndReached += staffEndReached;
+            // Subscribe events
+            Guide.StaffEndReached += StaffEndReached;
             Guide.GoToFirstStaff += GoToFirstStaff;
             Guide.HoldPosition += this.HoldPosition;
-            MidiController.Guide = Guide;
 
+            MidiController.Guide = Guide;
             KeyboardController.Guide = Guide;
             
         }
 
-
+        // Draw music piece
         public StackPanel DrawMusicPiece()
         {
+            // If sheet is null -> draw standard sheet
             if (Sheet == null)
             {
                 return StandardSheet();
 
             }
+            // else draw sheet bases on Sheet
             else
             {
                 return Sheet.DrawSheet();
@@ -78,6 +78,7 @@ namespace PianoApp.Controllers
 
         }
 
+        // Function to draw standard sheet
         public StackPanel StandardSheet()
         {
             GreatStaffModel greatStaffModel = new GreatStaffModel();

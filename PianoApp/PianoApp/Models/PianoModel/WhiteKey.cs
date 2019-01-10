@@ -36,12 +36,13 @@ namespace PianoApp.Models
             return KeyRect;
         }
 
+        //Updates color based on state.
         public override void ColorUpdate()
         {            
             if (StaffNumber == 1 && Active)
             {
                 KeyRect.Fill = ActiveStaffOneColor;
-                if (fingerSettingEnabled)
+                if (FingerSettingEnabled)
                 {
                     SetFingerNum(ActiveStaffOneColor);
                 }
@@ -49,7 +50,7 @@ namespace PianoApp.Models
             else if (StaffNumber == 2 && Active)
             {
                 KeyRect.Fill = ActiveStaffTwoColor;
-                if (fingerSettingEnabled)
+                if (FingerSettingEnabled)
                 {
                     SetFingerNum(ActiveStaffTwoColor);
                 }
@@ -64,6 +65,7 @@ namespace PianoApp.Models
             }
         }
 
+        //Sets the finger numbers.
         private void SetFingerNum(SolidColorBrush Color)
         {
             if (FingerNum > 0)
@@ -96,18 +98,9 @@ namespace PianoApp.Models
             }
         }
 
-
+        //Color the keys with idle color.
         public override void Color()
         {
-            //            if (base.KeyNumber <= KeyboardController.KeyOffset ||
-            //               (base.KeyNumber >= KeyboardController.KeyOffset + 33))
-            //            {
-            //                KeyRect.Fill = System.Windows.Media.Brushes.DarkGray;
-            //            }
-            //            else
-            //            {
-            //                KeyRect.Fill = System.Windows.Media.Brushes.FloralWhite;
-            //            }
             KeyRect.Fill = IdleColor;
         }
     }
