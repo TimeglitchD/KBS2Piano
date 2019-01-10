@@ -14,6 +14,7 @@ namespace ControllerTests
     /// Summary description for KeyboardContollerTests
     /// </summary>
     [TestFixture]
+    [Apartment(ApartmentState.STA)]
     public class KeyboardContollerTests
     {
         KeyboardController kc;
@@ -23,49 +24,26 @@ namespace ControllerTests
         }
 
         [Test]
-        public void CurrentOctave_When12_ShouldReturn1()
+        [TestCase(12, 1)]
+        [TestCase(24, 2)]
+        [TestCase(36, 3)]
+        [TestCase(48, 4)]
+        public void CurrentOctave_ShouldReturnRightOctave(int offset, int octave)
         {
-            KeyboardController.KeyOffset = 12;
-            Assert.AreEqual(1, kc.CurrentOctave());
+            KeyboardController.KeyOffset = offset;
+            Assert.AreEqual(octave, kc.CurrentOctave());
         }
 
         [Test]
-        public void CurrentOctave_When24_ShouldReturn2()
+        [TestCase(60, 5)]
+        [TestCase(72, 6)]
+        public void OctaveUp_ShouldReturnRightOctave(int offset, int octave)
         {
-            KeyboardController.KeyOffset = 24;
-            Assert.AreEqual(2, kc.CurrentOctave());
+            KeyboardController.KeyOffset = offset;
+            Assert.AreEqual(octave, kc.CurrentOctave());
         }
 
         [Test]
-        public void CurrentOctave_When36_ShouldReturn3()
-        {
-            KeyboardController.KeyOffset = 36;
-            Assert.AreEqual(3, kc.CurrentOctave());
-        }
-
-        [Test]
-        public void CurrentOctave_When48_ShouldReturn4()
-        {
-            KeyboardController.KeyOffset = 48;
-            Assert.AreEqual(4, kc.CurrentOctave());
-        }
-
-        [Test]
-        public void OctaveUp_When60_ShouldReturn5()
-        {
-            KeyboardController.KeyOffset = 60;
-            Assert.AreEqual(5, kc.CurrentOctave());
-        }
-
-        [Test]
-        public void OctaveUp_When72_ShouldReturn6()
-        {
-            KeyboardController.KeyOffset = 72;
-            Assert.AreEqual(6, kc.CurrentOctave());
-        }
-
-        [Test]
-        [Apartment(ApartmentState.STA)]
         public void KeyDown_GuideIsNull_ReturnTrue()
         {
             KeyEventArgs keyEvent = new KeyEventArgs(
@@ -80,7 +58,6 @@ namespace ControllerTests
         }
 
         [Test]
-        [Apartment(ApartmentState.STA)]
         public void KeyUp_GuideIsNull_ReturnTrue()
         {
             KeyEventArgs keyEvent = new KeyEventArgs(

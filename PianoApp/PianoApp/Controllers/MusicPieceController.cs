@@ -13,7 +13,7 @@ namespace PianoApp.Controllers
 {
     public class MusicPieceController
     {
-        private Score _score;
+        public Score Score;
         public PianoController Piano;
 
         public SheetController SheetController;
@@ -38,9 +38,9 @@ namespace PianoApp.Controllers
 
         public void CreateMusicPiece(string filename)
         {
-            _score = MusicXmlParser.GetScore(filename);
+            Score = MusicXmlParser.GetScore(filename);
 
-            Guide = new GuidesController(MidiController) { Score = _score, Piano = Piano, Sheet = SheetController, grid = Grid};
+            Guide = new GuidesController(MidiController) { Score = Score, Piano = Piano, Sheet = SheetController, grid = Grid};
 
 
             Sheet = SheetController.SheetModel;
@@ -87,10 +87,10 @@ namespace PianoApp.Controllers
         }
 
         //Create Great staffs based on amount of measures in the piece
-        private void AddGreatStaffsToSheet()
+        public void AddGreatStaffsToSheet()
         {
 
-            for (int i = _score.Systems; i > 0; i--)
+            for (int i = Score.Systems; i > 0; i--)
             {
                 Sheet.GreatStaffModelList.Add(new GreatStaffModel());
             }
@@ -99,11 +99,11 @@ namespace PianoApp.Controllers
         }
 
         //Fill staffs width measures based on amount of measures in the piece
-        private void AddMeasuresToGreatStaffs()
+        public void AddMeasuresToGreatStaffs()
         {
             int greatstaff = 0;
 
-            foreach (var scorePart in _score.Parts)
+            foreach (var scorePart in Score.Parts)
             {
                 foreach (var measure in scorePart.Measures)
                 {
