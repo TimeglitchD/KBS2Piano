@@ -41,7 +41,7 @@ namespace PianoApp.Models
             if (StaffNumber == 1 && Active)
             {
                 KeyRect.Fill = ActiveStaffOneColor;
-                if (fingerSettingEnabled)
+                if (FingerSettingEnabled)
                 {
                     SetFingerNum(ActiveStaffOneColor);
                 }
@@ -49,7 +49,7 @@ namespace PianoApp.Models
             else if (StaffNumber == 2 && Active)
             {
                 KeyRect.Fill = ActiveStaffTwoColor;
-                if (fingerSettingEnabled)
+                if (FingerSettingEnabled)
                 {
                     SetFingerNum(ActiveStaffTwoColor);
                 }

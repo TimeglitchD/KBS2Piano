@@ -15,15 +15,15 @@ namespace PianoApp.Controllers
 {
     public class MidiController
     {
-        public MidiIn midiIn;
+        public MidiIn MidiIn;
 
-        public event EventHandler midiInputChanged;
+        public event EventHandler MidiInputChanged;
 
-        public Dictionary<int, float> currentlyPressedKeys = new Dictionary<int, float>();
+        public Dictionary<int, float> CurrentlyPressedKeys = new Dictionary<int, float>();
 
         public Thread MidiThread { get; set; }
 
-        private MidiControllerEventArgs midiArgs = new MidiControllerEventArgs();
+        private MidiControllerEventArgs _midiArgs = new MidiControllerEventArgs();
 
         public GuidesController Guide;
 
@@ -37,16 +37,16 @@ namespace PianoApp.Controllers
 
         public void initializeMidi()
         {
-            midiIn = new MidiIn(0); 
+            MidiIn = new MidiIn(0); 
             
 
-            midiIn.MessageReceived += midiInReceived;
-            midiIn.ErrorReceived += midiIn_ErrorReceived;            
+            MidiIn.MessageReceived += midiInReceived;
+            MidiIn.ErrorReceived += midiIn_ErrorReceived;            
 
 
 
             MidiThread = new Thread(() => {
-                midiIn.Start();
+                MidiIn.Start();
             });
 
             MidiThread.Start();
@@ -81,12 +81,12 @@ namespace PianoApp.Controllers
                 
                 int calculatedNote =  offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
                 MidiOutput.play(calculatedNote);
-                if (currentlyPressedKeys.ContainsKey(calculatedNote)) return;
+                if (CurrentlyPressedKeys.ContainsKey(calculatedNote)) return;
 
                 if (Guide == null) return;
 
-                currentlyPressedKeys.Add(calculatedNote, GuidesController.StopWatch.ElapsedMilliseconds);
-                Guide.ActiveKeys = currentlyPressedKeys;
+                CurrentlyPressedKeys.Add(calculatedNote, GuidesController.StopWatch.ElapsedMilliseconds);
+                Guide.ActiveKeys = CurrentlyPressedKeys;
                 Guide.UpdatePianoKeys();
                 //Thread.Sleep inside GUI is just for example
                 
@@ -97,8 +97,8 @@ namespace PianoApp.Controllers
                 int calculatedNote = offsetNote(noteEvent.NoteNumber, KeyboardController.KeyOffset);
                 MidiOutput.stop(calculatedNote);
                 if (Guide == null) return;
-                currentlyPressedKeys.Remove(calculatedNote);
-                Guide.ActiveKeys = currentlyPressedKeys;
+                CurrentlyPressedKeys.Remove(calculatedNote);
+                Guide.ActiveKeys = CurrentlyPressedKeys;
                 Guide.UpdatePianoKeys();
                 
             }
@@ -168,7 +168,7 @@ namespace PianoApp.Controllers
 
         protected virtual void OnMidiInputChanged(MidiControllerEventArgs e)
         {
-            midiInputChanged?.Invoke(this, e);
+            MidiInputChanged?.Invoke(this, e);
         }
 
         private int offsetNote(int note, int offset)

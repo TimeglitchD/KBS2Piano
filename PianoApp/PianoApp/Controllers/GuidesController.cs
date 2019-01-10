@@ -101,7 +101,7 @@ namespace PianoApp.Controllers
         public GuidesController(MidiController midi)
         {
             this.Midi = midi;
-            //            Midi.midiInputChanged += inputChanged;
+            //            Midi.MidiInputChanged += inputChanged;
         }
 
         private void FillToDoList()

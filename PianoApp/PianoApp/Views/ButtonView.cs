@@ -232,13 +232,13 @@ namespace PianoApp.Views
             {
                 fingerEnabled = false;
                 fingerSettingTxt.TextDecorations = null;
-                mPc.Guide.Piano.fingerSettingEnabled = fingerEnabled;
+                mPc.Guide.Piano.FingerSettingEnabled = fingerEnabled;
             }
             else
             {
                 fingerEnabled = true;
                 fingerSettingTxt.TextDecorations = strikeTrough;
-                mPc.Guide.Piano.fingerSettingEnabled = fingerEnabled;
+                mPc.Guide.Piano.FingerSettingEnabled = fingerEnabled;
             }
         }
 

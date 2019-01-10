@@ -14,7 +14,7 @@ namespace PianoApp.Models
         public int Amount { get; set; } = 10;
         public int Center { get; set; } = 0;
 
-        private DockPanel piano = new DockPanel();
+        private DockPanel _piano = new DockPanel();
 
 
         public PianoModel()
@@ -30,7 +30,7 @@ namespace PianoApp.Models
             }
             Center = 4 - Center;
 
-            piano.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            _piano.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             for (int i = 0; i < Amount; i++)
             {
                 OctaveModelList.Add(new OctaveModel(i+Center));
@@ -43,10 +43,10 @@ namespace PianoApp.Models
             float width = (float)1266 / (Amount * 7);
             foreach(OctaveModel octaveModel in OctaveModelList)
             {
-                piano.Children.Add(octaveModel.DrawOctave(width));
+                _piano.Children.Add(octaveModel.DrawOctave(width));
             }
 
-            return piano;
+            return _piano;
         }
     }
 
