@@ -16,14 +16,16 @@ namespace PianoApp.Models
 
         public int Number { get; set; }
         public List<Note> NoteList { get; set; } = new List<Note>();
-        public Grid stave { get; set; }
+        public Grid Stave { get; set; }
 
         public Grid DrawStaff()
         {
             //create the grid
-            stave = new Grid();
-            stave.Height = 100;
-            stave.Width = 1055;
+            Stave = new Grid();
+            Stave.Height = 100;
+            Stave.Width = 1055;
+
+            // Define all rows in a staff
             RowDefinition rowDef0 = new RowDefinition();
             RowDefinition rowDef1 = new RowDefinition();
             RowDefinition rowDef2 = new RowDefinition();
@@ -54,21 +56,21 @@ namespace PianoApp.Models
             rowDef12.Height = new GridLength(1, GridUnitType.Star);
             rowDef13.Height = new GridLength(1, GridUnitType.Star);
             rowDef14.Height = new GridLength(1, GridUnitType.Star);
-            stave.RowDefinitions.Add(rowDef0);
-            stave.RowDefinitions.Add(rowDef1);
-            stave.RowDefinitions.Add(rowDef2);
-            stave.RowDefinitions.Add(rowDef3);
-            stave.RowDefinitions.Add(rowDef4);
-            stave.RowDefinitions.Add(rowDef5);
-            stave.RowDefinitions.Add(rowDef6);
-            stave.RowDefinitions.Add(rowDef7);
-            stave.RowDefinitions.Add(rowDef8);
-            stave.RowDefinitions.Add(rowDef9);
-            stave.RowDefinitions.Add(rowDef10);
-            stave.RowDefinitions.Add(rowDef11);
-            stave.RowDefinitions.Add(rowDef12);
-            stave.RowDefinitions.Add(rowDef13);
-            stave.RowDefinitions.Add(rowDef14);
+            Stave.RowDefinitions.Add(rowDef0);
+            Stave.RowDefinitions.Add(rowDef1);
+            Stave.RowDefinitions.Add(rowDef2);
+            Stave.RowDefinitions.Add(rowDef3);
+            Stave.RowDefinitions.Add(rowDef4);
+            Stave.RowDefinitions.Add(rowDef5);
+            Stave.RowDefinitions.Add(rowDef6);
+            Stave.RowDefinitions.Add(rowDef7);
+            Stave.RowDefinitions.Add(rowDef8);
+            Stave.RowDefinitions.Add(rowDef9);
+            Stave.RowDefinitions.Add(rowDef10);
+            Stave.RowDefinitions.Add(rowDef11);
+            Stave.RowDefinitions.Add(rowDef12);
+            Stave.RowDefinitions.Add(rowDef13);
+            Stave.RowDefinitions.Add(rowDef14);
 
             //add lines to the grid on the correct places
             for (int i = 0; i < 13; i++)
@@ -78,17 +80,17 @@ namespace PianoApp.Models
                     Line line = new Line();
                     line.Stroke = Brushes.Black;
                     line.X1 = 0;
-                    line.X2 = stave.Width-5;
+                    line.X2 = Stave.Width-5;
                     line.HorizontalAlignment = HorizontalAlignment.Left;
                     line.VerticalAlignment = VerticalAlignment.Center;
                     line.StrokeThickness = 1;
                     Grid.SetRow(line, i);
-                    stave.Children.Add(line);
+                    Stave.Children.Add(line);
                 }
 
             }
 
-            return stave;
+            return Stave;
 
         }
     }

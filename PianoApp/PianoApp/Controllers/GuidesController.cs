@@ -69,6 +69,8 @@ namespace PianoApp.Controllers
         private System.Timers.Timer _timerStaffOne;
         private System.Timers.Timer _timerStaffTwo;
 
+        public bool staffsEnabled = false;
+
         public bool paused = false;
 
 

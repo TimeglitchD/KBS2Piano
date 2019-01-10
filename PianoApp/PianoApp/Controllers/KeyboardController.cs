@@ -11,19 +11,18 @@ namespace PianoApp.Controllers
 {
     public class KeyboardController
     {
-        public Dictionary<int, float> currentlyPressedKeys = new Dictionary<int, float>();
-
+        public Dictionary<int, float> CurrentlyPressedKeys = new Dictionary<int, float>();
         public PianoController PianoController;
-
         public GuidesController Guide;
-        public bool guideIsNull = false;
-
+        public bool GuideIsNull = false;
         public static int KeyOffset = 48;
 
+        // When key is pressed
         public void KeyDown(KeyEventArgs e)
         {
             int pressedKey = -1;
 
+            // Check which key is pressed
             switch(e.Key)
             {
                 case Key.Q:
@@ -130,24 +129,32 @@ namespace PianoApp.Controllers
                     break;
             }
 
-            if (pressedKey < 0 || currentlyPressedKeys.ContainsKey(pressedKey))
+            if (pressedKey < 0 || CurrentlyPressedKeys.ContainsKey(pressedKey))
                 return;
 
+            // Play sound based on key press
             MidiOutput.play(pressedKey);
-            currentlyPressedKeys.Add(pressedKey, GuidesController.StopWatch.ElapsedMilliseconds);
 
+            // Update Dict of pressed key
+            CurrentlyPressedKeys.Add(pressedKey, GuidesController.StopWatch.ElapsedMilliseconds);
+
+            // If guide is null -> return
             if (Guide == null)
             {
-                guideIsNull = true;
+                GuideIsNull = true;
                 return;
             }
 
-            Guide.Piano.UpdatePressedPianoKeys(currentlyPressedKeys);
+            // Update pressed key in guideController
+            Guide.Piano.UpdatePressedPianoKeys(CurrentlyPressedKeys);
         }
 
+        // When key is not pressed
         public void KeyUp(KeyEventArgs e)
         {
             int pressedKey = -1;
+
+            // Check which key is not pressed anymore
             switch (e.Key)
             {
                 case Key.Q:
@@ -248,19 +255,24 @@ namespace PianoApp.Controllers
                     break;
             }
 
-            if (pressedKey < 0 || !currentlyPressedKeys.ContainsKey(pressedKey))
+            if (pressedKey < 0 || !CurrentlyPressedKeys.ContainsKey(pressedKey))
                 return;
 
-            currentlyPressedKeys.Remove(pressedKey);
+            // Remove pressed key
+            CurrentlyPressedKeys.Remove(pressedKey);
+
+            // Stop playing sounds
             MidiOutput.stop(pressedKey);
 
+            // If guide is null -> return
             if (Guide == null)
             {
-                guideIsNull = true;
+                GuideIsNull = true;
                 return;
             }
 
-            Guide.Piano.UpdatePressedPianoKeys(currentlyPressedKeys);
+            // Update keypress in guideController
+            Guide.Piano.UpdatePressedPianoKeys(CurrentlyPressedKeys);
         }
 
         public void octaveUp()

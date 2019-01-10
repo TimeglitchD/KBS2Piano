@@ -54,7 +54,7 @@ namespace ControllerTests
             kc.Guide = new GuidesController(new MidiController());
             kc.KeyDown(keyEvent);
 
-            Assert.AreEqual(kc.guideIsNull, false);
+            Assert.AreEqual(kc.GuideIsNull, false);
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace ControllerTests
             kc.Guide = new GuidesController(new MidiController());
             kc.KeyDown(keyEvent);
 
-            Assert.AreEqual(kc.guideIsNull, false);
+            Assert.AreEqual(kc.GuideIsNull, false);
         }
     }
 }

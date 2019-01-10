@@ -24,7 +24,7 @@ namespace PianoApp.Views
             sheet = new StackPanel();
             DrawMusic();
 
-            MusicPieceController.staffEndReached += scrollToNext;
+            MusicPieceController.StaffEndReached += scrollToNext;
             MusicPieceController.GoToFirstStaff += ScrollToTop;
             MusicPieceController.HoldPosition += ScrollToCurrent;
         }

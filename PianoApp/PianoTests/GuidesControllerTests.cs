@@ -48,6 +48,9 @@ namespace ControllerTests
         [Test]
         [TestCase (10, 100, 10)]
         [TestCase (10, 20, 50)]
+        [TestCase (100, 100, 100)]
+        [TestCase (15, 20, 75)]
+        [TestCase (1, 100, 1)]
         public void CalcScore_ShouldReturnPercentage(int gn, int an, int sc)
         {
             guidesController._goodNotes = gn;
