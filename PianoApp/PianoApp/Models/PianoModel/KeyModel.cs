@@ -20,7 +20,7 @@ namespace PianoApp.Models
         public Rectangle KeyRect { get; set; } = new Rectangle();
         public int FingerNum { get; set; } = 0;
         public int StaffNumber;
-        public bool fingerSettingEnabled = true;
+        public bool FingerSettingEnabled = true;
         public int KeyNumber { get; set; }
         public SolidColorBrush IdleColor { get; set; }
         public SolidColorBrush ActiveStaffOneColor { get; set; }

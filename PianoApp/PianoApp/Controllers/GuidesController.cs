@@ -16,13 +16,14 @@ using PianoApp.Views;
 
 namespace PianoApp.Controllers
 {
-
+    //Structure used for timeout of a note.
     public struct Timeout
     {
         public float NoteTimeout { get; set; }
         public float TimeAdded { get; set; }
     }
 
+    //Structure used for saving a dummy note.
     public struct MockupNote
     {
         public int Octave;
@@ -30,9 +31,11 @@ namespace PianoApp.Controllers
         public int Alter;
     }
 
+
     public class GuidesController
     {
-        public float _bpm;
+        //Bpm
+        private float _bpm;
 
         public float Bpm
         {
@@ -68,42 +71,40 @@ namespace PianoApp.Controllers
 
         private System.Timers.Timer _timerStaffOne;
         private System.Timers.Timer _timerStaffTwo;
-
         public bool staffsEnabled = false;
 
         public bool paused = false;
 
 
-        private List<PianoApp.Models.StaffModel> stafflist;
-        private int currentStaff = 0;
-        private bool atStaffEndOne = false;
-        private bool atStaffEndTwo = false;
+        private List<PianoApp.Models.StaffModel> _stafflist;
+        private int _currentStaff = 0;
+        private bool _atStaffEndOne = false;
+        private bool _atStaffEndTwo = false;
         public event EventHandler StaffEndReached;
         public event EventHandler GoToFirstStaff;
         public event EventHandler HoldPosition;
-        public event EventHandler guideStopped;
+        public event EventHandler GuideStopped;
 
-        public MidiController midi;
+        public MidiController Midi;
 
         public Dictionary<int, float> ActiveKeys = new Dictionary<int, float>();
 
-        private int[] staffdivs;
-        private List<Note>[] prevnote;
-        private List<Note> newlistprevnote;
+        private int[] _staffdivs;
+        private List<Note>[] _prevnote;
+        private List<Note> _newlistprevnote;
 
         private int _scoreVal = 0;
         public int _amountOfNotes = 0;
         public int _goodNotes = 0;
         private int _endReached = 0;
         private int _amountOfGreatStaffs = 0;
-        public Grid grid;
+        public Grid Grid;
 
         public bool _finished { get; set; }
 
         public GuidesController(MidiController midi)
         {
-            this.midi = midi;
-            //            midi.midiInputChanged += inputChanged;
+            this.Midi = midi;
         }
 
         private void FillToDoList()
@@ -179,9 +180,10 @@ namespace PianoApp.Controllers
                 }
             }
 
-            stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
+            _stafflist = Sheet.SheetModel.GreatStaffModelList[_currentStaff].StaffList;
         }
 
+        //Remove a note that is done.
         private void RemoveFirstNoteFromToDoDict(Note note)
         {
             if (note.Staff == 1)
@@ -196,12 +198,13 @@ namespace PianoApp.Controllers
             }
         }
 
+        //The method that makes the notes active and activates the corresponding piano keys.
         private void NoteIntersectEvent(EventArgs e, int staffNumber)
         {
-            if (staffdivs[staffNumber] > 0)
-                staffdivs[staffNumber]--;
+            if (_staffdivs[staffNumber] > 0)
+                _staffdivs[staffNumber]--;
 
-            if (staffdivs[staffNumber] == 0)
+            if (_staffdivs[staffNumber] == 0)
             {
                 //Check key press is correct or not
                 CheckPressedKeysToActiveNotes(staffNumber);
@@ -258,8 +261,8 @@ namespace PianoApp.Controllers
                                     TimeAdded = StopWatch.ElapsedMilliseconds
                                 });
 
-                                staffdivs[staffNumber] = tempList[i].Key.Duration;
-                                prevnote[staffNumber].Add(tempList[i].Key);
+                                _staffdivs[staffNumber] = tempList[i].Key.Duration;
+                                _prevnote[staffNumber].Add(tempList[i].Key);
                             }
 
 
@@ -287,7 +290,7 @@ namespace PianoApp.Controllers
                         }
                     }
                     
-
+                    //Update the music sheet and piano keys.
                     Piano.UpdatePianoKeys(tempDict);
                     Sheet.UpdateNotes(tempDict);
 
@@ -297,7 +300,7 @@ namespace PianoApp.Controllers
 
 
 
-
+            //Show percentage on end of music piece.
             if (_endReached.Equals(_amountOfGreatStaffs) && !_finished)
             {
                 _finished = true;
@@ -307,17 +310,22 @@ namespace PianoApp.Controllers
                 DatabaseConnection connection = new DatabaseConnection();
                 connection.updateScore(MusicChooseView.PieceID, CalcScore());
 
-                grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.UpdateScore()));
+                //Show the calculated score.
+                Grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.UpdateScore()));
+                //Show for 3 seconds...
                 Thread.Sleep(3000);
-                grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.HideScore()));
+                //hide the calculated score.
+                Grid.Dispatcher.BeginInvoke((Action)(() => ScoreLabel.HideScore()));
             }
         }
 
+        //Calc a score based on played notes.
         public int CalcScore()
         {
             return (100 * _goodNotes) / _amountOfNotes;
         }
 
+        //Returns a mockup note from a note number. 
         public MockupNote getNoteFromNoteNumber(int nn)
         {
             int octave = (int)Math.Floor((decimal)nn / 12);
@@ -344,6 +352,7 @@ namespace PianoApp.Controllers
             return new MockupNote() { Step = step, Alter = alter, Octave = octave };
         }
 
+        //Determines if a note is played right.
         private void CheckPressedKeysToActiveNotes(int staffNumber)
         {
             var tempDict = _activeNoteAndTimeoutDict1;
@@ -386,34 +395,36 @@ namespace PianoApp.Controllers
 
         }
 
+        //Check if end of great stave is reached.
         private void checkLastNote(Dictionary<Note, Timeout> noteDict)
         {
-            Note lastNoteStaffOne = stafflist[0].NoteList.Last();
-            Note lastNoteStaffTwo = stafflist[1].NoteList.Last();
+            Note lastNoteStaffOne = _stafflist[0].NoteList.Last();
+            Note lastNoteStaffTwo = _stafflist[1].NoteList.Last();
             Timeout temp = new Timeout();
             if (noteDict.TryGetValue(lastNoteStaffOne, out temp))
             {
-                atStaffEndOne = true;
+                _atStaffEndOne = true;
                 _endReached++;
             }
 
             if (noteDict.TryGetValue(lastNoteStaffTwo, out temp))
             {
-                atStaffEndTwo = true;
+                _atStaffEndTwo = true;
                
             }
         }
 
+        //Scroll the music piece.
         private void goToNextStaff()
         {
-            if (atStaffEndOne && atStaffEndTwo)
+            if (_atStaffEndOne && _atStaffEndTwo)
             {
-                atStaffEndOne = false;
-                atStaffEndTwo = false;
+                _atStaffEndOne = false;
+                _atStaffEndTwo = false;
 
-                currentStaff++;
+                _currentStaff++;
 
-                if (currentStaff >= Sheet.SheetModel.GreatStaffModelList.Count)
+                if (_currentStaff >= Sheet.SheetModel.GreatStaffModelList.Count)
                 {
                     this.Stop();
                     
@@ -421,9 +432,9 @@ namespace PianoApp.Controllers
                 }
 
 
-                if (currentStaff < Sheet.SheetModel.GreatStaffModelList.Count)
+                if (_currentStaff < Sheet.SheetModel.GreatStaffModelList.Count)
                 {
-                    stafflist = Sheet.SheetModel.GreatStaffModelList[currentStaff].StaffList;
+                    _stafflist = Sheet.SheetModel.GreatStaffModelList[_currentStaff].StaffList;
                 }
 
                 if (StaffEndReached != null)
@@ -433,6 +444,7 @@ namespace PianoApp.Controllers
             }
         }
 
+        //Pause the guider.
         public void Pause()
         {
             if (paused)
@@ -449,6 +461,7 @@ namespace PianoApp.Controllers
             paused = !paused;
         }
 
+        //Start the guider.
         public bool Start()
         {
             _finished = false;
@@ -462,8 +475,8 @@ namespace PianoApp.Controllers
             FillToDoList();
 
             StopWatch = Stopwatch.StartNew();
-            staffdivs = new int[3] { 0, 0, 0 };
-            prevnote = new List<Note>[3] { new List<Note>(), new List<Note>(), new List<Note>(), };
+            _staffdivs = new int[3] { 0, 0, 0 };
+            _prevnote = new List<Note>[3] { new List<Note>(), new List<Note>(), new List<Note>(), };
 
 
             _timerStaffOne = new System.Timers.Timer();
@@ -482,7 +495,7 @@ namespace PianoApp.Controllers
 
         public void ResetMusicPiece()
         {
-            currentStaff = 0;
+            _currentStaff = 0;
 
             foreach (var scorePart in Score.Parts)
             {
@@ -531,6 +544,7 @@ namespace PianoApp.Controllers
             SetAttributes();
         }
 
+        //Stop the guider.
         public bool Stop()
         {
             _timerStaffOne.Enabled = false;
@@ -538,6 +552,7 @@ namespace PianoApp.Controllers
             return true;
         }
 
+        //Used for dropdown of selecting a note.
         public void SetNote(string note)
         {
             if (note == "Hele noot")
@@ -554,6 +569,7 @@ namespace PianoApp.Controllers
             }
         }
 
+        //Update pressed piano keys.
         public void UpdatePianoKeys()
         {
             Piano.UpdatePressedPianoKeys(ActiveKeys);

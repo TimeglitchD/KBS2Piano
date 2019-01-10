@@ -39,7 +39,14 @@ namespace PianoApp.Controllers
         public void CreateMusicPiece(string filename)
         {
             Score = MusicXmlParser.GetScore(filename);
+<<<<<<< HEAD
             Guide = new GuidesController(MidiController) { Score = Score, Piano = Piano, Sheet = SheetController, grid = Grid};
+=======
+
+            Guide = new GuidesController(MidiController) { Score = Score, Piano = Piano, Sheet = SheetController, Grid = Grid};
+
+
+>>>>>>> 93db978a667b36571297cc6a4b4e76cca71b0bf6
             Sheet = SheetController.SheetModel;
 
             //stop program from crashing when reloading musicpiece.

@@ -42,7 +42,7 @@ namespace PianoApp.Views
             scroll.Visibility = Visibility.Visible;
             Grid.SetRow(scroll, 1);
 
-            //zet de stackpanel in de goede plek in het grid
+            //zet de stackpanel in de goede plek in het Grid
             Grid.SetRow(sheet, 1);
 
             //koppel de scrollbar aan het stackpanel
