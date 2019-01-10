@@ -15,11 +15,10 @@ namespace PianoApp.Models
         public int Center { get; set; } = 0;
 
         private DockPanel _piano = new DockPanel();
-
-
+        
         public PianoModel()
         {
-            
+            //Check for center octave 4.
             if (Amount % 2 == 0)
             {
                 Center = Amount / 2;

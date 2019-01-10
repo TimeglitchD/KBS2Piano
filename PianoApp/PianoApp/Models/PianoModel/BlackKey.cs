@@ -35,7 +35,7 @@ namespace PianoApp.Models
             return KeyRect;
         }
 
-
+        //Updates color based on state.
         public override void ColorUpdate()
         {
             if (StaffNumber == 1 && Active)
@@ -56,7 +56,7 @@ namespace PianoApp.Models
             }
         }
 
-
+        //Color the keys with idle color.
         public override void Color()
         {
             KeyRect.Fill = IdleColor;

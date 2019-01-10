@@ -20,9 +20,10 @@ namespace PianoApp.Models
             _octave.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             //_octave.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
             CreateKeys();
-            DrawPianoInConsole();
+            //DrawPianoInConsole();
         }
 
+        //For testing purposes.
         private void DrawPianoInConsole()
         {
             StringBuilder sb = new StringBuilder();
@@ -36,6 +37,7 @@ namespace PianoApp.Models
 
         }
 
+        //Create the key objects inside a octave.
         private void CreateKeys()
         {
             int val = Position * 12;
@@ -78,6 +80,7 @@ namespace PianoApp.Models
             }
         }
 
+        //Draws the keys.
         public DockPanel DrawOctave(float width)
         {
             var previous = new KeyModel();
