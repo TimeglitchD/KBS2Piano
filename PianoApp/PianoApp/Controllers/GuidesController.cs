@@ -73,7 +73,7 @@ namespace PianoApp.Controllers
         private System.Timers.Timer _timerStaffTwo;
         public bool staffsEnabled = false;
 
-        public bool paused = false;
+        public bool Paused = false;
 
 
         private List<PianoApp.Models.StaffModel> _stafflist;

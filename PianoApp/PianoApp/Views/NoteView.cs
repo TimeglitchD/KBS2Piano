@@ -82,7 +82,7 @@ namespace PianoApp.Views
                         {
                             staff = greatStaff.StaffList.Last<StaffModel>();
                         }
-                        Grid staveGrid = staff.stave;
+                        Grid staveGrid = staff.Stave;
                         GNote(note, note.Pitch, staff, staveGrid, totalwidth, measure.Width * scale, prevnote, measure);
                         prevnote = note;
 
