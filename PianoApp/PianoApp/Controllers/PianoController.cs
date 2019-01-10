@@ -19,8 +19,10 @@ namespace PianoApp.Controllers
         public PianoView PianoView { get; set; }
         public bool FingerSettingEnabled = true;
 
+        //Update pressed piano keys based on pressed keys on the computer-keyboard.
         public void UpdatePressedPianoKeys(Dictionary<int, float> activeKeysFromKeyboard)
         {
+            //First set all keys to non active.
             foreach (var octaveModel in PianoModel.OctaveModelList)
             {
                 foreach (var keyModel in octaveModel.KeyModelList)
@@ -29,6 +31,7 @@ namespace PianoApp.Controllers
                 }
             }
 
+            //Now set them active if a key is pressed.
             foreach (var pressedKey in activeKeysFromKeyboard)
             {
                 int octave = (int)Math.Floor((float)pressedKey.Key / 12);
@@ -42,12 +45,14 @@ namespace PianoApp.Controllers
                 }
             }
 
+            //Redraw all the keys.
             Redraw();
         }
 
+        //Update piano keys based on notes on musicpiece.
         public void UpdatePianoKeys(Dictionary<Note, Timeout> noteAndTimeoutDictionary)
         {
-
+            //Set all keys to non active first.
             foreach (var octaveModel in PianoModel.OctaveModelList.ToList())
             {
                 foreach (var keyModel in octaveModel.KeyModelList.ToList())
@@ -61,6 +66,7 @@ namespace PianoApp.Controllers
             //go over all keys and compare to note when true set active true on the corresponding key...
             foreach (var keyValuePair in tempDict)
             {
+                //Check for for flats and sharps first. 
                 var octave = keyValuePair.Key.Pitch.Octave;
                 if (keyValuePair.Key.Pitch.Step == 'C' && keyValuePair.Key.Pitch.Alter == -1)
                 {
@@ -79,7 +85,7 @@ namespace PianoApp.Controllers
                     keyValuePair.Key.Pitch.Alter = 0;
                 }
 
-                //.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave))
+                //Check for non flat or sharp notes.               
                 foreach (var octaveModel in PianoModel.OctaveModelList.Where(n => n.Position.Equals(keyValuePair.Key.Pitch.Octave)))
                 {
                     //Select not active keys only
@@ -113,9 +119,11 @@ namespace PianoApp.Controllers
                 }
             }
 
+            //Redraw all the keys.
             Redraw();  
         }
 
+        //Redraws all the keys.
         public void Redraw()
         {
             foreach (var octaveModel in PianoModel.OctaveModelList)
