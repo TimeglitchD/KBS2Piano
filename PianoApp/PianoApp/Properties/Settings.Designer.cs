@@ -26,8 +26,8 @@ namespace PianoApp.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\bin\\Debug\\Mus" +
-            "icDatabase.mdf;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\MusicDatabase" +
+            ".mdf;Integrated Security=True")]
         public string MusicDatabaseConnectionString {
             get {
                 return ((string)(this["MusicDatabaseConnectionString"]));
