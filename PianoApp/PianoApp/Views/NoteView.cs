@@ -358,7 +358,7 @@ namespace PianoApp.Views
                             staveGrid.Children.Add(lbFinger);
                         }
 
-                        
+
                     }
                     catch (System.InvalidCastException)
                     {
@@ -407,180 +407,91 @@ namespace PianoApp.Views
                         row = 0;
                         break;
                     case 'B':
-                        if (pitch.Octave == 4)
-                        {
-                            row = 7;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 4)
-                            {
-                                row = 7;
-                                //Draw 8va
-                                pitch.Octave = 4;
-                            }
-                            else
-                            {
-                                row = 7;
-                                //Draw 8vb
-                                pitch.Octave = 4;
-                            }
-                        }
+                        row = 7;
+                        pitch.Octave = 4;
                         break;
                     case 'A':
-                        if (pitch.Octave == 5)
+                        if (pitch.Octave >= 5)
                         {
                             row = 1;
+                            pitch.Octave = 5;
                         }
                         else
-                        if (pitch.Octave == 4)
+                        if (pitch.Octave <= 4)
                         {
                             row = 8;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 5)
-                            {
-                                row = 1;
-                                //Draw 8va
-                                pitch.Octave = 5;
-                            }
-                            else
-                            {
-                                row = 8;
-                                //Draw 8vb
-                                pitch.Octave = 4;
-                            }
+                            pitch.Octave = 4;
                         }
                         break;
                     case 'G':
-                        if (pitch.Octave == 5)
+                        if (pitch.Octave >= 5)
                         {
                             row = 2;
+                            pitch.Octave = 5;
                         }
                         else
-                        if (pitch.Octave == 4)
+                        if (pitch.Octave <= 4)
                         {
                             row = 9;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 5)
-                            {
-                                row = 2;
-                                //Draw 8va
-                                pitch.Octave = 5;
-                            }
-                            else
-                            {
-                                row = 9;
-                                //Draw 8vb
-                                pitch.Octave = 4;
-                            }
+                            pitch.Octave = 4;
                         }
                         break;
                     case 'F':
-                        if (pitch.Octave == 5)
+                        if (pitch.Octave >= 5)
                         {
                             row = 3;
+                            pitch.Octave = 5;
+
                         }
                         else
-                        if (pitch.Octave == 4)
+                        if (pitch.Octave <= 4)
                         {
                             row = 10;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 5)
-                            {
-                                row = 3;
-                                //Draw 8va
-                                pitch.Octave = 5;
-                            }
-                            else
-                            {
-                                row = 10;
-                                //Draw 8vb
-                                pitch.Octave = 4;
-                            }
+                            pitch.Octave = 4;
+
                         }
                         break;
                     case 'E':
-                        if (pitch.Octave == 5)
+                        if (pitch.Octave >= 5)
                         {
                             row = 4;
+                            pitch.Octave = 5;
+
                         }
                         else
-                        if (pitch.Octave == 4)
+                        if (pitch.Octave <= 4)
                         {
                             row = 11;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 5)
-                            {
-                                row = 4;
-                                //Draw 8va
-                                pitch.Octave = 5;
-                            }
-                            else
-                            {
-                                row = 11;
-                                //Draw 8vb
-                                pitch.Octave = 4;
-                            }
+                            pitch.Octave = 4;
+
                         }
                         break;
                     case 'D':
-                        if (pitch.Octave == 5)
+                        if (pitch.Octave >= 5)
                         {
                             row = 5;
+                            pitch.Octave = 5;
+
                         }
                         else
-                        if (pitch.Octave == 4)
+                        if (pitch.Octave <= 4)
                         {
                             row = 12;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 5)
-                            {
-                                row = 5;
-                                //Draw 8va
-                                pitch.Octave = 5;
-                            }
-                            else
-                            {
-                                row = 12;
-                                //Draw 8vb
-                                pitch.Octave = 4;
-                            }
+                            pitch.Octave = 4;
+
                         }
                         break;
                     case 'C':
-                        if (pitch.Octave == 5)
+                        if (pitch.Octave >= 5)
                         {
                             row = 6;
+                            pitch.Octave = 5;
                         }
                         else
-                        if (pitch.Octave == 4)
+                        if (pitch.Octave <= 4)
                         {
                             row = 13;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 5)
-                            {
-                                row = 6;
-                                //Draw 8va
-                                pitch.Octave = 5;
-                            }
-                            else
-                            {
-                                row = 13;
-                                //Draw 8vb
-                                pitch.Octave = 4;
-                            }
+                            pitch.Octave = 4;
                         }
                         break;
 
@@ -596,183 +507,100 @@ namespace PianoApp.Views
                         row = 0;
                         break;
                     case 'C':
-                        if (pitch.Octave == 4)
+                        if (pitch.Octave >= 4)
                         {
                             row = 1;
+                            pitch.Octave = 4;
+
                         }
                         else
-                        if (pitch.Octave == 3)
+                        if (pitch.Octave <= 3)
                         {
                             row = 8;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 4)
-                            {
-                                row = 1;
-                                //Draw 8va
-                                pitch.Octave = 4;
-                            }
-                            else
-                            {
-                                row = 8;
-                                //Draw 8vb
-                                pitch.Octave = 3;
-                            }
+                            pitch.Octave = 3;
+
                         }
                         break;
                     case 'B':
-                        if (pitch.Octave == 3)
+                        if (pitch.Octave >= 3)
                         {
                             row = 2;
+                            pitch.Octave = 3;
+
                         }
                         else
-                        if (pitch.Octave == 2)
+                        if (pitch.Octave <= 2)
                         {
                             row = 9;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 3)
-                            {
-                                row = 2;
-                                //Draw 8va
-                                pitch.Octave = 3;
-                            }
-                            else
-                            {
-                                row = 9;
-                                //Draw 8vb
-                                pitch.Octave = 2;
-                            }
+                            pitch.Octave = 2;
+
+
                         }
                         break;
                     case 'A':
-                        if (pitch.Octave == 3)
+                        if (pitch.Octave >= 3)
                         {
                             row = 3;
+                            pitch.Octave = 3;
+
                         }
                         else
-                        if (pitch.Octave == 2)
+                        if (pitch.Octave <= 2)
                         {
                             row = 10;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 3)
-                            {
-                                row = 3;
-                                //Draw 8va
-                                pitch.Octave = 3;
-                            }
-                            else
-                            {
-                                row = 10;
-                                //Draw 8vb
-                                pitch.Octave = 2;
-                            }
+                            pitch.Octave = 2;
+
                         }
                         break;
                     case 'G':
-                        if (pitch.Octave == 3)
+                        if (pitch.Octave >= 3)
                         {
                             row = 4;
+                            pitch.Octave = 3;
+
                         }
                         else
-                        if (pitch.Octave == 2)
+                        if (pitch.Octave <= 2)
                         {
                             row = 11;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 3)
-                            {
-                                row = 4;
-                                //Draw 8va
-                                pitch.Octave = 3;
-                            }
-                            else
-                            {
-                                row = 11;
-                                //Draw 8vb
-                                pitch.Octave = 2;
-                            }
+                            pitch.Octave = 2;
+
                         }
                         break;
                     case 'F':
-                        if (pitch.Octave == 3)
+                        if (pitch.Octave >= 3)
                         {
                             row = 5;
+                            pitch.Octave = 3;
+
                         }
                         else
-                        if (pitch.Octave == 2)
+                        if (pitch.Octave <= 2)
                         {
                             row = 12;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 3)
-                            {
-                                row = 5;
-                                //Draw 8va
-                                pitch.Octave = 3;
-                            }
-                            else
-                            {
-                                row = 12;
-                                //Draw 8vb
-                                pitch.Octave = 2;
-                            }
+                            pitch.Octave = 2;
+
                         }
                         break;
                     case 'E':
-                        if (pitch.Octave == 3)
+                        if (pitch.Octave >= 3)
                         {
                             row = 6;
+                            pitch.Octave = 3;
+
                         }
                         else
-                        if (pitch.Octave == 2)
+                        if (pitch.Octave <= 2)
                         {
                             row = 13;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 3)
-                            {
-                                row = 6;
-                                //Draw 8va
-                                pitch.Octave = 3;
-                            }
-                            else
-                            {
-                                row = 13;
-                                //Draw 8vb
-                                pitch.Octave = 2;
-                            }
+                            pitch.Octave = 2;
+
                         }
                         break;
                     case 'D':
-                        if (pitch.Octave == 3)
-                        {
-                            row = 7;
-                        }
-                        else
-                        {
-                            if (pitch.Octave > 4)
-                            {
-                                row = 7;
-                                //Draw 8va
-                                pitch.Octave = 3;
-                            }
-                            else
-                            {
-                                row = 7;
-                                //Draw 8vb
-                                pitch.Octave = 3;
-                            }
-                        }
+                        row = 7;
+                        pitch.Octave = 3;
                         break;
-
                 }
             }
 

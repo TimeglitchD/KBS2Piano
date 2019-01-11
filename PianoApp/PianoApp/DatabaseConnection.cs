@@ -104,6 +104,7 @@ namespace PianoApp
                 }
                 catch (Exception)
                 {
+                    Console.WriteLine("failed..");
                     return null;
                 }
             }

@@ -21,6 +21,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_1FF5D4FB66EA4031BE4B6EA2713A2388"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_27717663BB2D4422A4D3E1389FAC822A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -34,13 +40,7 @@
         "Entry"
         {
         "MsmKey" = "8:_35717447D385778061C1DE52F46282AF"
-        "OwnerKey" = "8:_A5885C75EC3041358FB8A0CA02D03936"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_3EBB7C36FD224FDC80316E2B3871252E"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_6C378EADABDA4E12A71DE9F960E45EE6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -64,6 +64,12 @@
         "Entry"
         {
         "MsmKey" = "8:_6A40BF882B9E422E9B56B7019BDEC798"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6C378EADABDA4E12A71DE9F960E45EE6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -93,14 +99,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A5885C75EC3041358FB8A0CA02D03936"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_A6618CDB8606D6D914850E2DEE09B6C7"
-        "OwnerKey" = "8:_A5885C75EC3041358FB8A0CA02D03936"
+        "OwnerKey" = "8:_6C378EADABDA4E12A71DE9F960E45EE6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -117,20 +117,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_BF896472E6EA464CAD48400B62593BB6"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_C4DC6F0B60CA485599951E1B17C94FC3"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_D56B697C5911407DA1E3C34651EBD6B7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_DAAA464E949BB13B7AD1A6FF86CE2782"
-        "OwnerKey" = "8:_A5885C75EC3041358FB8A0CA02D03936"
+        "OwnerKey" = "8:_6C378EADABDA4E12A71DE9F960E45EE6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -148,7 +148,7 @@
         "Entry"
         {
         "MsmKey" = "8:_FFF3FB5508AA48AFBD42F3F14F09602F"
-        "OwnerKey" = "8:_A5885C75EC3041358FB8A0CA02D03936"
+        "OwnerKey" = "8:_6C378EADABDA4E12A71DE9F960E45EE6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -160,13 +160,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A5885C75EC3041358FB8A0CA02D03936"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_DAAA464E949BB13B7AD1A6FF86CE2782"
+        "OwnerKey" = "8:_A6618CDB8606D6D914850E2DEE09B6C7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -178,7 +172,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_A6618CDB8606D6D914850E2DEE09B6C7"
+        "OwnerKey" = "8:_DAAA464E949BB13B7AD1A6FF86CE2782"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_6C378EADABDA4E12A71DE9F960E45EE6"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -199,6 +199,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -215,6 +231,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -264,6 +296,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1FF5D4FB66EA4031BE4B6EA2713A2388"
+            {
+            "SourcePath" = "8:..\\PianoApp\\bin\\Debug\\MusicDatabase.mdf"
+            "TargetName" = "8:MusicDatabase.mdf"
+            "Tag" = "8:"
+            "Folder" = "8:_59D18B9AEE4A40B09EDA5E6E330518EA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_27717663BB2D4422A4D3E1389FAC822A"
             {
             "SourcePath" = "8:..\\..\\..\\..\\..\\Documents\\Diana\\Windesheim\\Jaar 2\\Periode 2\\KBS2\\Keyboard_Hero_Installatie\\fonts\\NoteHedz170.ttf"
@@ -275,11 +327,11 @@
             "Vital" = "11:TRUE"
             "ReadOnly" = "11:FALSE"
             "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
+            "System" = "11:TRUE"
             "Permanent" = "11:FALSE"
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
-            "Register" = "3:1"
+            "Register" = "3:5"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
@@ -311,11 +363,6 @@
             "AssemblyAsmDisplayName" = "8:System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"
                 "ScatterAssemblies"
                 {
-                    "_35717447D385778061C1DE52F46282AF"
-                    {
-                    "Name" = "8:System.Net.Http.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:System.Net.Http.dll"
             "TargetName" = "8:"
@@ -333,26 +380,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3EBB7C36FD224FDC80316E2B3871252E"
-            {
-            "SourcePath" = "8:..\\PianoApp\\bin\\Debug\\MusicDatabase_log.ldf"
-            "TargetName" = "8:MusicDatabase_log.ldf"
-            "Tag" = "8:"
-            "Folder" = "8:_59D18B9AEE4A40B09EDA5E6E330518EA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_438811CED93745D99A18E38F19CE5603"
@@ -522,11 +549,6 @@
             "AssemblyAsmDisplayName" = "8:MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_A6618CDB8606D6D914850E2DEE09B6C7"
-                    {
-                    "Name" = "8:MaterialDesignColors.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:MaterialDesignColors.dll"
             "TargetName" = "8:"
@@ -586,32 +608,32 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BF896472E6EA464CAD48400B62593BB6"
-            {
-            "SourcePath" = "8:..\\PianoApp\\bin\\Debug\\MusicDatabase.mdf"
-            "TargetName" = "8:MusicDatabase.mdf"
-            "Tag" = "8:"
-            "Folder" = "8:_59D18B9AEE4A40B09EDA5E6E330518EA"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C4DC6F0B60CA485599951E1B17C94FC3"
             {
             "SourcePath" = "8:..\\..\\..\\..\\..\\Documents\\Diana\\Windesheim\\Jaar 2\\Periode 2\\KBS2\\Keyboard_Hero_Installatie\\fonts\\Metdemo.ttf"
             "TargetName" = "8:Metdemo.ttf"
             "Tag" = "8:"
             "Folder" = "8:_EA568D7F14184A4B843E4CD4F6985E8A"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:TRUE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:5"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D56B697C5911407DA1E3C34651EBD6B7"
+            {
+            "SourcePath" = "8:..\\PianoApp\\bin\\Debug\\MusicDatabase_log.ldf"
+            "TargetName" = "8:MusicDatabase_log.ldf"
+            "Tag" = "8:"
+            "Folder" = "8:_59D18B9AEE4A40B09EDA5E6E330518EA"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -633,11 +655,6 @@
             "AssemblyAsmDisplayName" = "8:NAudio, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_DAAA464E949BB13B7AD1A6FF86CE2782"
-                    {
-                    "Name" = "8:NAudio.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:NAudio.dll"
             "TargetName" = "8:"
@@ -704,11 +721,6 @@
             "AssemblyAsmDisplayName" = "8:MaterialDesignThemes.Wpf, Version=2.5.0.1205, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_FFF3FB5508AA48AFBD42F3F14F09602F"
-                    {
-                    "Name" = "8:MaterialDesignThemes.Wpf.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:MaterialDesignThemes.Wpf.dll"
             "TargetName" = "8:"
@@ -817,15 +829,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Keyboard Hero"
-        "ProductCode" = "8:{E846231B-910D-4AB1-AA84-9EFB240200B2}"
-        "PackageCode" = "8:{09B8B045-1103-4FB0-8C3C-AF2C72958FD9}"
+        "ProductCode" = "8:{EC5D648D-C306-4FB1-966B-DBE3C860CEC5}"
+        "PackageCode" = "8:{2F0060BD-F8E8-4209-8277-93BCFF072E01}"
         "UpgradeCode" = "8:{61EA30A4-5D5B-4773-AFFA-EED83972187B}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:3.0.1"
+        "ProductVersion" = "8:3.0.8"
         "Manufacturer" = "8:Cismineur"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -938,7 +950,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_624B167FDB7A4B51885714161D25BEE7"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_3833F5883BA8426D8228B57C1CC5A08E"
             {
             "Name" = "8:Keyboard Hero"
             "Arguments" = "8:"
@@ -946,7 +958,7 @@
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_A5885C75EC3041358FB8A0CA02D03936"
+            "Target" = "8:_6C378EADABDA4E12A71DE9F960E45EE6"
             "Folder" = "8:_BFAEE6FA3F684B52A5578EDCCBBA0AC6"
             "WorkingFolder" = "8:_59D18B9AEE4A40B09EDA5E6E330518EA"
             "Icon" = "8:_8EEA668008AA44CE882A287D0DFBCAC3"
@@ -1351,7 +1363,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A5885C75EC3041358FB8A0CA02D03936"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_6C378EADABDA4E12A71DE9F960E45EE6"
             {
             "SourcePath" = "8:..\\PianoApp\\obj\\Debug\\Keyboard Hero.exe"
             "TargetName" = "8:"
